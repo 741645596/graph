@@ -1,0 +1,42 @@
+﻿using System.Collections.Generic;
+
+namespace Graphics.Math
+{
+    public class MathUtil
+    {
+        /// <summary>
+        /// 误差
+        /// </summary>
+        public  const float kEpsilon = 1E-05F;
+        /// <summary>
+        /// 误差
+        /// </summary>
+        public const float kEpsilonNormalSqrt = 1E-15F;
+    }
+    /// <summary>
+    /// 线关系
+    /// </summary>
+    public enum LineRelation
+    {
+        /// <summary>
+        /// 异常情况
+        /// </summary>
+        None   = 0,
+        /// <summary>
+        /// 重合
+        /// </summary>
+        Coincide = 1,
+        /// <summary>
+        /// 平行
+        /// </summary>
+        Parallel = 2,
+        /// <summary>
+        /// 相交
+        /// </summary>
+        Intersect = 3,
+        /// <summary>
+        /// 分离
+        /// </summary>
+        Detach = 4,
+    }
+}
