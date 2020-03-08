@@ -12,6 +12,10 @@ namespace Graphics.Math
         /// 误差
         /// </summary>
         public const float kEpsilonNormalSqrt = 1E-15F;
+        /// <summary>
+        /// pi 常量
+        /// </summary>
+        public const float kPI =3.14159265358979f;
     }
     /// <summary>
     /// 线关系

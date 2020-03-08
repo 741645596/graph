@@ -6,7 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 namespace Graphics.Math
 {
-    public  class Matrix
+    public struct Matrix4x4
     {
         /// <summary>
         /// 第一行

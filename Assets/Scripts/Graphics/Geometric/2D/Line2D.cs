@@ -51,7 +51,15 @@ namespace Graphics.Geometric
         public void DrawGizmos()
         {
             startPoint.DrawGizmos();
-            UnityEngine.Gizmos.DrawSphere(EndPoint, 0.25f);
+            Float2 v1 = Float2.Perpendicular(normalizedDir).normalized * 0.2f;
+            Float2 diff = 9.8f * normalizedDir;
+            UnityEngine.Gizmos.DrawLine((startPoint + diff + v1).V3, EndPoint);
+            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, EndPoint);
+
+            v1 = Float2.Perpendicular(-normalizedDir).normalized * 0.2f;
+            diff = 0.2f * normalizedDir;
+            UnityEngine.Gizmos.DrawLine((startPoint  + diff + v1).V3, StartPoint);
+            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, StartPoint);
         }
         /// <summary>
         /// 判断点是否在直线上

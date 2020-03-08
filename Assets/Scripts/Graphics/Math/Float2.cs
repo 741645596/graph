@@ -13,6 +13,11 @@ namespace Graphics.Math
             this.x = x;
             this.y = y;
         }
+        public Float2(double x, double y)
+        {
+            this.x = (float)x;
+            this.y = (float)y;
+        }
         /// <summary>
         /// 设置属性
         /// </summary>
@@ -418,7 +423,7 @@ namespace Graphics.Math
         /// <returns></returns>
         public static Float2 Perpendicular(Float2 inDirection)
         {
-            return new Float2(inDirection.y, inDirection.x);
+            return inDirection * Matrix2x2.RotateMatrix(MathUtil.kPI / 2);
         }
         /// <summary>
         /// 求发射光线
@@ -483,7 +488,7 @@ namespace Graphics.Math
         public void DrawGizmos()
         {
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
-            UnityEngine.Gizmos.DrawSphere(this.V3, 0.25f);
+            UnityEngine.Gizmos.DrawSphere(this.V3, 0.1f);
         }
     }
 }
