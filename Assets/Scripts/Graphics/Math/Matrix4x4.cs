@@ -231,5 +231,27 @@ namespace Graphics.Math
         {
             return base.GetHashCode();
         }
+
+        /// <summary>
+        /// 转置矩阵
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public Matrix4x4 GetT()
+        {
+            return new Matrix4x4(this.row1, this.row2, this.row3, this.row4);
+        }
+
+        /// <summary>
+        /// 转置矩阵
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public static Matrix4x4 T(Matrix4x4 v)
+        {
+            return new Matrix4x4(v.row1, v.row2, v.row3, v.row4);
+        }
     }
 }

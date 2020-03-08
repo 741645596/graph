@@ -225,5 +225,27 @@ namespace Graphics.Math
         {
             return base.GetHashCode();
         }
+
+        /// <summary>
+        /// 转置矩阵
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public Matrix3x3 GetT()
+        {
+            return new Matrix3x3(this.row1, this.row2, this.row3);
+        }
+
+        /// <summary>
+        /// 转置矩阵
+        /// </summary>
+        /// <param name="k"></param>
+        /// <param name="vector"></param>
+        /// <returns></returns>
+        public static Matrix3x3 T(Matrix3x3 v)
+        {
+            return new Matrix3x3(v.row1, v.row2, v.row3);
+        }
     }
 }
