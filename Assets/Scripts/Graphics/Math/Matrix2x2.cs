@@ -85,7 +85,7 @@ namespace Graphics.Math
         /// <returns></returns>
         public static bool operator !=(Matrix2x2 v1, Matrix2x2 v2)
         {
-            return v1.col1 != v2.col1 || v1.col1 != v2.col1;
+            return v1.col1 != v2.col1 || v1.col2 != v2.col2;
         }
         /// <summary>
         /// 矩阵判断相等
@@ -95,7 +95,7 @@ namespace Graphics.Math
         /// <returns></returns>
         public static bool operator ==(Matrix2x2 v1, Matrix2x2 v2)
         {
-            return v1.col1 == v2.col1 && v1.col1 == v2.col1;
+            return v1.col1 == v2.col1 && v1.col2 == v2.col2;
         }
         /// <summary>
         /// 矩阵+

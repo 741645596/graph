@@ -14,6 +14,12 @@ namespace Graphics.Math
             this.y = y;
             this.z = z;
         }
+        public Float3(double x, double y, double z)
+        {
+            this.x = (float)x;
+            this.y = (float)y;
+            this.z = (float)z;
+        }
         /// <summary>
         /// 设置属性
         /// </summary>
