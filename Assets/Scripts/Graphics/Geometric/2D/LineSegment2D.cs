@@ -319,5 +319,14 @@ namespace Graphics.Geometric
             }
             return false;
         }
+        /// <summary>
+        /// 镜面但
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public Float2 GetMirrorPoint(Float2 point)
+        {
+            return point - 2 * AixsVector(point);
+        }
     }
 }

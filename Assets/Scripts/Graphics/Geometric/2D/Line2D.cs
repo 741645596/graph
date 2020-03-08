@@ -197,5 +197,16 @@ namespace Graphics.Geometric
         {
             return line.GetIntersectPoint(this, ref intersectPoint);
         }
+
+        /// <summary>
+        /// 镜面但
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public Float2 GetMirrorPoint(Float2 point)
+        {
+            return point - 2 * AixsVector(point);
+        }
+            
     }
 }

@@ -69,6 +69,12 @@ namespace Graphics.Geometric
         /// <returns></returns>
         bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectPoint);
         /// <summary>
+        /// 镜面但
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        Float2 GetMirrorPoint(Float2 point);
+        /// <summary>
         /// draw
         /// </summary>
         void Draw();
