@@ -82,7 +82,7 @@ namespace Graphics.Math
         }
         private static readonly Matrix3x3 s_one = new Matrix3x3(Float3.right, Float3.up, Float3.foward);
         /// <summary>
-        /// 
+        /// 绕Z旋转
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
@@ -91,6 +91,56 @@ namespace Graphics.Math
             Float3 col1 = new Float3(System.Math.Cos(angle), System.Math.Sin(angle), 0);
             Float3 col2 = new Float3(-System.Math.Sin(angle), System.Math.Cos(angle), 0);
             Float3 col3 = new Float3(0, 0, 1);
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 绕X旋转
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static Matrix3x3 RotateXMatrix(double angle)
+        {
+            Float3 col1 = new Float3(1, 0, 0);
+            Float3 col2 = new Float3(0, System.Math.Cos(angle), System.Math.Sin(angle));
+            Float3 col3 = new Float3(0, -System.Math.Sin(angle), System.Math.Cos(angle));
+            
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 绕Y旋转
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static Matrix3x3 RotateYMatrix(double angle)
+        {
+            Float3 col1 = new Float3(System.Math.Cos(angle), 0, System.Math.Sin(angle));
+            Float3 col2 = new Float3(0, 1, 0);
+            Float3 col3 = new Float3(-System.Math.Sin(angle), 0, System.Math.Cos(angle));
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 缩放矩阵
+        /// </summary>
+        /// <param name="scaleX"></param>
+        /// <param name="scaleY"></param>
+        /// <returns></returns>
+        public static Matrix3x3 ScaleMatrix(float scaleX, float scaleY, float scaleZ)
+        {
+            Float3 col1 = scaleX * Float3.right;
+            Float3 col2 = scaleY * Float3.up;
+            Float3 col3 = scaleZ * Float3.foward;
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 缩放矩阵
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public static Matrix3x3 ScaleMatrix(float scale)
+        {
+            Float3 col1 = scale * Float3.right;
+            Float3 col2 = scale * Float3.up;
+            Float3 col3 = scale * Float3.foward;
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>

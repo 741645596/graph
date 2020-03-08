@@ -78,6 +78,29 @@ namespace Graphics.Math
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
+        /// 缩放矩阵
+        /// </summary>
+        /// <param name="scaleX"></param>
+        /// <param name="scaleY"></param>
+        /// <returns></returns>
+        public static Matrix2x2 ScaleMatrix(float scaleX, float scaleY)
+        {
+            Float2 col1 = new Float2(scaleX, 0);
+            Float2 col2 = new Float2(0, scaleY);
+            return new Matrix2x2(col1, col2);
+        }
+        /// <summary>
+        /// 缩放矩阵
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public static Matrix2x2 ScaleMatrix(float scale)
+        {
+            Float2 col1 = new Float2(scale, 0);
+            Float2 col2 = new Float2(0, scale);
+            return new Matrix2x2(col1, col2);
+        }
+        /// <summary>
         /// 矩阵判断相等
         /// </summary>
         /// <param name="v1"></param>
