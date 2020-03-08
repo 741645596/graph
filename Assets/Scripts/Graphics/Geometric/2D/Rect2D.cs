@@ -5,6 +5,7 @@ namespace Graphics.Geometric
     /// <summary>
     /// 矩形区域
     /// </summary>
+    [System.Serializable]
     public struct Rect2D : iGeo2DElement
     {
         /// <summary>
@@ -20,6 +21,12 @@ namespace Graphics.Geometric
         {
             this.leftBottom = lb;
             this.rightUp = ru;
+        }
+        /// <summary>
+        /// draw
+        /// </summary>
+        public void Draw()
+        {
         }
         /// <summary>
         /// 判断点是否在直线上

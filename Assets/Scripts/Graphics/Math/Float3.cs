@@ -507,5 +507,13 @@ namespace Graphics.Math
         {
             return "x:" + x + "y:" + y + "x:" + z;
         }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            UnityEngine.Gizmos.color = UnityEngine.Color.red;
+            UnityEngine.Gizmos.DrawSphere(this.V3, 0.25f);
+        }
     }
 }

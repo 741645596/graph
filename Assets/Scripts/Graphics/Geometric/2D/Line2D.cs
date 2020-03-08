@@ -6,6 +6,7 @@ namespace Graphics.Geometric
     /// <summary>
     /// 直线
     /// </summary>
+    [System.Serializable]
     public struct Line2D : iGeo2DElement
     {
         /// <summary>
@@ -21,6 +22,36 @@ namespace Graphics.Geometric
         {
             this.startPoint = startPt;
             this.normalizedDir = dir.normalized;
+        }
+        /// <summary>
+        /// start point
+        /// </summary>
+        public UnityEngine.Vector3 StartPoint
+        {
+            get { return startPoint.V3; }
+        }
+        /// <summary>
+        /// End point
+        /// </summary>
+        public UnityEngine.Vector3 EndPoint
+        {
+            get {return (startPoint + 10 * normalizedDir).V3; }
+        }
+        /// <summary>
+        /// draw
+        /// </summary>
+        public void Draw()
+        {
+            UnityEngine.GL.Vertex(this.StartPoint);
+            UnityEngine.GL.Vertex(this.EndPoint);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            startPoint.DrawGizmos();
+            UnityEngine.Gizmos.DrawSphere(EndPoint, 0.25f);
         }
         /// <summary>
         /// 判断点是否在直线上

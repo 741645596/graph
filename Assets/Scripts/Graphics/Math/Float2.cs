@@ -3,6 +3,7 @@
 /// </summary>
 namespace Graphics.Math
 {
+    [System.Serializable]
     public partial struct Float2
     {
         public float x, y;
@@ -417,7 +418,7 @@ namespace Graphics.Math
         /// <returns></returns>
         public static Float2 Perpendicular(Float2 inDirection)
         {
-            return Float2.zero;
+            return new Float2(inDirection.y, inDirection.x);
         }
         /// <summary>
         /// 求发射光线
@@ -462,12 +463,27 @@ namespace Graphics.Math
             get { return new UnityEngine.Vector2(this.x, this.y); }
         }
         /// <summary>
+        /// 转vector3
+        /// </summary>
+        public UnityEngine.Vector3 V3
+        {
+            get { return new UnityEngine.Vector3(this.x, this.y, 0); }
+        }
+        /// <summary>
         /// 序列化
         /// </summary>
         /// <returns></returns>
         public string toString()
         {
             return "x:" + x + "y:" + y;
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            UnityEngine.Gizmos.color = UnityEngine.Color.red;
+            UnityEngine.Gizmos.DrawSphere(this.V3, 0.25f);
         }
     }
 }
