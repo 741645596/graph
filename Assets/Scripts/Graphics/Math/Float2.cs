@@ -446,6 +446,15 @@ namespace Graphics.Math
             return new Float2(a.x * b.x, a.y * b.y);
         }
         /// <summary>
+        /// 向量旋转
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static Float2 Rotate(Float2 a, double angle)
+        {
+            return a * Matrix2x2.RotateMatrix(angle);
+        }
+        /// <summary>
         /// 求角度
         /// </summary>
         /// <param name="from"></param>

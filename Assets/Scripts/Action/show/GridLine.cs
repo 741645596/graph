@@ -8,7 +8,10 @@ public class GridLine : MonoBehaviour
 {
     public Material material;
     public LineSegment2D ls2d;
+    public LineSegment2D ls21;
     public Float2 point;
+
+    private Rays2D vectorAix;
 
     void Start()
     {
@@ -18,9 +21,9 @@ public class GridLine : MonoBehaviour
 
     void Doline()
     {
-        float x = Random.Range(-10.0f, 10.0f);
-        float y = Random.Range(-10.0f, 10.0f);
-        ls2d = new LineSegment2D(Float2.zero, new Float2(x, y));
+        Float2 normalizedDir = Float2.Rotate(ls2d.normalizedDir, 0.1f);
+        ls2d = new LineSegment2D(ls2d.startPoint, ls2d.startPoint + normalizedDir * ls2d.length);
+        vectorAix = new Rays2D(ls2d.ProjectPoint(point), ls2d.AixsVector(point)); 
     }
 
     // Update is called once per frame
@@ -39,6 +42,8 @@ public class GridLine : MonoBehaviour
         GL.Begin(GL.LINES);
 
         ls2d.Draw();
+        //vectorAix.Draw();
+        ls21.Draw();
 
 
         GL.End();
@@ -50,12 +55,18 @@ public class GridLine : MonoBehaviour
     void OnDrawGizmos()
     {
         ls2d.DrawGizmos();
-        point.DrawGizmos();
-        
-        ls2d.ProjectPoint(point).DrawGizmos();
-        ls2d.GetMirrorPoint(point).DrawGizmos();
+        ls21.DrawGizmos();
+        //point.DrawGizmos();
+
+        //ls2d.ProjectPoint(point).DrawGizmos();
+        //ls2d.GetMirrorPoint(point).DrawGizmos();
 
 
+        Float2 interPoint = Float2.zero;
+        if (ls2d.GetIntersectPoint(ls21, ref interPoint) == true)
+        {
+            interPoint.DrawGizmos();
+        }
     }
 
 }

@@ -22,6 +22,13 @@ namespace Graphics.Geometric
         /// </summary>
         public Float2 normalizedDir;
         /// <summary>
+        /// 长度
+        /// </summary>
+        public float length
+        {
+            get { return (endPoint - startPoint).magnitude; }
+        }
+        /// <summary>
         /// 构建线段
         /// </summary>
         /// <param name="startPt"></param>
