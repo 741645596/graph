@@ -212,7 +212,31 @@ namespace Graphics.Geometric
         /// <returns></returns>
         public LineRelation CheckLineRelation(Line2D line)
         {
-            return LineRelation.Intersect;
+            if (CheckIn(line.startPoint) == true)
+                return LineRelation.Intersect;
+            else // 4个点在同侧
+            {
+                Float2 p1 = this.leftBottom - line.startPoint;
+                Float2 p2 = this.RightBottom - line.startPoint;
+                
+                
+                float cross1 = Float2.Cross(line.normalizedDir, p1);
+                if (cross1 * Float2.Cross(line.normalizedDir, p2) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                Float2 p3 = this.rightUp - line.startPoint;
+                if (cross1 * Float2.Cross(line.normalizedDir, p3) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                Float2 p4 = this.LeftUp - line.startPoint;
+                if (cross1 * Float2.Cross(line.normalizedDir, p4) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                return LineRelation.Detach;
+            }
         }
         /// <summary>
         /// 直线与射线间的关系
