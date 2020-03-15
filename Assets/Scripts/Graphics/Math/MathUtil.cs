@@ -43,4 +43,47 @@ namespace Graphics.Math
         /// </summary>
         Detach = 4,
     }
+
+    /// <summary>
+    /// 对其方式
+    /// </summary>
+    public enum AligentStyle
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        LeftBottom = 0,
+        /// <summary>
+        /// 
+        /// </summary>
+        LeftMiddle= 1,
+        /// <summary>
+        /// 
+        /// </summary>
+        LeftUp = 2,
+        /// <summary>
+        /// 
+        /// </summary>
+        MiddleBottom = 3,
+        /// <summary>
+        /// 
+        /// </summary>
+        MiddleMiddle = 4,
+        /// <summary>
+        /// 
+        /// </summary>
+        MiddleUp = 5,
+        /// <summary>
+        /// 
+        /// </summary>
+        RightBottom = 6,
+        /// <summary>
+        /// 
+        /// </summary>
+        RightMiddle = 7,
+        /// <summary>
+        /// 
+        /// </summary>
+        RightUp = 8,
+    }
 }

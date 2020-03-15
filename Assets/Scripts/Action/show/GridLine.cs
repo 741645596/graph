@@ -8,14 +8,15 @@ public class GridLine : MonoBehaviour
 {
     public Material material;
     public LineSegment2D ls2d;
-    public LineSegment2D ls21;
+    public LineSegment2D ls2d1;
     public Float2 point;
 
     private Rays2D vectorAix;
 
     void Start()
     {
-        ls2d = new LineSegment2D(Float2.zero, new Float2(10, 10));
+        ls2d = new LineSegment2D(Float2.zero, new Float2(10, 0));
+        ls2d1 = new LineSegment2D(new Float2(-100, -5), new Float2(100, 5));
         InvokeRepeating("Doline", 0.1f, 1.0f);
     }
 
@@ -23,7 +24,7 @@ public class GridLine : MonoBehaviour
     {
         Float2 normalizedDir = Float2.Rotate(ls2d.normalizedDir, 0.1f);
         ls2d = new LineSegment2D(ls2d.startPoint, ls2d.startPoint + normalizedDir * ls2d.length);
-        vectorAix = new Rays2D(ls2d.ProjectPoint(point), ls2d.AixsVector(point)); 
+        //vectorAix = new Rays2D(ls2d.ProjectPoint(point), ls2d.AixsVector(point)); 
     }
 
     // Update is called once per frame
@@ -43,7 +44,7 @@ public class GridLine : MonoBehaviour
 
         ls2d.Draw();
         //vectorAix.Draw();
-        ls21.Draw();
+        ls2d1.Draw();
 
 
         GL.End();
@@ -55,7 +56,7 @@ public class GridLine : MonoBehaviour
     void OnDrawGizmos()
     {
         ls2d.DrawGizmos();
-        ls21.DrawGizmos();
+        ls2d1.DrawGizmos();
         //point.DrawGizmos();
 
         //ls2d.ProjectPoint(point).DrawGizmos();
@@ -63,7 +64,7 @@ public class GridLine : MonoBehaviour
 
 
         Float2 interPoint = Float2.zero;
-        if (ls2d.GetIntersectPoint(ls21, ref interPoint) == true)
+        if (ls2d.GetIntersectPoint(ls2d1, ref interPoint) == true)
         {
             interPoint.DrawGizmos();
         }

@@ -16,17 +16,80 @@ namespace Graphics.Geometric
         /// 右上
         /// </summary>
         public Float2 rightUp;
+        /// <summary>
+        /// 左⬆️
+        /// </summary>
+        public Float2 LeftUp
+        {
+            get { return new Float2(leftBottom.x, rightUp.y); }
+        }
+        /// <summary>
+        /// 右⬇️
+        /// </summary>
+        public Float2 RightBottom
+        {
+            get { return new Float2(rightUp.x, leftBottom.y); }
+        }
+        /// <summary>
+        /// 左边法线
+        /// </summary>
+        public Float2 LeftEdgeNormal
+        {
+            get { return Float2.left; }
+        }
+        /// <summary>
+        /// 右边法线
+        /// </summary>
+        public Float2 RightEdgeNormal
+        {
+            get { return Float2.right; }
+        }
+        /// <summary>
+        /// 下边法线
+        /// </summary>
+        public Float2 BottomEdgeNormal
+        {
+            get { return Float2.down; }
+        }
+        /// <summary>
+        /// 上边法线
+        /// </summary>
+        public Float2 UpEdgeNormal
+        {
+            get { return Float2.down; }
+        }
 
         public Rect2D(Float2 lb, Float2 ru)
         {
-            this.leftBottom = lb;
-            this.rightUp = ru;
+            this.leftBottom = Float2.Min(lb, ru);
+            this.rightUp = Float2.Max(lb, ru);
         }
         /// <summary>
-        /// draw
+        /// draw, 逆时针绘制
         /// </summary>
         public void Draw()
         {
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            //
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            leftBottom.DrawGizmos();
+            rightUp.DrawGizmos();
+            LeftUp.DrawGizmos();
+            RightBottom.DrawGizmos();
         }
         /// <summary>
         /// 判断点是否在直线上
@@ -35,7 +98,13 @@ namespace Graphics.Geometric
         /// <returns></returns>
         public bool CheckIn(Float2 pt)
         {
-            return false;
+            Float2 max = this.rightUp;
+            if (pt.x > max.x || pt.y > max.y)
+                return false;
+            Float2 min = this.leftBottom;
+            if (pt.x < min.x || pt.y < min.y)
+                return false;
+            return true;
         }
         /// <summary>
         /// 点导几何元素的距离
@@ -44,7 +113,79 @@ namespace Graphics.Geometric
         /// <returns></returns>
         public float CalcDistance(Float2 pt)
         {
-            return 0;
+            float distance = 0.0f;
+            AligentStyle style = GetAligentStyle(pt);
+            switch (style)
+            {
+                case AligentStyle.LeftBottom:
+                    distance = (this.leftBottom - pt).magnitude;
+                    break;
+                case AligentStyle.MiddleBottom:
+                    distance = this.leftBottom.y - pt.y;
+                    break;
+                case AligentStyle.RightBottom:
+                    distance = (this.RightBottom - pt).magnitude;
+                    break;
+                case AligentStyle.LeftMiddle:
+                    distance = this.leftBottom.x - pt.x;
+                    break;
+                case AligentStyle.MiddleMiddle:
+                    distance = 0.0f;
+                    break;
+                case AligentStyle.RightMiddle:
+                    distance = pt.x - this.RightBottom.x;
+                    break;
+                case AligentStyle.LeftUp:
+                    distance = (this.LeftUp - pt).magnitude;
+                    break;
+                case AligentStyle.MiddleUp:
+                    distance = pt.y - this.LeftUp.y;
+                    break;
+                case AligentStyle.RightUp:
+                    distance = (pt - this.rightUp).magnitude;
+                    break;
+                default:
+                    break;
+            }
+            return distance;
+        }
+        /// <summary>
+        /// 点与矩形的关系
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public AligentStyle GetAligentStyle(Float2 pt)
+        {
+            Float2 max = this.rightUp;
+            Float2 min = this.leftBottom;
+            // 8 种情形
+            if (pt.y < min.y)
+            {
+                if (pt.x < min.x)
+                    return AligentStyle.LeftBottom;
+                else if (pt.x >= min.x && pt.x <= max.x)
+                    return AligentStyle.MiddleBottom;
+                else
+                    return AligentStyle.RightBottom;
+            }
+            else if (pt.y >= min.y && pt.y <= max.y)
+            {
+                if (pt.x < min.x)
+                    return AligentStyle.LeftMiddle;
+                else if (pt.x >= min.x && pt.x <= max.x)
+                    return AligentStyle.MiddleMiddle;
+                else
+                    return AligentStyle.RightMiddle;
+            }
+            else
+            {
+                if (pt.x < min.x)
+                    return AligentStyle.LeftUp;
+                else if (pt.x >= min.x && pt.x <= max.x)
+                    return AligentStyle.MiddleUp;
+                else
+                    return AligentStyle.RightUp;
+            }
         }
         /// <summary>
         /// 点导几何元素的投影点
