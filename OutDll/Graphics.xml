@@ -1629,6 +1629,179 @@
             <param name="b"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Int2.Set(System.Int32,System.Int32)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_UnaryNegation(RayGraphics.Math.Int2)">
+            <summary>
+            负号重载
+            </summary>
+            <param name="v1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_Multiply(System.Int32,RayGraphics.Math.Int2)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_Multiply(RayGraphics.Math.Int2,System.Int32)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Angle(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            夹角[0, PI]
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.CosAngle(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            求cos Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.SinAngle(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            求sin Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Distance(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            求距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Area(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            向量组成的平行四边形的面积， 已经取绝对值。
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.CheckInLine(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            共线判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.CheckVertical(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            垂直判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Dot(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            点积
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Cross(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            叉积 , 可通过float3 的cross 推出，结果实际上就是z分量的值，因为，x，y分量都为0
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Max(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            获取max向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Min(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            获取Min向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Scale(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            分量分别相乘，得到新的向量
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Math.MathUtil.kEpsilon">
             <summary>
             误差
@@ -2247,6 +2420,172 @@
             </summary>
             <param name="k"></param>
             <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Set(System.Int16,System.Int16)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_UnaryNegation(RayGraphics.Math.Short2)">
+            <summary>
+            负号重载
+            </summary>
+            <param name="v1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_Multiply(System.Int32,RayGraphics.Math.Short2)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_Multiply(RayGraphics.Math.Short2,System.Int32)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Angle(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            夹角[0, PI]
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.CosAngle(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            求cos Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.SinAngle(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            求sin Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Area(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            向量组成的平行四边形的面积， 已经取绝对值。
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.CheckInLine(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            共线判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.CheckVertical(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            垂直判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Short2.Dot(RayGraphics.Math.Short2,RayGraphics.Math.Short2)" -->
+        <member name="M:RayGraphics.Math.Short2.Cross(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            叉积 , 可通过float3 的cross 推出，结果实际上就是z分量的值，因为，x，y分量都为0
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Distance(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            求距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Max(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            获取max向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Min(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            获取Min向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.Scale(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            分量分别相乘，得到新的向量
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
             <returns></returns>
         </member>
     </members>
