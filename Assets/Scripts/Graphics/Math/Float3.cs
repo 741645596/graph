@@ -147,7 +147,7 @@ namespace RayGraphics.Math
         {
             get { return s_right; }
         }
-        private static readonly Float3 s_right = new Float3(0, 0, 1);
+        private static readonly Float3 s_right = new Float3(1, 0, 0);
         /// <summary>
         /// foward 向量
         /// </summary>

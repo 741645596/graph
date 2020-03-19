@@ -132,7 +132,7 @@ namespace RayGraphics.Math
         {
             get { return s_right; }
         }
-        private static readonly Float2 s_right = new Float2(0, 1);
+        private static readonly Float2 s_right = new Float2(1, 0);
         /// <summary>
         /// 负无穷大
         /// </summary>

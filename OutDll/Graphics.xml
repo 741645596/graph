@@ -1683,6 +1683,26 @@
             foward 向量
             </summary>
         </member>
+        <member name="P:RayGraphics.Math.Int2.rightDown">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.rightUp">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.leftDown">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int2.leftUp">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
         <member name="M:RayGraphics.Math.Int2.op_UnaryNegation(RayGraphics.Math.Int2)">
             <summary>
             负号重载
@@ -2446,6 +2466,11 @@
             模
             </summary>
         </member>
+        <member name="P:RayGraphics.Math.Short2.invalid">
+            <summary>
+            无效
+            </summary>
+        </member>
         <member name="P:RayGraphics.Math.Short2.zero">
             <summary>
             0 向量
@@ -2472,6 +2497,26 @@
             </summary>
         </member>
         <member name="P:RayGraphics.Math.Short2.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.rightDown">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.rightUp">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.leftDown">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short2.leftUp">
             <summary>
             foward 向量
             </summary>

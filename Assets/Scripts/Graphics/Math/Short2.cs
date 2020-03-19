@@ -62,6 +62,16 @@
         {
             get { return (float)System.Math.Sqrt(this.sqrMagnitude); }
         }
+
+        /// <summary>
+        /// 无效
+        /// </summary>
+        public static Short2 invalid
+        {
+            get { return s_invalid; }
+        }
+        private static readonly Short2 s_invalid = new Short2(-1, -1);
+        
         /// <summary>
         /// 0 向量
         /// </summary>
@@ -110,7 +120,46 @@
         {
             get { return s_right; }
         }
-        private static readonly Short2 s_right = new Short2(0, 1);
+        private static readonly Short2 s_right = new Short2(1, 0);
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Short2 rightDown
+        {
+            get { return s_rightDown; }
+        }
+        private static readonly Short2 s_rightDown = new Short2(1, -1);
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Short2 rightUp
+        {
+            get { return s_rightUp; }
+        }
+        private static readonly Short2 s_rightUp = new Short2(1, 1);
+
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Short2 leftDown
+        {
+            get { return s_leftDown; }
+        }
+        private static readonly Short2 s_leftDown = new Short2(-1, -1);
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Short2 leftUp
+        {
+            get { return s_leftUp; }
+        }
+        private static readonly Short2 s_leftUp = new Short2(-1, 1);
+
+
 
         public static bool operator !=(Short2 v1, Short2 v2)
         {

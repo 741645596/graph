@@ -112,7 +112,46 @@ namespace RayGraphics.Math
         {
             get { return s_right; }
         }
-        private static readonly Int2 s_right = new Int2(0, 1);
+        private static readonly Int2 s_right = new Int2(1, 0);
+
+
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Int2 rightDown
+        {
+            get { return s_rightDown; }
+        }
+        private static readonly Int2 s_rightDown = new Int2(1, -1);
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Int2 rightUp
+        {
+            get { return s_rightUp; }
+        }
+        private static readonly Int2 s_rightUp = new Int2(1, 1);
+
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Int2 leftDown
+        {
+            get { return s_leftDown; }
+        }
+        private static readonly Int2 s_leftDown = new Int2(-1, -1);
+
+        /// <summary>
+        /// foward 向量
+        /// </summary>
+        public static Int2 leftUp
+        {
+            get { return s_leftUp; }
+        }
+        private static readonly Int2 s_leftUp = new Int2(-1, 1);
 
         public static bool operator !=(Int2 v1, Int2 v2)
         {
