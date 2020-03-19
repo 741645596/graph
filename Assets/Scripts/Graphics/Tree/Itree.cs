@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Graphics.Tree
+namespace RayGraphics.Tree
 {
     public interface Itree
     {

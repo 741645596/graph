@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     public class MathUtil
     {

@@ -1,6 +1,6 @@
-﻿using Graphics.Math;
+﻿using RayGraphics.Math;
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     [System.Serializable]
     public class Circle2D : iGeo2DElement

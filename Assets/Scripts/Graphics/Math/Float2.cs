@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// 平面向量
 /// </summary>
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     [System.Serializable]
     public partial struct Float2

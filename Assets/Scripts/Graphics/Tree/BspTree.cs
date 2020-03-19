@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Graphics.Tree
+namespace RayGraphics.Tree
 {
     /// <summary>
     /// Binary space partitioning,BSP bsp tree

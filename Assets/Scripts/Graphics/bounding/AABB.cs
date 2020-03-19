@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Graphics.Math;
+using RayGraphics.Math;
 
 
-namespace Graphics.Bounding
+namespace RayGraphics.Bounding
 {
     /// <summary>
     /// AABB包围盒(Axis-aligned bounding box)

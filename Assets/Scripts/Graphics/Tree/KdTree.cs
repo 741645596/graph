@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Graphics.Tree
+namespace RayGraphics.Tree
 {
     public class KdTree : Itree
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Graphics.Math;
+using RayGraphics.Math;
 
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     public interface iGeo3DElement
     {

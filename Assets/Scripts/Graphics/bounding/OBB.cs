@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Graphics.Math;
+using RayGraphics.Math;
 
-namespace Graphics.Bounding
+namespace RayGraphics.Bounding
 {
     /// <summary>
     /// OBB方向包围盒(Oriented bounding box)

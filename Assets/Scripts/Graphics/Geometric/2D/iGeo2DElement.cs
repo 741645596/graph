@@ -1,7 +1,7 @@
-﻿using Graphics.Math;
+﻿using RayGraphics.Math;
 
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     public interface iGeo2DElement
     {

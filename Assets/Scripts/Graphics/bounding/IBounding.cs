@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Graphics.Math;
+using RayGraphics.Math;
 /// <summary>
 /// 包围盒
 /// </summary>
-namespace Graphics.Bounding
+namespace RayGraphics.Bounding
 {
     public interface IBounding
     {

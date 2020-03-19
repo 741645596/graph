@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Graphics.Geometric;
-using Graphics.Math;
+using RayGraphics.Geometric;
+using RayGraphics.Math;
 
 
 public class GridLine : MonoBehaviour

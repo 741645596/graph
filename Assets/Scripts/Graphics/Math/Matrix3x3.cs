@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// 矩阵
 /// </summary>
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     public  class Matrix3x3
     {
