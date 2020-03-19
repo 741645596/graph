@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 
 namespace Graphics.Math
@@ -498,6 +497,7 @@ namespace Graphics.Math
         {
             return Float3.zero;
         }
+#if Client
         /// <summary>
         /// 转vector3
         /// </summary>
@@ -521,5 +521,6 @@ namespace Graphics.Math
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
             UnityEngine.Gizmos.DrawSphere(this.V3, 0.25f);
         }
+#endif
     }
 }

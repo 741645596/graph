@@ -65,33 +65,6 @@ namespace Graphics.Geometric
             this.rightUp = Float2.Max(lb, ru);
         }
         /// <summary>
-        /// draw, 逆时针绘制
-        /// </summary>
-        public void Draw()
-        {
-            UnityEngine.GL.Vertex(this.leftBottom.V3);
-            UnityEngine.GL.Vertex(this.RightBottom.V3);
-            //
-            UnityEngine.GL.Vertex(this.RightBottom.V3);
-            UnityEngine.GL.Vertex(this.rightUp.V3);
-            //
-            UnityEngine.GL.Vertex(this.rightUp.V3);
-            UnityEngine.GL.Vertex(this.LeftUp.V3);
-            //
-            UnityEngine.GL.Vertex(this.LeftUp.V3);
-            UnityEngine.GL.Vertex(this.leftBottom.V3);
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-            leftBottom.DrawGizmos();
-            rightUp.DrawGizmos();
-            LeftUp.DrawGizmos();
-            RightBottom.DrawGizmos();
-        }
-        /// <summary>
         /// 判断点是否在直线上
         /// </summary>
         /// <param name="pt"></param>
@@ -296,5 +269,34 @@ namespace Graphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
+#if Client
+        /// <summary>
+        /// draw, 逆时针绘制
+        /// </summary>
+        public void Draw()
+        {
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            //
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            leftBottom.DrawGizmos();
+            rightUp.DrawGizmos();
+            LeftUp.DrawGizmos();
+            RightBottom.DrawGizmos();
+        }
+#endif
     }
 }

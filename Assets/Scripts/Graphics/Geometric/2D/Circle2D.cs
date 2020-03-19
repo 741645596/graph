@@ -21,20 +21,6 @@ namespace Graphics.Geometric
             this.radius = radius;
         }
         /// <summary>
-        /// draw, 逆时针绘制
-        /// </summary>
-        public void Draw()
-        {
-            
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-
-        }
-        /// <summary>
         /// 判断点是否在直线上
         /// </summary>
         /// <param name="pt"></param>
@@ -193,5 +179,20 @@ namespace Graphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
+#if Client
+        /// <summary>
+        /// draw, 逆时针绘制
+        /// </summary>
+        public void Draw()
+        {
+
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+        }
+#endif
     }
 }

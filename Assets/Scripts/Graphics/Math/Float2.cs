@@ -469,6 +469,7 @@ namespace Graphics.Math
         {
             return Float2.zero;
         }
+#if Client
         /// <summary>
         /// 转vector2
         /// </summary>
@@ -499,5 +500,6 @@ namespace Graphics.Math
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
             UnityEngine.Gizmos.DrawSphere(this.V3, 0.1f);
         }
+#endif
     }
 }

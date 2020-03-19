@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using Graphics.Math;
 
 
@@ -21,8 +20,9 @@ namespace Graphics.Bounding
         public void Generate() { }
         public void Generate(List<Float3> listPt) { }
         public void Generate(Float3[] ptArray) { }
-        public void Generate(Mesh mesh) { }
-
+#if Client
+        public void Generate(UnityEngine.Mesh mesh) { }
+#endif
         public bool CheckIN()
         {
             return true;

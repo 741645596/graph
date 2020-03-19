@@ -74,9 +74,15 @@ namespace Graphics.Geometric
         /// <param name="point"></param>
         /// <returns></returns>
         Float2 GetMirrorPoint(Float2 point);
+#if Client
         /// <summary>
         /// draw
         /// </summary>
         void Draw();
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        void DrawGizmos();
+#endif
     }
 }

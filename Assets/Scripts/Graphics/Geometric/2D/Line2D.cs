@@ -24,44 +24,6 @@ namespace Graphics.Geometric
             this.normalizedDir = dir.normalized;
         }
         /// <summary>
-        /// start point
-        /// </summary>
-        public UnityEngine.Vector3 StartPoint
-        {
-            get { return startPoint.V3; }
-        }
-        /// <summary>
-        /// End point
-        /// </summary>
-        public UnityEngine.Vector3 EndPoint
-        {
-            get {return (startPoint + 10 * normalizedDir).V3; }
-        }
-        /// <summary>
-        /// draw
-        /// </summary>
-        public void Draw()
-        {
-            UnityEngine.GL.Vertex(this.StartPoint);
-            UnityEngine.GL.Vertex(this.EndPoint);
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-            startPoint.DrawGizmos();
-            Float2 v1 = Float2.Perpendicular(normalizedDir).normalized * 0.2f;
-            Float2 diff = 9.8f * normalizedDir;
-            UnityEngine.Gizmos.DrawLine((startPoint + diff + v1).V3, EndPoint);
-            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, EndPoint);
-
-            v1 = Float2.Perpendicular(-normalizedDir).normalized * 0.2f;
-            diff = 0.2f * normalizedDir;
-            UnityEngine.Gizmos.DrawLine((startPoint  + diff + v1).V3, StartPoint);
-            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, StartPoint);
-        }
-        /// <summary>
         /// 判断点是否在直线上
         /// </summary>
         /// <param name="pt"></param>
@@ -207,6 +169,45 @@ namespace Graphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
-            
+#if Client
+        /// <summary>
+        /// start point
+        /// </summary>
+        public UnityEngine.Vector3 StartPoint
+        {
+            get { return startPoint.V3; }
+        }
+        /// <summary>
+        /// End point
+        /// </summary>
+        public UnityEngine.Vector3 EndPoint
+        {
+            get { return (startPoint + 10 * normalizedDir).V3; }
+        }
+        /// <summary>
+        /// draw
+        /// </summary>
+        public void Draw()
+        {
+            UnityEngine.GL.Vertex(this.StartPoint);
+            UnityEngine.GL.Vertex(this.EndPoint);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            startPoint.DrawGizmos();
+            Float2 v1 = Float2.Perpendicular(normalizedDir).normalized * 0.2f;
+            Float2 diff = 9.8f * normalizedDir;
+            UnityEngine.Gizmos.DrawLine((startPoint + diff + v1).V3, EndPoint);
+            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, EndPoint);
+
+            v1 = Float2.Perpendicular(-normalizedDir).normalized * 0.2f;
+            diff = 0.2f * normalizedDir;
+            UnityEngine.Gizmos.DrawLine((startPoint + diff + v1).V3, StartPoint);
+            UnityEngine.Gizmos.DrawLine((startPoint + diff - v1).V3, StartPoint);
+        }
+#endif
     }
 }
