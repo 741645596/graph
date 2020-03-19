@@ -1065,7 +1065,7 @@
         </member>
         <member name="M:RayGraphics.Math.Float2.SinAngle(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
             <summary>
-            求cos Angle
+            求sin Angle
             </summary>
             <param name="a"></param>
             <param name="b"></param>
@@ -1210,7 +1210,7 @@
         </member>
         <member name="M:RayGraphics.Math.Float2.SignedAngle(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
             <summary>
-            求角度
+            求角度,逆时针为正， 瞬时值为负。
             </summary>
             <param name="from"></param>
             <param name="to"></param>
