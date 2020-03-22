@@ -3,7 +3,7 @@
 /// <summary>
 /// 矩阵
 /// </summary>
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     public struct Matrix2x2
     {

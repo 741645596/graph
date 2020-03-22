@@ -1,6 +1,6 @@
-﻿using Graphics.Math;
+﻿using RayGraphics.Math;
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     /// <summary>
     /// (Oriented rect)，带方向的

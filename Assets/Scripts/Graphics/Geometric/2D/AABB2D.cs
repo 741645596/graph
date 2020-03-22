@@ -1,18 +1,24 @@
-﻿using RayGraphics.Math;
+﻿using Graphics.Math;
 
-namespace RayGraphics.Geometric
+
+namespace Graphics.Geometric
 {
-    /// <summary>
-    /// 矩形区域
-    /// </summary>
-    [System.Serializable]
-    public class Rect2D : AABB2D
+
+    public class AABB2D: iGeo2DElement
     {
-        public Rect2D(Float2 lb, Float2 ru) : base(lb, ru)
+        /// <summary>
+        /// 左下
+        /// </summary>
+        public Float2 leftBottom;
+        /// <summary>
+        /// 右上
+        /// </summary>
+        public Float2 rightUp;
+        /// <summary>
+        /// 左⬆️
+        /// </summary>
+        public Float2 LeftUp
         {
-<<<<<<< HEAD
-            
-=======
             get { return new Float2(leftBottom.x, rightUp.y); }
         }
         /// <summary>
@@ -51,10 +57,37 @@ namespace RayGraphics.Geometric
             get { return Float2.down; }
         }
 
-        public Rect2D(Float2 lb, Float2 ru)
+        public AABB2D(Float2 lb, Float2 ru)
         {
             this.leftBottom = Float2.Min(lb, ru);
             this.rightUp = Float2.Max(lb, ru);
+        }
+        /// <summary>
+        /// draw, 逆时针绘制
+        /// </summary>
+        public void Draw()
+        {
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            //
+            UnityEngine.GL.Vertex(this.RightBottom.V3);
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.rightUp.V3);
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            //
+            UnityEngine.GL.Vertex(this.LeftUp.V3);
+            UnityEngine.GL.Vertex(this.leftBottom.V3);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            leftBottom.DrawGizmos();
+            rightUp.DrawGizmos();
+            LeftUp.DrawGizmos();
+            RightBottom.DrawGizmos();
         }
         /// <summary>
         /// 判断点是否在直线上
@@ -260,36 +293,6 @@ namespace RayGraphics.Geometric
         public Float2 GetMirrorPoint(Float2 point)
         {
             return point - 2 * AixsVector(point);
->>>>>>> 2741734f3e1e83642535d5c4cfb095fea8c5b1c7
         }
-#if Client
-        /// <summary>
-        /// draw, 逆时针绘制
-        /// </summary>
-        public void Draw()
-        {
-            UnityEngine.GL.Vertex(this.leftBottom.V3);
-            UnityEngine.GL.Vertex(this.RightBottom.V3);
-            //
-            UnityEngine.GL.Vertex(this.RightBottom.V3);
-            UnityEngine.GL.Vertex(this.rightUp.V3);
-            //
-            UnityEngine.GL.Vertex(this.rightUp.V3);
-            UnityEngine.GL.Vertex(this.LeftUp.V3);
-            //
-            UnityEngine.GL.Vertex(this.LeftUp.V3);
-            UnityEngine.GL.Vertex(this.leftBottom.V3);
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-            leftBottom.DrawGizmos();
-            rightUp.DrawGizmos();
-            LeftUp.DrawGizmos();
-            RightBottom.DrawGizmos();
-        }
-#endif
     }
 }

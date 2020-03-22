@@ -1,7 +1,7 @@
 ﻿/// <summary>
 /// 平面向量
 /// </summary>
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     [System.Serializable]
     public partial struct Float2
@@ -132,7 +132,7 @@ namespace Graphics.Math
         {
             get { return s_right; }
         }
-        private static readonly Float2 s_right = new Float2(0, 1);
+        private static readonly Float2 s_right = new Float2(1, 0);
         /// <summary>
         /// 负无穷大
         /// </summary>
@@ -271,7 +271,7 @@ namespace Graphics.Math
             return Float2.Dot(from, to) / (from.magnitude * to.magnitude);
         }
         /// <summary>
-        /// 求cos Angle
+        /// 求sin Angle
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -455,7 +455,7 @@ namespace Graphics.Math
             return a * Matrix2x2.RotateMatrix(angle);
         }
         /// <summary>
-        /// 求角度
+        /// 求角度,逆时针为正， 瞬时值为负。
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
@@ -463,12 +463,33 @@ namespace Graphics.Math
         /// <returns></returns>
         public static float SignedAngle(Float2 from, Float2 to)
         {
+            // [-PI / 2,  PI /2]  Asin
+            // [0,  PI]  acos
+            double sinValue = SinAngle(from, to);
+            float dot = Dot(from, to) / (from.magnitude * to.magnitude);
+            if (sinValue >= 0 && dot >= 0) // 1
+            {
+                return (float)(System.Math.Asin(sinValue));
+            }
+            else if (sinValue >= 0 && dot <= 0) // 2
+            {
+                return (float)(System.Math.Acos(dot));
+            }
+            else if (sinValue <= 0 && dot >= 0) // 4
+            {
+                return (float)(System.Math.Asin(sinValue));
+            }
+            else if (sinValue <= 0 && dot <= 0) // 2
+            {
+                return -(float)(System.Math.Acos(dot));
+            }
             return 0;
         }
         public static Float2 SmoothDamp(Float2 current, Float2 target, ref Float2 currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
         {
             return Float2.zero;
         }
+#if Client
         /// <summary>
         /// 转vector2
         /// </summary>
@@ -499,5 +520,6 @@ namespace Graphics.Math
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
             UnityEngine.Gizmos.DrawSphere(this.V3, 0.1f);
         }
+#endif
     }
 }

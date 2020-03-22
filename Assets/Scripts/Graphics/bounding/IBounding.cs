@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using Graphics.Math;
+using RayGraphics.Math;
 /// <summary>
 /// 包围盒
 /// </summary>
-namespace Graphics.Bounding
+namespace RayGraphics.Bounding
 {
     public interface IBounding
     {
         // Start is called before the first frame update
         void Generate(List<Float3> listPt);
         void Generate(Float3[] ptArray);
-        void Generate(Mesh mesh);
+#if Client
+        void Generate(UnityEngine.Mesh mesh);
+#endif
 
         bool CheckIN();
     }

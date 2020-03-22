@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using Graphics.Math;
+using RayGraphics.Math;
 
 
-namespace Graphics.Bounding
+namespace RayGraphics.Bounding
 {
     /// <summary>
     /// AABB包围盒(Axis-aligned bounding box)
@@ -21,8 +20,9 @@ namespace Graphics.Bounding
         public void Generate() { }
         public void Generate(List<Float3> listPt) { }
         public void Generate(Float3[] ptArray) { }
-        public void Generate(Mesh mesh) { }
-
+#if Client
+        public void Generate(UnityEngine.Mesh mesh) { }
+#endif
         public bool CheckIN()
         {
             return true;

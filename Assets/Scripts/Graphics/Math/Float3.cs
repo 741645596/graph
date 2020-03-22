@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 
-namespace Graphics.Math
+namespace RayGraphics.Math
 {
     public partial struct Float3
     {
@@ -148,7 +147,7 @@ namespace Graphics.Math
         {
             get { return s_right; }
         }
-        private static readonly Float3 s_right = new Float3(0, 0, 1);
+        private static readonly Float3 s_right = new Float3(1, 0, 0);
         /// <summary>
         /// foward 向量
         /// </summary>
@@ -498,6 +497,7 @@ namespace Graphics.Math
         {
             return Float3.zero;
         }
+#if Client
         /// <summary>
         /// 转vector3
         /// </summary>
@@ -521,5 +521,6 @@ namespace Graphics.Math
             UnityEngine.Gizmos.color = UnityEngine.Color.red;
             UnityEngine.Gizmos.DrawSphere(this.V3, 0.25f);
         }
+#endif
     }
 }

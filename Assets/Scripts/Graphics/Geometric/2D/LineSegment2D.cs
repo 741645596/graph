@@ -1,7 +1,7 @@
-﻿using Graphics.Math;
+﻿using RayGraphics.Math;
 
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     /// <summary>
     /// 直线
@@ -38,36 +38,6 @@ namespace Graphics.Geometric
             this.startPoint = startPt;
             this.endPoint = endPt;
             this.normalizedDir = (endPt - startPt).normalized;
-        }
-        /// <summary>
-        /// start point
-        /// </summary>
-        public UnityEngine.Vector3 StartPoint
-        {
-            get { return startPoint.V3; }
-        }
-        /// <summary>
-        /// End point
-        /// </summary>
-        public UnityEngine.Vector3 EndPoint
-        {
-            get { return endPoint.V3; }
-        }
-        /// <summary>
-        /// draw
-        /// </summary>
-        public void Draw()
-        {
-            UnityEngine.GL.Vertex(this.StartPoint);
-            UnityEngine.GL.Vertex(this.EndPoint);
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-            startPoint.DrawGizmos();
-            endPoint.DrawGizmos();
         }
         /// <summary>
         /// 判断点是否在线段上
@@ -335,5 +305,37 @@ namespace Graphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
+#if Client
+        /// <summary>
+        /// start point
+        /// </summary>
+        public UnityEngine.Vector3 StartPoint
+        {
+            get { return startPoint.V3; }
+        }
+        /// <summary>
+        /// End point
+        /// </summary>
+        public UnityEngine.Vector3 EndPoint
+        {
+            get { return endPoint.V3; }
+        }
+        /// <summary>
+        /// draw
+        /// </summary>
+        public void Draw()
+        {
+            UnityEngine.GL.Vertex(this.StartPoint);
+            UnityEngine.GL.Vertex(this.EndPoint);
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+            startPoint.DrawGizmos();
+            endPoint.DrawGizmos();
+        }
+#endif
     }
 }

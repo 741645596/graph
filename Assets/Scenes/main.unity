@@ -340,3 +340,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 09b346df499b1b5459ad3ce3f224f293, type: 2}
+  rc2d:
+    leftBottom:
+      x: 0
+      y: 0
+    rightUp:
+      x: 0
+      y: 0
+  ls2d1:
+    startPoint:
+      x: 0
+      y: 0
+    endPoint:
+      x: 0
+      y: 0
+    normalizedDir:
+      x: 0
+      y: 0

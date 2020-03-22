@@ -1,39 +1,27 @@
-﻿using Graphics.Math;
+﻿using RayGraphics.Math;
 
-namespace Graphics.Geometric
+namespace RayGraphics.Geometric
 {
     [System.Serializable]
-    public class Circle2D : iGeo2DElement
+    public class Circle2D : AABB2D
     {
         /// <summary>
         /// 中心
         /// </summary>
         public Float2 center;
         /// <summary>
-        /// 半价
+        /// 半径
         /// </summary>
         public float radius;
 
 
-        public Circle2D(Float2 center, float radius)
+        public Circle2D(Float2 center, float radius) : base(center - Float2.one * radius, center + Float2.one * radius)
         {
             this.center = center;
             this.radius = radius;
         }
-        /// <summary>
-        /// draw, 逆时针绘制
-        /// </summary>
-        public void Draw()
-        {
-            
-        }
-        /// <summary>
-        /// DrawGizmos
-        /// </summary>
-        public void DrawGizmos()
-        {
-
-        }
+<<<<<<< HEAD
+=======
         /// <summary>
         /// 判断点是否在直线上
         /// </summary>
@@ -193,5 +181,21 @@ namespace Graphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
+#if Client
+        /// <summary>
+        /// draw, 逆时针绘制
+        /// </summary>
+        public void Draw()
+        {
+
+        }
+        /// <summary>
+        /// DrawGizmos
+        /// </summary>
+        public void DrawGizmos()
+        {
+        }
+#endif
+>>>>>>> 2741734f3e1e83642535d5c4cfb095fea8c5b1c7
     }
 }
