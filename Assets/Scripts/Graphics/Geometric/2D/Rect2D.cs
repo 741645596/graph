@@ -10,7 +10,6 @@ namespace RayGraphics.Geometric
     {
         public Rect2D(Float2 lb, Float2 ru) : base(lb, ru)
         {
-            get { return new Float2(leftBottom.x, rightUp.y); }
         }
     }
 }
