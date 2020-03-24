@@ -4,6 +4,36 @@
         <name>Graphics</name>
     </assembly>
     <members>
+        <member name="F:RayGraphics.Tree.AreaTile`1.s_dynblockArray">
+            <summary>
+            挡格数组，bit 存储一个挡格数据
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.AreaTile`1.s_Xnum">
+            <summary>
+            瓦片X的num
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.AreaTile`1.s_Ynum">
+            <summary>
+            瓦片Z的num
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.AreaTile`1.s_tileSize">
+            <summary>
+            瓦片X的num
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.AreaTile`1.s_startPos">
+            <summary>
+            起始位置
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.AreaTile`1.Init(RayGraphics.Math.Float2,System.Single,System.Int32,System.Int32)">
+            <summary>
+            格子数据初始化
+            </summary>
+        </member>
         <member name="T:RayGraphics.Tree.BspTree">
             <summary>
             Binary space partitioning,BSP bsp tree
@@ -29,6 +59,136 @@
             球形包围盒
             </summary>
         </member>
+        <member name="F:RayGraphics.Geometric.AABB2D.leftBottom">
+            <summary>
+            左下
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.AABB2D.rightUp">
+            <summary>
+            右上
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.LeftUp">
+            <summary>
+            左⬆️
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.RightBottom">
+            <summary>
+            右⬇️
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.LeftEdgeNormal">
+            <summary>
+            左边法线
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.RightEdgeNormal">
+            <summary>
+            右边法线
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.BottomEdgeNormal">
+            <summary>
+            下边法线
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Geometric.AABB2D.UpEdgeNormal">
+            <summary>
+            上边法线
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIn(RayGraphics.Math.Float2)">
+            <summary>
+            判断点是否在直线上
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CalcDistance(RayGraphics.Math.Float2)">
+            <summary>
+            点导几何元素的距离
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetAligentStyle(RayGraphics.Math.Float2)">
+            <summary>
+            点与矩形的关系
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.ProjectPoint(RayGraphics.Math.Float2)">
+            <summary>
+            点导几何元素的投影点
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.AixsVector(RayGraphics.Math.Float2)">
+            <summary>
+            求轴向量
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.Line2D)">
+            <summary>
+            与直线的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.Rays2D)">
+            <summary>
+            直线与射线间的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.LineSegment2D)">
+            <summary>
+            与线段的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetMirrorPoint(RayGraphics.Math.Float2)">
+            <summary>
+            镜面但
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <summary>
+            最短射线包围盒路径
+            </summary>
+            <param name="line">线段</param>
+            <param name="offset">偏移值</param>
+            <param name="paths">返回路径</param>
+            <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+            <summary>
+            获取挡格附近出生点
+            </summary>
+            <param name="line"></param>
+            <param name="offset"></param>
+            <param name="bornPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+            <summary>
+            获取交点
+            </summary>
+            <param name="line"></param>
+            <param name="intersectStart"></param>
+            <param name="intersectEnd"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Geometric.Circle2D.center">
             <summary>
             中心
@@ -36,33 +196,22 @@
         </member>
         <member name="F:RayGraphics.Geometric.Circle2D.radius">
             <summary>
-            半价
+            半径
             </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <returns></returns>
+            <summary>
+            最短射线包围盒路径
+            </summary>
+            <param name="line">线段</param>
+            <param name="offset">偏移值</param>
+            <param name="paths">返回路径</param>
+            <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
         <member name="M:RayGraphics.Geometric.Circle2D.CheckIn(RayGraphics.Math.Float2)">
             <summary>
             判断点是否在直线上
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.CalcDistance(RayGraphics.Math.Float2)">
-            <summary>
-            点导几何元素的距离
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.ProjectPoint(RayGraphics.Math.Float2)">
-            <summary>
-            点导几何元素的投影点
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.AixsVector(RayGraphics.Math.Float2)">
-            <summary>
-            求轴向量
             </summary>
             <param name="pt"></param>
             <returns></returns>
@@ -88,35 +237,13 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Circle2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
             <summary>
-            获取交点
+            获取挡格附近出生点
             </summary>
             <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
-            <summary>
-            获取交点
-            </summary>
-            <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
-            <summary>
-            获取交点
-            </summary>
-            <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.GetMirrorPoint(RayGraphics.Math.Float2)">
-            <summary>
-            镜面但
-            </summary>
-            <param name="point"></param>
+            <param name="offset"></param>
+            <param name="bornPoint"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.iGeo2DElement.CheckIn(RayGraphics.Math.Float2)">
@@ -516,94 +643,31 @@
             矩形区域
             </summary>
         </member>
-        <member name="F:RayGraphics.Geometric.Rect2D.leftBottom">
+        <member name="M:RayGraphics.Geometric.Rect2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
             <summary>
-            左下
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Geometric.Rect2D.rightUp">
-            <summary>
-            右上
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.LeftUp">
-            <summary>
-            左⬆️
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.RightBottom">
-            <summary>
-            右⬇️
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.LeftEdgeNormal">
-            <summary>
-            左边法线
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.RightEdgeNormal">
-            <summary>
-            右边法线
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.BottomEdgeNormal">
-            <summary>
-            下边法线
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.Rect2D.UpEdgeNormal">
-            <summary>
-            上边法线
-            </summary>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.CheckIn(RayGraphics.Math.Float2)">
-            <summary>
-            判断点是否在直线上
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.CalcDistance(RayGraphics.Math.Float2)">
-            <summary>
-            点导几何元素的距离
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetAligentStyle(RayGraphics.Math.Float2)">
-            <summary>
-            点与矩形的关系
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.ProjectPoint(RayGraphics.Math.Float2)">
-            <summary>
-            点导几何元素的投影点
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.AixsVector(RayGraphics.Math.Float2)">
-            <summary>
-            求轴向量
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.CheckLineRelation(RayGraphics.Geometric.Line2D)">
-            <summary>
-            与直线的关系
+            获取挡格附近出生点
             </summary>
             <param name="line"></param>
+            <param name="offset"></param>
+            <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.CheckLineRelation(RayGraphics.Geometric.Rays2D)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
-            直线与射线间的关系
+            最短射线包围盒路径
             </summary>
-            <param name="line"></param>
-            <returns></returns>
+            <param name="line">线段</param>
+            <param name="offset">偏移值</param>
+            <param name="paths">返回路径</param>
+            <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <summary>
+            
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="sl"></param>
         </member>
         <member name="M:RayGraphics.Geometric.Rect2D.CheckLineRelation(RayGraphics.Geometric.LineSegment2D)">
             <summary>
@@ -612,35 +676,13 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             获取交点
             </summary>
             <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
-            <summary>
-            获取交点
-            </summary>
-            <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
-            <summary>
-            获取交点
-            </summary>
-            <param name="line"></param>
-            <param name="intersectPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetMirrorPoint(RayGraphics.Math.Float2)">
-            <summary>
-            镜面但
-            </summary>
-            <param name="point"></param>
+            <param name="intersectStart"></param>
+            <param name="intersectEnd"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Float3)">

@@ -1,10 +1,11 @@
 ﻿using RayGraphics.Math;
+using System.Collections.Generic;
 
 
 namespace RayGraphics.Geometric
 {
 
-    public class AABB2D: iGeo2DElement
+    public class AABB2D
     {
         /// <summary>
         /// 左下
@@ -62,6 +63,7 @@ namespace RayGraphics.Geometric
             this.leftBottom = Float2.Min(lb, ru);
             this.rightUp = Float2.Max(lb, ru);
         }
+#if Client
         /// <summary>
         /// draw, 逆时针绘制
         /// </summary>
@@ -89,12 +91,13 @@ namespace RayGraphics.Geometric
             LeftUp.DrawGizmos();
             RightBottom.DrawGizmos();
         }
+#endif
         /// <summary>
         /// 判断点是否在直线上
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public bool CheckIn(Float2 pt)
+        public virtual bool CheckIn(Float2 pt)
         {
             Float2 max = this.rightUp;
             if (pt.x > max.x || pt.y > max.y)
@@ -208,7 +211,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public LineRelation CheckLineRelation(Line2D line)
+        public virtual LineRelation CheckLineRelation(Line2D line)
         {
             if (CheckIn(line.startPoint) == true)
                 return LineRelation.Intersect;
@@ -241,7 +244,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public LineRelation CheckLineRelation(Rays2D line)
+        public virtual LineRelation CheckLineRelation(Rays2D line)
         {
             return LineRelation.Intersect;
         }
@@ -250,41 +253,10 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public LineRelation CheckLineRelation(LineSegment2D line)
+        public virtual LineRelation CheckLineRelation(LineSegment2D line)
         {
             return LineRelation.Intersect;
         }
-        /// <summary>
-        /// 获取交点
-        /// </summary>
-        /// <param name="line"></param>
-        /// <param name="intersectPoint"></param>
-        /// <returns></returns>
-        public bool GetIntersectPoint(Line2D line, ref Float2 intersectPoint)
-        {
-            return true;
-        }
-        /// <summary>
-        /// 获取交点
-        /// </summary>
-        /// <param name="line"></param>
-        /// <param name="intersectPoint"></param>
-        /// <returns></returns>
-        public bool GetIntersectPoint(Rays2D line, ref Float2 intersectPoint)
-        {
-            return true;
-        }
-        /// <summary>
-        /// 获取交点
-        /// </summary>
-        /// <param name="line"></param>
-        /// <param name="intersectPoint"></param>
-        /// <returns></returns>
-        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectPoint)
-        {
-            return true;
-        }
-
         /// <summary>
         /// 镜面但
         /// </summary>
@@ -293,6 +265,39 @@ namespace RayGraphics.Geometric
         public Float2 GetMirrorPoint(Float2 point)
         {
             return point - 2 * AixsVector(point);
+        }
+        /// <summary>
+        /// 最短射线包围盒路径
+        /// </summary>
+        /// <param name="line">线段</param>
+        /// <param name="offset">偏移值</param>
+        /// <param name="paths">返回路径</param>
+        /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
+        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref List<Float2> paths)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 获取挡格附近出生点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="offset"></param>
+        /// <param name="bornPoint"></param>
+        /// <returns></returns>
+        public virtual bool GetBornPoint(LineSegment2D line, float offset, ref Float2 bornPoint)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 获取交点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="intersectStart"></param>
+        /// <param name="intersectEnd"></param>
+        /// <returns></returns>
+        public virtual bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStart, ref Float2 intersectEnd)
+        {
+            return false;
         }
     }
 }
