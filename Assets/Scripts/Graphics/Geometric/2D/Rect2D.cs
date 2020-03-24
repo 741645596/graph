@@ -9,8 +9,9 @@ namespace RayGraphics.Geometric
     [System.Serializable]
     public class Rect2D : AABB2D
     {
-        public Rect2D(Float2 lb, Float2 ru) : base(lb, ru)
+        public Rect2D(Float2 lb, Float2 ru) 
         {
+            this.SetAABB(lb, ru);
         }
         /// <summary>
         /// 获取挡格附近出生点

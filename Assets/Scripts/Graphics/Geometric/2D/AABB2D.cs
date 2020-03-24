@@ -57,8 +57,12 @@ namespace RayGraphics.Geometric
         {
             get { return Float2.down; }
         }
-
-        public AABB2D(Float2 lb, Float2 ru)
+        /// <summary>
+        /// 设置aabb
+        /// </summary>
+        /// <param name="lb"></param>
+        /// <param name="ru"></param>
+        protected void SetAABB(Float2 lb, Float2 ru)
         {
             this.leftBottom = Float2.Min(lb, ru);
             this.rightUp = Float2.Max(lb, ru);

@@ -14,10 +14,11 @@ namespace RayGraphics.Geometric
         /// 半径
         /// </summary>
         public float radius;
-        public Circle2D(Float2 center, float radius) : base(center - Float2.one * radius, center + Float2.one * radius)
+        public Circle2D(Float2 center, float radius)
         {
             this.center = center;
             this.radius = radius;
+            this.SetAABB(center - Float2.one * radius, center + Float2.one * radius);
         }
         /// <returns></returns>
         /// <summary>
