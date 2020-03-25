@@ -564,13 +564,28 @@
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckSamePathDir(System.Collections.Generic.List{RayGraphics.Math.Float3},System.Boolean)">
+            <summary>
+            确认局部方向是否跟全局方向保持一致
+            </summary>
+            <param name="lineArray"></param>
+            <param name="isPathDir"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             
             </summary>
             <param name="p1"></param>
             <param name="p2"></param>
             <param name="sl"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+            <summary>
+            确认方向（顺时针，逆时针方向）
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
             <summary>

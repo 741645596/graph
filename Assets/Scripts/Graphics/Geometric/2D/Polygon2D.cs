@@ -81,25 +81,41 @@ namespace RayGraphics.Geometric
                 // 先按距离进行排序。
                 lineArray.Sort((x, y) => Float2.Distance(new Float2(x.x, x.y), line.startPoint).CompareTo(Float2.Distance(new Float2(y.x, y.y), line.startPoint)));
                 //
-                bool isIn = true;
-                for (int i = 0; i < lineArray.Count - 1; i++)
+                bool isPathDir = CheckPathDir(lineArray[0], lineArray[lineArray.Count - 1]);
+                if (CheckSamePathDir(lineArray, isPathDir) == true)
                 {
-                    if (isIn == true)
+                    bool isIn = true;
+                    for (int i = 0; i < lineArray.Count - 1; i++)
                     {
-                        List<Float2> temppaths = new List<Float2>();
-                        RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, ref temppaths);
-                        if (paths == null)
+                        if (isIn == true)
                         {
-                            paths = temppaths;
+                            List<Float2> temppaths = new List<Float2>();
+                            RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
+                            if (paths == null)
+                            {
+                                paths = temppaths;
+                            }
+                            else
+                            {
+                                paths.AddRange(temppaths);
+                            }
                         }
-                        else 
-                        {
-                            paths.AddRange(temppaths);
-                        }
+                        isIn = !isIn;
                     }
-                    isIn = !isIn;
                 }
-
+                else  // 与整体方向不一致。直接暴力取2头的点。
+                {
+                    List<Float2> temppaths = new List<Float2>();
+                    RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
+                    if (paths == null)
+                    {
+                        paths = temppaths;
+                    }
+                    else
+                    {
+                        paths.AddRange(temppaths);
+                    }
+                }
                 if (paths != null && paths.Count > 0)
                 {
                     return true;
@@ -108,25 +124,68 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
+        /// 确认局部方向是否跟全局方向保持一致
+        /// </summary>
+        /// <param name="lineArray"></param>
+        /// <param name="isPathDir"></param>
+        /// <returns></returns>
+        private bool CheckSamePathDir(List<Float3> lineArray, bool isPathDir)
+        {
+            if (lineArray == null || lineArray.Count < 3)
+                return true;
+            int p1 = (int)lineArray[0].z;
+            int p2 = (int)lineArray[1].z;
+            int p3 = (int)lineArray[2].z;
+            if (p1 >= p2 && p1 >= p3)
+            {
+                if (p3 >= p2)
+                {
+                    // 顺时针方向
+                    return isPathDir;
+                }
+                else
+                {
+                    return !isPathDir;
+                }
+            }
+            else if (p2 >= p1 && p2 >= p3)
+            {
+                if (p1 >= p3)
+                {
+                    // 顺时针方向
+                    return isPathDir;
+                }
+                else
+                {
+                    return !isPathDir;
+                }
+            }
+            else 
+            {
+                if (p2 >= p1)
+                {
+                    // 顺时针方向
+                    return isPathDir;
+                }
+                else
+                {
+                    return !isPathDir;
+                }
+            }
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="sl"></param>
-        private void RayboundingNearestPath(Float3 p1, Float3 p2, float offset, ref List<Float2> paths)
+        private void RayboundingNearestPath(Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
         {
             List<Float2> listpath = new List<Float2>();
             // 先计算逆时针距离。
-            float dis;
-            // 对边行为
             if (p1.z < p2.z)
             {
-                int max = (int)p2.z + 1;
-                max = max > this.pointArr.Length - 1 ? 0 : max;
-                dis = distancArr[(int)p2.z + 1] - distancArr[(int)p1.z]
-                    - (float)Float2.Distance(new Float2(p1.x, p1.y), this.pointArr[(int)p1.z])
-                    - (float)Float2.Distance(new Float2(p2.x, p2.y), this.pointArr[max]);
-                if (dis < totalDistance - dis)
+                if (isPathDir == true)
                 {
                     listpath.Add(new Float2(p1.x, p1.y));
                     for (int i = (int)p1.z + 1; i <= (int)p2.z; i++)
@@ -153,12 +212,7 @@ namespace RayGraphics.Geometric
             }
             else if (p1.z > p2.z)
             {
-                int max = (int)p1.z + 1;
-                max = max > this.pointArr.Length - 1 ? 0 : max;
-                dis = distancArr[(int)p1.z + 1] - distancArr[(int)p2.z]
-                - (float)Float2.Distance(new Float2(p2.x, p2.y), this.pointArr[(int)p2.z])
-                - (float)Float2.Distance(new Float2(p1.x, p1.y), this.pointArr[max]);
-                if (dis < totalDistance - dis)
+                if (isPathDir == false)
                 {
                     listpath.Add(new Float2(p1.x, p1.y));
                     for (int i = (int)p1.z; i >= (int)p2.z + 1; i--)
@@ -189,6 +243,53 @@ namespace RayGraphics.Geometric
                 listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
+        }
+        /// <summary>
+        /// 确认方向（顺时针，逆时针方向）
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        private bool CheckPathDir(Float3 p1, Float3 p2)
+        {
+            // 先计算逆时针距离。
+            float dis;
+            // 对边行为
+            if (p1.z < p2.z)
+            {
+                int max = (int)p2.z + 1;
+                max = max > this.pointArr.Length - 1 ? 0 : max;
+                dis = distancArr[(int)p2.z + 1] - distancArr[(int)p1.z]
+                    - (float)Float2.Distance(new Float2(p1.x, p1.y), this.pointArr[(int)p1.z])
+                    - (float)Float2.Distance(new Float2(p2.x, p2.y), this.pointArr[max]);
+                if (dis < totalDistance - dis)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (p1.z > p2.z)
+            {
+                int max = (int)p1.z + 1;
+                max = max > this.pointArr.Length - 1 ? 0 : max;
+                dis = distancArr[(int)p1.z + 1] - distancArr[(int)p2.z]
+                - (float)Float2.Distance(new Float2(p2.x, p2.y), this.pointArr[(int)p2.z])
+                - (float)Float2.Distance(new Float2(p1.x, p1.y), this.pointArr[max]);
+                if (dis < totalDistance - dis)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
         /// <summary>
         /// 获取挡格附近出生点
