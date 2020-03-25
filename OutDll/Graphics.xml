@@ -99,6 +99,13 @@
             上边法线
             </summary>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.SetAABB(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            设置aabb
+            </summary>
+            <param name="lb"></param>
+            <param name="ru"></param>
+        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckIn(RayGraphics.Math.Float2)">
             <summary>
             判断点是否在直线上
@@ -543,6 +550,44 @@
             draw
             </summary>
         </member>
+        <member name="F:RayGraphics.Geometric.Polygon2D.distancArr">
+            <summary>
+            逆时针
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <summary>
+            最短射线包围盒路径
+            </summary>
+            <param name="line">线段</param>
+            <param name="offset">偏移值</param>
+            <param name="paths">返回路径</param>
+            <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <summary>
+            
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="sl"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+            <summary>
+            获取挡格附近出生点
+            </summary>
+            <param name="line"></param>
+            <param name="offset"></param>
+            <param name="bornPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckLineRelation(RayGraphics.Geometric.LineSegment2D)">
+            <summary>
+            与线段的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
             <summary>
             直线
@@ -684,6 +729,29 @@
             <param name="intersectStart"></param>
             <param name="intersectEnd"></param>
             <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Geometric.Triangle2D.p1">
+            <summary>
+            顶点1
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.Triangle2D.p2">
+            <summary>
+            顶点2
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.Triangle2D.p3">
+            <summary>
+            顶点3
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.#ctor(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            顺时针顶点
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="p3"></param>
         </member>
         <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Float3)">
             <summary>
