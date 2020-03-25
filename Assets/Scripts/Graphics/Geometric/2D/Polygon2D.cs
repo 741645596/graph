@@ -90,7 +90,7 @@ namespace RayGraphics.Geometric
                         if (isIn == true)
                         {
                             List<Float2> temppaths = new List<Float2>();
-                            RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
+                            RayboundingNearestPath(line, lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
                             if (paths == null)
                             {
                                 paths = temppaths;
@@ -106,7 +106,7 @@ namespace RayGraphics.Geometric
                 else  // 与整体方向不一致。直接暴力取2头的点。
                 {
                     List<Float2> temppaths = new List<Float2>();
-                    RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
+                    RayboundingNearestPath(line, lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
                     if (paths == null)
                     {
                         paths = temppaths;
@@ -179,62 +179,69 @@ namespace RayGraphics.Geometric
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="sl"></param>
-        private void RayboundingNearestPath(Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
+        private void RayboundingNearestPath(LineSegment2D line, Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
         {
             List<Float2> listpath = new List<Float2>();
+            Float2 prev = new Float2(p1.x, p1.y); 
             // 先计算逆时针距离。
             if (p1.z < p2.z)
             {
                 if (isPathDir == true)
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    listpath.Add(prev - offset * line.normalizedDir);
                     for (int i = (int)p1.z + 1; i <= (int)p2.z; i++)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
                 }
                 else 
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    listpath.Add(prev - offset * line.normalizedDir);
                     //
                     for (int i = (int)p1.z; i >= 0; i--)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
                     //
                     for (int i = this.pointArr.Length -1; i > (int)p2.z; i--)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
                 }
             }
             else if (p1.z > p2.z)
             {
                 if (isPathDir == false)
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    listpath.Add(prev - offset * line.normalizedDir);
                     for (int i = (int)p1.z; i >= (int)p2.z + 1; i--)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
                 }
                 else
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    listpath.Add(prev - offset * line.normalizedDir);
                     for (int i = (int)p1.z + 1; i < this.pointArr.Length; i++)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
                     //
                     for (int i = 0; i <= (int)p2.z; i ++)
                     {
-                        listpath.Add(this.pointArr[i]);
+                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
+                        prev = this.pointArr[i];
                     }
                     //
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
                 }
             }
             else 

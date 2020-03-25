@@ -572,7 +572,7 @@
             <param name="isPathDir"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             
             </summary>
