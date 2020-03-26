@@ -556,15 +556,143 @@
             <param name="point"></param>
             <returns></returns>
         </member>
-        <member name="T:RayGraphics.Geometric.ORect2D">
+        <member name="F:RayGraphics.Geometric.OBB2D.startPoint">
             <summary>
-            (Oriented rect)，带方向的
+            起点
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.ORect2D.Draw">
+        <member name="F:RayGraphics.Geometric.OBB2D.aix1">
             <summary>
-            draw
+            轴1
             </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.OBB2D.aix2">
+            <summary>
+            轴2
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.OBB2D.size">
+            <summary>
+            obb的大小
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.SetObb(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            设置aabb
+            </summary>
+            <param name="lb"></param>
+            <param name="ru"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.Init(RayGraphics.Math.Float2[])">
+            <summary>
+            根据点阵创建obb
+            </summary>
+            <param name="points"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CalcCenter(RayGraphics.Math.Float2[],RayGraphics.Math.Float2@)">
+            <summary>
+            计算点阵的中心及修正后的点阵。
+            </summary>
+            <param name="points"></param>
+            <param name="centerPos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CalcSize(RayGraphics.Math.Float2[],RayGraphics.Math.Float2,RayGraphics.Math.Matrix2x2)">
+            <summary>
+            
+            </summary>
+            <param name="offPoints"></param>
+            <param name="centerPos"></param>
+            <param name="featreVectorMatrix"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CheckIn(RayGraphics.Math.Float2)">
+            <summary>
+            判断点是否在直线上
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CalcDistance(RayGraphics.Math.Float2)">
+            <summary>
+            点导几何元素的距离
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.ProjectPoint(RayGraphics.Math.Float2)">
+            <summary>
+            点导几何元素的投影点
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.AixsVector(RayGraphics.Math.Float2)">
+            <summary>
+            求轴向量
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CheckLineRelation(RayGraphics.Geometric.Line2D)">
+            <summary>
+            与直线的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CheckLineRelation(RayGraphics.Geometric.Rays2D)">
+            <summary>
+            直线与射线间的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.CheckLineRelation(RayGraphics.Geometric.LineSegment2D)">
+            <summary>
+            与线段的关系
+            </summary>
+            <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.GetMirrorPoint(RayGraphics.Math.Float2)">
+            <summary>
+            镜面但
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+            <summary>
+            最短射线包围盒路径
+            </summary>
+            <param name="line">线段</param>
+            <param name="offset">偏移值</param>
+            <param name="paths">返回路径</param>
+            <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+            <summary>
+            获取挡格附近出生点
+            </summary>
+            <param name="line"></param>
+            <param name="offset"></param>
+            <param name="bornPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+            <summary>
+            获取交点
+            </summary>
+            <param name="line"></param>
+            <param name="intersectStart"></param>
+            <param name="intersectEnd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.OBB2D.GetPoints">
+            <summary>
+            求obb的点
+            </summary>
+            <returns></returns>
         </member>
         <member name="F:RayGraphics.Geometric.Polygon2D.distancArr">
             <summary>
@@ -2240,6 +2368,20 @@
             <param name="k"></param>
             <param name="vector"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix2x2.GetCovarianceMatrix(RayGraphics.Math.Float2[])">
+            <summary>
+            计算协方差举证
+            https://zhuanlan.zhihu.com/p/37609917
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix2x2.GetFeatureVectorMatrix(RayGraphics.Math.Matrix2x2)">
+            <summary>
+            求特征向量矩阵 通过使用Jacobi 迭代算法
+            </summary>
+            <param name="matrix"></param>
         </member>
         <member name="F:RayGraphics.Math.Matrix3x3.col1">
             <summary>
