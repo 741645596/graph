@@ -51,6 +51,30 @@ namespace RayGraphics.Math
         }
 
         /// <summary>
+        /// 索引访问
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public float this[int col,int row]
+        {
+            get
+            {
+                if (col == 0)
+                    return this.col1[row];
+                else if (col == 1)
+                    return this.col2[row];
+                else return 0;
+            }
+            set
+            {
+                if (col == 0)
+                    this.col1[row] = value;
+                else if (col == 1)
+                    this.col2[row] = value;
+            }
+        }
+        /// <summary>
         /// 0 矩阵
         /// </summary>
         public static Matrix2x2 zero

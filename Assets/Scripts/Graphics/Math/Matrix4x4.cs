@@ -53,6 +53,38 @@ namespace RayGraphics.Math
             get { return new Float4(col1.w, col2.w, col3.w, col4.w); }
         }
         /// <summary>
+        /// 索引访问
+        /// </summary>
+        /// <param name="col"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        public float this[int col, int row]
+        {
+            get
+            {
+                if (col == 0)
+                    return this.col1[row];
+                else if (col == 1)
+                    return this.col2[row];
+                else if (col == 2)
+                    return this.col3[row];
+                else if (col == 3)
+                    return this.col4[row];
+                else return 0;
+            }
+            set
+            {
+                if (col == 0)
+                    this.col1[row] = value;
+                else if (col == 1)
+                    this.col2[row] = value;
+                else if (col == 2)
+                    this.col3[row] = value;
+                else if (col == 3)
+                    this.col4[row] = value;
+            }
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="col1"></param>

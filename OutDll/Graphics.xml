@@ -54,6 +54,22 @@
             OBB方向包围盒(Oriented bounding box)
             </summary>
         </member>
+        <member name="M:RayGraphics.Bounding.OBB.CalcCovarianceMatrix(RayGraphics.Math.Float2[])">
+            <summary>
+            计算协方差举证
+            https://zhuanlan.zhihu.com/p/37609917
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Bounding.OBB.jacobiSolver(RayGraphics.Math.Matrix2x2,System.Single[],RayGraphics.Math.Float2[])">
+            <summary>
+            求出特征向量，也就是轴
+            </summary>
+            <param name="matrix"></param>
+            <param name="eValue"></param>
+            <param name="eVectors"></param>
+        </member>
         <member name="T:RayGraphics.Bounding.Sphere">
             <summary>
             球形包围盒
@@ -2084,6 +2100,14 @@
             <param name="x"></param>
             <param name="y"></param>
         </member>
+        <member name="P:RayGraphics.Math.Matrix2x2.Item(System.Int32,System.Int32)">
+            <summary>
+            索引访问
+            </summary>
+            <param name="col"></param>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
         <member name="P:RayGraphics.Math.Matrix2x2.zero">
             <summary>
             0 矩阵
@@ -2246,6 +2270,14 @@
             <summary>
             第二列
             </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Matrix3x3.Item(System.Int32,System.Int32)">
+            <summary>
+            索引访问
+            </summary>
+            <param name="col"></param>
+            <param name="row"></param>
+            <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix3x3.#ctor(RayGraphics.Math.Float3,RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
             <summary>
@@ -2448,6 +2480,14 @@
             <summary>
             第二列
             </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Matrix4x4.Item(System.Int32,System.Int32)">
+            <summary>
+            索引访问
+            </summary>
+            <param name="col"></param>
+            <param name="row"></param>
+            <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix4x4.#ctor(RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4)">
             <summary>
