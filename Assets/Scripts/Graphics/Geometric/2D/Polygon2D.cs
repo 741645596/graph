@@ -182,66 +182,61 @@ namespace RayGraphics.Geometric
         private void RayboundingNearestPath(LineSegment2D line, Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
         {
             List<Float2> listpath = new List<Float2>();
-            Float2 prev = new Float2(p1.x, p1.y); 
+            Float2 first = new Float2(p1.x, p1.y);
+            Float2 diff = offset * line.normalizedDir;
             // 先计算逆时针距离。
             if (p1.z < p2.z)
             {
                 if (isPathDir == true)
                 {
-                    listpath.Add(prev - offset * line.normalizedDir);
+                    listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i <= (int)p2.z; i++)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
+                    listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else 
                 {
-                    listpath.Add(prev - offset * line.normalizedDir);
+                    listpath.Add(first - diff);
                     //
                     for (int i = (int)p1.z; i >= 0; i--)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
                     //
                     for (int i = this.pointArr.Length -1; i > (int)p2.z; i--)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
+                    listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
             }
             else if (p1.z > p2.z)
             {
                 if (isPathDir == false)
                 {
-                    listpath.Add(prev - offset * line.normalizedDir);
+                    listpath.Add(first - diff);
                     for (int i = (int)p1.z; i >= (int)p2.z + 1; i--)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
+                    listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else
                 {
-                    listpath.Add(prev - offset * line.normalizedDir);
+                    listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i < this.pointArr.Length; i++)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
                     //
                     for (int i = 0; i <= (int)p2.z; i ++)
                     {
-                        listpath.Add(this.pointArr[i] + offset * (this.pointArr[i] - prev).normalized);
-                        prev = this.pointArr[i];
+                        listpath.Add(GetOutPoint(i, offset));
                     }
                     //
-                    listpath.Add(new Float2(p2.x, p2.y) + offset * line.normalizedDir);
+                    listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
             }
             else 
@@ -250,6 +245,31 @@ namespace RayGraphics.Geometric
                 listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
+        }
+        /// <summary>
+        /// 获取指定顶点的外部偏移点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        private Float2 GetOutPoint(int index, float offset)
+        {
+            if (index < 0 || index >= this.pointArr.Length)
+                return Float2.zero;
+            Float2 diff;
+            if (index == 0)
+            {
+                diff = (this.pointArr[index] - this.pointArr[this.pointArr.Length - 1]).normalized + (this.pointArr[index] - this.pointArr[index + 1]).normalized;
+            }
+            else if (index == this.pointArr.Length - 1)
+            {
+                diff = (this.pointArr[index] - this.pointArr[index - 1]).normalized + (this.pointArr[index] - this.pointArr[0]).normalized;
+            }
+            else 
+            {
+                diff = (this.pointArr[index] - this.pointArr[index - 1]).normalized + (this.pointArr[index] - this.pointArr[index + 1]).normalized;
+            }
+            return this.pointArr[index] + offset * diff;
         }
         /// <summary>
         /// 确认方向（顺时针，逆时针方向）

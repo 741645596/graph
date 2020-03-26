@@ -580,6 +580,14 @@
             <param name="p2"></param>
             <param name="sl"></param>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetOutPoint(System.Int32,System.Single)">
+            <summary>
+            获取指定顶点的外部偏移点
+            </summary>
+            <param name="index"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
             <summary>
             确认方向（顺时针，逆时针方向）
