@@ -556,6 +556,31 @@
             <param name="point"></param>
             <returns></returns>
         </member>
+        <member name="T:RayGraphics.Geometric.MakePolygon2D">
+            <summary>
+            生成polygon 
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.SearchOutPoint(System.Int32,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            获取最边缘一圈的顶点。
+            </summary>
+            <param name="dir"></param>
+            <param name="s"></param>
+            <param name="e"></param>
+            <param name="listOutEdgePoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.CheckPointInCorns(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            判断指定的点，在夹角内。不包括在边上。
+            </summary>
+            <param name="target"></param>
+            <param name="startPoint"></param>
+            <param name="sindir"></param>
+            <param name="outdir"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Geometric.OBB2D.startPoint">
             <summary>
             起点
