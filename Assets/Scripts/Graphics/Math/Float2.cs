@@ -459,7 +459,6 @@ namespace RayGraphics.Math
         /// </summary>
         /// <param name="from"></param>
         /// <param name="to"></param>
-        /// <param name="axis">from, to 的垂直轴</param>
         /// <returns></returns>
         public static float SignedAngle(Float2 from, Float2 to)
         {

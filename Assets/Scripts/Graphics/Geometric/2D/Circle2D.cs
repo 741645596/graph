@@ -62,7 +62,7 @@ namespace RayGraphics.Geometric
             Float2 startVector = (p1 - this.center).normalized * (this.radius + offset);
             for (int i = 0; i <= count; i++)
             {
-                Float2 rorateVector = Float2.Rotate(startVector, diffangle * i);
+                Float2 rorateVector = Float2.Rotate(startVector, -diffangle * i);
                 listpath.Add(rorateVector + this.center);
             }
             paths = listpath;
