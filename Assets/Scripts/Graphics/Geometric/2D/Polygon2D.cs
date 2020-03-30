@@ -6,22 +6,31 @@ namespace RayGraphics.Geometric
 
     public class Polygon2D : AABB2D
     {
-        // 顶点列表多+ 1,回头了
+        /// <summary>
+        /// 顶点列表
+        /// </summary>
         public Float2[] pointArr = null;
+        /// <summary>
+        /// 法线列表。
+        /// </summary>
+        public Float2[] normalAttr = null;
         /// <summary>
         /// 逆时针
         /// </summary>
-        public float[] distancArr = null;
-        public float totalDistance = 0;
+        private float[] distancArr = null;
+        private float totalDistance = 0;
         public Polygon2D(Float2 [] points) 
         {
             if (points == null || points.Length < 3)
                 return;
             this.pointArr = new Float2[points.Length];
+            this.normalAttr = new Float2[points.Length]; 
+
+
             this.distancArr = new float[points.Length + 1];
             Float2 min = points[0];
             Float2 max = points[0];
-            int i = 0;
+            int i ;
             for (i = 0; i < points.Length; i++)
             {
                 this.pointArr[i] = points[i];
@@ -39,6 +48,17 @@ namespace RayGraphics.Geometric
                     this.distancArr[i] = 0;
                     totalDistance = 0;
                 }
+                //
+                Float2 dir;
+                if (i < points.Length - 1)
+                {
+                    dir = (points[i + 1] - points[i]).normalized;
+                }
+                else 
+                {
+                    dir = (points[0] - points[i]).normalized;
+                }
+                this.normalAttr[i] = Float2.Perpendicular(dir);
             }
             totalDistance += (float)Float2.Distance(points[points.Length - 1], points[0]);
             this.distancArr[i] = totalDistance;

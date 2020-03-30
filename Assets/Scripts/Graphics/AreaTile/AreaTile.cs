@@ -11,7 +11,7 @@ namespace RayGraphics.Tree
         /// <summary>
         /// 挡格数组，bit 存储一个挡格数据
         /// </summary>
-        private static TileUnit<T>[][] s_dynblockArray = null;
+        private static TileUnit<T>[][] s_dynblockArray ;
         /// <summary>
         /// 瓦片X的num
         /// </summary>

@@ -581,6 +581,14 @@
             <param name="outdir"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.MakePolygon(RayGraphics.Math.Float2[],RayGraphics.Math.Float2[])">
+            <summary>
+            求多边形的并。
+            </summary>
+            <param name="polygon1"></param>
+            <param name="polygon2"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Geometric.OBB2D.startPoint">
             <summary>
             起点
@@ -718,6 +726,16 @@
             求obb的点
             </summary>
             <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Geometric.Polygon2D.pointArr">
+            <summary>
+            顶点列表
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.Polygon2D.normalAttr">
+            <summary>
+            法线列表。
+            </summary>
         </member>
         <member name="F:RayGraphics.Geometric.Polygon2D.distancArr">
             <summary>

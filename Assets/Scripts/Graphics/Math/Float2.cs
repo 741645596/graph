@@ -423,7 +423,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Float2 Perpendicular(Float2 inDirection)
         {
-            return inDirection * Matrix2x2.RotateMatrix(MathUtil.kPI / 2);
+            return  Matrix2x2.RotateMatrix(MathUtil.kPI / 2) * inDirection;
         }
         /// <summary>
         /// 求发射光线
@@ -452,7 +452,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Float2 Rotate(Float2 a, double angle)
         {
-            return a * Matrix2x2.RotateMatrix(angle);
+            return Matrix2x2.RotateMatrix(angle) * a;
         }
         /// <summary>
         /// 求角度,逆时针为正， 瞬时值为负。

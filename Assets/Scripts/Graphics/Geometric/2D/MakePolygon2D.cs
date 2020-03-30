@@ -191,5 +191,16 @@ namespace RayGraphics.Geometric
             if (ret < 0) return true;
             return false;
         }
+
+        /// <summary>
+        /// 求多边形的并。
+        /// </summary>
+        /// <param name="polygon1"></param>
+        /// <param name="polygon2"></param>
+        /// <returns></returns>
+        public static List<Float2> MakePolygon(Float2[] polygon1, Float2[] polygon2)
+        {
+            return null;
+        }
     }
 }
