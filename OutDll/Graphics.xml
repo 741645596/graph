@@ -561,6 +561,13 @@
             生成polygon 
             </summary>
         </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.MakePolygon(RayGraphics.Math.Float2[])">
+            <summary>
+            获取凸包
+            </summary>
+            <param name="listpt"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.MakePolygon2D.SearchOutPoint(System.Int32,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
             <summary>
             获取最边缘一圈的顶点。
@@ -588,6 +595,40 @@
             <param name="polygon1"></param>
             <param name="polygon2"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Float2}@,RayGraphics.Math.Float2)">
+            <summary>
+            加入顶点
+            </summary>
+            <param name="listPoint"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@,System.Collections.Generic.List{RayGraphics.Math.Float3}[],System.Collections.Generic.List{RayGraphics.Math.Float3}[])">
+            <summary>
+            交换数据
+            </summary>
+            <param name="poly"></param>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@)">
+            <summary>
+            获取多边形所有边的相交点
+            </summary>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+            <param name="Poly1IntersectArray"></param>
+            <param name="Poly2IntersectArray"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.MakePolygon2D.GetAllIntersectPoint(RayGraphics.Math.Float2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Float3}[],System.Collections.Generic.List{RayGraphics.Math.Float3}@)">
+            <summary>
+            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+            </summary>
+            <param name="lsStartPoint">线段起点</param>
+            <param name="lsindex">线段索引</param>
+            <param name="PolyIntersectArray">多边形相交数据</param>
+            <param name="paths"></param>
         </member>
         <member name="F:RayGraphics.Geometric.OBB2D.startPoint">
             <summary>
@@ -742,6 +783,12 @@
             逆时针
             </summary>
         </member>
+        <member name="P:RayGraphics.Geometric.Polygon2D.EdgeNum">
+            <summary>
+            获取边数
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
@@ -796,6 +843,40 @@
             与线段的关系
             </summary>
             <param name="line"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPolygonType">
+            <summary>
+            获取多边形的类型，凹的还是凸的。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CalcRotateValue(System.Int32)">
+            <summary>
+            计算某个顶点叉乘。
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetAllIntersectPoint(RayGraphics.Geometric.LineSegment2D,System.Collections.Generic.List{RayGraphics.Math.Float3}@)">
+            <summary>
+            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+            </summary>
+            <param name="line"></param>
+            <param name="paths"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetNormal(System.Int32)">
+            <summary>
+            获取法线
+            </summary>
+            <param name="edgeIndex"></param>
             <returns></returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
@@ -2234,6 +2315,21 @@
         <member name="F:RayGraphics.Math.AligentStyle.RightUp">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:RayGraphics.Math.PolygonType">
+            <summary>
+            多边形
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.PolygonType.Convex">
+            <summary>
+            凸多边形
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.PolygonType.Concave">
+            <summary>
+            凹多边形
             </summary>
         </member>
         <member name="F:RayGraphics.Math.Matrix2x2.col1">

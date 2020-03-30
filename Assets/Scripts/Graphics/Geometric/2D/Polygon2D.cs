@@ -19,6 +19,15 @@ namespace RayGraphics.Geometric
         /// </summary>
         private float[] distancArr = null;
         private float totalDistance = 0;
+        /// <summary>
+        /// 获取边数
+        /// </summary>
+        /// <returns></returns>
+        public int EdgeNum
+        {
+            get { return this.pointArr.Length; }
+        }
+
         public Polygon2D(Float2 [] points) 
         {
             if (points == null || points.Length < 3)
@@ -395,5 +404,116 @@ namespace RayGraphics.Geometric
             }
             return LineRelation.Detach;
         }
+
+        /// <summary>
+        /// 获取多边形的类型，凹的还是凸的。
+        /// </summary>
+        /// <returns></returns>
+        public PolygonType GetPolygonType()
+        {
+            float prev = CalcRotateValue(this.pointArr.Length -1);
+            float cur = 0.0f;
+            for (int i = 0; i < this.pointArr.Length; i++)
+            {
+                cur = CalcRotateValue(i);
+                if (cur * prev < 0)
+                {
+                    return PolygonType.Concave;
+                }
+                prev = cur;
+            }
+            return PolygonType.Convex;
+        }
+        /// <summary>
+        /// 计算某个顶点叉乘。
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private float CalcRotateValue(int index)
+        {
+            if (index < 0 || index >= this.pointArr.Length)
+                return 0;
+            if (index < this.pointArr.Length - 1 && index > 0)
+            {
+                return Float2.Cross(this.pointArr[index] - this.pointArr[index - 1], this.pointArr[index + 1] - this.pointArr[index]);
+            }
+            else if (index == this.pointArr.Length - 1)
+            {
+                return Float2.Cross(this.pointArr[index] - this.pointArr[index - 1], this.pointArr[0] - this.pointArr[index]);
+            }
+            else if (index == 0)
+            {
+                return Float2.Cross(this.pointArr[index] - this.pointArr[this.pointArr.Length - 1], this.pointArr[0] - this.pointArr[index]);
+            }
+            return 0;
+        }
+        /// <summary>
+        /// 获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="paths"></param>
+        public void GetAllIntersectPoint(LineSegment2D line,ref List<Float3> paths)
+        {
+            List<Float3> listpath = new List<Float3>();
+            Float2 point = Float2.zero;
+            for (int i = 0; i < this.pointArr.Length; i++)
+            {
+                if (i == this.pointArr.Length - 1)
+                {
+                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref point) == true)
+                    {
+                        paths.Add(new Float3(point.x, point.y, i));
+                    }
+                }
+                else
+                {
+                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref point) == true)
+                    {
+                        paths.Add(new Float3(point.x, point.y, i));
+                    }
+                }
+            }
+            // 从近到远排好队。
+            if (listpath.Count > 1)
+            {
+                listpath.Sort((x, y) => Float2.Distance(new Float2(x.x, x.y), line.startPoint).CompareTo(Float2.Distance(new Float2(y.x, y.y), line.startPoint)));
+            }
+            
+            paths = listpath;
+        }
+        /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public LineSegment2D GetEdge(int edgeIndex)
+        {
+            if (edgeIndex < 0 || edgeIndex > this.pointArr.Length - 1)
+            {
+                return new LineSegment2D(Float2.zero, Float2.zero);
+            }
+            else if (edgeIndex == this.pointArr.Length - 1)
+            {
+                return new LineSegment2D(this.pointArr[edgeIndex], this.pointArr[0]);
+            }
+            else 
+            {
+                return new LineSegment2D(this.pointArr[edgeIndex], this.pointArr[edgeIndex +　1]);
+            }
+        }
+        /// <summary>
+        /// 获取法线
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public Float2 GetNormal(int edgeIndex)
+        {
+            if (edgeIndex < 0 || edgeIndex > this.normalAttr.Length - 1)
+            {
+                return Float2.zero;
+            }
+            return this.normalAttr[edgeIndex];
+        }
+
     }
 }

@@ -7,7 +7,7 @@ namespace RayGraphics.Math
         /// <summary>
         /// 误差
         /// </summary>
-        public  const float kEpsilon = 1E-05F;
+        public const float kEpsilon = 1E-05F;
         /// <summary>
         /// 误差
         /// </summary>
@@ -15,7 +15,7 @@ namespace RayGraphics.Math
         /// <summary>
         /// pi 常量
         /// </summary>
-        public const float kPI =3.14159265358979f;
+        public const float kPI = 3.14159265358979f;
     }
     /// <summary>
     /// 线关系
@@ -25,7 +25,7 @@ namespace RayGraphics.Math
         /// <summary>
         /// 异常情况
         /// </summary>
-        None   = 0,
+        None = 0,
         /// <summary>
         /// 重合
         /// </summary>
@@ -56,7 +56,7 @@ namespace RayGraphics.Math
         /// <summary>
         /// 
         /// </summary>
-        LeftMiddle= 1,
+        LeftMiddle = 1,
         /// <summary>
         /// 
         /// </summary>
@@ -85,5 +85,20 @@ namespace RayGraphics.Math
         /// 
         /// </summary>
         RightUp = 8,
+    }
+
+    /// <summary>
+    /// 多边形
+    /// </summary>
+    public enum PolygonType
+    {
+        /// <summary>
+        /// 凸多边形
+        /// </summary>
+        Convex = 0,
+        /// <summary>
+        /// 凹多边形
+        /// </summary>
+        Concave = 1,
     }
 }
