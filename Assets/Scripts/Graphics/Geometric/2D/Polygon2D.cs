@@ -462,14 +462,14 @@ namespace RayGraphics.Geometric
                 {
                     if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref point) == true)
                     {
-                        paths.Add(new Float3(point.x, point.y, i));
+                        listpath.Add(new Float3(point.x, point.y, i));
                     }
                 }
                 else
                 {
                     if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref point) == true)
                     {
-                        paths.Add(new Float3(point.x, point.y, i));
+                        listpath.Add(new Float3(point.x, point.y, i));
                     }
                 }
             }
