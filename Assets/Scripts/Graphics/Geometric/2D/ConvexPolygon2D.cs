@@ -8,7 +8,7 @@ namespace RayGraphics.Geometric
     /// <summary>
     /// 生成polygon 
     /// </summary>
-    public class MakePolygon2D
+    public class ConvexPolygon2D
     {
         /// <summary>
         /// 获取凸包
