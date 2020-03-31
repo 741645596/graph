@@ -9,11 +9,11 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 顶点列表
         /// </summary>
-        public Float2[] pointArr = null;
+        private Float2[] pointArr = null;
         /// <summary>
         /// 法线列表。
         /// </summary>
-        public Float2[] normalAttr = null;
+        private Float2[] normalAttr = null;
         /// <summary>
         /// 逆时针
         /// </summary>
@@ -513,6 +513,20 @@ namespace RayGraphics.Geometric
                 return Float2.zero;
             }
             return this.normalAttr[edgeIndex];
+        }
+
+        /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Float2 GetPoint(int index)
+        {
+            if (index < 0 || index > this.pointArr.Length - 1)
+            {
+                return Float2.zero;
+            }
+            return this.pointArr[index];
         }
 
     }

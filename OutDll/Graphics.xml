@@ -879,6 +879,13 @@
             <param name="edgeIndex"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPoint(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
             <summary>
             直线
