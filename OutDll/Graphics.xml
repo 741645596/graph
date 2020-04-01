@@ -185,7 +185,7 @@
             <param name="point"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -222,7 +222,7 @@
             半径
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <returns></returns>
             <summary>
             最短射线包围盒路径
@@ -828,7 +828,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -845,11 +845,10 @@
             <param name="isPathDir"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             中间经过的顶点，不包含2端的点。
             </summary>
-            <param name="line"></param>
             <param name="p1"></param>
             <param name="p2"></param>
             <param name="offset"></param>
@@ -1037,7 +1036,7 @@
             <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>

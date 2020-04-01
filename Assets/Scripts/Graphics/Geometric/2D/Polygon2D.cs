@@ -80,7 +80,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref List<Float2> paths)
         {
             List<Float3> lineArray = new List<Float3>();
             Float2 intersectionPoint = Float2.zero;
@@ -109,7 +109,7 @@ namespace RayGraphics.Geometric
                         if (isIn == true)
                         {
                             List<Float2> temppaths = new List<Float2>();
-                            RayboundingNearestPath(line, lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
+                            RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
                             if (paths == null)
                             {
                                 paths = temppaths;
@@ -125,7 +125,7 @@ namespace RayGraphics.Geometric
                 else  // 与整体方向不一致。直接暴力取2头的点。
                 {
                     List<Float2> temppaths = new List<Float2>();
-                    RayboundingNearestPath(line, lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
+                    RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
                     if (paths == null)
                     {
                         paths = temppaths;
@@ -137,8 +137,9 @@ namespace RayGraphics.Geometric
                 }
                 if (paths != null && paths.Count > 0)
                 {
-                    paths.Insert(0, new Float2(lineArray[0].x, lineArray[0].y) - offset * line.normalizedDir);
-                    paths.Insert(paths.Count, new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y) + offset * line.normalizedDir);
+                    nearPoint = new Float2(lineArray[0].x, lineArray[0].y);
+                    //paths.Insert(0, new Float2(lineArray[0].x, lineArray[0].y) - offset * line.normalizedDir);
+                    //paths.Insert(paths.Count, new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y) + offset * line.normalizedDir);
                     return true;
                 }
                 return false;
@@ -197,33 +198,26 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 中间经过的顶点，不包含2端的点。
         /// </summary>
-        /// <param name="line"></param>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="offset"></param>
         /// <param name="isPathDir"></param>
         /// <param name="paths"></param>
-        private void RayboundingNearestPath(LineSegment2D line, Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
+        private void RayboundingNearestPath(Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
         {
             List<Float2> listpath = new List<Float2>();
-            Float2 first = new Float2(p1.x, p1.y);
-            Float2 diff = offset * line.normalizedDir;
             // 先计算逆时针距离。
             if (p1.z < p2.z)
             {
                 if (isPathDir == true)
                 {
-                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i <= (int)p2.z; i++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else 
                 {
-                    //listpath.Add(first - diff);
-                    //
                     for (int i = (int)p1.z; i >= 0; i--)
                     {
                         listpath.Add(GetOutPoint(i, offset));
@@ -233,40 +227,28 @@ namespace RayGraphics.Geometric
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
             }
             else if (p1.z > p2.z)
             {
                 if (isPathDir == false)
                 {
-                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z; i >= (int)p2.z + 1; i--)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else
                 {
-                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i < this.pointArr.Length; i++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    //
                     for (int i = 0; i <= (int)p2.z; i ++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    //
-                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
-            }
-            else 
-            {
-               // listpath.Add(new Float2(p1.x, p1.y));
-               // listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
         }

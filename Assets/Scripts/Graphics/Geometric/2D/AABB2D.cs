@@ -277,7 +277,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref List<Float2> paths)
+        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref List<Float2> paths)
         {
             return false;
         }

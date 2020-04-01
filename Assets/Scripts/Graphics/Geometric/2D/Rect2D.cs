@@ -51,7 +51,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref List<Float2> paths)
         {
             int index = 0;
             Float3[] lineArray = new Float3[2];
@@ -96,6 +96,7 @@ namespace RayGraphics.Geometric
                     s -= fnormalized;
                     e += fnormalized;
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[0].z), new Float3(e.x, e.y, lineArray[1].z), offset, ref paths);
+                    nearPoint = s;
                 }
                 else
                 {
@@ -105,6 +106,7 @@ namespace RayGraphics.Geometric
                     s -= fnormalized;
                     e += fnormalized;
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref paths);
+                    nearPoint = e;
                 }
                 return true;
             }
@@ -129,17 +131,17 @@ namespace RayGraphics.Geometric
                 float v2 = -p1.x + this.RightBottom.x - p2.x + this.RightBottom.x;
                 if (v1 <= v2)
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(this.leftBottom.x - offset, p1.y));
                     listpath.Add(new Float2(this.leftBottom.x - offset, p2.y));
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
                 else
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(this.RightBottom.x + offset, p1.y));
                     listpath.Add(new Float2(this.RightBottom.x + offset, p2.y));
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
             }
             else if ((p1.z == 2 && p2.z == 4) || (p1.z == 4 && p2.z == 2))
@@ -148,42 +150,42 @@ namespace RayGraphics.Geometric
                 float v2 = -p1.y + this.LeftUp.y - p2.y + this.LeftUp.y;
                 if (v1 <= v2)
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(p1.x, this.leftBottom.y - offset));
                     listpath.Add(new Float2(p2.x, this.leftBottom.y - offset));
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
                 else
                 {
-                    listpath.Add(new Float2(p1.x, p1.y));
+                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(p1.x, this.LeftUp.y + offset));
                     listpath.Add(new Float2(p2.x, this.LeftUp.y + offset));
-                    listpath.Add(new Float2(p2.x, p2.y));
+                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
             }
             else if ((p1.z == 1 && p2.z == 2) || (p1.z == 2 && p2.z == 1))
             {
-                listpath.Add(new Float2(p1.x, p1.y));
+                //listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.RightBottom + new Float2(offset, -offset));
-                listpath.Add(new Float2(p2.x, p2.y));
+                //listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 2 && p2.z == 3) || (p1.z == 3 && p2.z == 2))
             {
-                listpath.Add(new Float2(p1.x, p1.y));
+               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.rightUp + new Float2(offset, offset));
-                listpath.Add(new Float2(p2.x, p2.y));
+               // listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 3 && p2.z == 4) || (p1.z == 4 && p2.z == 3))
             {
-                listpath.Add(new Float2(p1.x, p1.y));
+               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.LeftUp + new Float2(-offset, offset));
-                listpath.Add(new Float2(p2.x, p2.y));
+               // listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 4 && p2.z == 1) || (p1.z == 1 && p2.z == 4))
             {
-                listpath.Add(new Float2(p1.x, p1.y));
+               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.leftBottom + new Float2(-offset, -offset));
-                listpath.Add(new Float2(p2.x, p2.y));
+               // listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
         }
