@@ -355,6 +355,13 @@
             <param name="listpt"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.ConvexPolygon2D.optimizationPoly(System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+             接近一条直线的邻边优化掉。
+            </summary>
+            <param name="listPoly"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.ConvexPolygon2D.SearchOutPoint(System.Int32,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
             <summary>
             获取最边缘一圈的顶点。
@@ -840,11 +847,14 @@
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
-            
+            中间经过的顶点，不包含2端的点。
             </summary>
+            <param name="line"></param>
             <param name="p1"></param>
             <param name="p2"></param>
-            <param name="sl"></param>
+            <param name="offset"></param>
+            <param name="isPathDir"></param>
+            <param name="paths"></param>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetOutPoint(System.Int32,System.Single)">
             <summary>

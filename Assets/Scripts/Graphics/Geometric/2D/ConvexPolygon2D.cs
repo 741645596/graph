@@ -39,7 +39,6 @@ namespace RayGraphics.Geometric
             // 进行收集了。
             foreach (Float2 pos in listpt)
             {
-                bool isOut = true;
                 // 第一条边 bottom edge
                 if (pos.y == min.y && pos.x < max.x)
                 {
@@ -93,7 +92,45 @@ namespace RayGraphics.Geometric
             }
             return listPoly;
         }
+        /// <summary>
+        ///  接近一条直线的邻边优化掉。
+        /// </summary>
+        /// <param name="listPoly"></param>
+        /// <returns></returns>
+        private static List<Float2> optimizationPoly(List<Float2> listPoly)
+        {
+            if (listPoly == null || listPoly.Count < 3)
+                return listPoly;
+            bool isNeed = true;
+            while (isNeed && listPoly.Count > 3)
+            {
+                isNeed = false;
+                for (int i = 0; i < listPoly.Count - 1; i++)
+                {
+                    float value ;
+                    if (i == 0)
+                    {
+                        value = Float2.Cross((listPoly[i] - listPoly[listPoly.Count - 1]).normalized, (listPoly[i +1] - listPoly[i]).normalized);
+                    }
+                    else if (i == listPoly.Count - 1)
+                    {
+                        value = Float2.Cross((listPoly[i] - listPoly[i -1]).normalized, (listPoly[0] - listPoly[i]).normalized);
+                    }
+                    else 
+                    {
+                        value = Float2.Cross((listPoly[i] - listPoly[i - 1]).normalized, (listPoly[i + 1] - listPoly[i]).normalized);
+                    }
+                    if (System.Math.Abs(value) < MathUtil.kEpsilon)
+                    {
+                        listPoly.RemoveAt(i);
+                        isNeed = true;
+                        break;
+                    }
+                }
+            }
+            return listPoly;
 
+        }
         /// <summary>
         /// 获取最边缘一圈的顶点。
         /// </summary>

@@ -86,19 +86,9 @@ namespace RayGraphics.Geometric
             Float2 intersectionPoint = Float2.zero;
             for (int i = 0; i < this.pointArr.Length ; i++)
             {
-                if (i == this.pointArr.Length - 1)
+                if (line.GetIntersectPoint(GetEdge(i), ref intersectionPoint) == true)
                 {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref intersectionPoint) == true)
-                    {
-                        lineArray.Add(new Float3(intersectionPoint.x, intersectionPoint.y, i));
-                    }
-                }
-                else 
-                {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref intersectionPoint) == true)
-                    {
-                        lineArray.Add(new Float3(intersectionPoint.x, intersectionPoint.y, i));
-                    }
+                    lineArray.Add(new Float3(intersectionPoint.x, intersectionPoint.y, i));
                 }
             }
             if (lineArray.Count == 0)
@@ -147,6 +137,8 @@ namespace RayGraphics.Geometric
                 }
                 if (paths != null && paths.Count > 0)
                 {
+                    paths.Insert(0, new Float2(lineArray[0].x, lineArray[0].y) - offset * line.normalizedDir);
+                    paths.Insert(paths.Count, new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y) + offset * line.normalizedDir);
                     return true;
                 }
                 return false;
@@ -203,11 +195,14 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
-        /// 
+        /// 中间经过的顶点，不包含2端的点。
         /// </summary>
+        /// <param name="line"></param>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
-        /// <param name="sl"></param>
+        /// <param name="offset"></param>
+        /// <param name="isPathDir"></param>
+        /// <param name="paths"></param>
         private void RayboundingNearestPath(LineSegment2D line, Float3 p1, Float3 p2, float offset, bool isPathDir, ref List<Float2> paths)
         {
             List<Float2> listpath = new List<Float2>();
@@ -218,16 +213,16 @@ namespace RayGraphics.Geometric
             {
                 if (isPathDir == true)
                 {
-                    listpath.Add(first - diff);
+                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i <= (int)p2.z; i++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + diff);
+                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else 
                 {
-                    listpath.Add(first - diff);
+                    //listpath.Add(first - diff);
                     //
                     for (int i = (int)p1.z; i >= 0; i--)
                     {
@@ -238,23 +233,23 @@ namespace RayGraphics.Geometric
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + diff);
+                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
             }
             else if (p1.z > p2.z)
             {
                 if (isPathDir == false)
                 {
-                    listpath.Add(first - diff);
+                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z; i >= (int)p2.z + 1; i--)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    listpath.Add(new Float2(p2.x, p2.y) + diff);
+                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
                 else
                 {
-                    listpath.Add(first - diff);
+                    //listpath.Add(first - diff);
                     for (int i = (int)p1.z + 1; i < this.pointArr.Length; i++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
@@ -265,13 +260,13 @@ namespace RayGraphics.Geometric
                         listpath.Add(GetOutPoint(i, offset));
                     }
                     //
-                    listpath.Add(new Float2(p2.x, p2.y) + diff);
+                    //listpath.Add(new Float2(p2.x, p2.y) + diff);
                 }
             }
             else 
             {
-                listpath.Add(new Float2(p1.x, p1.y));
-                listpath.Add(new Float2(p2.x, p2.y));
+               // listpath.Add(new Float2(p1.x, p1.y));
+               // listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
         }
@@ -288,17 +283,13 @@ namespace RayGraphics.Geometric
             Float2 diff;
             if (index == 0)
             {
-                diff = (this.pointArr[index] - this.pointArr[this.pointArr.Length - 1]).normalized + (this.pointArr[index] - this.pointArr[index + 1]).normalized;
+                diff = GetEdge(this.pointArr.Length - 1).normalizedDir + GetEdge(0).normalizedDir;
             }
-            else if (index == this.pointArr.Length - 1)
+            else
             {
-                diff = (this.pointArr[index] - this.pointArr[index - 1]).normalized + (this.pointArr[index] - this.pointArr[0]).normalized;
+                diff = GetEdge(index - 1).normalizedDir + GetEdge(index).normalizedDir;
             }
-            else 
-            {
-                diff = (this.pointArr[index] - this.pointArr[index - 1]).normalized + (this.pointArr[index] - this.pointArr[index + 1]).normalized;
-            }
-            return this.pointArr[index] + offset * diff;
+            return this.pointArr[index] - offset * diff;
         }
         /// <summary>
         /// 确认方向（顺时针，逆时针方向）
@@ -358,21 +349,10 @@ namespace RayGraphics.Geometric
         {
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (i == this.pointArr.Length - 1)
+                if (line.GetIntersectPoint(GetEdge(i), ref bornPoint) == true)
                 {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref bornPoint) == true)
-                    {
-                        bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref bornPoint) == true)
-                    {
-                        bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                        return true;
-                    }
+                    bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
+                    return true;
                 }
             }
             return false;
@@ -387,19 +367,9 @@ namespace RayGraphics.Geometric
             Float2 pos = Float2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (i == this.pointArr.Length - 1)
+                if (line.GetIntersectPoint(GetEdge(i), ref pos) == true)
                 {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref pos) == true)
-                    {
-                        return LineRelation.Intersect;
-                    }
-                }
-                else
-                {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref pos) == true)
-                    {
-                        return LineRelation.Intersect;
-                    }
+                    return LineRelation.Intersect;
                 }
             }
             return LineRelation.Detach;
@@ -412,7 +382,7 @@ namespace RayGraphics.Geometric
         public PolygonType GetPolygonType()
         {
             float prev = CalcRotateValue(this.pointArr.Length -1);
-            float cur = 0.0f;
+            float cur ;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
                 cur = CalcRotateValue(i);
@@ -433,17 +403,13 @@ namespace RayGraphics.Geometric
         {
             if (index < 0 || index >= this.pointArr.Length)
                 return 0;
-            if (index < this.pointArr.Length - 1 && index > 0)
+            if (index > 0)
             {
-                return Float2.Cross(this.pointArr[index] - this.pointArr[index - 1], this.pointArr[index + 1] - this.pointArr[index]);
-            }
-            else if (index == this.pointArr.Length - 1)
-            {
-                return Float2.Cross(this.pointArr[index] - this.pointArr[index - 1], this.pointArr[0] - this.pointArr[index]);
+                return Float2.Cross(GetEdge(index - 1).normalizedDir, GetEdge(index).normalizedDir);
             }
             else if (index == 0)
             {
-                return Float2.Cross(this.pointArr[index] - this.pointArr[this.pointArr.Length - 1], this.pointArr[0] - this.pointArr[index]);
+                return Float2.Cross(GetEdge(this.pointArr.Length - 1).normalizedDir, GetEdge(0).normalizedDir);
             }
             return 0;
         }
@@ -458,19 +424,9 @@ namespace RayGraphics.Geometric
             Float2 point = Float2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (i == this.pointArr.Length - 1)
+                if (line.GetIntersectPoint(GetEdge(i), ref point) == true)
                 {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[0]), ref point) == true)
-                    {
-                        listpath.Add(new Float3(point.x, point.y, i));
-                    }
-                }
-                else
-                {
-                    if (line.GetIntersectPoint(new LineSegment2D(this.pointArr[i], this.pointArr[i + 1]), ref point) == true)
-                    {
-                        listpath.Add(new Float3(point.x, point.y, i));
-                    }
+                    listpath.Add(new Float3(point.x, point.y, i));
                 }
             }
             // 从近到远排好队。
