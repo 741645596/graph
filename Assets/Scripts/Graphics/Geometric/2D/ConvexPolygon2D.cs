@@ -39,6 +39,7 @@ namespace RayGraphics.Geometric
             // 进行收集了。
             foreach (Float2 pos in listpt)
             {
+                bool isOut = true;
                 // 第一条边 bottom edge
                 if (pos.y == min.y && pos.x < max.x)
                 {
@@ -48,15 +49,15 @@ namespace RayGraphics.Geometric
                 {
                     edgePointArray[1].Add(pos);
                 }
-                else if (pos.y == max.y && pos.x > min.x) //  up edge
+                else if(pos.y == max.y && pos.x > min.x) //  up edge
                 {
                     edgePointArray[2].Add(pos);
                 }
-                else if (pos.x == min.x && pos.y > min.y) //  left edge
+                else if(pos.x == min.x && pos.y > min.y) //  left edge
                 {
                     edgePointArray[3].Add(pos);
                 }
-                else  // 内部的顶点了。
+                else
                 {
                     listOutEdgePoint.Add(pos);
                 }
@@ -75,11 +76,19 @@ namespace RayGraphics.Geometric
                 if (length > 0)
                 {
                     listPoly.AddRange(edgePointArray[i]);
-                }
-                List<Float2> llinkPoint = SearchOutPoint(i, edgePointArray[i][length - 1], edgePointArray[(i + 1) % 4][0], listOutEdgePoint);
-                if (llinkPoint != null && llinkPoint.Count > 0)
-                {
-                    listPoly.AddRange(llinkPoint);
+                    if (edgePointArray[(i + 1) % 4].Count > 0)
+                    {
+                        Float2 end = edgePointArray[i][0];
+                        if (length > 1)
+                        {
+                            end = edgePointArray[i][length - 1];
+                        }
+                        List<Float2> llinkPoint = SearchOutPoint(i, end, edgePointArray[(i + 1) % 4][0], listOutEdgePoint);
+                        if (llinkPoint != null && llinkPoint.Count > 0)
+                        {
+                            listPoly.AddRange(llinkPoint);
+                        }
+                    }
                 }
             }
             return listPoly;
