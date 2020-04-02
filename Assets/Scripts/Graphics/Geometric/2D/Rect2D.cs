@@ -51,7 +51,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref List<Float2> paths)
         {
             int index = 0;
             Float3[] lineArray = new Float3[2];
@@ -97,6 +97,7 @@ namespace RayGraphics.Geometric
                     e += fnormalized;
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[0].z), new Float3(e.x, e.y, lineArray[1].z), offset, ref paths);
                     nearPoint = s;
+                    farPoint = e;
                 }
                 else
                 {
@@ -107,6 +108,7 @@ namespace RayGraphics.Geometric
                     e += fnormalized;
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref paths);
                     nearPoint = e;
+                    farPoint = s;
                 }
                 return true;
             }

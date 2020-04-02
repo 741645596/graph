@@ -185,12 +185,14 @@
             <param name="point"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
             <param name="line">线段</param>
             <param name="offset">偏移值</param>
+            <param name="nearPoint">最近的一个交点</param>
+            <param name="farPoint">最远的一个交点</param>
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
@@ -222,7 +224,7 @@
             半径
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <returns></returns>
             <summary>
             最短射线包围盒路径
@@ -828,7 +830,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -1036,7 +1038,7 @@
             <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -1394,6 +1396,37 @@
             点导几何元素的投影
             </summary>
             <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            优化路线
+            </summary>
+            <param name="lineStart">线段起点</param>
+            <param name="lineEnd">线段终点</param>
+            <param name="near">与动态挡格相交 near点</param>
+            <param name="far">与动态挡格相交 far点</param>
+            <param name="listMidPoint">2个交点之间的路线</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.SearchOutPoint(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            获取最边缘一圈的顶点。
+            </summary>
+            <param name="lineStart">起点</param>
+            <param name="far">远处的交点</param>
+            <param name="outdir">外包边</param>
+            <param name="listOutEdgePoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.CheckPointInCorns(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            判断指定的点，在夹角内。不包括在边上。
+            </summary>
+            <param name="target"></param>
+            <param name="startPoint"></param>
+            <param name="sindir"></param>
+            <param name="outdir"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Float2.Set(System.Single,System.Single)">

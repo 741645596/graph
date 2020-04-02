@@ -28,7 +28,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref List<Float2> paths)
         {
             Float2 diff = this.center - line.startPoint;
             if (diff == Float2.zero)
@@ -65,7 +65,8 @@ namespace RayGraphics.Geometric
                 Float2 rorateVector = Float2.Rotate(startVector, -diffangle * i);
                 listpath.Add(rorateVector + this.center);
             }
-            nearPoint = startVector + this.center;
+            nearPoint = p1;
+            farPoint = p2;
             paths = listpath;
             return true;
         }
