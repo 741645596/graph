@@ -30,32 +30,18 @@ namespace RayGraphics.Geometric
             get { return new Float2(rightUp.x, leftBottom.y); }
         }
         /// <summary>
-        /// 左边法线
+        /// Center
         /// </summary>
-        public Float2 LeftEdgeNormal
+        public Float2 Center
         {
-            get { return Float2.left; }
+            get { return (this.leftBottom + this.rightUp) * 0.5f; }
         }
         /// <summary>
-        /// 右边法线
+        /// 2* Center
         /// </summary>
-        public Float2 RightEdgeNormal
+        public Float2 Center2
         {
-            get { return Float2.right; }
-        }
-        /// <summary>
-        /// 下边法线
-        /// </summary>
-        public Float2 BottomEdgeNormal
-        {
-            get { return Float2.down; }
-        }
-        /// <summary>
-        /// 上边法线
-        /// </summary>
-        public Float2 UpEdgeNormal
-        {
-            get { return Float2.down; }
+            get { return this.leftBottom + this.rightUp; }
         }
         /// <summary>
         /// 设置aabb
@@ -304,6 +290,136 @@ namespace RayGraphics.Geometric
         public virtual bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStart, ref Float2 intersectEnd)
         {
             return false;
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public virtual bool CheckIntersect(Rect2D ab)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 与圆的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public virtual bool CheckIntersect(Circle2D ab)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 与多边形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public virtual bool CheckIntersect(Polygon2D ab)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 判断2个对象是否相交
+        /// </summary>
+        /// <param name="ab1"></param>
+        /// <param name="ab2"></param>
+        /// <returns>暂处理不多边形的关系</returns>
+        public static bool CheckIntersect(AABB2D ab1, AABB2D ab2)
+        {
+            if (ab1 == null || ab2 == null)
+                return false;
+            if (ab2 is Rect2D)
+                return ab1.CheckIntersect(ab2 as Rect2D);
+            else if (ab2 is Circle2D)
+                return ab1.CheckIntersect(ab2 as Circle2D);
+            else if(ab2 is Polygon2D)
+                return ab1.CheckIntersect(ab2 as Polygon2D);
+            return false;
+        }
+        /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public virtual LineSegment2D GetEdge(int edgeIndex)
+        {
+            if (edgeIndex == 0)
+            {
+                return new LineSegment2D(this.leftBottom, this.RightBottom);
+            }
+            else if (edgeIndex == 1)
+            {
+                return new LineSegment2D(this.RightBottom, this.rightUp);
+            }
+            else if (edgeIndex == 2)
+            {
+                return new LineSegment2D(this.rightUp, this.LeftUp);
+            }
+            else if (edgeIndex == 3)
+            {
+                return new LineSegment2D(this.LeftUp, this.leftBottom);
+            }
+            return new LineSegment2D(Float2.zero, Float2.zero);
+        }
+        /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public virtual Float2 GetPoint(int index)
+        {
+            if (index == 0)
+            {
+                return this.leftBottom;
+            }
+            else if (index == 1)
+            {
+                return this.RightBottom;
+            }
+            else if (index == 2)
+            {
+                return this.rightUp;
+            }
+            else if (index == 3)
+            {
+                return this.LeftUp;
+            }
+            return Float2.zero;
+        }
+
+        /// <summary>
+        /// 获取法线
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public virtual Float2 GetNormal(int edgeIndex)
+        {
+            if (edgeIndex == 0)
+            {
+                return Float2.down;
+            }
+            else if (edgeIndex == 1)
+            {
+                return Float2.right;
+            }
+            else if (edgeIndex == 2)
+            {
+                return Float2.up;
+            }
+            else if (edgeIndex == 3)
+            {
+                return Float2.left;
+            }
+            return Float2.zero;
+        }
+
+        /// <summary>
+        /// 获取边数
+        /// </summary>
+        /// <returns></returns>
+        public virtual int GetEdgeNum()
+        {
+            return 4;
         }
     }
 }

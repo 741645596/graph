@@ -95,24 +95,14 @@
             右⬇️
             </summary>
         </member>
-        <member name="P:RayGraphics.Geometric.AABB2D.LeftEdgeNormal">
+        <member name="P:RayGraphics.Geometric.AABB2D.Center">
             <summary>
-            左边法线
+            Center
             </summary>
         </member>
-        <member name="P:RayGraphics.Geometric.AABB2D.RightEdgeNormal">
+        <member name="P:RayGraphics.Geometric.AABB2D.Center2">
             <summary>
-            右边法线
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.AABB2D.BottomEdgeNormal">
-            <summary>
-            下边法线
-            </summary>
-        </member>
-        <member name="P:RayGraphics.Geometric.AABB2D.UpEdgeNormal">
-            <summary>
-            上边法线
+            2* Center
             </summary>
         </member>
         <member name="M:RayGraphics.Geometric.AABB2D.SetAABB(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
@@ -214,7 +204,63 @@
             <param name="intersectEnd"></param>
             <returns></returns>
         </member>
-        <member name="F:RayGraphics.Geometric.Circle2D.center">
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.Circle2D)">
+            <summary>
+            与圆的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.Polygon2D)">
+            <summary>
+            与多边形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.AABB2D,RayGraphics.Geometric.AABB2D)">
+            <summary>
+            判断2个对象是否相交
+            </summary>
+            <param name="ab1"></param>
+            <param name="ab2"></param>
+            <returns>暂处理不多边形的关系</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetPoint(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetNormal(System.Int32)">
+            <summary>
+            获取法线
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetEdgeNum">
+            <summary>
+            获取边数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Geometric.Circle2D.circleCenter">
             <summary>
             中心
             </summary>
@@ -270,6 +316,27 @@
             <param name="offset"></param>
             <param name="bornPoint"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.CheckIntersect(RayGraphics.Geometric.Circle2D)">
+            <summary>
+            与圆的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.CheckIntersect(RayGraphics.Geometric.Polygon2D)">
+            <summary>
+            与多边形的关系
+            </summary>
+            <param name="ab"></param>
+            <returns>true 相交： false 不相交</returns>
         </member>
         <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GenerateConcavePolygon(System.Collections.Generic.List{RayGraphics.Math.Float2[]})">
             <summary>
@@ -824,12 +891,6 @@
             逆时针
             </summary>
         </member>
-        <member name="P:RayGraphics.Geometric.Polygon2D.EdgeNum">
-            <summary>
-            获取边数
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
@@ -927,6 +988,33 @@
             获取顶点
             </summary>
             <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIntersect(RayGraphics.Geometric.Circle2D)">
+            <summary>
+            与圆的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIntersect(RayGraphics.Geometric.Polygon2D)">
+            <summary>
+            与多边形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetEdgeNum">
+            <summary>
+            获取边数
+            </summary>
             <returns></returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
@@ -1070,6 +1158,27 @@
             <param name="intersectStart"></param>
             <param name="intersectEnd"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Rect2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Rect2D.CheckIntersect(RayGraphics.Geometric.Circle2D)">
+            <summary>
+            与圆的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Rect2D.CheckIntersect(RayGraphics.Geometric.Polygon2D)">
+            <summary>
+            与多边形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
         </member>
         <member name="F:RayGraphics.Geometric.Triangle2D.p1">
             <summary>

@@ -87,8 +87,8 @@ namespace RayGraphics.Geometric
             Polygon2D poly1 = new Polygon2D(polygon1);
             Polygon2D poly2 = new Polygon2D(polygon2);
             // 获取poly1每条线段上的交点。
-            List<Float3>[] Poly1IntersectArray = new List<Float3>[poly1.EdgeNum];
-            List<Float3>[] Poly2IntersectArray = new List<Float3>[poly2.EdgeNum];
+            List<Float3>[] Poly1IntersectArray = new List<Float3>[poly1.GetEdgeNum()];
+            List<Float3>[] Poly2IntersectArray = new List<Float3>[poly2.GetEdgeNum()];
             GetAllEdgeInterSectPoint(poly1, poly2, ref Poly1IntersectArray, ref Poly2IntersectArray);
 
             bool CheckIntersect = false;
@@ -123,7 +123,7 @@ namespace RayGraphics.Geometric
                 curPolyIntersectArray = Poly2IntersectArray;
             }
 
-            while (poly != null && curedge >= 0 && curedge < poly.EdgeNum)
+            while (poly != null && curedge >= 0 && curedge < poly.GetEdgeNum())
             {
                 LineSegment2D ls2d = poly.GetEdge(curedge);
                 Float2 normalDir = poly.GetNormal(curedge);
@@ -137,7 +137,7 @@ namespace RayGraphics.Geometric
                     if (SearchDir == true)
                     {
                         curedge++;
-                        if (curedge >= poly.EdgeNum)
+                        if (curedge >= poly.GetEdgeNum())
                         {
                             curedge = 0;
                         }
@@ -148,7 +148,7 @@ namespace RayGraphics.Geometric
                         curedge--;
                         if (curedge < 0)
                         {
-                            curedge = poly.EdgeNum - 1;
+                            curedge = poly.GetEdgeNum() - 1;
                         }
                         curPoint = poly.GetEdge(curedge).endPoint;
                     }
@@ -278,13 +278,13 @@ namespace RayGraphics.Geometric
         /// <param name="curedge"></param>
         private static void SetInitData(Polygon2D poly1, Polygon2D poly2, ref Polygon2D poly, ref Float2 curPoint, ref int curedge)
         {
-            if (poly1 == null || poly2 == null || poly1.EdgeNum < 3 || poly2.EdgeNum < 3)
+            if (poly1 == null || poly2 == null || poly1.GetEdgeNum() < 3 || poly2.GetEdgeNum() < 3)
                 return;
             // 先找poly1 最小的。
             poly = poly1;
             curedge = 0;
             Float2 min = poly1.GetPoint(0);
-            for (int i = 1; i < poly1.EdgeNum; i++)
+            for (int i = 1; i < poly1.GetEdgeNum(); i++)
             {
                 Float2 point = poly1.GetPoint(i);
                 if (point.y < min.y || (point.y == min.y && point.x < min.x))
@@ -294,7 +294,7 @@ namespace RayGraphics.Geometric
                 }
             }
             //
-            for (int i = 0; i < poly2.EdgeNum; i++)
+            for (int i = 0; i < poly2.GetEdgeNum(); i++)
             {
                 Float2 point = poly2.GetPoint(i);
                 if (point.y < min.y || (point.y == min.y && point.x < min.x))
@@ -356,12 +356,12 @@ namespace RayGraphics.Geometric
             if (poly1 == null || poly2 == null)
                 return;
 
-            for (int i = 0; i < poly1.EdgeNum; i++)
+            for (int i = 0; i < poly1.GetEdgeNum(); i++)
             {
                 poly2.GetAllIntersectPoint(poly1.GetEdge(i), ref Poly1IntersectArray[i]);
             }
             //
-            for (int i = 0; i < poly2.EdgeNum; i++)
+            for (int i = 0; i < poly2.GetEdgeNum(); i++)
             {
                 GetAllIntersectPoint(poly2.GetEdge(i).startPoint, i, Poly1IntersectArray, ref Poly2IntersectArray[i]);
             }

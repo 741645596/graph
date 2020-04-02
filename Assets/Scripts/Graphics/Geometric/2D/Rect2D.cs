@@ -133,17 +133,13 @@ namespace RayGraphics.Geometric
                 float v2 = -p1.x + this.RightBottom.x - p2.x + this.RightBottom.x;
                 if (v1 <= v2)
                 {
-                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(this.leftBottom.x - offset, p1.y));
                     listpath.Add(new Float2(this.leftBottom.x - offset, p2.y));
-                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
                 else
                 {
-                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(this.RightBottom.x + offset, p1.y));
                     listpath.Add(new Float2(this.RightBottom.x + offset, p2.y));
-                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
             }
             else if ((p1.z == 2 && p2.z == 4) || (p1.z == 4 && p2.z == 2))
@@ -152,42 +148,30 @@ namespace RayGraphics.Geometric
                 float v2 = -p1.y + this.LeftUp.y - p2.y + this.LeftUp.y;
                 if (v1 <= v2)
                 {
-                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(p1.x, this.leftBottom.y - offset));
                     listpath.Add(new Float2(p2.x, this.leftBottom.y - offset));
-                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
                 else
                 {
-                    //listpath.Add(new Float2(p1.x, p1.y));
                     listpath.Add(new Float2(p1.x, this.LeftUp.y + offset));
                     listpath.Add(new Float2(p2.x, this.LeftUp.y + offset));
-                    //listpath.Add(new Float2(p2.x, p2.y));
                 }
             }
             else if ((p1.z == 1 && p2.z == 2) || (p1.z == 2 && p2.z == 1))
             {
-                //listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.RightBottom + new Float2(offset, -offset));
-                //listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 2 && p2.z == 3) || (p1.z == 3 && p2.z == 2))
             {
-               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.rightUp + new Float2(offset, offset));
-               // listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 3 && p2.z == 4) || (p1.z == 4 && p2.z == 3))
             {
-               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.LeftUp + new Float2(-offset, offset));
-               // listpath.Add(new Float2(p2.x, p2.y));
             }
             else if ((p1.z == 4 && p2.z == 1) || (p1.z == 1 && p2.z == 4))
             {
-               // listpath.Add(new Float2(p1.x, p1.y));
                 listpath.Add(this.leftBottom + new Float2(-offset, -offset));
-               // listpath.Add(new Float2(p2.x, p2.y));
             }
             paths = listpath;
         }
@@ -269,6 +253,61 @@ namespace RayGraphics.Geometric
                 intersectStart = listPt[0];
                 intersectEnd = listPt[listPt.Count - 1];
                 return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Rect2D ab)
+        {
+            if (ab == null)
+                return false;
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                if (this.CheckIn(ab.GetPoint(i)) == true)
+                {
+                    return true;
+                }
+                if (this.CheckLineRelation(ab.GetEdge(i)) == LineRelation.Intersect)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 与圆的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Circle2D ab)
+        {
+            if (ab == null)
+                return false;
+            else return ab.CheckIntersect(this);
+        }
+        /// <summary>
+        /// 与多边形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Polygon2D ab)
+        {
+            if (ab == null)
+                return false;
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                if (this.CheckIn(ab.GetPoint(i)) == true)
+                {
+                    return true;
+                }
+                if (this.CheckLineRelation(ab.GetEdge(i)) == LineRelation.Intersect)
+                {
+                    return true;
+                }
             }
             return false;
         }

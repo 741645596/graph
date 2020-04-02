@@ -9,14 +9,14 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 中心
         /// </summary>
-        public Float2 center;
+        public Float2 circleCenter;
         /// <summary>
         /// 半径
         /// </summary>
         public float radius;
         public Circle2D(Float2 center, float radius)
         {
-            this.center = center;
+            this.circleCenter = center;
             this.radius = radius;
             this.SetAABB(center - Float2.one * radius, center + Float2.one * radius);
         }
@@ -30,12 +30,12 @@ namespace RayGraphics.Geometric
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref List<Float2> paths)
         {
-            Float2 diff = this.center - line.startPoint;
+            Float2 diff = this.circleCenter - line.startPoint;
             if (diff == Float2.zero)
                 return false;
             //
-            Float2 projectoint = line.ProjectPoint(this.center);
-            diff = this.center - projectoint;
+            Float2 projectoint = line.ProjectPoint(this.circleCenter);
+            diff = this.circleCenter - projectoint;
             // 跟直线相交奥
             float dis = diff.sqrMagnitude - this.radius * this.radius;
             if (dis >= 0)
@@ -55,15 +55,15 @@ namespace RayGraphics.Geometric
             Float2 p1 = projectoint - line.normalizedDir * dis;
             Float2 p2 = projectoint + line.normalizedDir * dis;
 
-            float angle = Float2.SignedAngle(p1 - this.center, p2 - this.center);
+            float angle = Float2.SignedAngle(p1 - this.circleCenter, p2 - this.circleCenter);
             int count = (int)(System.Math.Abs(angle / 0.25f));
             float diffangle = angle / count;
             List<Float2> listpath = new List<Float2>();
-            Float2 startVector = (p1 - this.center).normalized * (this.radius + offset);
+            Float2 startVector = (p1 - this.circleCenter).normalized * (this.radius + offset);
             for (int i = 1; i <= count - 1; i++)
             {
                 Float2 rorateVector = Float2.Rotate(startVector, -diffangle * i);
-                listpath.Add(rorateVector + this.center);
+                listpath.Add(rorateVector + this.circleCenter);
             }
             nearPoint = p1;
             farPoint = p2;
@@ -77,7 +77,7 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override bool CheckIn(Float2 pt)
         {
-            Float2 diff = this.center - pt;
+            Float2 diff = this.circleCenter - pt;
             if (diff.sqrMagnitude <= this.radius * this.radius)
                 return true;
             else return false;
@@ -89,12 +89,12 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override LineRelation CheckLineRelation(Line2D line)
         {
-            Float2 diff = this.center - line.startPoint;
+            Float2 diff = this.circleCenter - line.startPoint;
             if (diff == Float2.zero)
                 return LineRelation.Intersect;
             //
-            Float2 projectoint = line.ProjectPoint(this.center);
-            diff = this.center - projectoint;
+            Float2 projectoint = line.ProjectPoint(this.circleCenter);
+            diff = this.circleCenter - projectoint;
 
             if (diff.sqrMagnitude <= this.radius * this.radius)
                 return LineRelation.Intersect;
@@ -111,11 +111,11 @@ namespace RayGraphics.Geometric
             {
                 return LineRelation.Intersect;
             }
-            float dis = line.AixsVector(this.center).sqrMagnitude - this.radius * this.radius;
+            float dis = line.AixsVector(this.circleCenter).sqrMagnitude - this.radius * this.radius;
 
             if (dis < 0)
             {
-                Float2 diff = this.center - line.startPoint;
+                Float2 diff = this.circleCenter - line.startPoint;
                 if (Float2.Dot(diff, line.normalizedDir) > 0)
                     return LineRelation.Intersect;
                 else return LineRelation.Detach;
@@ -129,17 +129,17 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override LineRelation CheckLineRelation(LineSegment2D line)
         {
-            float dis = line.CalcDistance(this.center);
+            float dis = line.CalcDistance(this.circleCenter);
             if (dis > this.radius)
                 return LineRelation.Detach;
             else 
             {
                 float sqrRadius = this.radius * this.radius;
-                if ((this.center - line.startPoint).sqrMagnitude > sqrRadius)
+                if ((this.circleCenter - line.startPoint).sqrMagnitude > sqrRadius)
                 {
                     return LineRelation.Intersect;
                 }
-                if ((this.center - line.endPoint).sqrMagnitude > sqrRadius)
+                if ((this.circleCenter - line.endPoint).sqrMagnitude > sqrRadius)
                 {
                     return LineRelation.Intersect;
                 }
@@ -156,7 +156,7 @@ namespace RayGraphics.Geometric
         public override bool GetBornPoint(LineSegment2D line, float offset, ref Float2 bornPoint)
         {
             Float2 dirNormal = line.normalizedDir;
-            Float2 diff = this.center - line.startPoint;
+            Float2 diff = this.circleCenter - line.startPoint;
             if (diff == Float2.zero)
             {
                 bornPoint = line.startPoint + line.normalizedDir * (this.radius + offset);
@@ -165,7 +165,7 @@ namespace RayGraphics.Geometric
             else
             {
                 Float2 projectoint = Float2.Project(diff, dirNormal) + line.startPoint;
-                diff = this.center - projectoint;
+                diff = this.circleCenter - projectoint;
                 float dis = this.radius * this.radius - diff.sqrMagnitude;
                 if (dis <= 0)
                 {
@@ -186,6 +186,66 @@ namespace RayGraphics.Geometric
                     return true;
                 }
             }
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Rect2D ab)
+        {
+            if (ab == null)
+                return false;
+            if (ab.CheckIn(this.circleCenter) == true)
+                return true;
+
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                LineSegment2D ls = ab.GetEdge(i);
+                if (this.CheckLineRelation(ls) == LineRelation.Intersect)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 与圆的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Circle2D ab)
+        {
+            if (ab == null)
+                return false;
+            Float2 diff = this.circleCenter - ab.circleCenter;
+            if (diff.magnitude > (this.radius + ab.radius))
+            {
+                return false;
+            }
+            else return true;
+        }
+        /// <summary>
+        /// 与多边形的关系
+        /// </summary>
+        /// <param name="ab"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Polygon2D ab)
+        {
+            if (ab == null)
+                return false;
+            if (ab.CheckIn(this.circleCenter) == true)
+                return true;
+
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                LineSegment2D ls = ab.GetEdge(i);
+                if (this.CheckLineRelation(ls) == LineRelation.Intersect)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -19,14 +19,6 @@ namespace RayGraphics.Geometric
         /// </summary>
         private float[] distancArr = null;
         private float totalDistance = 0;
-        /// <summary>
-        /// 获取边数
-        /// </summary>
-        /// <returns></returns>
-        public int EdgeNum
-        {
-            get { return this.pointArr.Length; }
-        }
 
         public Polygon2D(Float2 [] points) 
         {
@@ -423,7 +415,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="edgeIndex"></param>
         /// <returns></returns>
-        public LineSegment2D GetEdge(int edgeIndex)
+        public override LineSegment2D GetEdge(int edgeIndex)
         {
             if (edgeIndex < 0 || edgeIndex > this.pointArr.Length - 1)
             {
@@ -443,7 +435,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="edgeIndex"></param>
         /// <returns></returns>
-        public Float2 GetNormal(int edgeIndex)
+        public override Float2 GetNormal(int edgeIndex)
         {
             if (edgeIndex < 0 || edgeIndex > this.normalAttr.Length - 1)
             {
@@ -451,19 +443,71 @@ namespace RayGraphics.Geometric
             }
             return this.normalAttr[edgeIndex];
         }
-
         /// <summary>
         /// 获取顶点
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public Float2 GetPoint(int index)
+        public override Float2 GetPoint(int index)
         {
             if (index < 0 || index > this.pointArr.Length - 1)
             {
                 return Float2.zero;
             }
             return this.pointArr[index];
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Rect2D ab)
+        {
+            if (ab == null)
+                return false;
+            return ab.CheckIntersect(this);
+        }
+        /// <summary>
+        /// 与圆的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Circle2D ab)
+        {
+            if (ab == null)
+                return false;
+            return ab.CheckIntersect(this);
+        }
+        /// <summary>
+        /// 与多边形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Polygon2D ab)
+        {
+            if (ab == null)
+                return false;
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                if (this.CheckIn(ab.GetPoint(i)) == true)
+                {
+                    return true;
+                }
+                if (this.CheckLineRelation(ab.GetEdge(i)) == LineRelation.Intersect)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 获取边数
+        /// </summary>
+        /// <returns></returns>
+        public override int GetEdgeNum()
+        {
+            return this.pointArr.Length; 
         }
 
     }
