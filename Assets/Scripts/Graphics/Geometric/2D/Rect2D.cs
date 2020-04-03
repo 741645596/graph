@@ -90,7 +90,6 @@ namespace RayGraphics.Geometric
             {
                 float v1 = (new Float2(lineArray[0].x, lineArray[0].y) - line.startPoint).sqrMagnitude;
                 float v2 = (new Float2(lineArray[1].x, lineArray[1].y) - line.startPoint).sqrMagnitude;
-                float v = (new Float2((lineArray[0].x + lineArray[1].x) / 2, (lineArray[0].y + lineArray[1].y) / 2) - line.startPoint).sqrMagnitude;
                 if (v1 < v2)
                 {
                     Float2 s = new Float2(lineArray[0].x, lineArray[0].y);
@@ -110,8 +109,8 @@ namespace RayGraphics.Geometric
                     s -= fnormalized;
                     e += fnormalized;
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref paths);
-                    nearPoint = e;
-                    farPoint = s;
+                    nearPoint = s;
+                    farPoint = e;
                 }
                 // 计算时针方向
                 if (paths.Count > 0)

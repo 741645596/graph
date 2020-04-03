@@ -3,7 +3,7 @@ using RayGraphics.Math;
 
 namespace RayGraphics.Geometric
 {
-    public class RayPathOptimization
+    public class RayPathOptimization1
     {
         /// <summary>
         /// 优化路线
@@ -63,7 +63,7 @@ namespace RayGraphics.Geometric
             List<Float2> lResult = new List<Float2>();
             Float2 startPoint = lineStart;
             Float2 bestPoint = Float2.zero;
-            Float2 indir = (far - lineStart).normalized;
+            Float2 indir = far - lineStart;
             bool isHaveBestPoint = false;
             List<Float2> listinPoints = new List<Float2>();
             List<Float2> lHave = listOutEdgePoint;
@@ -89,7 +89,7 @@ namespace RayGraphics.Geometric
                     for (int i = 1; i < listinPoints.Count; i++)
                     {
                         // 比较更好的点。
-                        if (CheckPointInCorns(listinPoints[i], startPoint, (bestPoint - startPoint).normalized, outdir) == true)
+                        if (CheckPointInCorns(listinPoints[i], startPoint, bestPoint - startPoint, outdir) == true)
                         {
                             bestPoint = listinPoints[i];
                         }
@@ -98,7 +98,7 @@ namespace RayGraphics.Geometric
                     lResult.Add(bestPoint);
                     outdir = (bestPoint - startPoint).normalized;
                     startPoint = bestPoint;
-                    indir = (far - startPoint).normalized;
+                    indir = far - startPoint;
                     listinPoints.Remove(bestPoint);
                     lHave = listinPoints;
                     listinPoints = new List<Float2>();
@@ -113,7 +113,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="target"></param>
         /// <param name="startPoint"></param>
-        /// <param name="sindir"></param>
+        /// <param name="indir"></param>
         /// <param name="outdir"></param>
         /// <returns></returns>
         private static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
@@ -122,8 +122,18 @@ namespace RayGraphics.Geometric
             if (diff == Float2.zero)
                 return false;
 
-            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir, diff);
+
+            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
             if (ret < 0) return true;
+            else if (ret == 0)
+            {
+                if (Float2.Dot(diff, indir) <= 0)
+                    return false;
+
+                if (indir.sqrMagnitude < diff.sqrMagnitude)
+                    return true;
+                else return false;
+            }
             return false;
         }
     }
