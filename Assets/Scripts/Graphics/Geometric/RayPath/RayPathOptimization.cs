@@ -23,11 +23,11 @@ namespace RayGraphics.Geometric
             Float2 outdir = (lineEnd - lineStart).normalized;
             if (isCounterclockwiseDir == false)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - 0.1f);
+                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + 0.1f);
+                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine = SearchOutPoint(lineStart, far, outdir.normalized, listOptimizationLine);
             // 再倒序来一次优化
@@ -35,11 +35,11 @@ namespace RayGraphics.Geometric
             outdir = (lineStart - lineEnd).normalized;
             if (isCounterclockwiseDir == true)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - 0.1f);
+                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + 0.1f);
+                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine = SearchOutPoint(lineEnd, near, outdir.normalized, listOptimizationLine);
             listOptimizationLine.Reverse();
@@ -58,7 +58,7 @@ namespace RayGraphics.Geometric
         private static List<Float2> SearchOutPoint(Float2 lineStart, Float2 far, Float2 outdir, List<Float2> listOutEdgePoint)
         {
             if (listOutEdgePoint == null || listOutEdgePoint.Count == 0)
-                return null;
+                return listOutEdgePoint;
             // 开始搜寻了。
             List<Float2> lResult = new List<Float2>();
             Float2 startPoint = lineStart;

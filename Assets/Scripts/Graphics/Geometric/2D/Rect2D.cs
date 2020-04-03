@@ -114,14 +114,17 @@ namespace RayGraphics.Geometric
                     farPoint = s;
                 }
                 // 计算时针方向
-                float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
-                if (sinAngle < 0)
+                if (paths.Count > 0)
                 {
-                    isCounterclockwiseDir = false;
-                }
-                else
-                {
-                    isCounterclockwiseDir = true;
+                    float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
+                    if (sinAngle < 0)
+                    {
+                        isCounterclockwiseDir = false;
+                    }
+                    else
+                    {
+                        isCounterclockwiseDir = true;
+                    }
                 }
                 return true;
             }
