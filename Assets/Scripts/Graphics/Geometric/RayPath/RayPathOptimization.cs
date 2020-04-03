@@ -3,7 +3,7 @@ using RayGraphics.Math;
 
 namespace RayGraphics.Geometric
 {
-    public class RayPathOptimization1
+    public class RayPathOptimization
     {
         /// <summary>
         /// 优化路线
