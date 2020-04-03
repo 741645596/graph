@@ -175,7 +175,7 @@
             <param name="point"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Boolean@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -183,6 +183,7 @@
             <param name="offset">偏移值</param>
             <param name="nearPoint">最近的一个交点</param>
             <param name="farPoint">最远的一个交点</param>
+            <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
@@ -270,13 +271,15 @@
             半径
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
-            <returns></returns>
+        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Boolean@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
             <param name="line">线段</param>
             <param name="offset">偏移值</param>
+            <param name="nearPoint">最近的一个交点</param>
+            <param name="farPoint">最远的一个交点</param>
+            <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
@@ -891,12 +894,15 @@
             逆时针
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Boolean@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
             <param name="line">线段</param>
             <param name="offset">偏移值</param>
+            <param name="nearPoint">最近的一个交点</param>
+            <param name="farPoint">最远的一个交点</param>
+            <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
@@ -1126,12 +1132,15 @@
             <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Boolean@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
             <summary>
             最短射线包围盒路径
             </summary>
             <param name="line">线段</param>
             <param name="offset">偏移值</param>
+            <param name="nearPoint">最近的一个交点</param>
+            <param name="farPoint">最远的一个交点</param>
+            <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
             <param name="paths">返回路径</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
@@ -1507,7 +1516,7 @@
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2})">
             <summary>
             优化路线
             </summary>

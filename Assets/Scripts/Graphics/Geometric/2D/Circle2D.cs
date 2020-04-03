@@ -20,15 +20,17 @@ namespace RayGraphics.Geometric
             this.radius = radius;
             this.SetAABB(center - Float2.one * radius, center + Float2.one * radius);
         }
-        /// <returns></returns>
         /// <summary>
         /// 最短射线包围盒路径
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
+        /// <param name="nearPoint">最近的一个交点</param>
+        /// <param name="farPoint">最远的一个交点</param>
+        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
         {
             Float2 diff = this.circleCenter - line.startPoint;
             if (diff == Float2.zero)
@@ -68,6 +70,16 @@ namespace RayGraphics.Geometric
             nearPoint = p1;
             farPoint = p2;
             paths = listpath;
+            // 计算时针方向
+            float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
+            if (sinAngle < 0)
+            {
+                isCounterclockwiseDir = false;
+            }
+            else
+            {
+                isCounterclockwiseDir = true;
+            }
             return true;
         }
         /// <summary>

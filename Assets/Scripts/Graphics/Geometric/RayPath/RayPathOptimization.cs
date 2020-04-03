@@ -14,15 +14,14 @@ namespace RayGraphics.Geometric
         /// <param name="far">与动态挡格相交 far点</param>
         /// <param name="listMidPoint">2个交点之间的路线</param>
         /// <returns></returns>
-        public static List<Float2> OptimizationLine(Float2 lineStart, Float2 lineEnd, Float2 near, Float2 far, List<Float2> listMidPoint)
+        public static List<Float2> OptimizationLine(Float2 lineStart, Float2 lineEnd, Float2 near, Float2 far, bool isCounterclockwiseDir, List<Float2> listMidPoint)
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
             List<Float2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
             Float2 outdir = (lineEnd - lineStart).normalized;
-            float sinAngle = Float2.SinAngle(outdir, listOptimizationLine[0] - lineStart);
-            if (sinAngle < 0)
+            if (isCounterclockwiseDir == false)
             {
                 outdir = Float2.Rotate(outdir, MathUtil.kPI - 0.1f);
             }
@@ -34,8 +33,7 @@ namespace RayGraphics.Geometric
             // 再倒序来一次优化
             listOptimizationLine.Reverse();
             outdir = (lineStart - lineEnd).normalized;
-            sinAngle = Float2.SinAngle(outdir, listOptimizationLine[0] - lineEnd);
-            if (sinAngle < 0)
+            if (isCounterclockwiseDir == true)
             {
                 outdir = Float2.Rotate(outdir, MathUtil.kPI - 0.1f);
             }

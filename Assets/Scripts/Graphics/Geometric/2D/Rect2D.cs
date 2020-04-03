@@ -49,9 +49,12 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
+        /// <param name="nearPoint">最近的一个交点</param>
+        /// <param name="farPoint">最远的一个交点</param>
+        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
         /// <param name="paths">返回路径</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
         {
             int index = 0;
             Float3[] lineArray = new Float3[2];
@@ -109,6 +112,16 @@ namespace RayGraphics.Geometric
                     RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref paths);
                     nearPoint = e;
                     farPoint = s;
+                }
+                // 计算时针方向
+                float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
+                if (sinAngle < 0)
+                {
+                    isCounterclockwiseDir = false;
+                }
+                else
+                {
+                    isCounterclockwiseDir = true;
                 }
                 return true;
             }
