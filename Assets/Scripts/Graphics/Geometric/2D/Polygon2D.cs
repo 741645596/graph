@@ -522,6 +522,14 @@ namespace RayGraphics.Geometric
         {
             return this.pointArr.Length; 
         }
+        /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public override Float2[] GetPoints()
+        {
+            return this.pointArr;
+        }
 
     }
 }

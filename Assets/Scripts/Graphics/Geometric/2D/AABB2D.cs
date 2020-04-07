@@ -422,5 +422,18 @@ namespace RayGraphics.Geometric
         {
             return 4;
         }
+        /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public virtual Float2[] GetPoints()
+        {
+            Float2[] points = new Float2[4];
+            points[0] = this.leftBottom;
+            points[1] = this.RightBottom;
+            points[2] = this.rightUp;
+            points[3] = this.LeftUp;
+            return points;
+        }
     }
 }

@@ -261,6 +261,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetPoints">
+            <summary>
+            获取顶点数组
+            </summary>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Geometric.Circle2D.circleCenter">
             <summary>
             中心
@@ -1020,6 +1026,12 @@
         <member name="M:RayGraphics.Geometric.Polygon2D.GetEdgeNum">
             <summary>
             获取边数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPoints">
+            <summary>
+            获取顶点数组
             </summary>
             <returns></returns>
         </member>
