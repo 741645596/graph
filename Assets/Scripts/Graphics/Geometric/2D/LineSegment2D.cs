@@ -188,15 +188,44 @@ namespace RayGraphics.Geometric
             // 进行跨立实验
             Float2 diff1 = line.startPoint - this.startPoint;
             Float2 diff2 = line.endPoint - this.startPoint;
-            if (Float2.Cross(this.normalizedDir, diff1) * Float2.Cross(this.normalizedDir, diff2) > 0)
+
+            float value = Float2.Cross(this.normalizedDir, diff1) * Float2.Cross(this.normalizedDir, diff2);
+            if (value > 0)
             {
                 return LineRelation.Detach;
             }
+            else if (value == 0)
+            {
+                if (Float2.Dot(diff1, diff2) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                else if (Float2.Dot(line.startPoint - this.endPoint, line.endPoint - this.endPoint) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                else return LineRelation.Detach;
+            }
+            //
             diff1 = this.startPoint - line.startPoint;
             diff2 = this.endPoint - line.startPoint;
-            if (Float2.Cross(line.normalizedDir, diff1) * Float2.Cross(line.normalizedDir, diff2) > 0)
+
+            value = Float2.Cross(line.normalizedDir, diff1) * Float2.Cross(line.normalizedDir, diff2);
+            if (value > 0)
             {
                 return LineRelation.Detach;
+            }
+            else if (value == 0)
+            {
+                if (Float2.Dot(diff1, diff2) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                else if (Float2.Dot(this.startPoint - line.endPoint, this.endPoint - line.endPoint) <= 0)
+                {
+                    return LineRelation.Intersect;
+                }
+                else return LineRelation.Detach;
             }
             return LineRelation.Intersect;
         }
