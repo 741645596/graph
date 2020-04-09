@@ -179,24 +179,6 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
-        /// 点导几何元素的投影点
-        /// </summary>
-        /// <param name="pt"></param>
-        /// <returns></returns>
-        public Float2 ProjectPoint(Float2 pt)
-        {
-            return Float2.zero;
-        }
-        /// <summary>
-        /// 求轴向量
-        /// </summary>
-        /// <param name="pt"></param>
-        /// <returns></returns>
-        public Float2 AixsVector(Float2 pt)
-        {
-            return Float2.zero;
-        }
-        /// <summary>
         /// 与直线的关系
         /// </summary>
         /// <param name="line"></param>
@@ -230,7 +212,7 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
-        /// 直线与射线间的关系
+        /// 射线间的关系
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
@@ -246,15 +228,6 @@ namespace RayGraphics.Geometric
         public virtual LineRelation CheckLineRelation(LineSegment2D line)
         {
             return LineRelation.Intersect;
-        }
-        /// <summary>
-        /// 镜面但
-        /// </summary>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        public Float2 GetMirrorPoint(Float2 point)
-        {
-            return point - 2 * AixsVector(point);
         }
         /// <summary>
         /// 最短射线包围盒路径

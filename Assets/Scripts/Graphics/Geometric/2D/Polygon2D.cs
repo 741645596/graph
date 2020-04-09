@@ -530,6 +530,40 @@ namespace RayGraphics.Geometric
         {
             return this.pointArr;
         }
+        /// <summary>
+        /// 判断点是否在直线上
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public override bool CheckIn(Float2 pt)
+        {
+            // 做射线， y = pt.y
+            bool flag = false;
+            int edgeNum = GetEdgeNum();
+            for (int i = 0; i < edgeNum; i++)
+            {
+                LineSegment2D line = GetEdge(i);
+                // 先判断点是否在边上。
+                if (line.CheckIn(pt) == true)
+                    return true;
+                Float2 diff = line.endPoint - line.startPoint;
+
+                if ((line.startPoint.y <= pt.y && line.endPoint.y >= pt.y) || (line.startPoint.y >= pt.y && line.endPoint.y <= pt.y))
+                {
+                    if (diff.y != 0)
+                    {
+                        float x = line.startPoint.x + (pt.y - line.startPoint.y) * diff.x / diff.y;
+                        // 射线穿过多边形的边界
+                        if (x > pt.x)
+                        {
+                            flag = !flag;
+                        }
+                    }
+                    // 共线情况，肯定是点在线段2端。
+                }
+            }
+            return flag;
+        }
 
     }
 }

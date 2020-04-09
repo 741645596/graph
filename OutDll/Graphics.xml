@@ -133,20 +133,6 @@
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.ProjectPoint(RayGraphics.Math.Float2)">
-            <summary>
-            点导几何元素的投影点
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.AixsVector(RayGraphics.Math.Float2)">
-            <summary>
-            求轴向量
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.Line2D)">
             <summary>
             与直线的关系
@@ -156,7 +142,7 @@
         </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.Rays2D)">
             <summary>
-            直线与射线间的关系
+            射线间的关系
             </summary>
             <param name="line"></param>
             <returns></returns>
@@ -166,13 +152,6 @@
             与线段的关系
             </summary>
             <param name="line"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.GetMirrorPoint(RayGraphics.Math.Float2)">
-            <summary>
-            镜面但
-            </summary>
-            <param name="point"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@,System.Boolean@,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
@@ -1033,6 +1012,13 @@
             <summary>
             获取顶点数组
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIn(RayGraphics.Math.Float2)">
+            <summary>
+            判断点是否在直线上
+            </summary>
+            <param name="pt"></param>
             <returns></returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
