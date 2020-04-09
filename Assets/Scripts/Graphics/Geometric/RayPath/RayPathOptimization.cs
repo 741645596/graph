@@ -18,6 +18,16 @@ namespace RayGraphics.Geometric
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
+/*
+#if UNITY_EDITOR
+            List<Float2> l = new List<Float2>();
+            l.Add(near);
+            l.AddRange(listMidPoint);
+            l.Add(far);
+            SkillObb.instance.TargetPoly = l.ToArray();
+#endif
+*/
+
             List<Float2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
             Float2 outdir = (lineEnd - lineStart).normalized;
@@ -122,9 +132,14 @@ namespace RayGraphics.Geometric
             if (diff == Float2.zero)
                 return false;
 
-
             float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
-            if (ret < 0) return true;
+            if (ret < 0)
+            {
+                // 添加异常处理,防止在反方向
+                if (Float2.Dot(diff, indir.normalized + outdir) < 0)
+                    return false;
+                else return true;
+            }  
             else if (ret == 0)
             {
                 if (Float2.Dot(diff, indir) <= 0)
