@@ -488,6 +488,43 @@ namespace RayGraphics.Math
         {
             return Float2.zero;
         }
+
+
+        /// <summary>
+        /// 判断目标点，在夹角内，
+        /// </summary>
+        /// <param name="target">目标点</param>
+        /// <param name="startPoint">起点</param>
+        /// <param name="indir">起点出发的2个边界向量</param>
+        /// <param name="outdir">起点出发的2个边界向量</param>
+        /// <returns></returns>
+        public static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
+        {
+            Float2 diff = target - startPoint;
+            if (diff == Float2.zero)
+                return false;
+
+            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
+            if (ret < 0)
+            {
+                Float2 mid = indir.normalized + outdir.normalized;
+                // 添加异常处理,防止在反方向
+                if (Float2.Dot(diff, mid) < 0)
+                    return false;
+                else return true;
+            }
+            else if (ret == 0)
+            {
+                if (Float2.Dot(diff, indir) <= 0)
+                    return false;
+
+                if (indir.sqrMagnitude < diff.sqrMagnitude)
+                    return true;
+                else return false;
+            }
+            return false;
+        }
+
 #if Client
         /// <summary>
         /// 转vector2

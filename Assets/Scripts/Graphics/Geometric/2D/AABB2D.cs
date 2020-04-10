@@ -234,12 +234,9 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
-        /// <param name="nearPoint">最近的一个交点</param>
-        /// <param name="farPoint">最远的一个交点</param>
-        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
-        /// <param name="paths">返回路径</param>
+        /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
+        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref RayboundingInfo rbi)
         {
             return false;
         }

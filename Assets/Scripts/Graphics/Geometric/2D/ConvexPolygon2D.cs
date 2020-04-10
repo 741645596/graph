@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RayGraphics.Math;
 
 
@@ -188,7 +187,7 @@ namespace RayGraphics.Geometric
                 // 先过滤了。
                 foreach (Float2 pos in lHave)
                 {
-                    if (CheckPointInCorns(pos, startPoint, indir, outdir) == true)
+                    if (Float2.CheckPointInCorns(pos, startPoint, indir, outdir) == true)
                     {
                         listinPoints.Add(pos);
                         if (isHaveBestPoint == false)
@@ -204,7 +203,7 @@ namespace RayGraphics.Geometric
                     for (int i = 1; i < listinPoints.Count; i++)
                     {
                         // 比较更好的点。
-                        if (CheckPointInCorns(listinPoints[i], startPoint, (bestPoint - startPoint).normalized, outdir) == true)
+                        if (Float2.CheckPointInCorns(listinPoints[i], startPoint, (bestPoint - startPoint).normalized, outdir) == true)
                         {
                             bestPoint = listinPoints[i];
                         }
@@ -222,26 +221,5 @@ namespace RayGraphics.Geometric
             }
             return lResult;
         }
-        /// <summary>
-        /// 判断指定的点，在夹角内。不包括在边上。
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="startPoint"></param>
-        /// <param name="sindir"></param>
-        /// <param name="outdir"></param>
-        /// <returns></returns>
-        private static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
-        {
-            Float2 diff = target - startPoint;
-            if (diff == Float2.zero)
-                return false;
-            if (Float2.Dot(target - startPoint, outdir) < 0)
-                return false;
-
-            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir, diff);
-            if (ret < 0) return true;
-            return false;
-        }
-
     }
 }

@@ -18,15 +18,15 @@ namespace RayGraphics.Geometric
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
-/*
+
 #if UNITY_EDITOR
-            List<Float2> l = new List<Float2>();
-            l.Add(near);
-            l.AddRange(listMidPoint);
-            l.Add(far);
-            SkillObb.instance.TargetPoly = l.ToArray();
+ //           List<Float2> l = new List<Float2>();
+ //           l.Add(near);
+ //           l.AddRange(listMidPoint);
+ //           l.Add(far);
+ //           SkillObb.instance.TargetPoly = l.ToArray();
 #endif
-*/
+
 
             List<Float2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
@@ -83,7 +83,7 @@ namespace RayGraphics.Geometric
                 // 先过滤了。
                 foreach (Float2 pos in lHave)
                 {
-                    if (CheckPointInCorns(pos, startPoint, indir, outdir) == true)
+                    if (Float2.CheckPointInCorns(pos, startPoint, indir, outdir) == true)
                     {
                         listinPoints.Add(pos);
                         if (isHaveBestPoint == false)
@@ -99,7 +99,7 @@ namespace RayGraphics.Geometric
                     for (int i = 1; i < listinPoints.Count; i++)
                     {
                         // 比较更好的点。
-                        if (CheckPointInCorns(listinPoints[i], startPoint, bestPoint - startPoint, outdir) == true)
+                        if (Float2.CheckPointInCorns(listinPoints[i], startPoint, bestPoint - startPoint, outdir) == true)
                         {
                             bestPoint = listinPoints[i];
                         }
@@ -118,38 +118,6 @@ namespace RayGraphics.Geometric
             }
             return lResult;
         }
-        /// <summary>
-        /// 判断指定的点，在夹角内。不包括在边上。
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="startPoint"></param>
-        /// <param name="indir"></param>
-        /// <param name="outdir"></param>
-        /// <returns></returns>
-        private static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
-        {
-            Float2 diff = target - startPoint;
-            if (diff == Float2.zero)
-                return false;
-
-            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
-            if (ret < 0)
-            {
-                // 添加异常处理,防止在反方向
-                if (Float2.Dot(diff, indir.normalized + outdir) < 0)
-                    return false;
-                else return true;
-            }  
-            else if (ret == 0)
-            {
-                if (Float2.Dot(diff, indir) <= 0)
-                    return false;
-
-                if (indir.sqrMagnitude < diff.sqrMagnitude)
-                    return true;
-                else return false;
-            }
-            return false;
-        }
     }
+
 }

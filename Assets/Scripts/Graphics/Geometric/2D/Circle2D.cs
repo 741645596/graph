@@ -25,13 +25,14 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
-        /// <param name="nearPoint">最近的一个交点</param>
-        /// <param name="farPoint">最远的一个交点</param>
-        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
-        /// <param name="paths">返回路径</param>
+        /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref RayboundingInfo rbi)
         {
+            if (rbi == null)
+            {
+                rbi = new RayboundingInfo();
+            }
             Float2 diff = this.circleCenter - line.startPoint;
             if (diff == Float2.zero)
                 return false;
@@ -67,22 +68,13 @@ namespace RayGraphics.Geometric
                 Float2 rorateVector = Float2.Rotate(startVector, -diffangle * i);
                 listpath.Add(rorateVector + this.circleCenter);
             }
-            nearPoint = p1;
-            farPoint = p2;
-            paths = listpath;
-            // 计算时针方向
-            if (paths.Count > 0)
+            rbi.listpath = listpath;
+            if (rbi.listpath != null && rbi.listpath.Count > 0)
             {
-                float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
-                if (sinAngle < 0)
-                {
-                    isCounterclockwiseDir = false;
-                }
-                else
-                {
-                    isCounterclockwiseDir = true;
-                }
+                rbi.CalcHelpData(line, offset, p1, p2);
+                return true;
             }
+
             return true;
         }
         /// <summary>

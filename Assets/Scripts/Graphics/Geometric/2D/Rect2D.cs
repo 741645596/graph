@@ -49,13 +49,14 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
-        /// <param name="nearPoint">最近的一个交点</param>
-        /// <param name="farPoint">最远的一个交点</param>
-        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
-        /// <param name="paths">返回路径</param>
+        /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref RayboundingInfo rbi)
         {
+            if (rbi == null)
+            {
+                rbi = new RayboundingInfo();
+            }
             int index = 0;
             Float3[] lineArray = new Float3[2];
             Float2 intersectionPoint = Float2.zero;
@@ -90,42 +91,26 @@ namespace RayGraphics.Geometric
             {
                 float v1 = (new Float2(lineArray[0].x, lineArray[0].y) - line.startPoint).sqrMagnitude;
                 float v2 = (new Float2(lineArray[1].x, lineArray[1].y) - line.startPoint).sqrMagnitude;
+                Float2 s ;
+                Float2 e ;
                 if (v1 < v2)
                 {
-                    Float2 s = new Float2(lineArray[0].x, lineArray[0].y);
-                    Float2 e = new Float2(lineArray[1].x, lineArray[1].y);
-                    Float2 fnormalized = (e - s).normalized * + offset;
-                    s -= fnormalized;
-                    e += fnormalized;
-                    RayboundingNearestPath(new Float3(s.x, s.y, lineArray[0].z), new Float3(e.x, e.y, lineArray[1].z), offset, ref paths);
-                    nearPoint = s;
-                    farPoint = e;
+                    s = new Float2(lineArray[0].x, lineArray[0].y);
+                    e = new Float2(lineArray[1].x, lineArray[1].y);
+                    RayboundingNearestPath(new Float3(s.x, s.y, lineArray[0].z), new Float3(e.x, e.y, lineArray[1].z), offset, ref rbi.listpath);
                 }
                 else
                 {
-                    Float2 e = new Float2(lineArray[0].x, lineArray[0].y);
-                    Float2 s = new Float2(lineArray[1].x, lineArray[1].y);
-                    Float2 fnormalized = (e - s).normalized * offset;
-                    s -= fnormalized;
-                    e += fnormalized;
-                    RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref paths);
-                    nearPoint = s;
-                    farPoint = e;
+                    e = new Float2(lineArray[0].x, lineArray[0].y);
+                    s = new Float2(lineArray[1].x, lineArray[1].y);
+                    RayboundingNearestPath(new Float3(s.x, s.y, lineArray[1].z), new Float3(e.x, e.y, lineArray[0].z), offset, ref rbi.listpath);
                 }
-                // 计算时针方向
-                if (paths.Count > 0)
+                if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
-                    float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
-                    if (sinAngle < 0)
-                    {
-                        isCounterclockwiseDir = false;
-                    }
-                    else
-                    {
-                        isCounterclockwiseDir = true;
-                    }
+                    rbi.CalcHelpData(line, offset, s, e);
+                    return true;
                 }
-                return true;
+                return false;
             }
             else
             {

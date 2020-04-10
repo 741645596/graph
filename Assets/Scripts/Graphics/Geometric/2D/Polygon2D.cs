@@ -70,13 +70,14 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line">线段</param>
         /// <param name="offset">偏移值</param>
-        /// <param name="nearPoint">最近的一个交点</param>
-        /// <param name="farPoint">最远的一个交点</param>
-        /// <param name="isCounterclockwiseDir">路线在线段区域，是否逆时针方向</param>
-        /// <param name="paths">返回路径</param>
+        /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref Float2 nearPoint, ref Float2 farPoint, ref bool isCounterclockwiseDir, ref List<Float2> paths)
+        public override bool RayboundingNearestPath(LineSegment2D line, float offset, ref RayboundingInfo rbi)
         {
+            if (rbi == null)
+            {
+                rbi = new RayboundingInfo();
+            }
             List<Float3> lineArray = new List<Float3>();
             Float2 intersectionPoint = Float2.zero;
             for (int i = 0; i < this.pointArr.Length ; i++)
@@ -105,13 +106,13 @@ namespace RayGraphics.Geometric
                         {
                             List<Float2> temppaths = new List<Float2>();
                             RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
-                            if (paths == null)
+                            if (rbi.listpath == null)
                             {
-                                paths = temppaths;
+                                rbi.listpath = temppaths;
                             }
                             else
                             {
-                                paths.AddRange(temppaths);
+                                rbi.listpath.AddRange(temppaths);
                             }
                         }
                         isIn = !isIn;
@@ -121,30 +122,19 @@ namespace RayGraphics.Geometric
                 {
                     List<Float2> temppaths = new List<Float2>();
                     RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
-                    if (paths == null)
+                    if (rbi.listpath == null)
                     {
-                        paths = temppaths;
+                        rbi.listpath = temppaths;
                     }
                     else
                     {
-                        paths.AddRange(temppaths);
+                        rbi.listpath.AddRange(temppaths);
                     }
                 }
-                if (paths != null && paths.Count > 0)
+                if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
-                    nearPoint = new Float2(lineArray[0].x, lineArray[0].y) - offset * line.normalizedDir;
-                    farPoint = new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y) + offset * line.normalizedDir;
-                    // 计算时针方向
-                    float sinAngle = Float2.SinAngle(line.normalizedDir, paths[0] - line.startPoint);
-                    if (sinAngle < 0)
-                    {
-                        isCounterclockwiseDir = false;
-                    }
-                    else
-                    {
-                        isCounterclockwiseDir = true;
-                    }
-                    return true;
+                    rbi.CalcHelpData(line, offset, new Float2(lineArray[0].x, lineArray[0].y), new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y));
+                    return true;               
                 }
                 return false;
             }
@@ -269,13 +259,13 @@ namespace RayGraphics.Geometric
             Float2 diff;
             if (index == 0)
             {
-                diff = GetEdge(this.pointArr.Length - 1).normalizedDir + GetEdge(0).normalizedDir;
+                diff = GetNormal(this.pointArr.Length - 1) + GetNormal(0);
             }
             else
             {
-                diff = GetEdge(index - 1).normalizedDir + GetEdge(index).normalizedDir;
+                diff = GetNormal(index - 1) + GetNormal(index);
             }
-            return this.pointArr[index] - offset * diff;
+            return this.pointArr[index] + offset * diff.normalized;
         }
         /// <summary>
         /// 确认方向（顺时针，逆时针方向）
