@@ -19,15 +19,6 @@ namespace RayGraphics.Geometric
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
 
-#if UNITY_EDITOR
- //           List<Float2> l = new List<Float2>();
- //           l.Add(near);
- //           l.AddRange(listMidPoint);
- //           l.Add(far);
- //           SkillObb.instance.TargetPoly = l.ToArray();
-#endif
-
-
             List<Float2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
             Float2 outdir = (lineEnd - lineStart).normalized;
@@ -81,16 +72,18 @@ namespace RayGraphics.Geometric
             while (lHave != null && lHave.Count > 0)
             {
                 // 先过滤了。
-                foreach (Float2 pos in lHave)
+                for (int i = 0; i < lHave.Count; i++)
                 {
+                    Float2 pos = lHave[i];
                     if (Float2.CheckPointInCorns(pos, startPoint, indir, outdir) == true)
                     {
-                        listinPoints.Add(pos);
-                        if (isHaveBestPoint == false)
+                        bestPoint = pos;
+                        isHaveBestPoint = true;
+                        for (int k = i; k < lHave.Count; k++)
                         {
-                            bestPoint = pos;
-                            isHaveBestPoint = true;
+                            listinPoints.Add(lHave[k]);
                         }
+                        break;
                     }
                 }
                 // 再则优。
