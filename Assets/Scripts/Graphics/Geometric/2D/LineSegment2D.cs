@@ -89,6 +89,34 @@ namespace RayGraphics.Geometric
                 return pt;
             return Float2.Project(diff, this.normalizedDir) + this.startPoint;
         }
+
+        /// <summary>
+        /// 点导几何元素的投影点
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public ProjectPointInLine CheckProjectInLine(Float2 pt)
+        {
+            Float2 projectPoint = ProjectPoint(pt);
+            float value = Float2.Dot(projectPoint - this.startPoint, this.normalizedDir);
+            if (value < 0)
+            {
+                return ProjectPointInLine.OutStart;
+            }
+            else if (value == 0)
+            {
+                return ProjectPointInLine.In;
+            }
+            else
+            {
+                value = Float2.Dot(projectPoint - this.endPoint, -this.normalizedDir);
+                if (value >= 0)
+                {
+                    return ProjectPointInLine.In;
+                }
+                else return ProjectPointInLine.OutEnd;
+            }
+        }
         /// <summary>
         /// 求轴向量
         /// </summary>

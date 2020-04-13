@@ -651,6 +651,13 @@
             <param name="pt"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.LineSegment2D.CheckProjectInLine(RayGraphics.Math.Float2)">
+            <summary>
+            点导几何元素的投影点
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.LineSegment2D.AixsVector(RayGraphics.Math.Float2)">
             <summary>
             求轴向量
@@ -1540,6 +1547,24 @@
             <param name="outdir">外包边</param>
             <param name="listOutEdgePoint"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.CheckProjectInLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            判断线段起点是否在投影点范围内。
+            </summary>
+            <param name="lineStart"></param>
+            <param name="lineEnd"></param>
+            <param name="listMidPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.Calcindir(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2@)">
+            <summary>
+            计算indir方向
+            </summary>
+            <param name="prevPoint"></param>
+            <param name="curPoint"></param>
+            <param name="endPoint"></param>
+            <param name="indir"></param>
         </member>
         <member name="M:RayGraphics.Math.Float2.Set(System.Single,System.Single)">
             <summary>
@@ -2533,6 +2558,26 @@
         <member name="F:RayGraphics.Math.PolygonType.Concave">
             <summary>
             凹多边形
+            </summary>
+        </member>
+        <member name="T:RayGraphics.Math.ProjectPointInLine">
+            <summary>
+            投影点在线上的关系
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.ProjectPointInLine.OutStart">
+            <summary>
+            重合
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.ProjectPointInLine.In">
+            <summary>
+            平行
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.ProjectPointInLine.OutEnd">
+            <summary>
+            相交
             </summary>
         </member>
         <member name="F:RayGraphics.Math.Matrix2x2.col1">

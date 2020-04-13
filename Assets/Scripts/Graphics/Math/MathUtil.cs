@@ -101,4 +101,22 @@ namespace RayGraphics.Math
         /// </summary>
         Concave = 1,
     }
+    /// <summary>
+    /// 投影点在线上的关系
+    /// </summary>
+    public enum ProjectPointInLine
+    {
+        /// <summary>
+        /// 重合
+        /// </summary>
+        OutStart = 0,
+        /// <summary>
+        /// 平行
+        /// </summary>
+        In = 1,
+        /// <summary>
+        /// 相交
+        /// </summary>
+        OutEnd = 2,
+    }
 }

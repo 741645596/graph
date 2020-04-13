@@ -118,6 +118,77 @@ namespace RayGraphics.Geometric
             }
             return lResult;
         }
+        /// <summary>
+        /// 判断线段起点是否在投影点范围内。
+        /// </summary>
+        /// <param name="lineStart"></param>
+        /// <param name="lineEnd"></param>
+        /// <param name="listMidPoint"></param>
+        /// <returns></returns>
+        private static bool CheckProjectInLine(Float2 lineStart, Float2 lineEnd, List<Float2> listMidPoint)
+        {
+            if (listMidPoint == null || listMidPoint.Count == 0)
+                return true;
+            LineSegment2D line = new LineSegment2D(lineStart, lineEnd);
+            foreach (Float2 v in listMidPoint)
+            {
+                if (line.CheckProjectInLine(v) == ProjectPointInLine.OutStart)
+                    return false;
+            }
+            return true;
+        }
+
+        private static void CalcCornsVector(Float2 lineStart, Float2 lineEnd, bool isCounterclockwiseDir, List<Float2> listMidPoint, ref Float2 outdir, ref Float2 indir)
+        {
+            bool isProjectInLine = CheckProjectInLine(lineStart, lineEnd, listMidPoint);
+            // 先顺序来一次优化
+            indir = lineEnd - lineStart;
+            if (isProjectInLine == false)
+            {
+                indir = -indir;
+                if (isCounterclockwiseDir == false)
+                {
+                    outdir = Float2.Rotate(indir, MathUtil.kPI / 2 - MathUtil.kEpsilon);
+                    indir = Float2.Rotate(indir, -MathUtil.kPI / 2);
+                }
+                else
+                {
+                    outdir = Float2.Rotate(indir, -MathUtil.kPI / 2 + MathUtil.kEpsilon);
+                    indir = Float2.Rotate(indir, MathUtil.kPI / 2);
+                }
+            }
+            else
+            {
+                if (isCounterclockwiseDir == false)
+                {
+                    outdir = Float2.Rotate(indir, MathUtil.kPI / 2);
+                }
+                else
+                {
+                    outdir = Float2.Rotate(indir, -MathUtil.kPI / 2);
+                }
+            }
+        }
+        /// <summary>
+        /// 计算indir方向
+        /// </summary>
+        /// <param name="prevPoint"></param>
+        /// <param name="curPoint"></param>
+        /// <param name="endPoint"></param>
+        /// <param name="indir"></param>
+        private static void Calcindir(Float2 prevPoint, Float2 curPoint, Float2 endPoint, ref Float2 indir)
+        {
+            LineSegment2D line = new LineSegment2D(prevPoint, curPoint);
+            float sinAngle = Float2.SinAngle(line.normalizedDir, endPoint - line.startPoint);
+            if (sinAngle < 0)
+            {
+                indir = Float2.Rotate(indir, -MathUtil.kPI + MathUtil.kEpsilon);
+            }
+            else
+            {
+                indir = Float2.Rotate(indir, MathUtil.kPI - MathUtil.kEpsilon);
+            }
+        }
     }
 
 }
