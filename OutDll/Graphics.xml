@@ -1548,23 +1548,15 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.CheckProjectInLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.CalcNearFarest(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2},System.Int32@,System.Int32@)">
             <summary>
-            判断线段起点是否在投影点范围内。
+            计算超出线段范围
             </summary>
             <param name="lineStart"></param>
             <param name="lineEnd"></param>
             <param name="listMidPoint"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.Calcindir(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2@)">
-            <summary>
-            计算indir方向
-            </summary>
-            <param name="prevPoint"></param>
-            <param name="curPoint"></param>
-            <param name="endPoint"></param>
-            <param name="indir"></param>
+            <param name="nearestIndex"></param>
+            <param name="farestIndex"></param>
         </member>
         <member name="M:RayGraphics.Math.Float2.Set(System.Single,System.Single)">
             <summary>
