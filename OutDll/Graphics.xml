@@ -879,12 +879,10 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.CheckSamePathDir(System.Collections.Generic.List{RayGraphics.Math.Float3},System.Boolean)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckisSubChild(System.Int32,System.Int32,System.Boolean,System.Int32,System.Int32)">
             <summary>
-            确认局部方向是否跟全局方向保持一致
+            确定是否为其子集, 先简单实现。
             </summary>
-            <param name="lineArray"></param>
-            <param name="isPathDir"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
@@ -893,6 +891,16 @@
             </summary>
             <param name="p1"></param>
             <param name="p2"></param>
+            <param name="offset"></param>
+            <param name="isPathDir"></param>
+            <param name="paths"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPathPoint(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            中间经过的顶点，不包含2端的点。
+            </summary>
+            <param name="startIndex"></param>
+            <param name="endIndex"></param>
             <param name="offset"></param>
             <param name="isPathDir"></param>
             <param name="paths"></param>

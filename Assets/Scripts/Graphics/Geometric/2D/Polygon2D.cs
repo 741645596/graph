@@ -97,40 +97,32 @@ namespace RayGraphics.Geometric
                 lineArray.Sort((x, y) => Float2.Distance(new Float2(x.x, x.y), line.startPoint).CompareTo(Float2.Distance(new Float2(y.x, y.y), line.startPoint)));
                 //
                 bool isPathDir = CheckPathDir(lineArray[0], lineArray[lineArray.Count - 1]);
-                if (CheckSamePathDir(lineArray, isPathDir) == true)
+                List<Float2> temppaths = new List<Float2>();
+                RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
+                if (rbi.listpath == null)
                 {
-                    bool isIn = true;
-                    for (int i = 0; i < lineArray.Count - 1; i++)
+                    rbi.listpath = temppaths;
+                }
+                else
+                {
+                    rbi.listpath.AddRange(temppaths);
+                }
+                // 排斥需要扣除的点。
+                for (int i = 1; i < lineArray.Count - 1; i+= 2)
+                {
+                    if (CheckisSubChild((int)lineArray[0].z, (int)lineArray[lineArray.Count - 1].z, isPathDir, (int)lineArray[i].z, (int)lineArray[i + 1].z) == false)
+                        continue;
+                    List<Float2> listTemp = new List<Float2>();
+                    RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref listTemp);
+                    if (listTemp.Count > 0)
                     {
-                        if (isIn == true)
+                        foreach (Float2 pos in listTemp)
                         {
-                            List<Float2> temppaths = new List<Float2>();
-                            RayboundingNearestPath(lineArray[i], lineArray[i + 1], offset, isPathDir, ref temppaths);
-                            if (rbi.listpath == null)
-                            {
-                                rbi.listpath = temppaths;
-                            }
-                            else
-                            {
-                                rbi.listpath.AddRange(temppaths);
-                            }
+                            rbi.listpath.Remove(pos);
                         }
-                        isIn = !isIn;
                     }
                 }
-                else  // 与整体方向不一致。直接暴力取2头的点。
-                {
-                    List<Float2> temppaths = new List<Float2>();
-                    RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
-                    if (rbi.listpath == null)
-                    {
-                        rbi.listpath = temppaths;
-                    }
-                    else
-                    {
-                        rbi.listpath.AddRange(temppaths);
-                    }
-                }
+                //
                 if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
                     rbi.CalcHelpData(line, offset, new Float2(lineArray[0].x, lineArray[0].y), new Float2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y));
@@ -140,54 +132,21 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
-        /// 确认局部方向是否跟全局方向保持一致
+        /// 确定是否为其子集, 先简单实现。
         /// </summary>
-        /// <param name="lineArray"></param>
-        /// <param name="isPathDir"></param>
         /// <returns></returns>
-        private bool CheckSamePathDir(List<Float3> lineArray, bool isPathDir)
+        private bool CheckisSubChild(int start , int end, bool isPathDir, int substart ,int subend)
         {
-            if (lineArray == null || lineArray.Count < 3)
-                return true;
-            int p1 = (int)lineArray[0].z;
-            int p2 = (int)lineArray[1].z;
-            int p3 = (int)lineArray[2].z;
-            if (p1 >= p2 && p1 >= p3)
+           List<int> listall = GetPathPoint(start, end, isPathDir);
+           List<int> listsub = GetPathPoint(substart, subend, isPathDir);
+
+            foreach (int index in listsub)
             {
-                if (p3 >= p2)
-                {
-                    // 顺时针方向
-                    return isPathDir;
-                }
-                else
-                {
-                    return !isPathDir;
-                }
+                listall.Remove(index);
             }
-            else if (p2 >= p1 && p2 >= p3)
-            {
-                if (p1 >= p3)
-                {
-                    // 顺时针方向
-                    return isPathDir;
-                }
-                else
-                {
-                    return !isPathDir;
-                }
-            }
-            else 
-            {
-                if (p2 >= p1)
-                {
-                    // 顺时针方向
-                    return isPathDir;
-                }
-                else
-                {
-                    return !isPathDir;
-                }
-            }
+            if (listall.Count == 0)
+                return false;
+            else return true;
         }
         /// <summary>
         /// 中间经过的顶点，不包含2端的点。
@@ -245,6 +204,67 @@ namespace RayGraphics.Geometric
                 }
             }
             paths = listpath;
+        }
+
+
+
+
+        /// <summary>
+        /// 中间经过的顶点，不包含2端的点。
+        /// </summary>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
+        /// <param name="offset"></param>
+        /// <param name="isPathDir"></param>
+        /// <param name="paths"></param>
+        private List<int> GetPathPoint(int startIndex, int endIndex, bool isPathDir)
+        {
+            List<int> listpath = new List<int>();
+            // 先计算逆时针距离。
+            if (startIndex < endIndex)
+            {
+                if (isPathDir == true)
+                {
+                    for (int i = startIndex + 1; i <= endIndex; i++)
+                    {
+                        listpath.Add(i);
+                    }
+                }
+                else
+                {
+                    for (int i = startIndex; i >= 0; i--)
+                    {
+                        listpath.Add(i);
+                    }
+                    //
+                    for (int i = this.pointArr.Length - 1; i > endIndex; i--)
+                    {
+                        listpath.Add(i);
+                    }
+                }
+            }
+            else if (startIndex > endIndex)
+            {
+                if (isPathDir == false)
+                {
+                    for (int i = startIndex; i >= endIndex + 1; i--)
+                    {
+                        listpath.Add(i);
+                    }
+                }
+                else
+                {
+                    for (int i = startIndex + 1; i < this.pointArr.Length; i++)
+                    {
+                        listpath.Add(i);
+                    }
+                    for (int i = 0; i <= endIndex; i++)
+                    {
+                        listpath.Add(i);
+                    }
+                }
+            }
+            return listpath;
         }
         /// <summary>
         /// 获取指定顶点的外部偏移点
