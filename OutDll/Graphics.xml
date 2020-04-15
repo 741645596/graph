@@ -1556,7 +1556,33 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.CalcNearFarest(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2},System.Int32@,System.Int32@)">
+        <member name="T:RayGraphics.Geometric.RayPathOptimization1">
+            <summary>
+            bake 版本
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            优化路线
+            </summary>
+            <param name="lineStart">线段起点</param>
+            <param name="lineEnd">线段终点</param>
+            <param name="near">与动态挡格相交 near点</param>
+            <param name="far">与动态挡格相交 far点</param>
+            <param name="listMidPoint">2个交点之间的路线</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.SearchOutPoint(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            获取最边缘一圈的顶点。
+            </summary>
+            <param name="lineStart">起点</param>
+            <param name="far">远处的交点</param>
+            <param name="outdir">外包边</param>
+            <param name="listOutEdgePoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.CalcNearFarest(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2},System.Int32@,System.Int32@)">
             <summary>
             计算超出线段范围
             </summary>
