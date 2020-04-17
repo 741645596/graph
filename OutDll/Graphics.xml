@@ -253,6 +253,24 @@
             半径
             </summary>
         </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.CreateCircumCircle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            创建外接圆
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="p3"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.CreateInscribedCircle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            创建内接圆
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="p3"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
             最短射线包围盒路径

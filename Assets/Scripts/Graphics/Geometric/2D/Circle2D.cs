@@ -21,6 +21,78 @@ namespace RayGraphics.Geometric
             this.SetAABB(center - Float2.one * radius, center + Float2.one * radius);
         }
         /// <summary>
+        /// 创建外接圆
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <returns></returns>
+        public static Circle2D CreateCircumCircle(Float2 p1, Float2 p2, Float2 p3)
+        {
+            // 排除三点共线
+            Float2 diff1 = p2 - p1;
+            Float2 diff2 = p3 - p1;
+            if (diff1 == Float2.zero || diff2 == Float2.zero)
+                return null;
+
+            float value = Float2.Cross(diff1, diff2);
+            if (System.Math.Abs(value) < MathUtil.kEpsilon)
+            {
+                return null;
+            }
+            // 2垂直平分线就是圆心。
+            Float2 mid1 = p1 + diff1 * 0.5f;
+            Float2 mid2 = p1 + diff2 * 0.5f;
+            Line2D line1 = new Line2D(mid1, Float2.Perpendicular(diff1));
+            Line2D line2 = new Line2D(mid2, Float2.Perpendicular(diff2));
+
+            Float2 center = Float2.zero;
+            if (line1.GetIntersectPoint(line2, ref center) == true)
+            {
+                float radius = (center - p1).magnitude;
+                return new Circle2D(center, radius);
+            }
+            else return null;
+        }
+
+
+        /// <summary>
+        /// 创建内接圆
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <returns></returns>
+        public static Circle2D CreateInscribedCircle(Float2 p1, Float2 p2, Float2 p3)
+        {
+            // 排除三点共线
+            Float2 diff1 = p2 - p1;
+            Float2 diff2 = p3 - p1;
+            if (diff1 == Float2.zero || diff2 == Float2.zero)
+                return null;
+
+            float value = Float2.Cross(diff1, diff2);
+            if (System.Math.Abs(value) < MathUtil.kEpsilon)
+            {
+                return null;
+            }
+            // 2垂直平分线就是圆心。
+            Float2 mid1dir = diff1.normalized + diff2.normalized;
+            Float2 mid2dir = (p3 - p2).normalized - diff1.normalized;
+            Line2D line1 = new Line2D(p1, mid1dir);
+            Line2D line2 = new Line2D(p2, mid2dir);
+
+            Float2 center = Float2.zero;
+            if (line1.GetIntersectPoint(line2, ref center) == true)
+            {
+                float radius = line1.CalcDistance(center);
+                return new Circle2D(center, radius);
+            }
+            else return null;
+        }
+
+
+        /// <summary>
         /// 最短射线包围盒路径
         /// </summary>
         /// <param name="line">线段</param>
