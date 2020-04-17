@@ -209,7 +209,7 @@ namespace RayGraphics.Geometric
             for (int i = 0; i < ab.GetEdgeNum(); i++)
             {
                 LineSegment2D ls = ab.GetEdge(i);
-                if (this.CheckLineRelation(ls) == LineRelation.Intersect)
+                if (this.CheckLineRelation(ls) != LineRelation.Detach)
                 {
                     return true;
                 }
@@ -247,7 +247,7 @@ namespace RayGraphics.Geometric
             for (int i = 0; i < ab.GetEdgeNum(); i++)
             {
                 LineSegment2D ls = ab.GetEdge(i);
-                if (this.CheckLineRelation(ls) == LineRelation.Intersect)
+                if (this.CheckLineRelation(ls) != LineRelation.Detach)
                 {
                     return true;
                 }

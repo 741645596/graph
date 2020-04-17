@@ -362,6 +362,44 @@ namespace RayGraphics.Geometric
         {
             return point - 2 * AixsVector(point);
         }
+
+        public static bool operator !=(LineSegment2D v1, LineSegment2D v2)
+        {
+            if ((v1.startPoint == v2.startPoint && v1.endPoint == v2.endPoint) || (v1.startPoint == v2.endPoint && v1.endPoint == v2.startPoint))
+            {
+                return false;
+            }
+            else return true;
+        }
+
+        public static bool operator ==(LineSegment2D v1, LineSegment2D v2)
+        {
+            if ((v1.startPoint == v2.startPoint && v1.endPoint == v2.endPoint) || (v1.startPoint == v2.endPoint && v1.endPoint == v2.startPoint))
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            LineSegment2D p = (LineSegment2D)obj;
+            if ((System.Object)p == null)
+            {
+                return false;
+            }
+            if ((startPoint == p.startPoint && endPoint == p.endPoint) || (startPoint == p.endPoint && endPoint == p.startPoint))
+            {
+                return true;
+            }
+            else return false;
+        }
+
 #if Client
         /// <summary>
         /// start point
