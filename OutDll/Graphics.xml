@@ -1203,6 +1203,32 @@
             <param name="p2"></param>
             <param name="p3"></param>
         </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetEdgeNum">
+            <summary>
+            获取边数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetPoints">
+            <summary>
+            获取顶点数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetPoint(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Float3)">
             <summary>
             判断点是否在几何元素上

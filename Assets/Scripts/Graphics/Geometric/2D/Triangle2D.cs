@@ -32,5 +32,61 @@ namespace RayGraphics.Geometric
             Float2 max = Float2.Max(p1, Float2.Max(p2, p3));
             this.SetAABB(min, max);
         }
+        /// <summary>
+        /// 获取边数
+        /// </summary>
+        /// <returns></returns>
+        public override int GetEdgeNum()
+        {
+            return 3;
+        }
+        /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public override Float2[] GetPoints()
+        {
+            Float2[] points = new Float2[3];
+            points[0] = this.p1;
+            points[1] = this.p2;
+            points[2] = this.p3;
+            return points;
+        }
+        /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public override Float2 GetPoint(int index)
+        {
+            if (index == 0)
+                return this.p1;
+            else if (index == 1)
+                return this.p2;
+            else if (index == 2)
+                return this.p3;
+            else return Float2.zero;
+        }
+        /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public override LineSegment2D GetEdge(int edgeIndex)
+        {
+            if (edgeIndex == 0)
+            {
+                return new LineSegment2D(this.p1, this.p2);
+            }
+            else if (edgeIndex == 1)
+            {
+                return new LineSegment2D(this.p2, this.p3);
+            }
+            else if (edgeIndex == 2)
+            {
+                return new LineSegment2D(this.p3, this.p1);
+            }
+            else return new LineSegment2D(Float2.zero, Float2.one);
+        }
     }
 }
