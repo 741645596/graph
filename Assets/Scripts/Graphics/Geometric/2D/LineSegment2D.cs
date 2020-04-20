@@ -339,6 +339,12 @@ namespace RayGraphics.Geometric
                 }
                 else
                 {
+                    if (CalcDistance(line.endPoint) == 0)
+                    {
+                        intersectPoint = line.endPoint;
+                        return true;
+                    }
+                    //
                     float dot = Float2.Dot(aixsVector.normalized, line.normalizedDir);
                     if (dot == 0)
                     {
