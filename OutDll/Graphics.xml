@@ -417,18 +417,18 @@
             生成polygon 
             </summary>
         </member>
+        <member name="M:RayGraphics.Geometric.ConvexPolygon2D.GenerateConvexPolygonIndex(RayGraphics.Math.Float2[])">
+            <summary>
+            获取凸多边形的索引。
+            </summary>
+            <param name="listpt"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.ConvexPolygon2D.GenerateConvexPolygon(RayGraphics.Math.Float2[])">
             <summary>
             获取凸包
             </summary>
             <param name="listpt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.ConvexPolygon2D.optimizationPoly(System.Collections.Generic.List{RayGraphics.Math.Float2})">
-            <summary>
-             接近一条直线的邻边优化掉。
-            </summary>
-            <param name="listPoly"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.ConvexPolygon2D.SearchOutPoint(System.Int32,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
