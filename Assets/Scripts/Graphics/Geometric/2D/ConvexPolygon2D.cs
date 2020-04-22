@@ -10,6 +10,39 @@ namespace RayGraphics.Geometric
     public class ConvexPolygon2D
     {
         /// <summary>
+        /// 获取凸多边形的索引。
+        /// </summary>
+        /// <param name="listpt"></param>
+        /// <returns></returns>
+        public static List<int> GenerateConvexPolygonIndex(Float2[] listpt)
+        {
+            List<int> listIndex = new List<int>();
+            List<Float2> listPoint= GenerateConvexPolygon(listpt);
+            if (listPoint == null || listPoint.Count == 0)
+                return listIndex;
+            foreach (Float2 pos in listPoint)
+            {
+                int index = GetIndex(pos, listpt);
+                if (index != -1)
+                {
+                    listIndex.Add(index);
+                }
+            }
+            return listIndex;
+        }
+        private static int GetIndex(Float2 pos, Float2[] listpt)
+        {
+            if (listpt == null || listpt.Length == 0)
+                return -1;
+            for (int i = 0; i < listpt.Length; i++)
+            {
+                if (listpt[i] == pos)
+                    return i;
+            }
+            return -1;
+        }
+
+        /// <summary>
         /// 获取凸包
         /// </summary>
         /// <param name="listpt"></param>
@@ -28,107 +61,96 @@ namespace RayGraphics.Geometric
                 max = Float2.Max(max, pos);
             }
             // 收集条边上的点，按顺时针收集。lb放置在bottom边上，rb 放置在right边上，ru顶点放置up边上, lu顶点放置在left边上
-            List<Float2>[] edgePointArray = new List<Float2>[4];
+            Float2[][] edgePointArray = new Float2[4][];
             for (int i = 0; i < 4; i++)
             {
-                edgePointArray[i] = new List<Float2>();
+                edgePointArray[i] = new Float2[2];
+                if (i < 2)
+                {
+                    edgePointArray[i][0] = Float2.positiveInfinity;
+                    edgePointArray[i][1] = Float2.negativeInfinity;
+                }
+                else 
+                {
+                    edgePointArray[i][0] = Float2.negativeInfinity;
+                    edgePointArray[i][1] = Float2.positiveInfinity;
+                }
             }
             // 不在边上的顶点
             List<Float2> listOutEdgePoint = new List<Float2>();
             // 进行收集了。
             foreach (Float2 pos in listpt)
             {
+                bool isInedge = false;
                 // 第一条边 bottom edge
-                if (pos.y == min.y && pos.x < max.x)
+                if (pos.y == min.y)
                 {
-                    edgePointArray[0].Add(pos);
+                    edgePointArray[0][0] = Float2.Min(pos, edgePointArray[0][0]);
+                    edgePointArray[0][1] = Float2.Max(pos, edgePointArray[0][1]);
+                    isInedge = true;
                 }
-                else if (pos.x == max.x && pos.y < max.y) //  right edge
+                if (pos.x == max.x) //  right edge
                 {
-                    edgePointArray[1].Add(pos);
+                    edgePointArray[1][0] = Float2.Min(pos, edgePointArray[1][0]);
+                    edgePointArray[1][1] = Float2.Max(pos, edgePointArray[1][1]);
+                    isInedge = true;
                 }
-                else if(pos.y == max.y && pos.x > min.x) //  up edge
+                if(pos.y == max.y ) //  up edge
                 {
-                    edgePointArray[2].Add(pos);
+                    edgePointArray[2][0] = Float2.Max(pos, edgePointArray[2][0]);
+                    edgePointArray[2][1] = Float2.Min(pos, edgePointArray[2][1]);
+                    isInedge = true;
                 }
-                else if(pos.x == min.x && pos.y > min.y) //  left edge
+                if(pos.x == min.x) //  left edge
                 {
-                    edgePointArray[3].Add(pos);
+                    edgePointArray[3][0] = Float2.Max(pos, edgePointArray[3][0]);
+                    edgePointArray[3][1] = Float2.Min(pos, edgePointArray[3][1]);
+                    isInedge = true;
                 }
-                else
+                if(isInedge == false)
                 {
                     listOutEdgePoint.Add(pos);
                 }
             }
             // 边上的顶点按顺时针排序了。
-            edgePointArray[0].Sort((x, y) => x.x.CompareTo(y.x));
-            edgePointArray[1].Sort((x, y) => x.y.CompareTo(y.y));
-            edgePointArray[2].Sort((x, y) => -x.x.CompareTo(y.x));
-            edgePointArray[3].Sort((x, y) => -x.y.CompareTo(y.y));
             // 
             List<Float2> listPoly = new List<Float2>();
-
+            Float2 startPoint ;
+            Float2 endPoint = Float2.negativeInfinity;
             for (int i = 0; i < 4; i++)
             {
-                int length = edgePointArray[i].Count;
-                if (length > 0)
+                startPoint = edgePointArray[i][0];
+                if (startPoint != endPoint)
                 {
-                    listPoly.AddRange(edgePointArray[i]);
-                    if (edgePointArray[(i + 1) % 4].Count > 0)
+                    listPoly.Add(startPoint);
+                }
+                endPoint = edgePointArray[i][1];
+                if (startPoint != endPoint)
+                {
+                    listPoly.Add(endPoint);
+                }
+                if (endPoint != edgePointArray[(i + 1) % 4][0])
+                {
+                    List<Float2> llinkPoint = SearchOutPoint(i, endPoint, edgePointArray[(i + 1) % 4][0], listOutEdgePoint);
+                    if (llinkPoint != null && llinkPoint.Count > 0)
                     {
-                        Float2 end = edgePointArray[i][0];
-                        if (length > 1)
-                        {
-                            end = edgePointArray[i][length - 1];
-                        }
-                        List<Float2> llinkPoint = SearchOutPoint(i, end, edgePointArray[(i + 1) % 4][0], listOutEdgePoint);
-                        if (llinkPoint != null && llinkPoint.Count > 0)
-                        {
-                            listPoly.AddRange(llinkPoint);
-                        }
+                        listPoly.AddRange(llinkPoint);
                     }
                 }
             }
-            return listPoly;
-        }
-        /// <summary>
-        ///  接近一条直线的邻边优化掉。
-        /// </summary>
-        /// <param name="listPoly"></param>
-        /// <returns></returns>
-        private static List<Float2> optimizationPoly(List<Float2> listPoly)
-        {
-            if (listPoly == null || listPoly.Count < 3)
-                return listPoly;
-            bool isNeed = true;
-            while (isNeed && listPoly.Count > 3)
+            for (int i = 0; i < 4; i++)
             {
-                isNeed = false;
-                for (int i = 0; i < listPoly.Count - 1; i++)
+                edgePointArray[i] = null;
+            }
+            edgePointArray = null;
+            if (listPoly.Count > 1)
+            {
+                if (listPoly[0] == listPoly[listPoly.Count - 1])
                 {
-                    float value ;
-                    if (i == 0)
-                    {
-                        value = Float2.Cross((listPoly[i] - listPoly[listPoly.Count - 1]).normalized, (listPoly[i +1] - listPoly[i]).normalized);
-                    }
-                    else if (i == listPoly.Count - 1)
-                    {
-                        value = Float2.Cross((listPoly[i] - listPoly[i -1]).normalized, (listPoly[0] - listPoly[i]).normalized);
-                    }
-                    else 
-                    {
-                        value = Float2.Cross((listPoly[i] - listPoly[i - 1]).normalized, (listPoly[i + 1] - listPoly[i]).normalized);
-                    }
-                    if (System.Math.Abs(value) < MathUtil.kEpsilon)
-                    {
-                        listPoly.RemoveAt(i);
-                        isNeed = true;
-                        break;
-                    }
+                    listPoly.RemoveAt(listPoly.Count - 1);
                 }
             }
             return listPoly;
-
         }
         /// <summary>
         /// 获取最边缘一圈的顶点。
