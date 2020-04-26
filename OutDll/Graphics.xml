@@ -2520,6 +2520,98 @@
             <param name="b"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Int3.Set(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.invalid">
+            <summary>
+            无效
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.back">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Int3.foward">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_UnaryNegation(RayGraphics.Math.Int3)">
+            <summary>
+            负号重载
+            </summary>
+            <param name="v1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_Multiply(System.Int32,RayGraphics.Math.Int3)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_Multiply(RayGraphics.Math.Int3,System.Int32)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Math.MathUtil.kEpsilon">
             <summary>
             误差
@@ -3402,6 +3494,98 @@
             </summary>
             <param name="a"></param>
             <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.Set(System.Int16,System.Int16,System.Int16)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.invalid">
+            <summary>
+            无效
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.back">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Short3.foward">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_UnaryNegation(RayGraphics.Math.Short3)">
+            <summary>
+            负号重载
+            </summary>
+            <param name="v1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_Multiply(System.Int32,RayGraphics.Math.Short3)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_Multiply(RayGraphics.Math.Short3,System.Int32)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
             <returns></returns>
         </member>
     </members>
