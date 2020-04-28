@@ -506,7 +506,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             获取交点
             </summary>
@@ -601,7 +601,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             获取交点
             </summary>
@@ -720,7 +720,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             获取交点
             </summary>
@@ -1115,7 +1115,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             获取交点
             </summary>

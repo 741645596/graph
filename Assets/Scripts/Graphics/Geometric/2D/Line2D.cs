@@ -155,9 +155,9 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectPoint)
+        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStartPoint, ref Float2 intersectEndPoint)
         {
-            return line.GetIntersectPoint(this, ref intersectPoint);
+            return line.GetIntersectPoint(this, ref intersectStartPoint);
         }
 
         /// <summary>

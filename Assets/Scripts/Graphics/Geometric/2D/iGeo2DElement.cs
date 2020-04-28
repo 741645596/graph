@@ -67,7 +67,7 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectPoint);
+        bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStartPoint, ref Float2 intersectEndPoint);
         /// <summary>
         /// 镜面但
         /// </summary>

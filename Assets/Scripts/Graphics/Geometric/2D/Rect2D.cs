@@ -22,25 +22,14 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override bool GetBornPoint(LineSegment2D line, float offset, ref Float2 bornPoint)
         {
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.RightBottom), ref bornPoint) == true)
+            Float2 pos1 = Float2.zero;
+            for (int i = 0; i < GetEdgeNum(); i++)
             {
-                bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                return true;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.LeftUp, this.rightUp), ref bornPoint) == true)
-            {
-                bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                return true;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.LeftUp), ref bornPoint) == true)
-            {
-                bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                return true;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.RightBottom, this.rightUp), ref bornPoint) == true)
-            {
-                bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
-                return true;
+                if (line.GetIntersectPoint(GetEdge(i), ref bornPoint, ref pos1) == true)
+                {
+                    bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
+                    return true;
+                }
             }
             return false;
         }
@@ -60,19 +49,20 @@ namespace RayGraphics.Geometric
             int index = 0;
             Float3[] lineArray = new Float3[2];
             Float2 intersectionPoint = Float2.zero;
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.RightBottom), ref intersectionPoint) == true)
+            Float2 pos1 = Float2.zero;
+            if (line.GetIntersectPoint(GetEdge(0), ref intersectionPoint, ref pos1) == true)
             {
                 lineArray[index] = new Float3(intersectionPoint.x, intersectionPoint.y, 1);
                 index++;
             }
-            if (line.GetIntersectPoint(new LineSegment2D(this.LeftUp, this.rightUp), ref intersectionPoint) == true)
+            if (line.GetIntersectPoint(GetEdge(2), ref intersectionPoint, ref pos1) == true)
             {
                 lineArray[index] = new Float3(intersectionPoint.x, intersectionPoint.y, 3);
                 index++;
             }
             if (index < 2)
             {
-                if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.LeftUp), ref intersectionPoint) == true)
+                if (line.GetIntersectPoint(GetEdge(3), ref intersectionPoint, ref pos1) == true)
                 {
                     lineArray[index] = new Float3(intersectionPoint.x, intersectionPoint.y, 4);
                     index++;
@@ -80,7 +70,7 @@ namespace RayGraphics.Geometric
             }
             if (index < 2)
             {
-                if (line.GetIntersectPoint(new LineSegment2D(this.RightBottom, this.rightUp), ref intersectionPoint) == true)
+                if (line.GetIntersectPoint(GetEdge(1), ref intersectionPoint, ref pos1) == true)
                 {
                     lineArray[index] = new Float3(intersectionPoint.x, intersectionPoint.y, 2);
                     index++;
@@ -183,21 +173,13 @@ namespace RayGraphics.Geometric
         public override LineRelation CheckLineRelation(LineSegment2D line)
         {
             Float2 pos = Float2.zero;
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.RightBottom), ref pos) == true)
+            Float2 pos1 = Float2.zero;
+            for (int i = 0; i < GetEdgeNum(); i++)
             {
-                return LineRelation.Intersect;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.LeftUp, this.rightUp), ref pos) == true)
-            {
-                return LineRelation.Intersect;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.LeftUp), ref pos) == true)
-            {
-                return LineRelation.Intersect;
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.RightBottom, this.rightUp), ref pos) == true)
-            {
-                return LineRelation.Intersect;
+                if (line.GetIntersectPoint(GetEdge(i), ref pos, ref pos1) == true)
+                {
+                    return LineRelation.Intersect;
+                }
             }
             return LineRelation.Detach;
         }
@@ -212,32 +194,30 @@ namespace RayGraphics.Geometric
         {
             List<Float2> listPt = new List<Float2>();
             Float2 pos = Float2.zero;
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.RightBottom), ref pos) == true)
+            Float2 pos1 = Float2.zero;
+
+            for (int i = 0; i < GetEdgeNum(); i++)
             {
-                if (listPt.Contains(pos) == false)
+                if (GetEdge(i).GetIntersectPoint(line, ref pos, ref pos1) == true)
                 {
-                    listPt.Add(pos);
-                }
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.LeftUp, this.rightUp), ref pos) == true)
-            {
-                if (listPt.Contains(pos) == false)
-                {
-                    listPt.Add(pos);
-                }
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.leftBottom, this.LeftUp), ref pos) == true)
-            {
-                if (listPt.Contains(pos) == false)
-                {
-                    listPt.Add(pos);
-                }
-            }
-            if (line.GetIntersectPoint(new LineSegment2D(this.RightBottom, this.rightUp), ref pos) == true)
-            {
-                if (listPt.Contains(pos) == false)
-                {
-                    listPt.Add(pos);
+                    if (pos == pos1)
+                    {
+                        if (listPt.Contains(pos) == false)
+                        {
+                            listPt.Add(pos);
+                        }
+                    }
+                    else 
+                    {
+                        if (listPt.Contains(pos) == false)
+                        {
+                            listPt.Add(pos);
+                        }
+                        if (listPt.Contains(pos1) == false)
+                        {
+                            listPt.Add(pos1);
+                        }
+                    }
                 }
             }
             // 排序从近到远

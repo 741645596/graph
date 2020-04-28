@@ -80,9 +80,10 @@ namespace RayGraphics.Geometric
             }
             List<Float3> lineArray = new List<Float3>();
             Float2 intersectionPoint = Float2.zero;
+            Float2 pos1 = Float2.zero;
             for (int i = 0; i < this.pointArr.Length ; i++)
             {
-                if (line.GetIntersectPoint(GetEdge(i), ref intersectionPoint) == true)
+                if (line.GetIntersectPoint(GetEdge(i), ref intersectionPoint, ref pos1) == true)
                 {
                     lineArray.Add(new Float3(intersectionPoint.x, intersectionPoint.y, i));
                 }
@@ -343,9 +344,10 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override bool GetBornPoint(LineSegment2D line, float offset, ref Float2 bornPoint)
         {
+            Float2 pos1 = Float2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (line.GetIntersectPoint(GetEdge(i), ref bornPoint) == true)
+                if (line.GetIntersectPoint(GetEdge(i), ref bornPoint, ref pos1) == true)
                 {
                     bornPoint = line.normalizedDir * ((bornPoint - line.startPoint).magnitude + offset) + line.startPoint;
                     return true;
@@ -361,9 +363,10 @@ namespace RayGraphics.Geometric
         public override LineRelation CheckLineRelation(LineSegment2D line)
         {
             Float2 pos = Float2.zero;
+            Float2 pos1 = Float2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (line.GetIntersectPoint(GetEdge(i), ref pos) == true)
+                if (line.GetIntersectPoint(GetEdge(i), ref pos, ref pos1) == true)
                 {
                     return LineRelation.Intersect;
                 }
@@ -418,11 +421,20 @@ namespace RayGraphics.Geometric
         {
             List<Float3> listpath = new List<Float3>();
             Float2 point = Float2.zero;
+            Float2 point1 = Float2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (line.GetIntersectPoint(GetEdge(i), ref point) == true)
+                if (line.GetIntersectPoint(GetEdge(i), ref point, ref point1) == true)
                 {
-                    listpath.Add(new Float3(point.x, point.y, i));
+                    if (point1 == point)
+                    {
+                        listpath.Add(new Float3(point.x, point.y, i));
+                    }
+                    else 
+                    {
+                        listpath.Add(new Float3(point.x, point.y, i));
+                        listpath.Add(new Float3(point1.x, point1.y, i));
+                    }
                 }
             }
             // 从近到远排好队。

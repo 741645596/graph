@@ -326,7 +326,7 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectPoint)
+        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStartPoint, ref Float2 intersectEndPoint)
         {
             if (CheckLineRelation(line) == LineRelation.Intersect)
             {
@@ -334,14 +334,49 @@ namespace RayGraphics.Geometric
                 float distance = aixsVector.magnitude;
                 if (distance == 0)
                 {
-                    intersectPoint = line.startPoint;
+                    if (Float2.Dot(line.normalizedDir, this.normalizedDir) > 0)
+                    {
+                        if (Float2.Dot(line.normalizedDir, this.startPoint - line.startPoint) > 0)
+                        {
+                            intersectStartPoint = this.startPoint;
+                        }
+                        else 
+                        {
+                            intersectStartPoint = line.startPoint;
+                        }
+                        //
+                        if (Float2.Dot(line.normalizedDir, this.endPoint - line.endPoint) > 0)
+                        {
+                            intersectEndPoint = line.endPoint;
+                        }
+                        else intersectEndPoint = this.endPoint;
+                    }
+                    else 
+                    {
+                        if (Float2.Dot(line.normalizedDir, this.startPoint - line.endPoint) > 0)
+                        {
+                            intersectEndPoint = line.endPoint;
+                        }
+                        else 
+                        {
+                            intersectEndPoint = line.startPoint;
+                        }
+                        //
+                        if (Float2.Dot(line.normalizedDir, this.endPoint - line.startPoint) > 0)
+                        {
+                            intersectStartPoint = this.endPoint;
+                        }
+                        else intersectStartPoint = line.startPoint;
+                    }
+
                     return true;
                 }
                 else
                 {
                     if (CalcDistance(line.endPoint) == 0)
                     {
-                        intersectPoint = line.endPoint;
+                        intersectStartPoint = line.endPoint;
+                        intersectEndPoint = intersectStartPoint;
                         return true;
                     }
                     //
@@ -352,7 +387,8 @@ namespace RayGraphics.Geometric
                     }
                     else
                     {
-                        intersectPoint = line.startPoint - distance / dot * line.normalizedDir;
+                        intersectStartPoint = line.startPoint - distance / dot * line.normalizedDir;
+                        intersectEndPoint = intersectStartPoint;
                         return true;
                     }
                 }
