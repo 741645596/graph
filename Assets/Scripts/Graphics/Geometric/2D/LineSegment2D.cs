@@ -228,7 +228,7 @@ namespace RayGraphics.Geometric
                 {
                     return LineRelation.Intersect;
                 }
-                else if (Float2.Dot(line.startPoint - this.endPoint, line.endPoint - this.endPoint) <= 0)
+                else if (Float2.Dot(line.startPoint - this.endPoint, line.endPoint - this.endPoint) >= 0)
                 {
                     return LineRelation.Intersect;
                 }
@@ -249,7 +249,7 @@ namespace RayGraphics.Geometric
                 {
                     return LineRelation.Intersect;
                 }
-                else if (Float2.Dot(this.startPoint - line.endPoint, this.endPoint - line.endPoint) <= 0)
+                else if (Float2.Dot(this.startPoint - line.endPoint, this.endPoint - line.endPoint) >= 0)
                 {
                     return LineRelation.Intersect;
                 }
