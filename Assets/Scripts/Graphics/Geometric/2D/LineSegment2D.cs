@@ -214,46 +214,53 @@ namespace RayGraphics.Geometric
         {
             // 快速排斥实验,后续优化实现
             // 进行跨立实验
-            Float2 diff1 = line.startPoint - this.startPoint;
-            Float2 diff2 = line.endPoint - this.startPoint;
-
-            float value = Float2.Cross(this.normalizedDir, diff1) * Float2.Cross(this.normalizedDir, diff2);
-            if (value > 0)
+            float r1 = Float2.Cross(this.normalizedDir, line.startPoint - this.startPoint);
+            float r2 = Float2.Cross(this.normalizedDir, line.endPoint - this.startPoint);
+            float cross1= r1 * r2;
+            float t1 = Float2.Cross(line.normalizedDir, this.startPoint - line.startPoint);
+            float t2 = Float2.Cross(line.normalizedDir, this.endPoint - line.startPoint);
+            float cross2 = t1 * t2;
+            if (cross1 > 0 || cross2 > 0)
             {
                 return LineRelation.Detach;
             }
-            else if (value == 0)
+            else if (cross1 == 0 || cross2 == 0)
             {
-                if (Float2.Dot(diff1, diff2) <= 0)
+                if (cross1 == 0)
                 {
-                    return LineRelation.Intersect;
+                    if (r1 == 0)
+                    {
+                        if (Float2.Dot(line.startPoint - this.startPoint, line.startPoint - this.endPoint) <= 0)
+                        {
+                            return LineRelation.Intersect;
+                        }
+                    }
+                    if (r2 == 0)
+                    {
+                        if (Float2.Dot(line.endPoint - this.startPoint, line.endPoint - this.endPoint) <= 0)
+                        {
+                            return LineRelation.Intersect;
+                        }
+                    }
                 }
-                else if (Float2.Dot(line.startPoint - this.endPoint, line.endPoint - this.endPoint) >= 0)
+                if (cross2 == 0)
                 {
-                    return LineRelation.Intersect;
+                    if (t1 == 0)
+                    {
+                        if (Float2.Dot(this.startPoint - line.startPoint, this.startPoint - line.endPoint) <= 0)
+                        {
+                            return LineRelation.Intersect;
+                        }
+                    }
+                    if (t2== 0)
+                    {
+                        if (Float2.Dot(this.endPoint - line.startPoint, this.endPoint - line.endPoint) <= 0)
+                        {
+                            return LineRelation.Intersect;
+                        }
+                    }
                 }
-                else return LineRelation.Detach;
-            }
-            //
-            diff1 = this.startPoint - line.startPoint;
-            diff2 = this.endPoint - line.startPoint;
-
-            value = Float2.Cross(line.normalizedDir, diff1) * Float2.Cross(line.normalizedDir, diff2);
-            if (value > 0)
-            {
                 return LineRelation.Detach;
-            }
-            else if (value == 0)
-            {
-                if (Float2.Dot(diff1, diff2) <= 0)
-                {
-                    return LineRelation.Intersect;
-                }
-                else if (Float2.Dot(this.startPoint - line.endPoint, this.endPoint - line.endPoint) >= 0)
-                {
-                    return LineRelation.Intersect;
-                }
-                else return LineRelation.Detach;
             }
             return LineRelation.Intersect;
         }
