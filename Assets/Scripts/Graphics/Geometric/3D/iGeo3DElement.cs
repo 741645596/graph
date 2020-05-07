@@ -12,25 +12,25 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        bool CheckIn(Float3 pt);
+        bool CheckIn(Double3 pt);
         /// <summary>
         /// 点导几何元素的距离
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        float CalcDistance(Float3 pt);
+        double CalcDistance(Double3 pt);
         /// <summary>
         /// 点导几何元素的投影点
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        Float3 ProjectPoint(Float3 pt);
+        Double3 ProjectPoint(Double3 pt);
         /// <summary>
         /// 点到几何元素轴向量（垂直），交点-》pt
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        Float3 AixsVector(Float3 pt);
+        Double3 AixsVector(Double3 pt);
         /// <summary>
         /// 与线的关系
         /// </summary>
@@ -43,6 +43,6 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        bool GetIntersectPoint(Line3D line, ref Float3 intersectPoint);
+        bool GetIntersectPoint(Line3D line, ref Double3 intersectPoint);
     }
 }

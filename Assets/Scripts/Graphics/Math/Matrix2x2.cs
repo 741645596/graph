@@ -10,31 +10,31 @@ namespace RayGraphics.Math
         /// <summary>
         /// 第一行
         /// </summary>
-        public Float2 col1;
+        public Double2 col1;
         /// <summary>
         /// 第二行
         /// </summary>
-        public Float2 col2;
+        public Double2 col2;
         /// <summary>
         /// 第一列
         /// </summary>
-        public Float2 row1
+        public Double2 row1
         {
-            get { return new Float2(col1.x, col2.x); }
+            get { return new Double2(col1.x, col2.x); }
         }
         /// <summary>
         /// 第二列
         /// </summary>
-        public Float2 row2
+        public Double2 row2
         {
-            get { return new Float2(col1.y, col2.y); }
+            get { return new Double2(col1.y, col2.y); }
         }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="col1"></param>
         /// <param name="col2"></param>
-        public Matrix2x2(Float2 col1, Float2 col2)
+        public Matrix2x2(Double2 col1, Double2 col2)
         {
             this.col1 = col1;
             this.col2 = col2;
@@ -44,7 +44,7 @@ namespace RayGraphics.Math
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void Set(Float2 col1, Float2 col2)
+        public void Set(Double2 col1, Double2 col2)
         {
             this.col1 = col1;
             this.col2 = col2;
@@ -56,7 +56,7 @@ namespace RayGraphics.Math
         /// <param name="col"></param>
         /// <param name="row"></param>
         /// <returns></returns>
-        public float this[int col,int row]
+        public double this[int col,int row]
         {
             get
             {
@@ -81,7 +81,7 @@ namespace RayGraphics.Math
         {
             get { return s_zero; }
         }
-        private static readonly Matrix2x2 s_zero = new Matrix2x2(Float2.zero, Float2.zero);
+        private static readonly Matrix2x2 s_zero = new Matrix2x2(Double2.zero, Double2.zero);
         /// <summary>
         /// 单位矩阵
         /// </summary>
@@ -89,7 +89,7 @@ namespace RayGraphics.Math
         {
             get { return s_one; }
         }
-        private static readonly Matrix2x2 s_one = new Matrix2x2(Float2.right, Float2.up);
+        private static readonly Matrix2x2 s_one = new Matrix2x2(Double2.right, Double2.up);
         /// <summary>
         /// 
         /// </summary>
@@ -97,8 +97,8 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix2x2 RotateMatrix(double angle)
         {
-            Float2 col1 = new Float2(System.Math.Cos(angle), System.Math.Sin(angle));
-            Float2 col2 = new Float2(-System.Math.Sin(angle), System.Math.Cos(angle));
+            Double2 col1 = new Double2(System.Math.Cos(angle), System.Math.Sin(angle));
+            Double2 col2 = new Double2(-System.Math.Sin(angle), System.Math.Cos(angle));
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -107,10 +107,10 @@ namespace RayGraphics.Math
         /// <param name="scaleX"></param>
         /// <param name="scaleY"></param>
         /// <returns></returns>
-        public static Matrix2x2 ScaleMatrix(float scaleX, float scaleY)
+        public static Matrix2x2 ScaleMatrix(double scaleX, double scaleY)
         {
-            Float2 col1 = new Float2(scaleX, 0);
-            Float2 col2 = new Float2(0, scaleY);
+            Double2 col1 = new Double2(scaleX, 0);
+            Double2 col2 = new Double2(0, scaleY);
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -120,8 +120,8 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix2x2 ScaleMatrix(float scale)
         {
-            Float2 col1 = new Float2(scale, 0);
-            Float2 col2 = new Float2(0, scale);
+            Double2 col1 = new Double2(scale, 0);
+            Double2 col2 = new Double2(0, scale);
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -152,8 +152,8 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix2x2 operator +(Matrix2x2 v1, Matrix2x2 v2)
         {
-            Float2 m1 = v1.col1 + v2.col1;
-            Float2 m2 = v1.col2 + v2.col2;
+            Double2 m1 = v1.col1 + v2.col1;
+            Double2 m2 = v1.col2 + v2.col2;
             return new Matrix2x2(m1, m2);
         }
         /// <summary>
@@ -164,8 +164,8 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix2x2 operator -(Matrix2x2 v1, Matrix2x2 v2)
         {
-            Float2 m1 = v1.col1 - v2.col1;
-            Float2 m2 = v1.col2 - v2.col2;
+            Double2 m1 = v1.col1 - v2.col1;
+            Double2 m2 = v1.col2 - v2.col2;
             return new Matrix2x2(m1, m2);
         }
         /// <summary>
@@ -174,10 +174,10 @@ namespace RayGraphics.Math
         /// <param name="k"></param>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static Matrix2x2 operator *(float k, Matrix2x2 v)
+        public static Matrix2x2 operator *(double k, Matrix2x2 v)
         {
-            Float2 col1 = v.col1 * k;
-            Float2 col2 = v.col2 * k;
+            Double2 col1 = v.col1 * k;
+            Double2 col2 = v.col2 * k;
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -186,10 +186,10 @@ namespace RayGraphics.Math
         /// <param name="k"></param>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static Matrix2x2 operator *(Matrix2x2 v, float k)
+        public static Matrix2x2 operator *(Matrix2x2 v, double k)
         {
-            Float2 col1 = v.col1 * k;
-            Float2 col2 = v.col2 * k;
+            Double2 col1 = v.col1 * k;
+            Double2 col2 = v.col2 * k;
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -200,8 +200,8 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix2x2 operator *(Matrix2x2 m1, Matrix2x2 m2)
         {
-            Float2 col1 = new Float2(Float2.Dot(m1.col1, m2.row1), Float2.Dot(m1.col1, m2.row2));
-            Float2 col2 = new Float2(Float2.Dot(m1.col2, m2.row1), Float2.Dot(m1.col2, m2.row2));
+            Double2 col1 = new Double2(Double2.Dot(m1.col1, m2.row1), Double2.Dot(m1.col1, m2.row2));
+            Double2 col2 = new Double2(Double2.Dot(m1.col2, m2.row1), Double2.Dot(m1.col2, m2.row2));
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -210,9 +210,9 @@ namespace RayGraphics.Math
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static Float2 operator *(Matrix2x2 m, Float2 v)
+        public static Double2 operator *(Matrix2x2 m, Double2 v)
         {
-            return new Float2(Float2.Dot(m.col1, v), Float2.Dot(m.col2, v));
+            return new Double2(Double2.Dot(m.col1, v), Double2.Dot(m.col2, v));
         }
         /// <summary>
         /// * 运算
@@ -220,9 +220,9 @@ namespace RayGraphics.Math
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static Float2 operator *(Float2 v, Matrix2x2 m)
+        public static Double2 operator *(Double2 v, Matrix2x2 m)
         {
-            return new Float2(Float2.Dot(v, m.row1), Float2.Dot(v, m.row2));
+            return new Double2(Double2.Dot(v, m.row1), Double2.Dot(v, m.row2));
         }
         /// <summary>
         /// * 运算
@@ -279,7 +279,7 @@ namespace RayGraphics.Math
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        public static Matrix2x2 GetCovarianceMatrix(Float2[] points)
+        public static Matrix2x2 GetCovarianceMatrix(Double2[] points)
         {
             Matrix2x2 covarianceMatrix = Matrix2x2.zero;
             if (points == null || points.Length <= 0)
@@ -288,11 +288,11 @@ namespace RayGraphics.Math
             //Compute the covariance 
             for (int col = 0; col < 2; col++)
             {
-                Float2 data;
+                Double2 data;
                 for (int row = col; row < 2; row++)
                 {
                     covarianceMatrix[col, row] = 0.0f;
-                    float acc = 0.0f;
+                    Double acc = 0.0f;
                     //cov(X,Y)=E[(X-x)(Y-y)]
                     for (int i = 0; i < numPoints; i++)
                     {
@@ -313,16 +313,16 @@ namespace RayGraphics.Math
         /// <param name="matrix"></param>
         public static Matrix2x2 GetFeatureVectorMatrix(Matrix2x2 matrix)
         {
-            float p, q, spq;
-            float cosa, sina;  //cos(alpha) and sin(alpha)
-            float temp;
-            float s1 = 0.0f;    //sums of squares of diagonal
-            float s2;          //elements
+            double p, q, spq;
+            double cosa, sina;  //cos(alpha) and sin(alpha)
+            double temp;
+            double s1 = 0.0f;    //sums of squares of diagonal
+            double s2;          //elements
 
             bool flag = true;  //determine whether to iterate again
             int iteration = 0;   //iteration counter
 
-            float[] data = new float[2];
+            double[] data = new double[2];
             Matrix2x2 t = Matrix2x2.one;//To store the product of the rotation matrices.
             do
             {

@@ -10,25 +10,25 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        bool CheckIn(Float2 pt);
+        bool CheckIn(Double2 pt);
         /// <summary>
         /// 点导几何元素的距离
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        float CalcDistance(Float2 pt);
+        double CalcDistance(Double2 pt);
         /// <summary>
         /// 点导几何元素的投影点
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        Float2 ProjectPoint(Float2 pt);
+        Double2 ProjectPoint(Double2 pt);
         /// <summary>
         /// 点到几何元素轴向量（垂直），交点-》pt
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        Float2 AixsVector(Float2 pt);
+        Double2 AixsVector(Double2 pt);
         /// <summary>
         /// 与直线的关系
         /// </summary>
@@ -53,27 +53,27 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        bool GetIntersectPoint(Line2D line, ref Float2 intersectPoint);
+        bool GetIntersectPoint(Line2D line, ref Double2 intersectPoint);
         /// <summary>
         /// 获取交点
         /// </summary>
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        bool GetIntersectPoint(Rays2D line, ref Float2 intersectPoint);
+        bool GetIntersectPoint(Rays2D line, ref Double2 intersectPoint);
         /// <summary>
         /// 获取交点
         /// </summary>
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStartPoint, ref Float2 intersectEndPoint);
+        bool GetIntersectPoint(LineSegment2D line, ref Double2 intersectStartPoint, ref Double2 intersectEndPoint);
         /// <summary>
         /// 镜面但
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        Float2 GetMirrorPoint(Float2 point);
+        Double2 GetMirrorPoint(Double2 point);
 #if Client
         /// <summary>
         /// draw

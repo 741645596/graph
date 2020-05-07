@@ -62,7 +62,7 @@
             <param name="points"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Bounding.OBB.jacobiSolver(RayGraphics.Math.Matrix2x2,System.Single[],RayGraphics.Math.Float2[])">
+        <member name="M:RayGraphics.Bounding.OBB.jacobiSolver(RayGraphics.Math.Matrix2x2,System.Double[],RayGraphics.Math.Double2[])">
             <summary>
             求出特征向量，也就是轴
             </summary>
@@ -105,28 +105,28 @@
             2* Center
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.SetAABB(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.AABB2D.SetAABB(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             设置aabb
             </summary>
             <param name="lb"></param>
             <param name="ru"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.CalcDistance(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.AABB2D.CalcDistance(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.GetAligentStyle(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.AABB2D.GetAligentStyle(RayGraphics.Math.Double2)">
             <summary>
             点与矩形的关系
             </summary>
@@ -154,7 +154,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Geometric.RayboundingInfo@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -163,7 +163,7 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2@)">
             <summary>
             获取挡格附近出生点
             </summary>
@@ -172,7 +172,7 @@
             <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.AABB2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -253,7 +253,7 @@
             半径
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.CreateCircumCircle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Circle2D.CreateCircumCircle(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             创建外接圆
             </summary>
@@ -262,7 +262,7 @@
             <param name="p3"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.CreateInscribedCircle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Circle2D.CreateInscribedCircle(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             创建内接圆
             </summary>
@@ -271,7 +271,7 @@
             <param name="p3"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Geometric.RayboundingInfo@)">
+        <member name="M:RayGraphics.Geometric.Circle2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -280,7 +280,7 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Circle2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上
             </summary>
@@ -308,7 +308,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Circle2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2@)">
             <summary>
             获取挡格附近出生点
             </summary>
@@ -338,14 +338,14 @@
             <param name="ab"></param>
             <returns>true 相交： false 不相交</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GenerateConcavePolygon(System.Collections.Generic.List{RayGraphics.Math.Float2[]})">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GenerateConcavePolygon(System.Collections.Generic.List{RayGraphics.Math.Double2[]})">
             <summary>
             生成凹多边形
             </summary>
             <param name="listpolygon"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.CombinePolygon(RayGraphics.Math.Float2[],RayGraphics.Math.Float2[],System.Boolean@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.CombinePolygon(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[],System.Boolean@)">
             <summary>
             求多边形的并。
             </summary>
@@ -353,14 +353,14 @@
             <param name="polygon2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Float3}[]@,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
             <summary>
             清理动作
             </summary>
             <param name="Poly1IntersectArray"></param>
             <param name="Poly2IntersectArray"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetNearPointInEdge(RayGraphics.Geometric.LineSegment2D,System.Boolean,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float3},RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetNearPointInEdge(RayGraphics.Geometric.LineSegment2D,System.Boolean,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
             <summary>
             多边形决策。
             </summary>
@@ -369,7 +369,7 @@
             <param name="targetPoint"></param>
             <param name="middlePoint"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.SetInitData(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D@,RayGraphics.Math.Float2@,System.Int32@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.SetInitData(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D@,RayGraphics.Math.Double2@,System.Int32@)">
             <summary>
             
             </summary>
@@ -378,7 +378,7 @@
             <param name="poly"></param>
             <param name="curedge"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Float2}@,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2}@,RayGraphics.Math.Double2)">
             <summary>
             加入顶点
             </summary>
@@ -386,7 +386,7 @@
             <param name="point"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@,System.Collections.Generic.List{RayGraphics.Math.Float3}[],System.Collections.Generic.List{RayGraphics.Math.Float3}[])">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
             <summary>
             交换数据
             </summary>
@@ -394,7 +394,7 @@
             <param name="poly1"></param>
             <param name="poly2"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@,System.Collections.Generic.List{RayGraphics.Math.Float3}[]@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
             <summary>
             获取多边形所有边的相交点
             </summary>
@@ -403,7 +403,7 @@
             <param name="Poly1IntersectArray"></param>
             <param name="Poly2IntersectArray"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetAllIntersectPoint(RayGraphics.Math.Float2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Float3}[],System.Collections.Generic.List{RayGraphics.Math.Float3}@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
             <summary>
             获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
             </summary>
@@ -441,28 +441,28 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在几何元素上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.CalcDistance(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.CalcDistance(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.ProjectPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.ProjectPoint(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.AixsVector(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.AixsVector(RayGraphics.Math.Double2)">
             <summary>
             点到几何元素轴向量（垂直），交点-》pt
             </summary>
@@ -490,7 +490,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -498,7 +498,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -506,7 +506,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -514,7 +514,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetMirrorPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.iGeo2DElement.GetMirrorPoint(RayGraphics.Math.Double2)">
             <summary>
             镜面但
             </summary>
@@ -536,28 +536,28 @@
             方向为单位向量
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Line2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.CalcDistance(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Line2D.CalcDistance(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.ProjectPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Line2D.ProjectPoint(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.AixsVector(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Line2D.AixsVector(RayGraphics.Math.Double2)">
             <summary>
             求轴向量
             </summary>
@@ -585,7 +585,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -593,7 +593,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -601,7 +601,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Line2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -609,7 +609,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line2D.GetMirrorPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Line2D.GetMirrorPoint(RayGraphics.Math.Double2)">
             <summary>
             镜面但
             </summary>
@@ -641,42 +641,42 @@
             长度
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.#ctor(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.#ctor(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             构建线段
             </summary>
             <param name="startPt"></param>
             <param name="endPt"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在线段上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.CalcDistance(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.CalcDistance(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.ProjectPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.ProjectPoint(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.CheckProjectInLine(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.CheckProjectInLine(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.AixsVector(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.AixsVector(RayGraphics.Math.Double2)">
             <summary>
             求轴向量
             </summary>
@@ -704,7 +704,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -712,7 +712,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -720,7 +720,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -728,7 +728,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment2D.GetMirrorPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.LineSegment2D.GetMirrorPoint(RayGraphics.Math.Double2)">
             <summary>
             镜面但
             </summary>
@@ -755,20 +755,20 @@
             obb的大小
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.OBB2D.SetObb(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.OBB2D.SetObb(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             设置aabb
             </summary>
             <param name="lb"></param>
             <param name="ru"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.OBB2D.Init(RayGraphics.Math.Float2[])">
+        <member name="M:RayGraphics.Geometric.OBB2D.Init(RayGraphics.Math.Double2[])">
             <summary>
             根据点阵创建obb
             </summary>
             <param name="points"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.OBB2D.CalcCenter(RayGraphics.Math.Float2[],RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.OBB2D.CalcCenter(RayGraphics.Math.Double2[],RayGraphics.Math.Double2@)">
             <summary>
             计算点阵的中心及修正后的点阵。
             </summary>
@@ -776,7 +776,7 @@
             <param name="centerPos"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.OBB2D.CalcSize(RayGraphics.Math.Float2[],RayGraphics.Math.Float2,RayGraphics.Math.Matrix2x2)">
+        <member name="M:RayGraphics.Geometric.OBB2D.CalcSize(RayGraphics.Math.Double2[],RayGraphics.Math.Double2,RayGraphics.Math.Matrix2x2)">
             <summary>
             
             </summary>
@@ -888,7 +888,7 @@
             逆时针
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Geometric.RayboundingInfo@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -903,7 +903,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Double2}@)">
             <summary>
             中间经过的顶点，不包含2端的点。
             </summary>
@@ -923,7 +923,7 @@
             <param name="isPathDir"></param>
             <param name="paths"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.GetOutPoint(System.Int32,System.Single)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetOutPoint(System.Int32,System.Double)">
             <summary>
             获取指定顶点的外部偏移点
             </summary>
@@ -931,14 +931,14 @@
             <param name="offset"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
             <summary>
             确认方向（顺时针，逆时针方向）
             </summary>
             <param name="p1"></param>
             <param name="p2"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2@)">
             <summary>
             获取挡格附近出生点
             </summary>
@@ -967,7 +967,7 @@
             <param name="index"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.GetAllIntersectPoint(RayGraphics.Geometric.LineSegment2D,System.Collections.Generic.List{RayGraphics.Math.Float3}@)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetAllIntersectPoint(RayGraphics.Geometric.LineSegment2D,System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
             <summary>
             获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
             </summary>
@@ -1028,7 +1028,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上
             </summary>
@@ -1050,28 +1050,28 @@
             方向为单位向量
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.CheckIn(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Rays2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.CalcDistance(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Rays2D.CalcDistance(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.ProjectPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Rays2D.ProjectPoint(RayGraphics.Math.Double2)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.AixsVector(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Rays2D.AixsVector(RayGraphics.Math.Double2)">
             <summary>
             求轴向量
             </summary>
@@ -1099,7 +1099,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.Line2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -1107,7 +1107,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.Rays2D,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -1115,7 +1115,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rays2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -1123,7 +1123,7 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays2D.GetMirrorPoint(RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Rays2D.GetMirrorPoint(RayGraphics.Math.Double2)">
             <summary>
             镜面但
             </summary>
@@ -1135,7 +1135,7 @@
             矩形区域
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2@)">
             <summary>
             获取挡格附近出生点
             </summary>
@@ -1144,7 +1144,7 @@
             <param name="bornPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Geometric.RayboundingInfo@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
             最短射线包围盒路径
             </summary>
@@ -1153,7 +1153,7 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Math.Float3,RayGraphics.Math.Float3,System.Single,System.Collections.Generic.List{RayGraphics.Math.Float2}@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.RayboundingNearestPath(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double,System.Collections.Generic.List{RayGraphics.Math.Double2}@)">
             <summary>
             
             </summary>
@@ -1168,7 +1168,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+        <member name="M:RayGraphics.Geometric.Rect2D.GetIntersectPoint(RayGraphics.Geometric.LineSegment2D,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
             获取交点
             </summary>
@@ -1213,7 +1213,7 @@
             顶点3
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Triangle2D.#ctor(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.Triangle2D.#ctor(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             顺时针顶点
             </summary>
@@ -1247,28 +1247,28 @@
             <param name="edgeIndex"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在几何元素上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo3DElement.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.iGeo3DElement.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo3DElement.ProjectPoint(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.iGeo3DElement.ProjectPoint(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo3DElement.AixsVector(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.iGeo3DElement.AixsVector(RayGraphics.Math.Double3)">
             <summary>
             点到几何元素轴向量（垂直），交点-》pt
             </summary>
@@ -1282,7 +1282,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.iGeo3DElement.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.iGeo3DElement.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Double3@)">
             <summary>
             获取交点
             </summary>
@@ -1305,28 +1305,28 @@
             方向为单位向量
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Line3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Line3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Line3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line3D.ProjectPoint(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Line3D.ProjectPoint(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line3D.AixsVector(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Line3D.AixsVector(RayGraphics.Math.Double3)">
             <summary>
             求轴向量
             </summary>
@@ -1340,7 +1340,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Line3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.Line3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Double3@)">
             <summary>
             获取交点
             </summary>
@@ -1369,14 +1369,14 @@
             线段
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.LineSegment3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.LineSegment3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
@@ -1390,7 +1390,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.LineSegment3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.LineSegment3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Double3@)">
             <summary>
             获取交点
             </summary>
@@ -1408,28 +1408,28 @@
             法线
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Plane.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Plane.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Plane.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Plane.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Plane.ProjectPoint(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Plane.ProjectPoint(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的投影点
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Plane.AixsVector(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Plane.AixsVector(RayGraphics.Math.Double3)">
             <summary>
             求轴向量
             </summary>
@@ -1443,7 +1443,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Plane.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.Plane.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Double3@)">
             <summary>
             获取交点
             </summary>
@@ -1451,21 +1451,21 @@
             <param name="intersectPoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Polygon3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Polygon3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon3D.ProjectPoint(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Polygon3D.ProjectPoint(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的投影
             </summary>
@@ -1477,14 +1477,14 @@
             射线
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Rays3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在射线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Rays3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导视线的距离
             </summary>
@@ -1498,7 +1498,7 @@
             <param name="line"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rays3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Float3@)">
+        <member name="M:RayGraphics.Geometric.Rays3D.GetIntersectPoint(RayGraphics.Geometric.Line3D,RayGraphics.Math.Double3@)">
             <summary>
             获取交点
             </summary>
@@ -1516,35 +1516,35 @@
             轴2，带长度
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Rect3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在矩形内
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Rect3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Rect3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Triangle3D.CheckIn(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Triangle3D.CheckIn(RayGraphics.Math.Double3)">
             <summary>
             判断点是否在直线上
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Triangle3D.CalcDistance(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Triangle3D.CalcDistance(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的距离
             </summary>
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Triangle3D.ProjectPoint(RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Geometric.Triangle3D.ProjectPoint(RayGraphics.Math.Double3)">
             <summary>
             点导几何元素的投影
             </summary>
@@ -1557,13 +1557,13 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "F:RayGraphics.Geometric.RayboundingInfo.isCounterclockwiseDir" -->
-        <member name="M:RayGraphics.Geometric.RayboundingInfo.CalcHelpData(RayGraphics.Geometric.LineSegment2D,System.Single,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.RayboundingInfo.CalcHelpData(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             计算其他辅助数据
             </summary>
             <param name="line"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.RayboundingInfo.CaclCounterclockwiseDir(RayGraphics.Geometric.LineSegment2D,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayboundingInfo.CaclCounterclockwiseDir(RayGraphics.Geometric.LineSegment2D,System.Collections.Generic.List{RayGraphics.Math.Double2})">
             <summary>
             计算时钟方向
             </summary>
@@ -1615,7 +1615,7 @@
             bake 版本
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization1.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.OptimizationLine(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Double2})">
             <summary>
             优化路线
             </summary>
@@ -1626,7 +1626,7 @@
             <param name="listMidPoint">2个交点之间的路线</param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization1.SearchOutPoint(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.SearchOutPoint(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double2})">
             <summary>
             获取最边缘一圈的顶点。
             </summary>
@@ -1636,7 +1636,7 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization1.CalcNearFarest(RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2},System.Int32@,System.Int32@)">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization1.CalcNearFarest(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double2},System.Int32@,System.Int32@)">
             <summary>
             计算超出线段范围
             </summary>
@@ -1665,6 +1665,697 @@
             <param name="far">远处的交点</param>
             <param name="outdir">外包边</param>
             <param name="listOutEdgePoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Set(System.Double,System.Double)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.normalized">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.negativeInfinity">
+            <summary>
+            负无穷大
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double2.positiveInfinity">
+            <summary>
+            无穷大
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_UnaryNegation(RayGraphics.Math.Double2)">
+            <summary>
+            负号重载
+            </summary>
+            <param name="v1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Multiply(System.Double,RayGraphics.Math.Double2)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Multiply(RayGraphics.Math.Double2,System.Double)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Division(RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            /运算
+            </summary>
+            <param name="v"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Angle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            夹角[0, PI]
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.CosAngle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            求cos Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.SinAngle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            求sin Angle
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Area(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            向量组成的平行四边形的面积， 已经取绝对值。
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.CheckInLine(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            共线判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.CheckVertical(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            垂直判断，考虑误差
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.ClampMagnitude(RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            保持向量方向，调整向量长度
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Dot(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            点积
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Cross(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            叉积 , 可通过float3 的cross 推出，结果实际上就是z分量的值，因为，x，y分量都为0
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Distance(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            求距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Lerp(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            限制性在点start，end 之间插值Linearly interpolates between two points.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="t">[0,1]</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.LerpUnclamped(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            非限制性在点start，end 之间插值Linearly interpolates between two points.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Max(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            获取max向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Min(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            获取Min向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.MoveTowards(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            朝目标向量移动maxDistanceDelta距离,未考虑移出。
+            </summary>
+            <param name="current"></param>
+            <param name="target"></param>
+            <param name="maxDistanceDelta"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Project(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            vector 在 onNormal的投影
+            </summary>
+            <param name="vector"></param>
+            <param name="onNormal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Perpendicular(RayGraphics.Math.Double2)">
+            <summary>
+            返回逆时针旋转90度的向量
+            </summary>
+            <param name="inDirection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Reflect(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            求发射光线
+            </summary>
+            <param name="inDirection">入射光线</param>
+            <param name="inNormal">法线</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Scale(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            分量分别相乘，得到新的向量
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Rotate(RayGraphics.Math.Double2,System.Double)">
+            <summary>
+            向量旋转
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.SignedAngle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            求角度,逆时针为正， 瞬时值为负。
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.CheckPointInCorns(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            判断目标点，在夹角内，
+            </summary>
+            <param name="target">目标点</param>
+            <param name="startPoint">起点</param>
+            <param name="indir">起点出发的2个边界向量</param>
+            <param name="outdir">起点出发的2个边界向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Set(System.Double,System.Double,System.Double)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.normalized">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.back">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.down">
+            <summary>
+            back 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.foward">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.left">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.right">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.up">
+            <summary>
+            foward 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.negativeInfinity">
+            <summary>
+            负无穷大
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double3.positiveInfinity">
+            <summary>
+            无穷大
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Inequality(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            判断相等
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Equality(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            判断相等
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Addition(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            + 运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Subtraction(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            - 运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Multiply(System.Double,RayGraphics.Math.Double3)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Multiply(RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            ×运算
+            </summary>
+            <param name="v"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.op_Division(RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            ×运算
+            </summary>
+            <param name="v"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Equals(System.Object)">
+            <summary>
+            相等
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.GetHashCode">
+            <summary>
+            hash code
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Angle(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            夹角[0, PI]
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.ClampMagnitude(RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            保持向量方向，调整向量长度
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Cross(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            叉积 Cross Product of two vectors
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Dot(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            点积
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Distance(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            求距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Lerp(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            限制性在点start，end 之间插值Linearly interpolates between two points.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="t">[0,1]</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.LerpUnclamped(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            非限制性在点start，end 之间插值Linearly interpolates between two points.
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Max(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            获取max向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Min(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            获取Min向量，计算包围盒有用
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.MoveTowards(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            朝目标向量移动maxDistanceDelta距离,未考虑移出。
+            </summary>
+            <param name="current"></param>
+            <param name="target"></param>
+            <param name="maxDistanceDelta"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Project(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            vector 在 onNormal的投影
+            </summary>
+            <param name="vector"></param>
+            <param name="onNormal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.ProjectOnPlane(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            求向量vector 在平面上的投影
+            </summary>
+            <param name="vector"></param>
+            <param name="planeNormal">平面法向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Reflect(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            求发射光线
+            </summary>
+            <param name="inDirection">入射光线</param>
+            <param name="inNormal">法线</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Scale(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            分量分别相乘，得到新的向量
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.SignedAngle(RayGraphics.Math.Double3,RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            求角度
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <param name="axis">from, to 的垂直轴</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.RotateTowards(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double,System.Double)">
+            <summary>
+            绕目标轴旋转
+            </summary>
+            <param name="current"></param>
+            <param name="target"></param>
+            <param name="maxRadiansDelta"></param>
+            <param name="maxMagnitudeDelta"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.Slerp(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            Spherically interpolates between two vectors 向量球面插值
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.SlerpUnclamped(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            Spherically interpolates between two vectors. 向量球面插值，非限制
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double3.SmoothDamp(RayGraphics.Math.Double3,RayGraphics.Math.Double3,RayGraphics.Math.Double3@,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="current"></param>
+            <param name="target"></param>
+            <param name="currentVelocity"></param>
+            <param name="smoothTime"></param>
+            <param name="maxSpeed"></param>
+            <param name="deltaTime"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+            <param name="w"></param>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.Set(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            设置属性
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="z"></param>
+        </member>
+        <member name="P:RayGraphics.Math.Double4.Item(System.Int32)">
+            <summary>
+            按索引访问
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Math.Double4.s_zero">
+            <summary>
+            0
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Double4.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Inequality(RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
+            <summary>
+            
+            </summary>
+            <param name="vector1"></param>
+            <param name="vector2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Equality(RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
+            <summary>
+            
+            </summary>
+            <param name="vector1"></param>
+            <param name="vector2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Addition(RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
+            <summary>
+            
+            </summary>
+            <param name="vector1"></param>
+            <param name="vector2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Subtraction(RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
+            <summary>
+            
+            </summary>
+            <param name="vector1"></param>
+            <param name="vector2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Multiply(System.Double,RayGraphics.Math.Double4)">
+            <summary>
+            
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.op_Multiply(RayGraphics.Math.Double4,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double4.Dot(RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
+            <summary>
+            点积
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Float2.Set(System.Single,System.Single)">
@@ -2793,14 +3484,14 @@
             第二列
             </summary>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.#ctor(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Math.Matrix2x2.#ctor(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             
             </summary>
             <param name="col1"></param>
             <param name="col2"></param>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.Set(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Math.Matrix2x2.Set(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             设置属性
             </summary>
@@ -2832,7 +3523,7 @@
             <param name="angle"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.ScaleMatrix(System.Single,System.Single)">
+        <member name="M:RayGraphics.Math.Matrix2x2.ScaleMatrix(System.Double,System.Double)">
             <summary>
             缩放矩阵
             </summary>
@@ -2879,7 +3570,7 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(System.Single,RayGraphics.Math.Matrix2x2)">
+        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(System.Double,RayGraphics.Math.Matrix2x2)">
             <summary>
             * 运算
             </summary>
@@ -2887,7 +3578,7 @@
             <param name="vector"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Matrix2x2,System.Single)">
+        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Matrix2x2,System.Double)">
             <summary>
             * 运算
             </summary>
@@ -2903,7 +3594,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Matrix2x2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Matrix2x2,RayGraphics.Math.Double2)">
             <summary>
             * 运算
             </summary>
@@ -2911,7 +3602,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Float2,RayGraphics.Math.Matrix2x2)">
+        <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Double2,RayGraphics.Math.Matrix2x2)">
             <summary>
             * 运算
             </summary>
@@ -2948,7 +3639,7 @@
             <param name="vector"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix2x2.GetCovarianceMatrix(RayGraphics.Math.Float2[])">
+        <member name="M:RayGraphics.Math.Matrix2x2.GetCovarianceMatrix(RayGraphics.Math.Double2[])">
             <summary>
             计算协方差举证
             https://zhuanlan.zhihu.com/p/37609917
@@ -3000,14 +3691,14 @@
             <param name="row"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.#ctor(RayGraphics.Math.Float3,RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Math.Matrix3x3.#ctor(RayGraphics.Math.Double3,RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
             <summary>
             
             </summary>
             <param name="col1"></param>
             <param name="col2"></param>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.Set(RayGraphics.Math.Float3,RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Math.Matrix3x3.Set(RayGraphics.Math.Double3,RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
             <summary>
             
             </summary>
@@ -3093,7 +3784,7 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(System.Single,RayGraphics.Math.Matrix3x3)">
+        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(System.Double,RayGraphics.Math.Matrix3x3)">
             <summary>
             * 运算
             </summary>
@@ -3101,7 +3792,7 @@
             <param name="vector"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Matrix3x3,System.Single)">
+        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Matrix3x3,System.Double)">
             <summary>
             * 运算
             </summary>
@@ -3117,7 +3808,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Matrix3x3,RayGraphics.Math.Float3)">
+        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Matrix3x3,RayGraphics.Math.Double3)">
             <summary>
             * 运算
             </summary>
@@ -3125,7 +3816,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Float3,RayGraphics.Math.Matrix3x3)">
+        <member name="M:RayGraphics.Math.Matrix3x3.op_Multiply(RayGraphics.Math.Double3,RayGraphics.Math.Matrix3x3)">
             <summary>
             * 运算
             </summary>
@@ -3210,14 +3901,14 @@
             <param name="row"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.#ctor(RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4)">
+        <member name="M:RayGraphics.Math.Matrix4x4.#ctor(RayGraphics.Math.Double4,RayGraphics.Math.Double4,RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
             <summary>
             
             </summary>
             <param name="col1"></param>
             <param name="col2"></param>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.Set(RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4,RayGraphics.Math.Float4)">
+        <member name="M:RayGraphics.Math.Matrix4x4.Set(RayGraphics.Math.Double4,RayGraphics.Math.Double4,RayGraphics.Math.Double4,RayGraphics.Math.Double4)">
             <summary>
             
             </summary>
@@ -3267,7 +3958,7 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(System.Single,RayGraphics.Math.Matrix4x4)">
+        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(System.Double,RayGraphics.Math.Matrix4x4)">
             <summary>
             * 运算
             </summary>
@@ -3275,7 +3966,7 @@
             <param name="vector"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Matrix4x4,System.Single)">
+        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Matrix4x4,System.Double)">
             <summary>
             * 运算
             </summary>
@@ -3291,7 +3982,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Matrix4x4,RayGraphics.Math.Float4)">
+        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Matrix4x4,RayGraphics.Math.Double4)">
             <summary>
             * 运算
             </summary>
@@ -3299,7 +3990,7 @@
             <param name="m2"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Float4,RayGraphics.Math.Matrix4x4)">
+        <member name="M:RayGraphics.Math.Matrix4x4.op_Multiply(RayGraphics.Math.Double4,RayGraphics.Math.Matrix4x4)">
             <summary>
             * 运算
             </summary>

@@ -9,25 +9,25 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 起点
         /// </summary>
-        public Float2 startPoint;
+        public Double2 startPoint;
         /// <summary>
         /// 轴1
         /// </summary>
-        public Float2 aix1;
+        public Double2 aix1;
         /// <summary>
         /// 轴2
         /// </summary>
-        public Float2 aix2;
+        public Double2 aix2;
         /// <summary>
         /// obb的大小
         /// </summary>
-        public Float2 size;
+        public Double2 size;
         /// <summary>
         /// 设置aabb
         /// </summary>
         /// <param name="lb"></param>
         /// <param name="ru"></param>
-        public void SetObb(Float2 startPoint ,Float2 aix1, Float2 aix2, Float2 size)
+        public void SetObb(Double2 startPoint , Double2 aix1, Double2 aix2, Double2 size)
         {
             this.startPoint = startPoint;
             this.aix1 = aix1;
@@ -39,10 +39,10 @@ namespace RayGraphics.Geometric
         /// 根据点阵创建obb
         /// </summary>
         /// <param name="points"></param>
-        public void Init(Float2[] points)
+        public void Init(Double2[] points)
         {
-            Float2 centerPos = Float2.zero;
-            Float2[] offPoints = CalcCenter(points, ref centerPos);
+            Double2 centerPos = Double2.zero;
+            Double2[] offPoints = CalcCenter(points, ref centerPos);
             if (offPoints != null)
             {
                 Matrix2x2 matrix = Matrix2x2.GetCovarianceMatrix(offPoints);
@@ -58,16 +58,16 @@ namespace RayGraphics.Geometric
         /// <param name="points"></param>
         /// <param name="centerPos"></param>
         /// <returns></returns>
-        private Float2[] CalcCenter(Float2[] points, ref Float2 centerPos)
+        private Double2[] CalcCenter(Double2[] points, ref Double2 centerPos)
         {
             if (points == null || points.Length <= 0)
             {
-                centerPos = Float2.zero;
+                centerPos = Double2.zero;
                 return null;
             }
             int numPoints = points.Length;
-            Float2[] pVectors = new Float2[numPoints];
-            centerPos = Float2.zero;
+            Double2[] pVectors = new Double2[numPoints];
+            centerPos = Double2.zero;
             for (int i = 0; i < numPoints; i++)
             {
                 pVectors[i] = points[i];
@@ -87,19 +87,19 @@ namespace RayGraphics.Geometric
         /// <param name="offPoints"></param>
         /// <param name="centerPos"></param>
         /// <param name="featreVectorMatrix"></param>
-        private void CalcSize(Float2[] offPoints, Float2 centerPos, Matrix2x2 featreVectorMatrix)
+        private void CalcSize(Double2[] offPoints, Double2 centerPos, Matrix2x2 featreVectorMatrix)
         {
-            Float2 min = Float2.positiveInfinity;
-            Float2 max = Float2.negativeInfinity;
+            Double2 min = Double2.positiveInfinity;
+            Double2 max = Double2.negativeInfinity;
             for (int index = 0; index < offPoints.Length; index++)
             {
-                Float2 vec = offPoints[index];
+                Double2 vec = offPoints[index];
 
-                min.x = System.Math.Min(min.x, Float2.Dot(vec, featreVectorMatrix.row1));
-                min.y = System.Math.Min(min.y, Float2.Dot(vec, featreVectorMatrix.row2));
+                min.x = System.Math.Min(min.x, Double2.Dot(vec, featreVectorMatrix.row1));
+                min.y = System.Math.Min(min.y, Double2.Dot(vec, featreVectorMatrix.row2));
 
-                max.x = System.Math.Max(max.x, Float2.Dot(vec, featreVectorMatrix.row1));
-                max.y = System.Math.Max(max.y, Float2.Dot(vec, featreVectorMatrix.row2));
+                max.x = System.Math.Max(max.x, Double2.Dot(vec, featreVectorMatrix.row1));
+                max.y = System.Math.Max(max.y, Double2.Dot(vec, featreVectorMatrix.row2));
             }
             this.startPoint = featreVectorMatrix.col1 * min.x + featreVectorMatrix.col2 * min.y + centerPos;
             this.size = max - min;
@@ -213,9 +213,9 @@ namespace RayGraphics.Geometric
         /// 求obb的点
         /// </summary>
         /// <returns></returns>
-        public Float2[] GetPoints()
+        public Double2[] GetPoints()
         {
-            Float2[] points = new Float2[4];
+            Double2[] points = new Double2[4];
             points[0] = this.startPoint;
             points[1] = this.startPoint + this.aix1 * this.size.x;
             points[2] = this.startPoint + this.aix1 * this.size.x + this.aix2 * this.size.y;

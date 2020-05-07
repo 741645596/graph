@@ -9,25 +9,25 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 直线上得点
         /// </summary>
-        protected Float3 _pt;
-        public Float3 Pt
+        protected Double3 _pt;
+        public Double3 Pt
         {
             get { return _pt; }
         }
         /// <summary>
         /// 法线
         /// </summary>
-        protected Float3 _normalizedNormal;
-        public Float3 NormalizedNormal
+        protected Double3 _normalizedNormal;
+        public Double3 NormalizedNormal
         {
             get { return _normalizedNormal; }
         }
         public Plane()
         {
-            this._pt = Float3.zero;
-            this._normalizedNormal = Float3.up;
+            this._pt = Double3.zero;
+            this._normalizedNormal = Double3.up;
         }
-        public Plane(Float3 pt, Float3 normal)
+        public Plane(Double3 pt, Double3 normal)
         {
             this._pt = pt;
             this._normalizedNormal = normal.normalized;
@@ -37,10 +37,10 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public virtual bool CheckIn(Float3 pt)
+        public virtual bool CheckIn(Double3 pt)
         {
-            Float3 diff = pt - this.Pt;
-            if (Float3.Dot(diff, this.NormalizedNormal) == 0)
+            Double3 diff = pt - this.Pt;
+            if (Double3.Dot(diff, this.NormalizedNormal) == 0)
             {
                 return true;
             }
@@ -54,30 +54,30 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public virtual float CalcDistance(Float3 pt)
+        public virtual double CalcDistance(Double3 pt)
         {
-            Float3 diff = pt - this.Pt;
-            return Float3.ProjectOnPlane(diff, this.NormalizedNormal).magnitude;
+            Double3 diff = pt - this.Pt;
+            return Double3.ProjectOnPlane(diff, this.NormalizedNormal).magnitude;
         }
         /// <summary>
         /// 点导几何元素的投影点
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public virtual Float3 ProjectPoint(Float3 pt)
+        public virtual Double3 ProjectPoint(Double3 pt)
         {
-            Float3 diff = pt - this.Pt;
-            return pt - Float3.ProjectOnPlane(diff, this.NormalizedNormal);
+            Double3 diff = pt - this.Pt;
+            return pt - Double3.ProjectOnPlane(diff, this.NormalizedNormal);
         }
         /// <summary>
         /// 求轴向量
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public virtual Float3 AixsVector(Float3 pt)
+        public virtual Double3 AixsVector(Double3 pt)
         {
-            Float3 diff = pt - this.Pt;
-            return Float3.Project(diff, this.NormalizedNormal);
+            Double3 diff = pt - this.Pt;
+            return Double3.Project(diff, this.NormalizedNormal);
         }
         /// <summary>
         /// 与线的关系
@@ -88,10 +88,10 @@ namespace RayGraphics.Geometric
         {
             if (line == null)
                 return LineRelation.None;
-            if (Float3.Dot(line.NormalizedDir, this.NormalizedNormal) == 0)
+            if (Double3.Dot(line.NormalizedDir, this.NormalizedNormal) == 0)
             {
-                Float3 diff = line.StartPoint - this.Pt;
-                if (Float3.Dot(diff, this.NormalizedNormal) == 0)
+                Double3 diff = line.StartPoint - this.Pt;
+                if (Double3.Dot(diff, this.NormalizedNormal) == 0)
                 {
                     // 线在平面上
                     return LineRelation.Coincide;
@@ -103,7 +103,7 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                Float3 intersectPoint = Float3.zero;
+                Double3 intersectPoint = Double3.zero;
                 if (GetIntersectPoint(line, ref intersectPoint) == true)
                 {
                     return LineRelation.Intersect;
@@ -120,12 +120,12 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public virtual bool GetIntersectPoint(Line3D line, ref Float3 intersectPoint)
+        public virtual bool GetIntersectPoint(Line3D line, ref Double3 intersectPoint)
         {
             if (line == null)
                 return false;
-            Float3 aixsVector = AixsVector(line.StartPoint);
-            float distance = aixsVector.magnitude;
+            Double3 aixsVector = AixsVector(line.StartPoint);
+            double distance = aixsVector.magnitude;
             if (distance == 0)
             {
                 intersectPoint = line.StartPoint;
@@ -133,17 +133,17 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                float dot = Float3.Dot(aixsVector.normalized, line.NormalizedDir);
+                double dot = Double3.Dot(aixsVector.normalized, line.NormalizedDir);
                 if (dot == 0)
                 {
                     return false;
                 }
                 else
                 {
-                    Float3 point = line.StartPoint - distance / dot * line.NormalizedDir;
+                    Double3 point = line.StartPoint - distance / dot * line.NormalizedDir;
                     if (line is Rays3D)
                     {
-                        if (Float3.Dot(line.NormalizedDir, point - line.StartPoint) >= 0)
+                        if (Double3.Dot(line.NormalizedDir, point - line.StartPoint) >= 0)
                         {
                             intersectPoint = point;
                             return true;
@@ -152,7 +152,7 @@ namespace RayGraphics.Geometric
                     }
                     else if (line is LineSegment3D)
                     {
-                        if (Float3.Dot(point - line.StartPoint, point - (line as LineSegment3D).EndPoint) <= 0)
+                        if (Double3.Dot(point - line.StartPoint, point - (line as LineSegment3D).EndPoint) <= 0)
                         {
                             intersectPoint = point;
                             return true;

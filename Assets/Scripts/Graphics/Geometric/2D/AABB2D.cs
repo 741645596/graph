@@ -10,36 +10,36 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 左下
         /// </summary>
-        public Float2 leftBottom;
+        public Double2 leftBottom;
         /// <summary>
         /// 右上
         /// </summary>
-        public Float2 rightUp;
+        public Double2 rightUp;
         /// <summary>
         /// 左⬆️
         /// </summary>
-        public Float2 LeftUp
+        public Double2 LeftUp
         {
-            get { return new Float2(leftBottom.x, rightUp.y); }
+            get { return new Double2(leftBottom.x, rightUp.y); }
         }
         /// <summary>
         /// 右⬇️
         /// </summary>
-        public Float2 RightBottom
+        public Double2 RightBottom
         {
-            get { return new Float2(rightUp.x, leftBottom.y); }
+            get { return new Double2(rightUp.x, leftBottom.y); }
         }
         /// <summary>
         /// Center
         /// </summary>
-        public Float2 Center
+        public Double2 Center
         {
             get { return (this.leftBottom + this.rightUp) * 0.5f; }
         }
         /// <summary>
         /// 2* Center
         /// </summary>
-        public Float2 Center2
+        public Double2 Center2
         {
             get { return this.leftBottom + this.rightUp; }
         }
@@ -48,10 +48,10 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="lb"></param>
         /// <param name="ru"></param>
-        protected void SetAABB(Float2 lb, Float2 ru)
+        protected void SetAABB(Double2 lb, Double2 ru)
         {
-            this.leftBottom = Float2.Min(lb, ru);
-            this.rightUp = Float2.Max(lb, ru);
+            this.leftBottom = Double2.Min(lb, ru);
+            this.rightUp = Double2.Max(lb, ru);
         }
 #if Client
         /// <summary>
@@ -87,12 +87,12 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public virtual bool CheckIn(Float2 pt)
+        public virtual bool CheckIn(Double2 pt)
         {
-            Float2 max = this.rightUp;
+            Double2 max = this.rightUp;
             if (pt.x > max.x || pt.y > max.y)
                 return false;
-            Float2 min = this.leftBottom;
+            Double2 min = this.leftBottom;
             if (pt.x < min.x || pt.y < min.y)
                 return false;
             return true;
@@ -102,9 +102,9 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public float CalcDistance(Float2 pt)
+        public double CalcDistance(Double2 pt)
         {
-            float distance = 0.0f;
+            double distance = 0.0f;
             AligentStyle style = GetAligentStyle(pt);
             switch (style)
             {
@@ -145,10 +145,10 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public AligentStyle GetAligentStyle(Float2 pt)
+        public AligentStyle GetAligentStyle(Double2 pt)
         {
-            Float2 max = this.rightUp;
-            Float2 min = this.leftBottom;
+            Double2 max = this.rightUp;
+            Double2 min = this.leftBottom;
             // 8 种情形
             if (pt.y < min.y)
             {
@@ -189,22 +189,22 @@ namespace RayGraphics.Geometric
                 return LineRelation.Intersect;
             else // 4个点在同侧
             {
-                Float2 p1 = this.leftBottom - line.startPoint;
-                Float2 p2 = this.RightBottom - line.startPoint;
+                Double2 p1 = this.leftBottom - line.startPoint;
+                Double2 p2 = this.RightBottom - line.startPoint;
                 
                 
-                float cross1 = Float2.Cross(line.normalizedDir, p1);
-                if (cross1 * Float2.Cross(line.normalizedDir, p2) <= 0)
+                double cross1 = Double2.Cross(line.normalizedDir, p1);
+                if (cross1 * Double2.Cross(line.normalizedDir, p2) <= 0)
                 {
                     return LineRelation.Intersect;
                 }
-                Float2 p3 = this.rightUp - line.startPoint;
-                if (cross1 * Float2.Cross(line.normalizedDir, p3) <= 0)
+                Double2 p3 = this.rightUp - line.startPoint;
+                if (cross1 * Double2.Cross(line.normalizedDir, p3) <= 0)
                 {
                     return LineRelation.Intersect;
                 }
-                Float2 p4 = this.LeftUp - line.startPoint;
-                if (cross1 * Float2.Cross(line.normalizedDir, p4) <= 0)
+                Double2 p4 = this.LeftUp - line.startPoint;
+                if (cross1 * Double2.Cross(line.normalizedDir, p4) <= 0)
                 {
                     return LineRelation.Intersect;
                 }
@@ -236,7 +236,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public virtual  bool RayboundingNearestPath(LineSegment2D line, float offset, ref RayboundingInfo rbi)
+        public virtual  bool RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
         {
             return false;
         }
@@ -247,7 +247,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset"></param>
         /// <param name="bornPoint"></param>
         /// <returns></returns>
-        public virtual bool GetBornPoint(LineSegment2D line, float offset, ref Float2 bornPoint)
+        public virtual bool GetBornPoint(LineSegment2D line, double offset, ref Double2 bornPoint)
         {
             return false;
         }
@@ -258,7 +258,7 @@ namespace RayGraphics.Geometric
         /// <param name="intersectStart"></param>
         /// <param name="intersectEnd"></param>
         /// <returns></returns>
-        public virtual bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStart, ref Float2 intersectEnd)
+        public virtual bool GetIntersectPoint(LineSegment2D line, ref Double2 intersectStart, ref Double2 intersectEnd)
         {
             return false;
         }
@@ -330,14 +330,14 @@ namespace RayGraphics.Geometric
             {
                 return new LineSegment2D(this.LeftUp, this.leftBottom);
             }
-            return new LineSegment2D(Float2.zero, Float2.zero);
+            return new LineSegment2D(Double2.zero, Double2.zero);
         }
         /// <summary>
         /// 获取顶点
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public virtual Float2 GetPoint(int index)
+        public virtual Double2 GetPoint(int index)
         {
             if (index == 0)
             {
@@ -355,7 +355,7 @@ namespace RayGraphics.Geometric
             {
                 return this.LeftUp;
             }
-            return Float2.zero;
+            return Double2.zero;
         }
 
         /// <summary>
@@ -363,25 +363,25 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="edgeIndex"></param>
         /// <returns></returns>
-        public virtual Float2 GetNormal(int edgeIndex)
+        public virtual Double2 GetNormal(int edgeIndex)
         {
             if (edgeIndex == 0)
             {
-                return Float2.down;
+                return Double2.down;
             }
             else if (edgeIndex == 1)
             {
-                return Float2.right;
+                return Double2.right;
             }
             else if (edgeIndex == 2)
             {
-                return Float2.up;
+                return Double2.up;
             }
             else if (edgeIndex == 3)
             {
-                return Float2.left;
+                return Double2.left;
             }
-            return Float2.zero;
+            return Double2.zero;
         }
 
         /// <summary>
@@ -396,9 +396,9 @@ namespace RayGraphics.Geometric
         /// 获取顶点数组
         /// </summary>
         /// <returns></returns>
-        public virtual Float2[] GetPoints()
+        public virtual Double2[] GetPoints()
         {
-            Float2[] points = new Float2[4];
+            Double2[] points = new Double2[4];
             points[0] = this.leftBottom;
             points[1] = this.RightBottom;
             points[2] = this.rightUp;

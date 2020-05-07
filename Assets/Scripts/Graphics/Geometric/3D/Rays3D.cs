@@ -9,7 +9,7 @@ namespace RayGraphics.Geometric
     /// </summary>
     public class Rays3D : Line3D
     {
-        public Rays3D(Float3 startPt, Float3 dir)
+        public Rays3D(Double3 startPt, Double3 dir)
         {
             this._startPoint = startPt;
             this._normalizedDir = dir.normalized;
@@ -19,13 +19,13 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override bool CheckIn(Float3 pt)
+        public override bool CheckIn(Double3 pt)
         {
             bool ret = base.CheckIn(pt);
             if (ret == true)
             {
-                Float3 diff = pt - this.StartPoint;
-                if (Float3.Dot(diff, this.NormalizedDir) < 0)
+                Double3 diff = pt - this.StartPoint;
+                if (Double3.Dot(diff, this.NormalizedDir) < 0)
                     return false;
                 else return true;
             }
@@ -36,18 +36,18 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override float CalcDistance(Float3 pt)
+        public override double CalcDistance(Double3 pt)
         {
-            Float3 diff = pt - this.StartPoint;
-            if (diff == Float3.zero)
+            Double3 diff = pt - this.StartPoint;
+            if (diff == Double3.zero)
                 return 0;
-            if (Float3.Dot(diff, this.NormalizedDir) <= 0)
+            if (Double3.Dot(diff, this.NormalizedDir) <= 0)
             {
                 return diff.magnitude;
             }
             else
             {
-                Float3 verticalAxis = this.AixsVector(pt);
+                Double3 verticalAxis = this.AixsVector(pt);
                 return verticalAxis.magnitude;
             }
         }
@@ -61,8 +61,8 @@ namespace RayGraphics.Geometric
             LineRelation lr = base.CheckLineRelation(line);
             if (lr == LineRelation.Intersect)
             {
-                Float3 aixsVector = line.AixsVector(this.StartPoint);
-                if (Float3.Dot(aixsVector, this.NormalizedDir) > 0)
+                Double3 aixsVector = line.AixsVector(this.StartPoint);
+                if (Double3.Dot(aixsVector, this.NormalizedDir) > 0)
                 {
                     return LineRelation.Detach;
                 }
@@ -82,12 +82,12 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public override bool GetIntersectPoint(Line3D line, ref Float3 intersectPoint)
+        public override bool GetIntersectPoint(Line3D line, ref Double3 intersectPoint)
         {
-            Float3 point = Float3.zero;
+            Double3 point = Double3.zero;
             if (base.GetIntersectPoint(line, ref point) == true)
             {
-                if (Float3.Dot(line.NormalizedDir, point - line.StartPoint) >= 0)
+                if (Double3.Dot(line.NormalizedDir, point - line.StartPoint) >= 0)
                 {
                     intersectPoint = point;
                     return true;

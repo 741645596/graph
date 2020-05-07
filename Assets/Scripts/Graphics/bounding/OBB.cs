@@ -74,18 +74,18 @@ namespace RayGraphics.Bounding
 		/// <param name="matrix"></param>
 		/// <param name="eValue"></param>
 		/// <param name="eVectors"></param>
-		public void jacobiSolver(Matrix2x2 matrix, float[] eValue, Float2[] eVectors)
+		public void jacobiSolver(Matrix2x2 matrix, double[] eValue, Double2[] eVectors)
 		{
-			float p, q, spq;
-			float cosa ,sina ;  //cos(alpha) and sin(alpha)
-			float temp;
-			float s1 = 0.0f;    //sums of squares of diagonal
-			float s2;          //elements
+			double p, q, spq;
+			double cosa ,sina ;  //cos(alpha) and sin(alpha)
+			double temp;
+			double s1 = 0.0f;    //sums of squares of diagonal
+			double s2;          //elements
 
 			bool flag = true;  //determine whether to iterate again
 			int iteration = 0;   //iteration counter
 
-			float[] data = new float[2];
+			double[] data = new double[2];
 			Matrix2x2 t = Matrix2x2.one;//To store the product of the rotation matrices.
 			do
 			{

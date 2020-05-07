@@ -16,9 +16,9 @@ public class GridLine : MonoBehaviour
 
     void Start()
     {
-        rc2d = new Rect2D(Float2.zero, Float2.one * 10);
+        rc2d = new Rect2D(Double2.zero, Double2.one * 10);
         //ls2d = new LineSegment2D(Float2.zero, new Float2(10, 0));
-        ls2d1 = new LineSegment2D(new Float2(-20, 5), new Float2(20, 5));
+        ls2d1 = new LineSegment2D(new Double2(-20, 5), new Double2(20, 5));
         //InvokeRepeating("Doline", 0.1f, 1.0f);
     }
 

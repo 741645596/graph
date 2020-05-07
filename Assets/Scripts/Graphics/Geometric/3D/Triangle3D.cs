@@ -12,7 +12,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override bool CheckIn(Float3 pt)
+        public override bool CheckIn(Double3 pt)
         {
             return false;
         }
@@ -21,7 +21,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override float CalcDistance(Float3 pt)
+        public override double CalcDistance(Double3 pt)
         {
             return 0;
         }
@@ -30,9 +30,9 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override Float3 ProjectPoint(Float3 pt)
+        public override Double3 ProjectPoint(Double3 pt)
         {
-            return Float3.zero;
+            return Double3.zero;
         }
     }
 }

@@ -11,35 +11,35 @@ namespace RayGraphics.Math
         /// <summary>
         /// 第一行
         /// </summary>
-        public Float3 col1;
+        public Double3 col1;
         /// <summary>
         /// 第二行
         /// </summary>
-        public Float3 col2;
+        public Double3 col2;
         /// <summary>
         /// 第三行
         /// </summary>
-        public Float3 col3;
+        public Double3 col3;
         /// <summary>
         /// 第一列
         /// </summary>
-        public Float3 row1
+        public Double3 row1
         {
-            get { return new Float3(col1.x, col2.x, col3.x); }
+            get { return new Double3(col1.x, col2.x, col3.x); }
         }
         /// <summary>
         /// 第二列
         /// </summary>
-        public Float3 row2
+        public Double3 row2
         {
-            get { return new Float3(col1.y, col2.y, col3.y); }
+            get { return new Double3(col1.y, col2.y, col3.y); }
         }
         /// <summary>
         /// 第二列
         /// </summary>
-        public Float3 row3
+        public Double3 row3
         {
-            get { return new Float3(col1.z, col2.z, col3.z); }
+            get { return new Double3(col1.z, col2.z, col3.z); }
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace RayGraphics.Math
         /// <param name="col"></param>
         /// <param name="row"></param>
         /// <returns></returns>
-        public float this[int col, int row]
+        public double this[int col, int row]
         {
             get
             {
@@ -75,7 +75,7 @@ namespace RayGraphics.Math
         /// </summary>
         /// <param name="col1"></param>
         /// <param name="col2"></param>
-        public Matrix3x3(Float3 col1, Float3 col2, Float3 col3)
+        public Matrix3x3(Double3 col1, Double3 col2, Double3 col3)
         {
             this.col1 = col1;
             this.col2 = col2;
@@ -87,7 +87,7 @@ namespace RayGraphics.Math
         /// <param name="col1"></param>
         /// <param name="col2"></param>
         /// <param name="col3"></param>
-        public void Set(Float3 col1, Float3 col2, Float3 col3)
+        public void Set(Double3 col1, Double3 col2, Double3 col3)
         {
             this.col1 = col1;
             this.col2 = col2;
@@ -101,7 +101,7 @@ namespace RayGraphics.Math
         {
             get { return s_zero; }
         }
-        private static readonly Matrix3x3 s_zero = new Matrix3x3(Float3.zero, Float3.zero, Float3.zero);
+        private static readonly Matrix3x3 s_zero = new Matrix3x3(Double3.zero, Double3.zero, Double3.zero);
         /// <summary>
         /// 单位矩阵
         /// </summary>
@@ -109,7 +109,7 @@ namespace RayGraphics.Math
         {
             get { return s_one; }
         }
-        private static readonly Matrix3x3 s_one = new Matrix3x3(Float3.right, Float3.up, Float3.foward);
+        private static readonly Matrix3x3 s_one = new Matrix3x3(Double3.right, Double3.up, Double3.foward);
         /// <summary>
         /// 绕Z旋转
         /// </summary>
@@ -117,9 +117,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateZMatrix(double angle)
         {
-            Float3 col1 = new Float3(System.Math.Cos(angle), System.Math.Sin(angle), 0);
-            Float3 col2 = new Float3(-System.Math.Sin(angle), System.Math.Cos(angle), 0);
-            Float3 col3 = new Float3(0, 0, 1);
+            Double3 col1 = new Double3(System.Math.Cos(angle), System.Math.Sin(angle), 0);
+            Double3 col2 = new Double3(-System.Math.Sin(angle), System.Math.Cos(angle), 0);
+            Double3 col3 = new Double3(0, 0, 1);
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -129,9 +129,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateXMatrix(double angle)
         {
-            Float3 col1 = new Float3(1, 0, 0);
-            Float3 col2 = new Float3(0, System.Math.Cos(angle), System.Math.Sin(angle));
-            Float3 col3 = new Float3(0, -System.Math.Sin(angle), System.Math.Cos(angle));
+            Double3 col1 = new Double3(1, 0, 0);
+            Double3 col2 = new Double3(0, System.Math.Cos(angle), System.Math.Sin(angle));
+            Double3 col3 = new Double3(0, -System.Math.Sin(angle), System.Math.Cos(angle));
             
             return new Matrix3x3(col1, col2, col3);
         }
@@ -142,9 +142,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateYMatrix(double angle)
         {
-            Float3 col1 = new Float3(System.Math.Cos(angle), 0, System.Math.Sin(angle));
-            Float3 col2 = new Float3(0, 1, 0);
-            Float3 col3 = new Float3(-System.Math.Sin(angle), 0, System.Math.Cos(angle));
+            Double3 col1 = new Double3(System.Math.Cos(angle), 0, System.Math.Sin(angle));
+            Double3 col2 = new Double3(0, 1, 0);
+            Double3 col3 = new Double3(-System.Math.Sin(angle), 0, System.Math.Cos(angle));
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -155,9 +155,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 ScaleMatrix(float scaleX, float scaleY, float scaleZ)
         {
-            Float3 col1 = scaleX * Float3.right;
-            Float3 col2 = scaleY * Float3.up;
-            Float3 col3 = scaleZ * Float3.foward;
+            Double3 col1 = scaleX * Double3.right;
+            Double3 col2 = scaleY * Double3.up;
+            Double3 col3 = scaleZ * Double3.foward;
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -167,9 +167,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 ScaleMatrix(float scale)
         {
-            Float3 col1 = scale * Float3.right;
-            Float3 col2 = scale * Float3.up;
-            Float3 col3 = scale * Float3.foward;
+            Double3 col1 = scale * Double3.right;
+            Double3 col2 = scale * Double3.up;
+            Double3 col3 = scale * Double3.foward;
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -200,9 +200,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 operator +(Matrix3x3 v1, Matrix3x3 v2)
         {
-            Float3 m1 = v1.col1 + v2.col1;
-            Float3 m2 = v1.col2 + v2.col2;
-            Float3 m3 = v1.col3 + v2.col3;
+            Double3 m1 = v1.col1 + v2.col1;
+            Double3 m2 = v1.col2 + v2.col2;
+            Double3 m3 = v1.col3 + v2.col3;
             return new Matrix3x3(m1, m2, m3);
         }
         /// <summary>
@@ -213,9 +213,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 operator -(Matrix3x3 v1, Matrix3x3 v2)
         {
-            Float3 m1 = v1.col1 - v2.col1;
-            Float3 m2 = v1.col2 - v2.col2;
-            Float3 m3 = v1.col3 - v2.col3;
+            Double3 m1 = v1.col1 - v2.col1;
+            Double3 m2 = v1.col2 - v2.col2;
+            Double3 m3 = v1.col3 - v2.col3;
             return new Matrix3x3(m1, m2, m3);
         }
         /// <summary>
@@ -224,12 +224,12 @@ namespace RayGraphics.Math
         /// <param name="k"></param>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static Matrix3x3 operator *(float k, Matrix3x3 v)
+        public static Matrix3x3 operator *(double k, Matrix3x3 v)
         {
-            Float3 col1 = v.col1 * k;
-            Float3 col2 = v.col2 * k;
-            Float3 col3 = v.col3 * k;
-            return new Matrix3x3(col1, col2,col3);
+            Double3 col1 = v.col1 * k;
+            Double3 col2 = v.col2 * k;
+            Double3 col3 = v.col3 * k;
+            return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
         /// * 运算
@@ -237,11 +237,11 @@ namespace RayGraphics.Math
         /// <param name="k"></param>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static Matrix3x3 operator *(Matrix3x3 v, float k)
+        public static Matrix3x3 operator *(Matrix3x3 v, double k)
         {
-            Float3 col1 = v.col1 * k;
-            Float3 col2 = v.col2 * k;
-            Float3 col3 = v.col3 * k;
+            Double3 col1 = v.col1 * k;
+            Double3 col2 = v.col2 * k;
+            Double3 col3 = v.col3 * k;
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -252,9 +252,9 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 operator *(Matrix3x3 m1, Matrix3x3 m2)
         {
-            Float3 col1 = new Float3(Float3.Dot(m1.col1, m2.row1), Float3.Dot(m1.col1, m2.row2), Float3.Dot(m1.col1, m2.row3));
-            Float3 col2 = new Float3(Float3.Dot(m1.col2, m2.row1), Float3.Dot(m1.col2, m2.row2), Float3.Dot(m1.col2, m2.row3));
-            Float3 col3 = new Float3(Float3.Dot(m1.col3, m2.row1), Float3.Dot(m1.col3, m2.row2), Float3.Dot(m1.col3, m2.row3));
+            Double3 col1 = new Double3(Double3.Dot(m1.col1, m2.row1), Double3.Dot(m1.col1, m2.row2), Double3.Dot(m1.col1, m2.row3));
+            Double3 col2 = new Double3(Double3.Dot(m1.col2, m2.row1), Double3.Dot(m1.col2, m2.row2), Double3.Dot(m1.col2, m2.row3));
+            Double3 col3 = new Double3(Double3.Dot(m1.col3, m2.row1), Double3.Dot(m1.col3, m2.row2), Double3.Dot(m1.col3, m2.row3));
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -263,9 +263,9 @@ namespace RayGraphics.Math
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static Float3 operator *(Matrix3x3 m, Float3 v)
+        public static Double3 operator *(Matrix3x3 m, Double3 v)
         {
-            return new Float3(Float3.Dot(m.col1, v), Float3.Dot(m.col2, v), Float3.Dot(m.col3, v));
+            return new Double3(Double3.Dot(m.col1, v), Double3.Dot(m.col2, v), Double3.Dot(m.col3, v));
         }
         /// <summary>
         /// * 运算
@@ -273,9 +273,9 @@ namespace RayGraphics.Math
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static Float3 operator *(Float3 v, Matrix3x3 m)
+        public static Double3 operator *(Double3 v, Matrix3x3 m)
         {
-            return new Float3(Float3.Dot(v, m.row1), Float3.Dot(v, m.row2), Float3.Dot(v, m.row3));
+            return new Double3(Double3.Dot(v, m.row1), Double3.Dot(v, m.row2), Double3.Dot(v, m.row3));
         }
         /// <summary>
         /// * 运算

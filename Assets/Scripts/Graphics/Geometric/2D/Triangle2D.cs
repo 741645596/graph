@@ -8,28 +8,28 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 顶点1
         /// </summary>
-        public Float2 p1;
+        public Double2 p1;
         /// <summary>
         /// 顶点2
         /// </summary>
-        public Float2 p2;
+        public Double2 p2;
         /// <summary>
         /// 顶点3
         /// </summary>
-        public Float2 p3;
+        public Double2 p3;
         /// <summary>
         /// 顺时针顶点
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <param name="p3"></param>
-        public Triangle2D(Float2 p1, Float2 p2, Float2 p3)
+        public Triangle2D(Double2 p1, Double2 p2, Double2 p3)
         {
             this.p1 = p1;
             this.p2 = p2;
             this.p3 = p3;
-            Float2 min = Float2.Min(p1, Float2.Min(p2, p3));
-            Float2 max = Float2.Max(p1, Float2.Max(p2, p3));
+            Double2 min = Double2.Min(p1, Double2.Min(p2, p3));
+            Double2 max = Double2.Max(p1, Double2.Max(p2, p3));
             this.SetAABB(min, max);
         }
         /// <summary>
@@ -44,9 +44,9 @@ namespace RayGraphics.Geometric
         /// 获取顶点数组
         /// </summary>
         /// <returns></returns>
-        public override Float2[] GetPoints()
+        public override Double2[] GetPoints()
         {
-            Float2[] points = new Float2[3];
+            Double2[] points = new Double2[3];
             points[0] = this.p1;
             points[1] = this.p2;
             points[2] = this.p3;
@@ -57,7 +57,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public override Float2 GetPoint(int index)
+        public override Double2 GetPoint(int index)
         {
             if (index == 0)
                 return this.p1;
@@ -65,7 +65,7 @@ namespace RayGraphics.Geometric
                 return this.p2;
             else if (index == 2)
                 return this.p3;
-            else return Float2.zero;
+            else return Double2.zero;
         }
         /// <summary>
         /// 获取边
@@ -86,7 +86,7 @@ namespace RayGraphics.Geometric
             {
                 return new LineSegment2D(this.p3, this.p1);
             }
-            else return new LineSegment2D(Float2.zero, Float2.one);
+            else return new LineSegment2D(Double2.zero, Double2.one);
         }
     }
 }

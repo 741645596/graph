@@ -1,29 +1,30 @@
-﻿/// <summary>
+﻿
+/// <summary>
 /// 平面向量
 /// </summary>
 namespace RayGraphics.Math
 {
     [System.Serializable]
-    public partial struct Float2
+    public partial struct Double2
     {
-        public float x, y;
+        public double x, y;
 
-        public Float2(float x, float y)
+        public Double2(float x, float y)
         {
             this.x = x;
             this.y = y;
         }
-        public Float2(double x, double y)
+        public Double2(double x, double y)
         {
-            this.x = (float)x;
-            this.y = (float)y;
+            this.x = x;
+            this.y = y;
         }
         /// <summary>
         /// 设置属性
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public void Set(float x, float y)
+        public void Set(double x, double y)
         {
             this.x = x;
             this.y = y;
@@ -33,7 +34,7 @@ namespace RayGraphics.Math
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public float this[int index]
+        public double this[int index]
         {
             get
             {
@@ -54,136 +55,136 @@ namespace RayGraphics.Math
         /// <summary>
         /// 模的平方
         /// </summary>
-        public float sqrMagnitude
+        public double sqrMagnitude
         {
             get { return this.x * this.x + this.y * this.y; }
         }
         /// <summary>
         /// 模
         /// </summary>
-        public float magnitude
+        public double magnitude
         {
-            get { return (float)System.Math.Sqrt(this.sqrMagnitude); }
+            get { return System.Math.Sqrt(this.sqrMagnitude); }
         }
         /// <summary>
         /// 单位向量
         /// </summary>
-        public Float2 normalized
+        public Double2 normalized
         {
             get
             {
-                float length = this.magnitude;
+                double length = this.magnitude;
                 if (length == 0)
                 {
-                    return new Float2(x, y);
+                    return new Double2(x, y);
                 }
                 else
                 {
                     length = 1 / length;
-                    return new Float2(x * length, y * length);
+                    return new Double2(x * length, y * length);
                 }
             }
         }
         /// <summary>
         /// 0 向量
         /// </summary>
-        public static Float2 zero
+        public static Double2 zero
         {
             get { return s_zero; }
         }
-        private static readonly Float2 s_zero = new Float2(0, 0);
+        private static readonly Double2 s_zero = new Double2(0, 0);
         /// <summary>
         /// 单位向量
         /// </summary>
-        public static Float2 one
+        public static Double2 one
         {
             get { return s_one; }
         }
-        private static readonly Float2 s_one = new Float2(1, 1);
+        private static readonly Double2 s_one = new Double2(1, 1);
 
         /// <summary>
         /// back 向量
         /// </summary>
-        public static Float2 down
+        public static Double2 down
         {
             get { return s_down; }
         }
-        private static readonly Float2 s_down = new Float2(0, -1);
+        private static readonly Double2 s_down = new Double2(0, -1);
         /// <summary>
         /// foward 向量
         /// </summary>
-        public static Float2 up
+        public static Double2 up
         {
             get { return s_up; }
         }
-        private static readonly Float2 s_up = new Float2(0, 1);
+        private static readonly Double2 s_up = new Double2(0, 1);
         /// <summary>
         /// foward 向量
         /// </summary>
-        public static Float2 left
+        public static Double2 left
         {
             get { return s_left; }
         }
-        private static readonly Float2 s_left = new Float2(-1, 0);
+        private static readonly Double2 s_left = new Double2(-1, 0);
         /// <summary>
         /// foward 向量
         /// </summary>
-        public static Float2 right
+        public static Double2 right
         {
             get { return s_right; }
         }
-        private static readonly Float2 s_right = new Float2(1, 0);
+        private static readonly Double2 s_right = new Double2(1, 0);
         /// <summary>
         /// 负无穷大
         /// </summary>
-        public static Float2 negativeInfinity
+        public static Double2 negativeInfinity
         {
             get { return s_negativeInfinity; }
         }
-        private static readonly Float2 s_negativeInfinity = new Float2(float.NegativeInfinity, float.NegativeInfinity);
+        private static readonly Double2 s_negativeInfinity = new Double2(double.NegativeInfinity, double.NegativeInfinity);
 
         /// <summary>
         /// 无穷大
         /// </summary>
-        public static Float2 positiveInfinity
+        public static Double2 positiveInfinity
         {
             get { return s_positiveInfinity; }
         }
-        private static readonly Float2 s_positiveInfinity = new Float2(float.PositiveInfinity, float.PositiveInfinity);
+        private static readonly Double2 s_positiveInfinity = new Double2(double.PositiveInfinity, double.PositiveInfinity);
 
-        public static bool operator !=(Float2 v1, Float2 v2)
+        public static bool operator !=(Double2 v1, Double2 v2)
         {
             return v1.x != v2.x || v1.y != v2.y;
         }
 
-        public static bool operator ==(Float2 v1, Float2 v2)
+        public static bool operator ==(Double2 v1, Double2 v2)
         {
             return v1.x == v2.x && v1.y == v2.y;
         }
 
-        public static Float2 operator +(Float2 v1, Float2 v2)
+        public static Double2 operator +(Double2 v1, Double2 v2)
         {
-            float xx = v1.x + v2.x;
-            float yy = v1.y + v2.y;
-            return new Float2(xx, yy);
+            double xx = v1.x + v2.x;
+            double yy = v1.y + v2.y;
+            return new Double2(xx, yy);
         }
 
-        public static Float2 operator -(Float2 v1, Float2 v2)
+        public static Double2 operator -(Double2 v1, Double2 v2)
         {
-            float xx = v1.x - v2.x;
-            float yy = v1.y - v2.y;
-            return new Float2(xx, yy);
+            double xx = v1.x - v2.x;
+            double yy = v1.y - v2.y;
+            return new Double2(xx, yy);
         }
         /// <summary>
         /// 负号重载
         /// </summary>
         /// <param name="v1"></param>
         /// <returns></returns>
-        public static Float2 operator -(Float2 v1)
+        public static Double2 operator -(Double2 v1)
         {
-            float xx = -v1.x;
-            float yy = -v1.y;
-            return new Float2(xx, yy);
+            double xx = -v1.x;
+            double yy = -v1.y;
+            return new Double2(xx, yy);
         }
         /// <summary>
         /// * 运算
@@ -191,11 +192,11 @@ namespace RayGraphics.Math
         /// <param name="k"></param>
         /// <param name="vector"></param>
         /// <returns></returns>
-        public static Float2 operator *(float k, Float2 v)
+        public static Double2 operator *(double k, Double2 v)
         {
-            float xx = v.x * k;
-            float yy = v.y * k;
-            return new Float2(xx, yy);
+            double xx = v.x * k;
+            double yy = v.y * k;
+            return new Double2(xx, yy);
         }
         /// <summary>
         ///  * 运算
@@ -203,11 +204,11 @@ namespace RayGraphics.Math
         /// <param name="vector"></param>
         /// <param name="k"></param>
         /// <returns></returns>
-        public static Float2 operator *(Float2 v, float k)
+        public static Double2 operator *(Double2 v, double k)
         {
-            float xx = v.x * k;
-            float yy = v.y * k;
-            return new Float2(xx, yy);
+            double xx = v.x * k;
+            double yy = v.y * k;
+            return new Double2(xx, yy);
         }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace RayGraphics.Math
         /// <param name="v"></param>
         /// <param name="k"></param>
         /// <returns></returns>
-        public static Float2 operator /(Float2 v, float k)
+        public static Double2 operator /(Double2 v, double k)
         {
             if (k != 0)
             {
@@ -236,7 +237,7 @@ namespace RayGraphics.Math
                 return false;
             }
 
-            Float2 p = (Float2)obj;
+            Double2 p = (Double2)obj;
             if ((System.Object)p == null)
             {
                 return false;
@@ -255,10 +256,10 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float Angle(Float2 from, Float2 to)
+        public static double Angle(Double2 from, Double2 to)
         {
-            float cosAngle = CosAngle(from, to);
-            return (float)System.Math.Acos(cosAngle); 
+            double cosAngle = CosAngle(from, to);
+            return System.Math.Acos(cosAngle);
         }
         /// <summary>
         /// 求cos Angle
@@ -266,9 +267,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float CosAngle(Float2 from, Float2 to)
+        public static double CosAngle(Double2 from, Double2 to)
         {
-            return Float2.Dot(from, to) / (from.magnitude * to.magnitude);
+            return Double2.Dot(from, to) / (from.magnitude * to.magnitude);
         }
         /// <summary>
         /// 求sin Angle
@@ -276,9 +277,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float SinAngle(Float2 from, Float2 to)
+        public static double SinAngle(Double2 from, Double2 to)
         {
-            return Float2.Cross(from, to) / (from.magnitude * to.magnitude);
+            return Double2.Cross(from, to) / (from.magnitude * to.magnitude);
         }
         /// <summary>
         /// 向量组成的平行四边形的面积， 已经取绝对值。
@@ -286,9 +287,9 @@ namespace RayGraphics.Math
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public static float Area(Float2 from, Float2 to)
+        public static double Area(Double2 from, Double2 to)
         {
-            return System.Math.Abs(Float2.Cross(from, to));
+            return System.Math.Abs(Double2.Cross(from, to));
         }
         /// <summary>
         /// 共线判断，考虑误差
@@ -296,9 +297,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool CheckInLine(Float2 a, Float2 b)
+        public static bool CheckInLine(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Float2.SinAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Double2.SinAngle(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 垂直判断，考虑误差
@@ -306,9 +307,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool CheckVertical(Float2 a, Float2 b)
+        public static bool CheckVertical(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Float2.CosAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Double2.CosAngle(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 保持向量方向，调整向量长度
@@ -316,7 +317,7 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Float2 ClampMagnitude(Float2 a, float maxLength)
+        public static Double2 ClampMagnitude(Double2 a, double maxLength)
         {
             return a.normalized * maxLength;
         }
@@ -326,7 +327,7 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float Dot(Float2 a, Float2 b) //点积
+        public static double Dot(Double2 a, Double2 b) //点积
         {
             return a.x * b.x + a.y * b.y;
         }
@@ -336,7 +337,7 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float Cross(Float2 lhs, Float2 rhs)
+        public static double Cross(Double2 lhs, Double2 rhs)
         {
             return lhs.x * rhs.y - lhs.y * rhs.x;
         }
@@ -346,7 +347,7 @@ namespace RayGraphics.Math
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public static double Distance(Float2 start, Float2 end)
+        public static double Distance(Double2 start, Double2 end)
         {
             return (start - end).magnitude;
         }
@@ -357,7 +358,7 @@ namespace RayGraphics.Math
         /// <param name="end"></param>
         /// <param name="t">[0,1]</param>
         /// <returns></returns>
-        public static Float2 Lerp(Float2 start, Float2 end, float t)
+        public static Double2 Lerp(Double2 start, Double2 end, double t)
         {
             t = t < 0 ? 0 : t;
             t = t > 1 ? 1 : t;
@@ -370,7 +371,7 @@ namespace RayGraphics.Math
         /// <param name="end"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static Float2 LerpUnclamped(Float2 start, Float2 end, float t)
+        public static Double2 LerpUnclamped(Double2 start, Double2 end, double t)
         {
             return start + (end - start) * t;
         }
@@ -380,9 +381,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Float2 Max(Float2 a, Float2 b)
+        public static Double2 Max(Double2 a, Double2 b)
         {
-            return new Float2(System.Math.Max(a.x, b.x), System.Math.Max(a.y, b.y));
+            return new Double2(System.Math.Max(a.x, b.x), System.Math.Max(a.y, b.y));
         }
         /// <summary>
         /// 获取Min向量，计算包围盒有用
@@ -390,9 +391,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Float2 Min(Float2 a, Float2 b)
+        public static Double2 Min(Double2 a, Double2 b)
         {
-            return new Float2(System.Math.Min(a.x, b.x), System.Math.Min(a.y, b.y));
+            return new Double2(System.Math.Min(a.x, b.x), System.Math.Min(a.y, b.y));
         }
         /// <summary>
         /// 朝目标向量移动maxDistanceDelta距离,未考虑移出。
@@ -401,7 +402,7 @@ namespace RayGraphics.Math
         /// <param name="target"></param>
         /// <param name="maxDistanceDelta"></param>
         /// <returns></returns>
-        public static Float2 MoveTowards(Float2 current, Float2 target, float maxDistanceDelta)
+        public static Double2 MoveTowards(Double2 current, Double2 target, double maxDistanceDelta)
         {
             return current + (target - current).normalized * maxDistanceDelta;
         }
@@ -411,20 +412,19 @@ namespace RayGraphics.Math
         /// <param name="vector"></param>
         /// <param name="onNormal"></param>
         /// <returns></returns>
-        public static Float2 Project(Float2 vector, Float2 onNormal)
+        public static Double2 Project(Double2 vector, Double2 onNormal)
         {
-            Float2 normal = onNormal.normalized;
-            return Float2.Dot(vector, normal) * normal;
+            Double2 normal = onNormal.normalized;
+            return Double2.Dot(vector, normal) * normal;
         }
         /// <summary>
         /// 返回逆时针旋转90度的向量
         /// </summary>
         /// <param name="inDirection"></param>
         /// <returns></returns>
-        public static Float2 Perpendicular(Float2 inDirection)
+        public static Double2 Perpendicular(Double2 inDirection)
         {
-            Double2 ret = Matrix2x2.RotateMatrix(MathUtil.kPI / 2) * new Double2(inDirection.x, inDirection.y);
-            return new Float2(ret.x, ret.y);
+            return Matrix2x2.RotateMatrix(MathUtil.kPI / 2) * inDirection;
         }
         /// <summary>
         /// 求发射光线
@@ -432,9 +432,9 @@ namespace RayGraphics.Math
         /// <param name="inDirection">入射光线</param>
         /// <param name="inNormal">法线</param>
         /// <returns></returns>
-        public static Float2 Reflect(Float2 inDirection, Float2 inNormal)
+        public static Double2 Reflect(Double2 inDirection, Double2 inNormal)
         {
-            return inDirection - Float2.Project(inDirection, inNormal) * 2;
+            return inDirection - Double2.Project(inDirection, inNormal) * 2;
         }
         /// <summary>
         /// 分量分别相乘，得到新的向量
@@ -442,19 +442,18 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static Float2 Scale(Float2 a, Float2 b)
+        public static Double2 Scale(Double2 a, Double2 b)
         {
-            return new Float2(a.x * b.x, a.y * b.y);
+            return new Double2(a.x * b.x, a.y * b.y);
         }
         /// <summary>
         /// 向量旋转
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
-        public static Float2 Rotate(Float2 a, double angle)
+        public static Double2 Rotate(Double2 a, double angle)
         {
-            Double2 ret = Matrix2x2.RotateMatrix(angle) * new Double2(a.x, a.y);
-            return new Float2(ret.x, ret.y);
+            return Matrix2x2.RotateMatrix(angle) * a;
         }
         /// <summary>
         /// 求角度,逆时针为正， 瞬时值为负。
@@ -462,33 +461,33 @@ namespace RayGraphics.Math
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public static float SignedAngle(Float2 from, Float2 to)
+        public static double SignedAngle(Double2 from, Double2 to)
         {
             // [-PI / 2,  PI /2]  Asin
             // [0,  PI]  acos
             double sinValue = SinAngle(from, to);
-            float dot = Dot(from, to) / (from.magnitude * to.magnitude);
+            double dot = Dot(from, to) / (from.magnitude * to.magnitude);
             if (sinValue >= 0 && dot >= 0) // 1
             {
-                return (float)(System.Math.Asin(sinValue));
+                return (System.Math.Asin(sinValue));
             }
             else if (sinValue >= 0 && dot <= 0) // 2
             {
-                return (float)(System.Math.Acos(dot));
+                return (System.Math.Acos(dot));
             }
             else if (sinValue <= 0 && dot >= 0) // 4
             {
-                return (float)(System.Math.Asin(sinValue));
+                return (System.Math.Asin(sinValue));
             }
             else if (sinValue <= 0 && dot <= 0) // 2
             {
-                return -(float)(System.Math.Acos(dot));
+                return -(System.Math.Acos(dot));
             }
             return 0;
         }
-        public static Float2 SmoothDamp(Float2 current, Float2 target, ref Float2 currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
+        public static Double2 SmoothDamp(Double2 current, Double2 target, ref Double2 currentVelocity, double smoothTime, double maxSpeed, double deltaTime)
         {
-            return Float2.zero;
+            return Double2.zero;
         }
 
 
@@ -500,24 +499,24 @@ namespace RayGraphics.Math
         /// <param name="indir">起点出发的2个边界向量</param>
         /// <param name="outdir">起点出发的2个边界向量</param>
         /// <returns></returns>
-        public static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
+        public static bool CheckPointInCorns(Double2 target, Double2 startPoint, Double2 indir, Double2 outdir)
         {
-            Float2 diff = target - startPoint;
-            if (diff == Float2.zero)
+            Double2 diff = target - startPoint;
+            if (diff == Double2.zero)
                 return false;
 
-            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
+            double ret = Double2.Cross(outdir, diff) * Double2.Cross(indir.normalized, diff);
             if (ret < 0)
             {
-                Float2 mid = indir.normalized + outdir.normalized;
+                Double2 mid = indir.normalized + outdir.normalized;
                 // 添加异常处理,防止在反方向
-                if (Float2.Dot(diff, mid) < 0)
+                if (Double2.Dot(diff, mid) < 0)
                     return false;
                 else return true;
             }
             else if (ret == 0)
             {
-                if (Float2.Dot(diff, indir) <= 0)
+                if (Double2.Dot(diff, indir) <= 0)
                     return false;
 
                 if (indir.sqrMagnitude < diff.sqrMagnitude)
@@ -533,14 +532,14 @@ namespace RayGraphics.Math
         /// </summary>
         public UnityEngine.Vector3 V2
         {
-            get { return new UnityEngine.Vector2(this.x, this.y); }
+            get { return new UnityEngine.Vector2((float)this.x, (float)this.y); }
         }
         /// <summary>
         /// 转vector3
         /// </summary>
         public UnityEngine.Vector3 V3
         {
-            get { return new UnityEngine.Vector3(this.x, this.y, 0); }
+            get { return new UnityEngine.Vector3((float)this.x, (float)this.y, 0); }
         }
         /// <summary>
         /// 序列化

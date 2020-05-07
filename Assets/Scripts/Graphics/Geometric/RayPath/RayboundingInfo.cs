@@ -8,10 +8,10 @@ namespace RayGraphics.Geometric
     /// </summary>
     public class RayboundingInfo
     {
-        public float distance;
-        public Float2 nearPoint;
-        public Float2 farPoint;
-        public List<Float2> listpath = null;
+        public double distance;
+        public Double2 nearPoint;
+        public Double2 farPoint;
+        public List<Double2> listpath = null;
         /// <summary>
         /// <summary>
         /// 路线在线段区域，是否逆时针方向
@@ -21,7 +21,7 @@ namespace RayGraphics.Geometric
         /// 计算其他辅助数据
         /// </summary>
         /// <param name="line"></param>
-        public void CalcHelpData(LineSegment2D line, float offset, Float2 near, Float2 far)
+        public void CalcHelpData(LineSegment2D line, double offset, Double2 near, Double2 far)
         {
             if (this.listpath != null && this.listpath.Count > 0)
             {
@@ -43,17 +43,17 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="paths"></param>
         /// <returns></returns>
-        protected bool CaclCounterclockwiseDir(LineSegment2D line, List<Float2> paths)
+        protected bool CaclCounterclockwiseDir(LineSegment2D line, List<Double2> paths)
         {
             if (paths == null || paths.Count == 0)
                 return true;
-            Float2 f = Float2.zero;
+            Double2 f = Double2.zero;
             for (int i = 0; i < paths.Count; i++)
             {
                 f += paths[i];
             }
             f /= paths.Count;
-            float sinAngle = Float2.SinAngle(line.normalizedDir, f - line.startPoint);
+            double sinAngle = Double2.SinAngle(line.normalizedDir, f - line.startPoint);
             if (sinAngle < 0)
             {
                 return false;
@@ -71,11 +71,11 @@ namespace RayGraphics.Geometric
         /// <param name="farPoint"></param>
         protected void ReviseNearFar(LineSegment2D line)
         {
-            if (Float2.Dot(nearPoint - line.startPoint, line.normalizedDir) <= 0)
+            if (Double2.Dot(nearPoint - line.startPoint, line.normalizedDir) <= 0)
             {
                 nearPoint = line.startPoint;
             }
-            if (Float2.Dot(line.endPoint - farPoint, line.normalizedDir) <= 0)
+            if (Double2.Dot(line.endPoint - farPoint, line.normalizedDir) <= 0)
             {
                 farPoint = line.endPoint;
             }

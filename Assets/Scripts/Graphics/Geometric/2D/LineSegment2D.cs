@@ -12,19 +12,19 @@ namespace RayGraphics.Geometric
         /// <summary>
         /// 直线上得点
         /// </summary>
-        public Float2 startPoint;
+        public Double2 startPoint;
         /// <summary>
         /// 直线上得点
         /// </summary>
-        public Float2 endPoint;
+        public Double2 endPoint;
         /// <summary>
         /// 方向为单位向量
         /// </summary>
-        public Float2 normalizedDir;
+        public Double2 normalizedDir;
         /// <summary>
         /// 长度
         /// </summary>
-        public float length
+        public double length
         {
             get { return (endPoint - startPoint).magnitude; }
         }
@@ -33,7 +33,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="startPt"></param>
         /// <param name="endPt"></param>
-        public LineSegment2D(Float2 startPt, Float2 endPt)
+        public LineSegment2D(Double2 startPt, Double2 endPt)
         {
             this.startPoint = startPt;
             this.endPoint = endPt;
@@ -44,11 +44,11 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public bool CheckIn(Float2 pt)
+        public bool CheckIn(Double2 pt)
         {
-            Float2 diff1 = pt - this.startPoint;
-            Float2 diff2 = pt - this.endPoint;
-            if (Float2.CheckInLine(diff1, diff2) == true && Float2.Dot(diff1, diff2) <= 0)
+            Double2 diff1 = pt - this.startPoint;
+            Double2 diff2 = pt - this.endPoint;
+            if (Double2.CheckInLine(diff1, diff2) == true && Double2.Dot(diff1, diff2) <= 0)
             {
                 return true;
             }
@@ -59,16 +59,16 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public float CalcDistance(Float2 pt)
+        public double CalcDistance(Double2 pt)
         {
-            Float2 aixsVector = this.AixsVector(pt);
-            Float2 diff1 = pt - this.startPoint;
-            Float2 diff2 = pt - this.endPoint;
-            if (Float2.Dot(diff1, this.normalizedDir) < 0)
+            Double2 aixsVector = this.AixsVector(pt);
+            Double2 diff1 = pt - this.startPoint;
+            Double2 diff2 = pt - this.endPoint;
+            if (Double2.Dot(diff1, this.normalizedDir) < 0)
             {
                 return diff1.magnitude;
             }
-            else if (Float2.Dot(diff2, this.normalizedDir) > 0)
+            else if (Double2.Dot(diff2, this.normalizedDir) > 0)
             {
                 return diff2.magnitude;
             }
@@ -82,12 +82,12 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public Float2 ProjectPoint(Float2 pt)
+        public Double2 ProjectPoint(Double2 pt)
         {
-            Float2 diff = pt - this.startPoint;
-            if (diff == Float2.zero)
+            Double2 diff = pt - this.startPoint;
+            if (diff == Double2.zero)
                 return pt;
-            return Float2.Project(diff, this.normalizedDir) + this.startPoint;
+            return Double2.Project(diff, this.normalizedDir) + this.startPoint;
         }
 
         /// <summary>
@@ -95,10 +95,10 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public ProjectPointInLine CheckProjectInLine(Float2 pt)
+        public ProjectPointInLine CheckProjectInLine(Double2 pt)
         {
-            Float2 projectPoint = ProjectPoint(pt);
-            float value = Float2.Dot(projectPoint - this.startPoint, this.normalizedDir);
+            Double2 projectPoint = ProjectPoint(pt);
+            double value = Double2.Dot(projectPoint - this.startPoint, this.normalizedDir);
             if (value < 0)
             {
                 return ProjectPointInLine.OutStart;
@@ -109,7 +109,7 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                value = Float2.Dot(projectPoint - this.endPoint, -this.normalizedDir);
+                value = Double2.Dot(projectPoint - this.endPoint, -this.normalizedDir);
                 if (value >= 0)
                 {
                     return ProjectPointInLine.In;
@@ -122,12 +122,12 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public Float2 AixsVector(Float2 pt)
+        public Double2 AixsVector(Double2 pt)
         {
-            Float2 diff = pt - this.startPoint;
-            if (diff == Float2.zero)
-                return Float2.zero;
-            return diff - Float2.Project(diff, this.normalizedDir);
+            Double2 diff = pt - this.startPoint;
+            if (diff == Double2.zero)
+                return Double2.zero;
+            return diff - Double2.Project(diff, this.normalizedDir);
         }
         /// <summary>
         /// 与线的关系
@@ -137,11 +137,11 @@ namespace RayGraphics.Geometric
         public LineRelation CheckLineRelation(Line2D line)
         {
             // 共线判断
-            if (Float2.CheckInLine(this.normalizedDir, line.normalizedDir) == true)
+            if (Double2.CheckInLine(this.normalizedDir, line.normalizedDir) == true)
             {
-                Float2 diff = line.startPoint - this.startPoint;
+                Double2 diff = line.startPoint - this.startPoint;
                 // 贡献判断
-                if (Float2.CheckInLine(this.normalizedDir, diff) == true)
+                if (Double2.CheckInLine(this.normalizedDir, diff) == true)
                 {
                     return LineRelation.Coincide;
                 }
@@ -152,9 +152,9 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                Float2 aixsVector1 = line.AixsVector(this.startPoint);
-                Float2 aixsVector2 = line.AixsVector(this.endPoint);
-                if (Float2.Dot(aixsVector1, aixsVector2) < 0)
+                Double2 aixsVector1 = line.AixsVector(this.startPoint);
+                Double2 aixsVector2 = line.AixsVector(this.endPoint);
+                if (Double2.Dot(aixsVector1, aixsVector2) < 0)
                 {
                     return LineRelation.Intersect;
                     
@@ -173,11 +173,11 @@ namespace RayGraphics.Geometric
         public LineRelation CheckLineRelation(Rays2D line)
         {
             // 共线判断
-            if (Float2.CheckInLine(this.normalizedDir, line.normalizedDir) == true)
+            if (Double2.CheckInLine(this.normalizedDir, line.normalizedDir) == true)
             {
-                Float2 diff = line.startPoint - this.startPoint;
+                Double2 diff = line.startPoint - this.startPoint;
                 // 贡献判断
-                if (Float2.CheckInLine(this.normalizedDir, diff) == true)
+                if (Double2.CheckInLine(this.normalizedDir, diff) == true)
                 {
                     return LineRelation.Coincide;
                 }
@@ -188,12 +188,12 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                Float2 aixsVector1 = line.AixsVector(this.startPoint);
-                Float2 aixsVector2 = line.AixsVector(this.endPoint);
-                if (Float2.Dot(aixsVector1, aixsVector2) < 0)
+                Double2 aixsVector1 = line.AixsVector(this.startPoint);
+                Double2 aixsVector2 = line.AixsVector(this.endPoint);
+                if (Double2.Dot(aixsVector1, aixsVector2) < 0)
                 {
-                    Float2 aixsVector = this.AixsVector(line.startPoint);
-                    if (Float2.Dot(aixsVector, line.normalizedDir) > 0)
+                    Double2 aixsVector = this.AixsVector(line.startPoint);
+                    if (Double2.Dot(aixsVector, line.normalizedDir) > 0)
                     {
                         return LineRelation.Detach;
                     }
@@ -214,12 +214,12 @@ namespace RayGraphics.Geometric
         {
             // 快速排斥实验,后续优化实现
             // 进行跨立实验
-            float r1 = Float2.Cross(this.normalizedDir, line.startPoint - this.startPoint);
-            float r2 = Float2.Cross(this.normalizedDir, line.endPoint - this.startPoint);
-            float cross1= r1 * r2;
-            float t1 = Float2.Cross(line.normalizedDir, this.startPoint - line.startPoint);
-            float t2 = Float2.Cross(line.normalizedDir, this.endPoint - line.startPoint);
-            float cross2 = t1 * t2;
+            double r1 = Double2.Cross(this.normalizedDir, line.startPoint - this.startPoint);
+            double r2 = Double2.Cross(this.normalizedDir, line.endPoint - this.startPoint);
+            double cross1 = r1 * r2;
+            double t1 = Double2.Cross(line.normalizedDir, this.startPoint - line.startPoint);
+            double t2 = Double2.Cross(line.normalizedDir, this.endPoint - line.startPoint);
+            double cross2 = t1 * t2;
             if (cross1 > 0 || cross2 > 0)
             {
                 return LineRelation.Detach;
@@ -230,14 +230,14 @@ namespace RayGraphics.Geometric
                 {
                     if (r1 == 0)
                     {
-                        if (Float2.Dot(line.startPoint - this.startPoint, line.startPoint - this.endPoint) <= 0)
+                        if (Double2.Dot(line.startPoint - this.startPoint, line.startPoint - this.endPoint) <= 0)
                         {
                             return LineRelation.Intersect;
                         }
                     }
                     if (r2 == 0)
                     {
-                        if (Float2.Dot(line.endPoint - this.startPoint, line.endPoint - this.endPoint) <= 0)
+                        if (Double2.Dot(line.endPoint - this.startPoint, line.endPoint - this.endPoint) <= 0)
                         {
                             return LineRelation.Intersect;
                         }
@@ -247,14 +247,14 @@ namespace RayGraphics.Geometric
                 {
                     if (t1 == 0)
                     {
-                        if (Float2.Dot(this.startPoint - line.startPoint, this.startPoint - line.endPoint) <= 0)
+                        if (Double2.Dot(this.startPoint - line.startPoint, this.startPoint - line.endPoint) <= 0)
                         {
                             return LineRelation.Intersect;
                         }
                     }
                     if (t2== 0)
                     {
-                        if (Float2.Dot(this.endPoint - line.startPoint, this.endPoint - line.endPoint) <= 0)
+                        if (Double2.Dot(this.endPoint - line.startPoint, this.endPoint - line.endPoint) <= 0)
                         {
                             return LineRelation.Intersect;
                         }
@@ -270,10 +270,10 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public bool GetIntersectPoint(Line2D line, ref Float2 intersectPoint)
+        public bool GetIntersectPoint(Line2D line, ref Double2 intersectPoint)
         {
-            Float2 aixsVector = line.AixsVector(this.startPoint);
-            float distance = aixsVector.magnitude;
+            Double2 aixsVector = line.AixsVector(this.startPoint);
+            double distance = aixsVector.magnitude;
             if (distance == 0)
             {
                 intersectPoint = this.startPoint;
@@ -281,12 +281,12 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                float dot = Float2.Dot(aixsVector.normalized, this.normalizedDir);
+                double dot = Double2.Dot(aixsVector.normalized, this.normalizedDir);
                 if (dot < 0)
                 {
-                    Float2 point = this.startPoint - distance / dot * this.normalizedDir;
-                    Float2 diff = point - this.endPoint;
-                    if (Float2.Dot(this.normalizedDir, diff) <= 0)
+                    Double2 point = this.startPoint - distance / dot * this.normalizedDir;
+                    Double2 diff = point - this.endPoint;
+                    if (Double2.Dot(this.normalizedDir, diff) <= 0)
                     {
                         intersectPoint = point;
                         return true;
@@ -301,10 +301,10 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public bool GetIntersectPoint(Rays2D line, ref Float2 intersectPoint)
+        public bool GetIntersectPoint(Rays2D line, ref Double2 intersectPoint)
         {
-            Float2 aixsVector = line.AixsVector(this.startPoint);
-            float distance = aixsVector.magnitude;
+            Double2 aixsVector = line.AixsVector(this.startPoint);
+            double distance = aixsVector.magnitude;
             if (distance == 0)
             {
                 intersectPoint = this.startPoint;
@@ -312,13 +312,13 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                float dot = Float2.Dot(aixsVector.normalized, this.normalizedDir);
+                double dot = Double2.Dot(aixsVector.normalized, this.normalizedDir);
                 if (dot < 0)
                 {
-                    Float2 point = this.startPoint - distance / dot * this.normalizedDir;
-                    Float2 diff = point - this.endPoint;
-                    Float2 diff2 = point - line.startPoint;
-                    if (Float2.Dot(this.normalizedDir, diff) <= 0 && Float2.Dot(diff2, line.normalizedDir) > 0)
+                    Double2 point = this.startPoint - distance / dot * this.normalizedDir;
+                    Double2 diff = point - this.endPoint;
+                    Double2 diff2 = point - line.startPoint;
+                    if (Double2.Dot(this.normalizedDir, diff) <= 0 && Double2.Dot(diff2, line.normalizedDir) > 0)
                     {
                         intersectPoint = point;
                         return true;
@@ -333,19 +333,19 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public bool GetIntersectPoint(LineSegment2D line, ref Float2 intersectStartPoint, ref Float2 intersectEndPoint)
+        public bool GetIntersectPoint(LineSegment2D line, ref Double2 intersectStartPoint, ref Double2 intersectEndPoint)
         {
             if (CheckLineRelation(line) == LineRelation.Intersect)
             {
-                Float2 aixsVector = AixsVector(line.startPoint);
-                float distance = aixsVector.magnitude;
+                Double2 aixsVector = AixsVector(line.startPoint);
+                double distance = aixsVector.magnitude;
                 if (distance == 0)
                 {
-                    if (Float2.Cross(line.normalizedDir, this.normalizedDir) == 0)
+                    if (Double2.Cross(line.normalizedDir, this.normalizedDir) == 0)
                     {
-                        if (Float2.Dot(line.normalizedDir, this.normalizedDir) > 0)
+                        if (Double2.Dot(line.normalizedDir, this.normalizedDir) > 0)
                         {
-                            if (Float2.Dot(line.normalizedDir, this.startPoint - line.startPoint) > 0)
+                            if (Double2.Dot(line.normalizedDir, this.startPoint - line.startPoint) > 0)
                             {
                                 intersectStartPoint = this.startPoint;
                             }
@@ -354,7 +354,7 @@ namespace RayGraphics.Geometric
                                 intersectStartPoint = line.startPoint;
                             }
                             //
-                            if (Float2.Dot(line.normalizedDir, this.endPoint - line.endPoint) > 0)
+                            if (Double2.Dot(line.normalizedDir, this.endPoint - line.endPoint) > 0)
                             {
                                 intersectEndPoint = line.endPoint;
                             }
@@ -362,7 +362,7 @@ namespace RayGraphics.Geometric
                         }
                         else
                         {
-                            if (Float2.Dot(line.normalizedDir, this.startPoint - line.endPoint) > 0)
+                            if (Double2.Dot(line.normalizedDir, this.startPoint - line.endPoint) > 0)
                             {
                                 intersectEndPoint = line.endPoint;
                             }
@@ -371,7 +371,7 @@ namespace RayGraphics.Geometric
                                 intersectEndPoint = line.startPoint;
                             }
                             //
-                            if (Float2.Dot(line.normalizedDir, this.endPoint - line.startPoint) > 0)
+                            if (Double2.Dot(line.normalizedDir, this.endPoint - line.startPoint) > 0)
                             {
                                 intersectStartPoint = this.endPoint;
                             }
@@ -394,7 +394,7 @@ namespace RayGraphics.Geometric
                         return true;
                     }
                     //
-                    float dot = Float2.Dot(aixsVector.normalized, line.normalizedDir);
+                    double dot = Double2.Dot(aixsVector.normalized, line.normalizedDir);
                     if (dot == 0)
                     {
                         return false;
@@ -414,7 +414,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="point"></param>
         /// <returns></returns>
-        public Float2 GetMirrorPoint(Float2 point)
+        public Double2 GetMirrorPoint(Double2 point)
         {
             return point - 2 * AixsVector(point);
         }

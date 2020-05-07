@@ -17,9 +17,9 @@ namespace RayGraphics.Geometric
         /// <param name="far">与动态挡格相交 far点</param>
         /// <param name="listMidPoint">2个交点之间的路线</param>
         /// <returns></returns>
-        public static List<Float2> OptimizationLine(Float2 lineStart, Float2 lineEnd, Float2 near, Float2 far, bool isCounterclockwiseDir, List<Float2> listMidPoint)
+        public static List<Double2> OptimizationLine(Double2 lineStart, Double2 lineEnd, Double2 near, Double2 far, bool isCounterclockwiseDir, List<Double2> listMidPoint)
         {
-            List<Float2> listResult = new List<Float2>();
+            List<Double2> listResult = new List<Double2>();
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listResult;
             int nearestIndex = -1;
@@ -27,9 +27,9 @@ namespace RayGraphics.Geometric
             CalcNearFarest(lineStart, lineEnd,listMidPoint, ref nearestIndex, ref farestIndex);
             if (nearestIndex >= 0 && nearestIndex < listMidPoint.Count)
             {
-                Float2 nearPoint = listMidPoint[nearestIndex];
+                Double2 nearPoint = listMidPoint[nearestIndex];
                 // step1
-                List<Float2> list = new List<Float2>();
+                List<Double2> list = new List<Double2>();
                 for (int i = 0; i < nearestIndex; i++)
                 {
                     list.Add(listMidPoint[i]);
@@ -44,7 +44,7 @@ namespace RayGraphics.Geometric
 
                 if (farestIndex == -1 || farestIndex <= nearestIndex || farestIndex >= listMidPoint.Count)
                 {
-                    list = new List<Float2>();
+                    list = new List<Double2>();
                     for (int i = nearestIndex + 1; i < listMidPoint.Count; i++)
                     {
                         list.Add(listMidPoint[i]);
@@ -57,8 +57,8 @@ namespace RayGraphics.Geometric
                 }
                 else
                 {
-                    Float2 farPoint = listMidPoint[farestIndex];
-                    list = new List<Float2>();
+                    Double2 farPoint = listMidPoint[farestIndex];
+                    list = new List<Double2>();
                     for (int i = nearestIndex + 1; i < farestIndex; i++)
                     {
                         list.Add(listMidPoint[i]);
@@ -70,7 +70,7 @@ namespace RayGraphics.Geometric
                     }
                     listResult.Add(farPoint);
                     // step3
-                    list = new List<Float2>();
+                    list = new List<Double2>();
                     for (int i = farestIndex + 1; i < listMidPoint.Count; i++)
                     {
                         list.Add(listMidPoint[i]);
@@ -86,9 +86,9 @@ namespace RayGraphics.Geometric
             {
                 if (farestIndex >= 0 && farestIndex <= listMidPoint.Count - 1)
                 {
-                    Float2 keyPoint = listMidPoint[farestIndex];
+                    Double2 keyPoint = listMidPoint[farestIndex];
                     // step1
-                    List<Float2> list = new List<Float2>();
+                    List<Double2> list = new List<Double2>();
                     for (int i = 0; i < farestIndex; i++)
                     {
                         list.Add(listMidPoint[i]);
@@ -101,7 +101,7 @@ namespace RayGraphics.Geometric
                     //
                     listResult.Add(keyPoint);
                     // step2
-                    list = new List<Float2>();
+                    list = new List<Double2>();
                     for (int i = farestIndex + 1; i < listMidPoint.Count; i++)
                     {
                         list.Add(listMidPoint[i]);
@@ -121,21 +121,21 @@ namespace RayGraphics.Geometric
         }
 
 
-        private static List<Float2> OptimizationStepLine(Float2 lineStart, Float2 lineEnd, Float2 near, Float2 far, bool isCounterclockwiseDir, List<Float2> listMidPoint)
+        private static List<Double2> OptimizationStepLine(Double2 lineStart, Double2 lineEnd, Double2 near, Double2 far, bool isCounterclockwiseDir, List<Double2> listMidPoint)
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
 
-            List<Float2> listOptimizationLine = listMidPoint;
+            List<Double2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
-            Float2 outdir = (lineEnd - lineStart).normalized;
+            Double2 outdir = (lineEnd - lineStart).normalized;
             if (isCounterclockwiseDir == false)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine = SearchOutPoint(lineStart, far, outdir.normalized, listOptimizationLine);
             // 再倒序来一次优化
@@ -143,11 +143,11 @@ namespace RayGraphics.Geometric
             outdir = (lineStart - lineEnd).normalized;
             if (isCounterclockwiseDir == true)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine.Reverse();
             listOptimizationLine = SearchOutPoint(lineEnd, near, outdir.normalized, listOptimizationLine);
@@ -163,18 +163,18 @@ namespace RayGraphics.Geometric
         /// <param name="outdir">外包边</param>
         /// <param name="listOutEdgePoint"></param>
         /// <returns></returns>
-        private static List<Float2> SearchOutPoint(Float2 lineStart, Float2 far, Float2 outdir, List<Float2> listOutEdgePoint)
+        private static List<Double2> SearchOutPoint(Double2 lineStart, Double2 far, Double2 outdir, List<Double2> listOutEdgePoint)
         {
             if (listOutEdgePoint == null || listOutEdgePoint.Count == 0)
                 return listOutEdgePoint;
             // 开始搜寻了。
-            List<Float2> lResult = new List<Float2>();
-            Float2 startPoint = lineStart;
-            Float2 bestPoint = Float2.zero;
-            Float2 indir = far - lineStart;
+            List<Double2> lResult = new List<Double2>();
+            Double2 startPoint = lineStart;
+            Double2 bestPoint = Double2.zero;
+            Double2 indir = far - lineStart;
             bool isHaveBestPoint = false;
-            List<Float2> listinPoints = new List<Float2>();
-            List<Float2> lHave = listOutEdgePoint;
+            List<Double2> listinPoints = new List<Double2>();
+            List<Double2> lHave = listOutEdgePoint;
 
             while (lHave != null && lHave.Count > 0)
             {
@@ -182,8 +182,8 @@ namespace RayGraphics.Geometric
                 // 先过滤了。
                 for (int i = 0; i < lHave.Count; i++)
                 {
-                    Float2 pos = lHave[i];
-                    if (Float2.CheckPointInCorns(pos, startPoint, indir, outdir) == true)
+                    Double2 pos = lHave[i];
+                    if (Double2.CheckPointInCorns(pos, startPoint, indir, outdir) == true)
                     {
                         bestPoint = pos;
                         isHaveBestPoint = true;
@@ -200,7 +200,7 @@ namespace RayGraphics.Geometric
                     for (int i = 1; i < listinPoints.Count; i++)
                     {
                         // 比较更好的点。
-                        if (Float2.CheckPointInCorns(listinPoints[i], startPoint, bestPoint - startPoint, outdir) == true)
+                        if (Double2.CheckPointInCorns(listinPoints[i], startPoint, bestPoint - startPoint, outdir) == true)
                         {
                             bestPoint = listinPoints[i];
                         }
@@ -214,7 +214,7 @@ namespace RayGraphics.Geometric
                         startPoint = bestPoint;
                         indir = far - startPoint;
                         lHave = listinPoints;
-                        listinPoints = new List<Float2>();
+                        listinPoints = new List<Double2>();
                         isHaveBestPoint = false;
                     }
                     else break;
@@ -231,24 +231,24 @@ namespace RayGraphics.Geometric
         /// <param name="listMidPoint"></param>
         /// <param name="nearestIndex"></param>
         /// <param name="farestIndex"></param>
-        private static void CalcNearFarest(Float2 lineStart, Float2 lineEnd, List<Float2> listMidPoint, ref int nearestIndex, ref int farestIndex)
+        private static void CalcNearFarest(Double2 lineStart, Double2 lineEnd, List<Double2> listMidPoint, ref int nearestIndex, ref int farestIndex)
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return;
             nearestIndex = -1;
             farestIndex = -1;
-            float outStartdis = 0;
-            float outEnddis = 0;
+            double outStartdis = 0;
+            double outEnddis = 0;
             LineSegment2D line = new LineSegment2D(lineStart, lineEnd);
             for (int i = 0; i < listMidPoint.Count; i++)
             {
                 ProjectPointInLine  pp=line.CheckProjectInLine(listMidPoint[i]);
                 if (pp == ProjectPointInLine.In)
                     continue;
-                Float2 projectPoint = line.ProjectPoint(listMidPoint[i]);
+                Double2 projectPoint = line.ProjectPoint(listMidPoint[i]);
                 if (pp == ProjectPointInLine.OutStart)
                 {
-                    float dis = (projectPoint - lineStart).sqrMagnitude;
+                    double dis = (projectPoint - lineStart).sqrMagnitude;
                     if (dis > outStartdis)
                     {
                         outStartdis = dis;
@@ -257,7 +257,7 @@ namespace RayGraphics.Geometric
                 }
                 else if (pp == ProjectPointInLine.OutStart)
                 {
-                    float dis = (projectPoint - lineEnd).sqrMagnitude;
+                    double dis = (projectPoint - lineEnd).sqrMagnitude;
                     if (dis > outEnddis)
                     {
                         outEnddis = dis;

@@ -10,12 +10,12 @@ namespace RayGraphics.Geometric
     /// </summary>
     public class LineSegment3D : Line3D
     {
-        protected Float3 _endPoint;
-        public Float3 EndPoint
+        protected Double3 _endPoint;
+        public Double3 EndPoint
         {
             get { return _endPoint; }
         }
-        public LineSegment3D(Float3 startPt, Float3 endPt)
+        public LineSegment3D(Double3 startPt, Double3 endPt)
         {
             this._startPoint = startPt;
             this._endPoint = endPt;
@@ -26,14 +26,14 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override bool CheckIn(Float3 pt)
+        public override bool CheckIn(Double3 pt)
         {
             bool ret = base.CheckIn(pt);
             if (ret == true)
             {
-                Float3 diff1 = pt - this.StartPoint;
-                Float3 diff2 = pt - this.EndPoint;
-                if (Float3.Dot(diff1, diff2) > 0)
+                Double3 diff1 = pt - this.StartPoint;
+                Double3 diff2 = pt - this.EndPoint;
+                if (Double3.Dot(diff1, diff2) > 0)
                     return false;
                 else return true;
             }
@@ -44,15 +44,15 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>
-        public override float CalcDistance(Float3 pt)
+        public override double CalcDistance(Double3 pt)
         {
-            Float3 diff1 = pt - this.StartPoint;
-            Float3 diff2 = pt - this.EndPoint;
-            float ret1 = Float3.Dot(diff1, this.NormalizedDir);
-            float ret2 = Float3.Dot(diff2, this.NormalizedDir);
+            Double3 diff1 = pt - this.StartPoint;
+            Double3 diff2 = pt - this.EndPoint;
+            double ret1 = Double3.Dot(diff1, this.NormalizedDir);
+            double ret2 = Double3.Dot(diff2, this.NormalizedDir);
             if (ret1 * ret2 <= 0)
             {
-                Float3 aixsVector = this.AixsVector(pt);
+                Double3 aixsVector = this.AixsVector(pt);
                 return aixsVector.magnitude;
             }
             else if (ret1 < 0)
@@ -75,10 +75,10 @@ namespace RayGraphics.Geometric
             if (lr == LineRelation.Intersect)
             {
                 // 计算轴向量
-                Float3 aixsVector1 = line.AixsVector(this.StartPoint);
-                Float3 aixsVector2 = line.AixsVector(this.EndPoint);
+                Double3 aixsVector1 = line.AixsVector(this.StartPoint);
+                Double3 aixsVector2 = line.AixsVector(this.EndPoint);
                 // 方向相反相交
-                if (Float3.Dot(aixsVector1, aixsVector2) <= 0)
+                if (Double3.Dot(aixsVector1, aixsVector2) <= 0)
                 {
                     return LineRelation.Intersect;
                 }
@@ -98,12 +98,12 @@ namespace RayGraphics.Geometric
         /// <param name="line"></param>
         /// <param name="intersectPoint"></param>
         /// <returns></returns>
-        public override bool GetIntersectPoint(Line3D line, ref Float3 intersectPoint)
+        public override bool GetIntersectPoint(Line3D line, ref Double3 intersectPoint)
         {
-            Float3 point = Float3.zero;
+            Double3 point = Double3.zero;
             if (base.GetIntersectPoint(line, ref point) == true)
             {
-                if (Float3.Dot(point - line.StartPoint, point - (line as LineSegment3D).EndPoint) <= 0)
+                if (Double3.Dot(point - line.StartPoint, point - (line as LineSegment3D).EndPoint) <= 0)
                 {
                     intersectPoint = point;
                     return true;
