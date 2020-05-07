@@ -1579,7 +1579,7 @@
             <param name="nearPoint"></param>
             <param name="farPoint"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.OptimizationLine(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.OptimizationLine(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Boolean,System.Collections.Generic.List{RayGraphics.Math.Double2})">
             <summary>
             优化路线
             </summary>
@@ -1590,7 +1590,7 @@
             <param name="listMidPoint">2个交点之间的路线</param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.SearchOutPoint(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Math.Float2})">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.SearchOutPoint(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double2})">
             <summary>
             获取最边缘一圈的顶点。
             </summary>
@@ -1600,7 +1600,7 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.RayPathOptimization.CheckPointInCorns(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Geometric.RayPathOptimization.CheckPointInCorns(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             判断指定的点，在夹角内。不包括在边上。
             </summary>

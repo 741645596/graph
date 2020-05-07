@@ -14,7 +14,7 @@ namespace RayGraphics.Geometric
         /// <param name="far">与动态挡格相交 far点</param>
         /// <param name="listMidPoint">2个交点之间的路线</param>
         /// <returns></returns>
-        public static List<Float2> OptimizationLine(Float2 lineStart, Float2 lineEnd, Float2 near, Float2 far, bool isCounterclockwiseDir, List<Float2> listMidPoint)
+        public static List<Double2> OptimizationLine(Double2 lineStart, Double2 lineEnd, Double2 near, Double2 far, bool isCounterclockwiseDir, List<Double2> listMidPoint)
         {
             if (listMidPoint == null || listMidPoint.Count == 0)
                 return listMidPoint;
@@ -28,16 +28,16 @@ namespace RayGraphics.Geometric
 #endif
 */
 
-            List<Float2> listOptimizationLine = listMidPoint;
+            List<Double2> listOptimizationLine = listMidPoint;
             // 先顺序来一次优化
-            Float2 outdir = (lineEnd - lineStart).normalized;
+            Double2 outdir = (lineEnd - lineStart).normalized;
             if (isCounterclockwiseDir == false)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine = SearchOutPoint(lineStart, far, outdir.normalized, listOptimizationLine);
             // 再倒序来一次优化
@@ -45,11 +45,11 @@ namespace RayGraphics.Geometric
             outdir = (lineStart - lineEnd).normalized;
             if (isCounterclockwiseDir == true)
             {
-                outdir = Float2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, MathUtil.kPI - MathUtil.kEpsilon);
             }
             else
             {
-                outdir = Float2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
+                outdir = Double2.Rotate(outdir, -MathUtil.kPI + MathUtil.kEpsilon);
             }
             listOptimizationLine = SearchOutPoint(lineEnd, near, outdir.normalized, listOptimizationLine);
             listOptimizationLine.Reverse();
@@ -65,23 +65,23 @@ namespace RayGraphics.Geometric
         /// <param name="outdir">外包边</param>
         /// <param name="listOutEdgePoint"></param>
         /// <returns></returns>
-        private static List<Float2> SearchOutPoint(Float2 lineStart, Float2 far, Float2 outdir, List<Float2> listOutEdgePoint)
+        private static List<Double2> SearchOutPoint(Double2 lineStart, Double2 far, Double2 outdir, List<Double2> listOutEdgePoint)
         {
             if (listOutEdgePoint == null || listOutEdgePoint.Count == 0)
                 return listOutEdgePoint;
             // 开始搜寻了。
-            List<Float2> lResult = new List<Float2>();
-            Float2 startPoint = lineStart;
-            Float2 bestPoint = Float2.zero;
-            Float2 indir = far - lineStart;
+            List<Double2> lResult = new List<Double2>();
+            Double2 startPoint = lineStart;
+            Double2 bestPoint = Double2.zero;
+            Double2 indir = far - lineStart;
             bool isHaveBestPoint = false;
-            List<Float2> listinPoints = new List<Float2>();
-            List<Float2> lHave = listOutEdgePoint;
+            List<Double2> listinPoints = new List<Double2>();
+            List<Double2> lHave = listOutEdgePoint;
 
             while (lHave != null && lHave.Count > 0)
             {
                 // 先过滤了。
-                foreach (Float2 pos in lHave)
+                foreach (Double2 pos in lHave)
                 {
                     if (CheckPointInCorns(pos, startPoint, indir, outdir) == true)
                     {
@@ -111,7 +111,7 @@ namespace RayGraphics.Geometric
                     indir = far - startPoint;
                     listinPoints.Remove(bestPoint);
                     lHave = listinPoints;
-                    listinPoints = new List<Float2>();
+                    listinPoints = new List<Double2>();
                     isHaveBestPoint = false;
                 }
                 else break;
@@ -126,13 +126,13 @@ namespace RayGraphics.Geometric
         /// <param name="indir"></param>
         /// <param name="outdir"></param>
         /// <returns></returns>
-        private static bool CheckPointInCorns(Float2 target, Float2 startPoint, Float2 indir, Float2 outdir)
+        private static bool CheckPointInCorns(Double2 target, Double2 startPoint, Double2 indir, Double2 outdir)
         {
-            Float2 diff = target - startPoint;
-            if (diff == Float2.zero)
+            Double2 diff = target - startPoint;
+            if (diff == Double2.zero)
                 return false;
 
-            float ret = Float2.Cross(outdir, diff) * Float2.Cross(indir.normalized, diff);
+            double ret = Double2.Cross(outdir, diff) * Double2.Cross(indir.normalized, diff);
             if (ret < 0)
             {
                 // 添加异常处理,防止在反方向
@@ -143,7 +143,7 @@ namespace RayGraphics.Geometric
             }  
             else if (ret == 0)
             {
-                if (Float2.Dot(diff, indir) <= 0)
+                if (Double2.Dot(diff, indir) <= 0)
                     return false;
 
                 if (indir.sqrMagnitude < diff.sqrMagnitude)
