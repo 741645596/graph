@@ -3049,6 +3049,28 @@
             <param name="b"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Index3.CheckContain(System.Int32)">
+            <summary>
+            是否包含
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Index3.CheckContain(System.Int32,System.Int32)">
+            <summary>
+            是否包含
+            </summary>
+            <param name="index1"></param>
+            <param name="index2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Index3.CheckContain(RayGraphics.Math.Index2)">
+            <summary>
+            是否包含
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Int2.Set(System.Int32,System.Int32)">
             <summary>
             设置属性

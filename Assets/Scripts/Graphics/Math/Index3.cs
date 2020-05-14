@@ -13,13 +13,37 @@
             this.p2 = p2;
             this.p3 = p3;
         }
-
+        /// <summary>
+        /// 是否包含
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool CheckContain(int index)
         {
             if (this.p1 == index || this.p2 == index || this.p3 == index)
                 return true;
             else return false;
         }
+        /// <summary>
+        /// 是否包含
+        /// </summary>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <returns></returns>
+        public bool CheckContain(int index1, int index2)
+        {
+            return this.CheckContain(index1) && this.CheckContain(index2) ;
+        }
+        /// <summary>
+        /// 是否包含
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public bool CheckContain(Index2 v)
+        {
+            return this.CheckContain(v.p1) && this.CheckContain(v.p2);
+        }
+
 
         public static bool operator !=(Index3 v1, Index3 v2)
         {
