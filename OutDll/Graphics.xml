@@ -1030,7 +1030,7 @@
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
-            判断点是否在直线上
+            判断点多边形内。
             </summary>
             <param name="pt"></param>
             <returns></returns>
@@ -1245,6 +1245,13 @@
             获取边
             </summary>
             <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.CheckIn(RayGraphics.Math.Double2)">
+            <summary>
+            判断点三角形内。
+            </summary>
+            <param name="pt"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Double3)">

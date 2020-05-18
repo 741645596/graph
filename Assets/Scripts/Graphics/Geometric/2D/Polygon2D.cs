@@ -553,7 +553,7 @@ namespace RayGraphics.Geometric
             return this.pointArr;
         }
         /// <summary>
-        /// 判断点是否在直线上
+        /// 判断点多边形内。
         /// </summary>
         /// <param name="pt"></param>
         /// <returns></returns>

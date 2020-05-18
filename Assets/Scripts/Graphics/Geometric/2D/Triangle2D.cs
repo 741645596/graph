@@ -88,5 +88,39 @@ namespace RayGraphics.Geometric
             }
             else return new LineSegment2D(Double2.zero, Double2.one);
         }
+        /// <summary>
+        /// 判断点三角形内。
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public override bool CheckIn(Double2 pt)
+        {
+            // 做射线， y = pt.y
+            bool flag = false;
+            int edgeNum = GetEdgeNum();
+            for (int i = 0; i < edgeNum; i++)
+            {
+                LineSegment2D line = GetEdge(i);
+                // 先判断点是否在边上。
+                if (line.CheckIn(pt) == true)
+                    return true;
+                Double2 diff = line.endPoint - line.startPoint;
+
+                if ((line.startPoint.y <= pt.y && line.endPoint.y >= pt.y) || (line.startPoint.y >= pt.y && line.endPoint.y <= pt.y))
+                {
+                    if (diff.y != 0)
+                    {
+                        double x = line.startPoint.x + (pt.y - line.startPoint.y) * diff.x / diff.y;
+                        // 射线穿过多边形的边界
+                        if (x > pt.x)
+                        {
+                            flag = !flag;
+                        }
+                    }
+                    // 共线情况，肯定是点在线段2端。
+                }
+            }
+            return flag;
+        }
     }
 }
