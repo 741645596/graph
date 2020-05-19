@@ -267,6 +267,15 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="dbd1"></param>
         /// <returns>true 相交： false 不相交</returns>
+        public virtual bool CheckIntersect(Triangle2D ab)
+        {
+            return false;
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
         public virtual bool CheckIntersect(Rect2D ab)
         {
             return false;

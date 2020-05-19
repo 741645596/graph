@@ -181,6 +181,13 @@
             <param name="intersectEnd"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.Triangle2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
             <summary>
             与矩形的关系
@@ -1177,6 +1184,13 @@
             <param name="intersectEnd"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Rect2D.CheckIntersect(RayGraphics.Geometric.Triangle2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Rect2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
             <summary>
             与矩形的关系
@@ -1253,6 +1267,13 @@
             </summary>
             <param name="pt"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
+            <summary>
+            与矩形的关系
+            </summary>
+            <param name="dbd1"></param>
+            <returns>true 相交： false 不相交</returns>
         </member>
         <member name="M:RayGraphics.Geometric.iGeo3DElement.CheckIn(RayGraphics.Math.Double3)">
             <summary>

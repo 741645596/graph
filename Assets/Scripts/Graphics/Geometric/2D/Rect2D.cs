@@ -241,6 +241,28 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="dbd1"></param>
         /// <returns>true 相交： false 不相交</returns>
+        public override bool CheckIntersect(Triangle2D ab)
+        {
+            if (ab == null)
+                return false;
+            for (int i = 0; i < ab.GetEdgeNum(); i++)
+            {
+                if (this.CheckIn(ab.GetPoint(i)) == true)
+                {
+                    return true;
+                }
+                if (this.CheckLineRelation(ab.GetEdge(i)) == LineRelation.Intersect)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 与矩形的关系
+        /// </summary>
+        /// <param name="dbd1"></param>
+        /// <returns>true 相交： false 不相交</returns>
         public override bool CheckIntersect(Rect2D ab)
         {
             if (ab == null)
