@@ -559,7 +559,11 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override bool CheckIn(Double2 pt)
         {
+            if (base.CheckIn(pt) == false)
+                return false;
             // 做射线， y = pt.y
+            // 经过顶点的。
+            int CrossPointCount = 0;
             bool flag = false;
             int edgeNum = GetEdgeNum();
             for (int i = 0; i < edgeNum; i++)
@@ -578,14 +582,24 @@ namespace RayGraphics.Geometric
                         // 射线穿过多边形的边界
                         if (x > pt.x)
                         {
+                            // 统计经过顶点的次数
+                            if (line.startPoint.y == pt.y || line.endPoint.y == pt.y)
+                            {
+                                CrossPointCount++;
+                            }
                             flag = !flag;
                         }
                     }
                     // 共线情况，肯定是点在线段2端。
                 }
             }
+            CrossPointCount = CrossPointCount / 2;
+            CrossPointCount = CrossPointCount % 2;
+            if (CrossPointCount == 1)
+            {
+                flag = !flag;
+            }
             return flag;
         }
-
     }
 }
