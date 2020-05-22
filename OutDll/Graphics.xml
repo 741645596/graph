@@ -880,6 +880,28 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:RayGraphics.Geometric.Point2D">
+            <summary>
+            顶点组
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.Point2D.startPoint">
+            <summary>
+            直线上得点
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Geometric.Point2D.endPoint">
+            <summary>
+            直线上得点
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Point2D.#ctor(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            构建线段
+            </summary>
+            <param name="startPt"></param>
+            <param name="endPt"></param>
+        </member>
         <member name="F:RayGraphics.Geometric.Polygon2D.pointArr">
             <summary>
             顶点列表
