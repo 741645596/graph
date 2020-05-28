@@ -24,6 +24,30 @@ namespace RayGraphics.Geometric
         private double[] distancArr = null;
         private double totalDistance = 0;
 
+        public Polygon2D(Double2Bool[] points)
+        {
+            if (points == null || points.Length < 3)
+                return;
+            List<Double2> lpoints = new List<Double2>();
+            List<int> unCrossPoints = new List<int>();
+            for (int i = 0; i < points.Length; i++)
+            {
+                lpoints.Add(new Double2(points[i].x, points[i].y));
+                if (points[i].isCross == false)
+                {
+                    unCrossPoints.Add(i);
+                }
+            }
+            Init(lpoints.ToArray());
+            if (unCrossPoints != null && unCrossPoints.Count > 0)
+            {
+                listunCrossPoints = new HashSet<int>();
+                foreach (int index in unCrossPoints)
+                {
+                    listunCrossPoints.Add(index);
+                }
+            }
+        }
         public Polygon2D(Double2[] points, List<int> unCrossPoints)
         {
             Init(points);
@@ -556,6 +580,26 @@ namespace RayGraphics.Geometric
             }
         }
         /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public override Point2D GetSimpleEdge(int edgeIndex)
+        {
+            if (edgeIndex < 0 || edgeIndex > this.pointArr.Length - 1)
+            {
+                return new Point2D(Double2.zero, Double2.zero);
+            }
+            else if (edgeIndex == this.pointArr.Length - 1)
+            {
+                return new Point2D(this.pointArr[edgeIndex], this.pointArr[0]);
+            }
+            else
+            {
+                return new Point2D(this.pointArr[edgeIndex], this.pointArr[edgeIndex + 1]);
+            }
+        }
+        /// <summary>
         /// 获取法线
         /// </summary>
         /// <param name="edgeIndex"></param>
@@ -580,6 +624,19 @@ namespace RayGraphics.Geometric
                 return Double2.zero;
             }
             return this.pointArr[index];
+        }
+        /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public override Double2Bool GetPointPlus(int index)
+        {
+            if (index < 0 || index > this.pointArr.Length - 1)
+            {
+                new Double2Bool(0, 0, true);
+            }
+            return new Double2Bool(this.pointArr[index].x, this.pointArr[index].y, CheckCrossPoint(index));
         }
         /// <summary>
         /// 与矩形的关系
@@ -705,6 +762,14 @@ namespace RayGraphics.Geometric
                 return false;
             }
             return true;
+        }
+        /// <summary>
+        /// 获取顶点可通过数据
+        /// </summary>
+        /// <returns></returns>
+        public override HashSet<int> GetCrossPointData()
+        {
+            return listunCrossPoints;
         }
     }
 }

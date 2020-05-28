@@ -5,23 +5,23 @@ using RayGraphics.Math;
 namespace RayGraphics.Geometric
 {
 
-    public class ConcavePolygon2D
+    public class ConcavePolygonPlus2D
     {
         /// <summary>
         /// 生成凹多边形
         /// </summary>
         /// <param name="listpolygon"></param>
         /// <returns></returns>
-        public static Double2[] GenerateConcavePolygon(List<Double2[]> listpolygon)
+        public static Double2Bool[] GenerateConcavePolygon(List<Double2Bool[]> listpolygon)
         {
             if (listpolygon == null || listpolygon.Count == 0)
                 return null;
             if (listpolygon.Count == 1)
                 return listpolygon[0];
 
-            List<Double2[]> listUnCombine = new List<Double2[]>();
+            List<Double2Bool[]> listUnCombine = new List<Double2Bool[]>();
             // 首轮合并
-            Double2[] poly = listpolygon[0];
+            Double2Bool[] poly = listpolygon[0];
             for (int i = 1; i < listpolygon.Count; i++)
             {
                 bool isCombine = false;
@@ -75,7 +75,7 @@ namespace RayGraphics.Geometric
         /// <param name="polygon1"></param>
         /// <param name="polygon2"></param>
         /// <returns></returns>
-        private static Double2[] CombinePolygon(Double2[] polygon1, Double2[] polygon2, ref bool isCombine)
+        private static Double2Bool[] CombinePolygon(Double2Bool[] polygon1, Double2Bool[] polygon2, ref bool isCombine)
         {
             isCombine = true;
             if (polygon1 == null || polygon1.Length < 3)
@@ -106,10 +106,10 @@ namespace RayGraphics.Geometric
                 return polygon1;
             }
             // 
-            List<Double2> listPoint = new List<Double2>();
+            List<Double2Bool> listPoint = new List<Double2Bool>();
             Polygon2D poly = null;
             int curedge = 0;
-            Double2 curPoint = Double2.zero;
+            Double2Bool curPoint = new Double2Bool(0, 0, true);
             bool SearchDir = true;
             List<Double3>[] curPolyIntersectArray = null;
             SetInitData(poly1, poly2, ref poly, ref curPoint, ref curedge);
@@ -140,7 +140,7 @@ namespace RayGraphics.Geometric
                         {
                             curedge = 0;
                         }
-                        curPoint = poly.GetEdge(curedge).startPoint;
+                        curPoint = poly.GetPointPlus(curedge);
                     }
                     else
                     {
@@ -149,16 +149,16 @@ namespace RayGraphics.Geometric
                         {
                             curedge = poly.GetEdgeNum() - 1;
                         }
-                        curPoint = poly.GetEdge(curedge).endPoint;
+                        curPoint = poly.GetPointPlus(curedge + 1);
                     }
                 }
-                else // 则需要交换了。
+                else // 则需要交换了。换到另一个多边形。
                 {
-                    curPoint = new Double2(nextPoint.x, nextPoint.y);
+                    // 肯定是边上的点了, 强制设置为true，可通过
+                    curPoint = new Double2Bool(nextPoint.x, nextPoint.y, true);
                     curedge = (int)nextPoint.z;
                     ExChangePoly(ref poly, poly1, poly2, ref curPolyIntersectArray, Poly1IntersectArray, Poly2IntersectArray);
                     Point2D ls = poly.GetSimpleEdge(curedge);
-
                     if (Double2.Dot(ls.endPoint - ls.startPoint, normalDir) > 0)
                     {
                         SearchDir = true;
@@ -170,7 +170,7 @@ namespace RayGraphics.Geometric
                 }
             }
             ClearPolyIntersectArray(ref Poly1IntersectArray, ref Poly2IntersectArray);
-            return listPoint.ToArray(); ;
+            return listPoint.ToArray(); 
         }
         /// <summary>
         /// 清理动作
@@ -203,7 +203,6 @@ namespace RayGraphics.Geometric
                 Poly2IntersectArray = null;
             }
         }
-
         /// <summary>
         /// 多边形决策。
         /// </summary>
@@ -211,8 +210,9 @@ namespace RayGraphics.Geometric
         /// <param name="dir"></param>
         /// <param name="targetPoint"></param>
         /// <param name="middlePoint"></param>
-        private static bool GetNearPointInEdge(Point2D ls2d, bool dir, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
+        private static bool GetNearPointInEdge(Point2D ls2d, bool dir, Double2Bool curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
         {
+            Double2 targetPos = new Double2(curPoint.x, curPoint.y);
             if (dir == true)
             {
                 if (listMiddlePoint == null || listMiddlePoint.Count == 0)
@@ -221,7 +221,7 @@ namespace RayGraphics.Geometric
                 }
                 else
                 {
-                    if (curPoint == ls2d.startPoint)
+                    if (targetPos == ls2d.startPoint)
                     {
                         nextPoint = listMiddlePoint[0];
                         return true;
@@ -230,7 +230,7 @@ namespace RayGraphics.Geometric
                     {
                         for (int i = 0; i < listMiddlePoint.Count; i++)
                         {
-                            if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
+                            if (targetPos == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
                             {
                                 nextPoint = listMiddlePoint[i + 1];
                                 return true;
@@ -247,7 +247,7 @@ namespace RayGraphics.Geometric
                 }
                 else
                 {
-                    if (curPoint == ls2d.endPoint)
+                    if (targetPos == ls2d.endPoint)
                     {
                         nextPoint = listMiddlePoint[listMiddlePoint.Count - 1];
                         return true;
@@ -256,7 +256,7 @@ namespace RayGraphics.Geometric
                     {
                         for (int i = listMiddlePoint.Count - 1; i >= 0; i--)
                         {
-                            if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i > 0)
+                            if (targetPos == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i > 0)
                             {
                                 nextPoint = listMiddlePoint[i - 1];
                                 return true;
@@ -275,17 +275,17 @@ namespace RayGraphics.Geometric
         /// <param name="poly2"></param>
         /// <param name="poly"></param>
         /// <param name="curedge"></param>
-        private static void SetInitData(Polygon2D poly1, Polygon2D poly2, ref Polygon2D poly, ref Double2 curPoint, ref int curedge)
+        private static void SetInitData(Polygon2D poly1, Polygon2D poly2, ref Polygon2D poly, ref Double2Bool curPoint, ref int curedge)
         {
             if (poly1 == null || poly2 == null || poly1.GetEdgeNum() < 3 || poly2.GetEdgeNum() < 3)
                 return;
             // 先找poly1 最小的。
             poly = poly1;
             curedge = 0;
-            Double2 min = poly1.GetPoint(0);
+            Double2Bool min = poly1.GetPointPlus(0);
             for (int i = 1; i < poly1.GetEdgeNum(); i++)
             {
-                Double2 point = poly1.GetPoint(i);
+                Double2Bool point = poly1.GetPointPlus(i);
                 if (point.y < min.y || (point.y == min.y && point.x < min.x))
                 {
                     min = point;
@@ -295,7 +295,7 @@ namespace RayGraphics.Geometric
             //
             for (int i = 0; i < poly2.GetEdgeNum(); i++)
             {
-                Double2 point = poly2.GetPoint(i);
+                Double2Bool point = poly2.GetPointPlus(i);
                 if (point.y < min.y || (point.y == min.y && point.x < min.x))
                 {
                     min = point;
@@ -311,7 +311,7 @@ namespace RayGraphics.Geometric
         /// <param name="listPoint"></param>
         /// <param name="point"></param>
         /// <returns></returns>
-        private static bool AddPoint(ref List<Double2> listPoint, Double2 point)
+        private static bool AddPoint(ref List<Double2Bool> listPoint, Double2Bool point)
         {
             if (listPoint.Contains(point) == true)
                 return false;

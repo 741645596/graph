@@ -68,6 +68,27 @@ namespace RayGraphics.Geometric
             else return Double2.zero;
         }
         /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public override Double2Bool GetPointPlus(int index)
+        {
+            if (index == 0)
+            {
+                return new Double2Bool(this.p1.x, this.p1.y, true);
+            }
+            else if (index == 1)
+            {
+                return new Double2Bool(this.p2.x, this.p2.y, true);
+            }
+            else if (index == 2)
+            {
+                return new Double2Bool(this.p3.x, this.p3.y, true);
+            }
+            return new Double2Bool(0, 0, true);
+        }
+        /// <summary>
         /// 获取边
         /// </summary>
         /// <param name="edgeIndex"></param>
@@ -87,6 +108,28 @@ namespace RayGraphics.Geometric
                 return new LineSegment2D(this.p3, this.p1);
             }
             else return new LineSegment2D(Double2.zero, Double2.one);
+        }
+
+        /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public override Point2D GetSimpleEdge(int edgeIndex)
+        {
+            if (edgeIndex == 0)
+            {
+                return new Point2D(this.p1, this.p2);
+            }
+            else if (edgeIndex == 1)
+            {
+                return new Point2D(this.p2, this.p3);
+            }
+            else if (edgeIndex == 2)
+            {
+                return new Point2D(this.p3, this.p1);
+            }
+            else return new Point2D(Double2.zero, Double2.one);
         }
         /// <summary>
         /// 判断点三角形内。

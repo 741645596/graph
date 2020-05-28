@@ -1,5 +1,5 @@
 ﻿using RayGraphics.Math;
-
+using System.Collections.Generic;
 
 namespace RayGraphics.Geometric
 {
@@ -340,6 +340,32 @@ namespace RayGraphics.Geometric
             }
             return new LineSegment2D(Double2.zero, Double2.zero);
         }
+
+        /// <summary>
+        /// 获取边
+        /// </summary>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        public virtual Point2D GetSimpleEdge(int edgeIndex)
+        {
+            if (edgeIndex == 0)
+            {
+                return new Point2D(this.leftBottom, this.RightBottom);
+            }
+            else if (edgeIndex == 1)
+            {
+                return new Point2D(this.RightBottom, this.rightUp);
+            }
+            else if (edgeIndex == 2)
+            {
+                return new Point2D(this.rightUp, this.LeftUp);
+            }
+            else if (edgeIndex == 3)
+            {
+                return new Point2D(this.LeftUp, this.leftBottom);
+            }
+            return new Point2D(Double2.zero, Double2.zero);
+        }
         /// <summary>
         /// 获取顶点
         /// </summary>
@@ -365,7 +391,31 @@ namespace RayGraphics.Geometric
             }
             return Double2.zero;
         }
-
+        /// <summary>
+        /// 获取顶点
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public virtual Double2Bool GetPointPlus(int index)
+        {
+            if (index == 0)
+            {
+                return  new Double2Bool(this.leftBottom.x, this.leftBottom.y, true);
+            }
+            else if (index == 1)
+            {
+                return new Double2Bool(this.RightBottom.x, this.RightBottom.y, true);
+            }
+            else if (index == 2)
+            {
+                return new Double2Bool(this.rightUp.x, this.rightUp.y, true);
+            }
+            else if (index == 3)
+            {
+                return new Double2Bool(this.LeftUp.x, this.LeftUp.y, true);
+            }
+            return new Double2Bool(0, 0, true);
+        }
         /// <summary>
         /// 获取法线
         /// </summary>
@@ -421,6 +471,14 @@ namespace RayGraphics.Geometric
         public virtual bool CheckCrossPoint(int indexPoint)
         {
             return true;
+        }
+        /// <summary>
+        /// 获取顶点可通过数据
+        /// </summary>
+        /// <returns></returns>
+        public virtual HashSet<int>  GetCrossPointData()
+        {
+            return null;
         }
     }
 }

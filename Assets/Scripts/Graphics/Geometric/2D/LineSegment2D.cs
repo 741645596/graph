@@ -456,6 +456,11 @@ namespace RayGraphics.Geometric
             else return false;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
 #if Client
         /// <summary>
         /// start point

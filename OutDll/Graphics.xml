@@ -224,7 +224,21 @@
             <param name="edgeIndex"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetSimpleEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.GetPoint(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetPointPlus(System.Int32)">
             <summary>
             获取顶点
             </summary>
@@ -255,6 +269,12 @@
             判断某个顶点是否可通行
             </summary>
             <param name="indexPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetCrossPointData">
+            <summary>
+            获取顶点可通过数据
+            </summary>
             <returns></returns>
         </member>
         <member name="F:RayGraphics.Geometric.Circle2D.circleCenter">
@@ -374,7 +394,7 @@
             <param name="Poly1IntersectArray"></param>
             <param name="Poly2IntersectArray"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetNearPointInEdge(RayGraphics.Geometric.LineSegment2D,System.Boolean,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
+        <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetNearPointInEdge(RayGraphics.Geometric.Point2D,System.Boolean,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
             <summary>
             多边形决策。
             </summary>
@@ -418,6 +438,80 @@
             <param name="Poly2IntersectArray"></param>
         </member>
         <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
+            <summary>
+            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+            </summary>
+            <param name="lsStartPoint">线段起点</param>
+            <param name="lsindex">线段索引</param>
+            <param name="PolyIntersectArray">多边形相交数据</param>
+            <param name="paths"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.GenerateConcavePolygon(System.Collections.Generic.List{RayGraphics.Math.Double2Bool[]})">
+            <summary>
+            生成凹多边形
+            </summary>
+            <param name="listpolygon"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.CombinePolygon(RayGraphics.Math.Double2Bool[],RayGraphics.Math.Double2Bool[],System.Boolean@)">
+            <summary>
+            求多边形的并。
+            </summary>
+            <param name="polygon1"></param>
+            <param name="polygon2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+            <summary>
+            清理动作
+            </summary>
+            <param name="Poly1IntersectArray"></param>
+            <param name="Poly2IntersectArray"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.GetNearPointInEdge(RayGraphics.Geometric.Point2D,System.Boolean,RayGraphics.Math.Double2Bool,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
+            <summary>
+            多边形决策。
+            </summary>
+            <param name="ls2d"></param>
+            <param name="dir"></param>
+            <param name="targetPoint"></param>
+            <param name="middlePoint"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.SetInitData(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D@,RayGraphics.Math.Double2Bool@,System.Int32@)">
+            <summary>
+            
+            </summary>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+            <param name="poly"></param>
+            <param name="curedge"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2Bool}@,RayGraphics.Math.Double2Bool)">
+            <summary>
+            加入顶点
+            </summary>
+            <param name="listPoint"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
+            <summary>
+            交换数据
+            </summary>
+            <param name="poly"></param>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+            <summary>
+            获取多边形所有边的相交点
+            </summary>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+            <param name="Poly1IntersectArray"></param>
+            <param name="Poly2IntersectArray"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.ConcavePolygonPlus2D.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
             <summary>
             获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
             </summary>
@@ -1036,6 +1130,13 @@
             <param name="edgeIndex"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetSimpleEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetNormal(System.Int32)">
             <summary>
             获取法线
@@ -1044,6 +1145,13 @@
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetPoint(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPointPlus(System.Int32)">
             <summary>
             获取顶点
             </summary>
@@ -1095,6 +1203,12 @@
             判断某个顶点是否可通行
             </summary>
             <param name="indexPoint"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetCrossPointData">
+            <summary>
+            获取顶点可通过数据
+            </summary>
             <returns></returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
@@ -1309,7 +1423,21 @@
             <param name="index"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetPointPlus(System.Int32)">
+            <summary>
+            获取顶点
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Triangle2D.GetEdge(System.Int32)">
+            <summary>
+            获取边
+            </summary>
+            <param name="edgeIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetSimpleEdge(System.Int32)">
             <summary>
             获取边
             </summary>
