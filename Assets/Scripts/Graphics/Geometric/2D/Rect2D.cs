@@ -40,7 +40,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
+        public override RBIResultType RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
         {
             if (rbi == null)
             {
@@ -98,13 +98,13 @@ namespace RayGraphics.Geometric
                 if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
                     rbi.CalcHelpData(line, offset, s, e);
-                    return true;
+                    return RBIResultType.Succ;
                 }
-                return false;
+                return RBIResultType.Fail;
             }
             else
             {
-                return false;
+                return RBIResultType.Fail;
             }
         }
         /// <summary>
@@ -221,12 +221,7 @@ namespace RayGraphics.Geometric
                 }
             }
             // 排序从近到远
-            listPt.Sort((a, b) =>
-            {
-                double adis = (a - line.startPoint).sqrMagnitude;
-                double bdis = (b - line.startPoint).sqrMagnitude;
-                return adis.CompareTo(bdis);
-            });
+            listPt.Sort((a, b) => MathUtil.GetCompareDis(a, line.startPoint).CompareTo(MathUtil.GetCompareDis(b, line.startPoint)));
             //
             if (listPt.Count > 0)
             {

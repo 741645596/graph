@@ -1,5 +1,4 @@
 ﻿using RayGraphics.Math;
-using System.Collections.Generic;
 
 
 namespace RayGraphics.Geometric
@@ -236,9 +235,9 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public virtual  bool RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
+        public virtual RBIResultType RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
         {
-            return false;
+            return RBIResultType.Fail;
         }
         /// <summary>
         /// 获取挡格附近出生点
@@ -413,6 +412,15 @@ namespace RayGraphics.Geometric
             points[2] = this.rightUp;
             points[3] = this.LeftUp;
             return points;
+        }
+        /// <summary>
+        /// 判断某个顶点是否可通行
+        /// </summary>
+        /// <param name="indexPoint"></param>
+        /// <returns></returns>
+        public virtual bool CheckCrossPoint(int indexPoint)
+        {
+            return true;
         }
     }
 }

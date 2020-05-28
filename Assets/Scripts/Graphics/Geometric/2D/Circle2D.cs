@@ -99,7 +99,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
+        public override RBIResultType RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
         {
             if (rbi == null)
             {
@@ -107,23 +107,23 @@ namespace RayGraphics.Geometric
             }
             Double2 diff = this.circleCenter - line.startPoint;
             if (diff == Double2.zero)
-                return false;
+                return RBIResultType.Fail;
             //
             Double2 projectoint = line.ProjectPoint(this.circleCenter);
             diff = this.circleCenter - projectoint;
             // 跟直线相交奥
             double dis = diff.sqrMagnitude - this.radius * this.radius;
             if (dis >= 0)
-                return false;
+                return RBIResultType.Fail;
             dis = -dis;
             // 在同侧不行。
             Double2 diff1 = line.startPoint - projectoint;
             Double2 diff2 = line.endPoint - projectoint;
             if (Double2.Dot(diff1, diff2) >= 0)
-                return false;
+                return RBIResultType.Fail;
             //
             if (diff1.sqrMagnitude < dis || diff2.sqrMagnitude < dis)
-                return false;
+                return RBIResultType.Fail;
 
             dis = System.Math.Sqrt(dis) + offset;
 
@@ -144,10 +144,9 @@ namespace RayGraphics.Geometric
             if (rbi.listpath != null && rbi.listpath.Count > 0)
             {
                 rbi.CalcHelpData(line, offset, p1, p2);
-                return true;
+                return RBIResultType.Succ;
             }
-
-            return true;
+            return RBIResultType.Fail;
         }
         /// <summary>
         /// 判断点是否在直线上

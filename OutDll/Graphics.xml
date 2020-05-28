@@ -250,6 +250,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.CheckCrossPoint(System.Int32)">
+            <summary>
+            判断某个顶点是否可通行
+            </summary>
+            <param name="indexPoint"></param>
+            <returns></returns>
+        </member>
         <member name="F:RayGraphics.Geometric.Circle2D.circleCenter">
             <summary>
             中心
@@ -912,10 +919,21 @@
             法线列表。
             </summary>
         </member>
+        <member name="F:RayGraphics.Geometric.Polygon2D.listunCrossPoints">
+            <summary>
+            顶点可同行数组
+            </summary>
+        </member>
         <member name="F:RayGraphics.Geometric.Polygon2D.distancArr">
             <summary>
             逆时针
             </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.Init(RayGraphics.Math.Double2[])">
+            <summary>
+            初始化数据
+            </summary>
+            <param name="points"></param>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.RayboundingNearestPath(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Geometric.RayboundingInfo@)">
             <summary>
@@ -960,12 +978,20 @@
             <param name="offset"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckPathDir(RayGraphics.Math.Double3,RayGraphics.Math.Double3,System.Boolean@)">
             <summary>
             确认方向（顺时针，逆时针方向）
             </summary>
             <param name="p1"></param>
             <param name="p2"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetCrossValue(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index1"></param>
+            <param name="index2"></param>
+            <returns>0, 可以通。1. 升序不可通， 2 降序不可通, 3 都不可通</returns>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetBornPoint(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2@)">
             <summary>
@@ -1062,6 +1088,13 @@
             判断点多边形内。
             </summary>
             <param name="pt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckCrossPoint(System.Int32)">
+            <summary>
+            判断某个顶点是否可通行
+            </summary>
+            <param name="indexPoint"></param>
             <returns></returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
@@ -3406,6 +3439,16 @@
             <param name="k"></param>
             <returns></returns>
         </member>
+        <member name="F:RayGraphics.Math.MathUtil.StraightDistance">
+            <summary>
+            直角增加的IntegrationValue
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathUtil.DiagonalDistance">
+            <summary>
+            对角增加的IntegrationValue
+            </summary>
+        </member>
         <member name="F:RayGraphics.Math.MathUtil.kEpsilon">
             <summary>
             误差
@@ -3420,6 +3463,29 @@
             <summary>
             pi 常量
             </summary>
+        </member>
+        <member name="M:RayGraphics.Math.MathUtil.GetCompareDis(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            获取2点评估距离/ 跳点距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathUtil.GetNearDistance(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            获取2点评估距离/ 跳点距离
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathUtil.GetNearDistance(RayGraphics.Math.Double2)">
+            <summary>
+            计算向量的长度
+            </summary>
+            <param name="diff"></param>
+            <returns></returns>
         </member>
         <member name="T:RayGraphics.Math.LineRelation">
             <summary>
@@ -3534,6 +3600,26 @@
         <member name="F:RayGraphics.Math.ProjectPointInLine.OutEnd">
             <summary>
             相交
+            </summary>
+        </member>
+        <member name="T:RayGraphics.Math.RBIResultType">
+            <summary>
+            射线包围盒返回类型
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.RBIResultType.Fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.RBIResultType.Succ">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.RBIResultType.UnCross">
+            <summary>
+            通不过
             </summary>
         </member>
         <member name="F:RayGraphics.Math.Matrix2x2.col1">

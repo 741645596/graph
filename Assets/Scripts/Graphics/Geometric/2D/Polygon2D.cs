@@ -15,23 +15,45 @@ namespace RayGraphics.Geometric
         /// </summary>
         private Double2[] normalAttr = null;
         /// <summary>
+        /// 顶点可同行数组
+        /// </summary>
+        private HashSet<int> listunCrossPoints = null;
+        /// <summary>
         /// 逆时针
         /// </summary>
         private double[] distancArr = null;
         private double totalDistance = 0;
 
+        public Polygon2D(Double2[] points, List<int> unCrossPoints)
+        {
+            Init(points);
+            if (unCrossPoints != null && unCrossPoints.Count > 0)
+            {
+                listunCrossPoints = new HashSet<int>();
+                foreach (int index in unCrossPoints)
+                {
+                    listunCrossPoints.Add(index);
+                }
+            }
+        }
         public Polygon2D(Double2[] points) 
+        {
+            Init(points);
+        }
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        /// <param name="points"></param>
+        private void Init(Double2[] points)
         {
             if (points == null || points.Length < 3)
                 return;
             this.pointArr = new Double2[points.Length];
-            this.normalAttr = new Double2[points.Length]; 
-
-
+            this.normalAttr = new Double2[points.Length];
             this.distancArr = new double[points.Length + 1];
             Double2 min = points[0];
             Double2 max = points[0];
-            int i ;
+            int i;
             for (i = 0; i < points.Length; i++)
             {
                 this.pointArr[i] = points[i];
@@ -39,10 +61,10 @@ namespace RayGraphics.Geometric
                 {
                     min = Double2.Min(min, points[i]);
                     max = Double2.Max(max, points[i]);
-                    totalDistance += (float)Double2.Distance(points[i - 1], points[i]);
+                    totalDistance += MathUtil.GetNearDistance(points[i - 1], points[i]);
                     this.distancArr[i] = totalDistance;
                 }
-                else 
+                else
                 {
                     min = points[i];
                     max = points[i];
@@ -55,13 +77,13 @@ namespace RayGraphics.Geometric
                 {
                     dir = (points[i + 1] - points[i]).normalized;
                 }
-                else 
+                else
                 {
                     dir = (points[0] - points[i]).normalized;
                 }
                 this.normalAttr[i] = Double2.Perpendicular(dir);
             }
-            totalDistance += (float)Double2.Distance(points[points.Length - 1], points[0]);
+            totalDistance += MathUtil.GetNearDistance(points[points.Length - 1], points[0]);
             this.distancArr[i] = totalDistance;
             this.SetAABB(min, max);
         }
@@ -72,7 +94,7 @@ namespace RayGraphics.Geometric
         /// <param name="offset">偏移值</param>
         /// <param name="rbi">包围盒信息</param>
         /// <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
-        public override bool RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
+        public override RBIResultType RayboundingNearestPath(LineSegment2D line, double offset, ref RayboundingInfo rbi)
         {
             if (rbi == null)
             {
@@ -90,14 +112,19 @@ namespace RayGraphics.Geometric
             }
             if (lineArray.Count == 0)
             {
-                return false;
+                return RBIResultType.Fail;
             }
             else 
             {
                 // 先按距离进行排序。
-                lineArray.Sort((x, y) => Double2.Distance(new Double2(x.x, x.y), line.startPoint).CompareTo(Double2.Distance(new Double2(y.x, y.y), line.startPoint)));
+                lineArray.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), line.startPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), line.startPoint)));
                 //
-                bool isPathDir = CheckPathDir(lineArray[0], lineArray[lineArray.Count - 1]);
+                bool isCross = true;
+                bool isPathDir = CheckPathDir(lineArray[0], lineArray[lineArray.Count - 1], ref isCross);
+                if (isCross == false)
+                {
+                    return RBIResultType.UnCross;
+                }
                 List<Double2> temppaths = new List<Double2>();
                 RayboundingNearestPath(lineArray[0], lineArray[lineArray.Count - 1], offset, isPathDir, ref temppaths);
                 if (rbi.listpath == null)
@@ -127,16 +154,16 @@ namespace RayGraphics.Geometric
                 if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
                     rbi.CalcHelpData(line, offset, new Double2(lineArray[0].x, lineArray[0].y), new Double2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y));
-                    return true;               
+                    return RBIResultType.Succ;               
                 }
-                return false;
+                return RBIResultType.Fail;
             }
         }
         /// <summary>
         /// 确定是否为其子集, 先简单实现。
         /// </summary>
         /// <returns></returns>
-        private bool CheckisSubChild(int start , int end, bool isPathDir, int substart ,int subend)
+        private bool CheckisSubChild(int start , int end, bool isPathDir, int substart,int subend)
         {
            List<int> listall = GetPathPoint(start, end, isPathDir);
            List<int> listsub = GetPathPoint(substart, subend, isPathDir);
@@ -206,10 +233,6 @@ namespace RayGraphics.Geometric
             }
             paths = listpath;
         }
-
-
-
-
         /// <summary>
         /// 中间经过的顶点，不包含2端的点。
         /// </summary>
@@ -293,20 +316,36 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
-        private bool CheckPathDir(Double3 p1, Double3 p2)
+        private bool CheckPathDir(Double3 p1, Double3 p2, ref bool isCross)
         {
+            isCross = true;
+            int crossValue = GetCrossValue((int)p1.z, (int)p2.z);
+            if (crossValue == 3)
+            {
+                isCross = false;
+                return false;
+            }
             // 先计算逆时针距离。
             double dis;
             // 对边行为
             if (p1.z < p2.z)
             {
+                if (crossValue == 1)
+                {
+                    return false;
+                }
+                else if (crossValue == 2)
+                {
+                    return true;
+                }
                 int max = (int)p2.z + 1;
                 max = max > this.pointArr.Length - 1 ? 0 : max;
                 dis = distancArr[(int)p2.z + 1] - distancArr[(int)p1.z]
-                    - Double2.Distance(new Double2(p1.x, p1.y), this.pointArr[(int)p1.z])
-                    - Double2.Distance(new Double2(p2.x, p2.y), this.pointArr[max]);
+                    - MathUtil.GetNearDistance(new Double2(p1.x, p1.y), this.pointArr[(int)p1.z])
+                    - MathUtil.GetNearDistance(new Double2(p2.x, p2.y), this.pointArr[max]);
                 if (dis < totalDistance - dis)
                 {
+
                     return true;
                 }
                 else
@@ -316,11 +355,19 @@ namespace RayGraphics.Geometric
             }
             else if (p1.z > p2.z)
             {
+                if (crossValue == 1)
+                {
+                    return true;
+                }
+                else if (crossValue == 2)
+                {
+                    return false;
+                }
                 int max = (int)p1.z + 1;
                 max = max > this.pointArr.Length - 1 ? 0 : max;
                 dis = distancArr[(int)p1.z + 1] - distancArr[(int)p2.z]
-                - Double2.Distance(new Double2(p2.x, p2.y), this.pointArr[(int)p2.z])
-                - Double2.Distance(new Double2(p1.x, p1.y), this.pointArr[max]);
+                - MathUtil.GetNearDistance(new Double2(p2.x, p2.y), this.pointArr[(int)p2.z])
+                - MathUtil.GetNearDistance(new Double2(p1.x, p1.y), this.pointArr[max]);
                 if (dis < totalDistance - dis)
                 {
                     return false;
@@ -334,6 +381,49 @@ namespace RayGraphics.Geometric
             {
                 return true;
             }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <returns>0, 可以通。1. 升序不可通， 2 降序不可通, 3 都不可通</returns>
+        private int GetCrossValue(int index1, int index2)
+        {
+            int value = 0;
+            if (index1 > index2)
+            {
+                int temp = index2;
+                index2 = index1;
+                index1 = temp;
+            }
+            //  升序
+            for (int i = index1 + 1; i <= index2; i++)
+            {
+                if (CheckCrossPoint(i) == false)
+                {
+                    value = 1;
+                    break;
+                }
+            }
+            //  降序
+            for (int i = index2 + 1; i < this.pointArr.Length; i++)
+            {
+                if (CheckCrossPoint(i) == false)
+                {
+                    value += 2;
+                    return value;
+                }
+            }
+            for (int i = 0; i <= index1; i++)
+            {
+                if (CheckCrossPoint(i) == false)
+                {
+                    value += 2;
+                    return value;
+                }
+            }
+            return value;
         }
         /// <summary>
         /// 获取挡格附近出生点
@@ -440,7 +530,7 @@ namespace RayGraphics.Geometric
             // 从近到远排好队。
             if (listpath.Count > 1)
             {
-                listpath.Sort((x, y) => Double2.Distance(new Double2(x.x, x.y), line.startPoint).CompareTo(Double2.Distance(new Double2(y.x, y.y), line.startPoint)));
+                listpath.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), line.startPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), line.startPoint)));
             }
             
             paths = listpath;
@@ -593,13 +683,28 @@ namespace RayGraphics.Geometric
                     // 共线情况，肯定是点在线段2端。
                 }
             }
-            CrossPointCount = CrossPointCount / 2;
-            CrossPointCount = CrossPointCount % 2;
+            CrossPointCount /=  2;
+            CrossPointCount %=  2;
             if (CrossPointCount == 1)
             {
                 flag = !flag;
             }
             return flag;
+        }
+        /// <summary>
+        /// 判断某个顶点是否可通行
+        /// </summary>
+        /// <param name="indexPoint"></param>
+        /// <returns></returns>
+        public override bool CheckCrossPoint(int indexPoint)
+        {
+            if (listunCrossPoints == null || listunCrossPoints.Count == 0)
+                return true;
+            if (listunCrossPoints.Contains(indexPoint) == true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
