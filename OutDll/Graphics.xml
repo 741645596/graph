@@ -119,20 +119,6 @@
             <param name="pt"></param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.CalcDistance(RayGraphics.Math.Double2)">
-            <summary>
-            点导几何元素的距离
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.AABB2D.GetAligentStyle(RayGraphics.Math.Double2)">
-            <summary>
-            点与矩形的关系
-            </summary>
-            <param name="pt"></param>
-            <returns></returns>
-        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckLineRelation(RayGraphics.Geometric.Line2D)">
             <summary>
             与直线的关系
@@ -1002,6 +988,13 @@
             </summary>
             <param name="startPt"></param>
             <param name="endPt"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Point2D.CheckIn(RayGraphics.Math.Double2)">
+            <summary>
+            判断点是否在线段上
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
         </member>
         <member name="F:RayGraphics.Geometric.Polygon2D.pointArr">
             <summary>
@@ -3643,56 +3636,6 @@
         <member name="F:RayGraphics.Math.LineRelation.Detach">
             <summary>
             分离
-            </summary>
-        </member>
-        <member name="T:RayGraphics.Math.AligentStyle">
-            <summary>
-            对其方式
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.LeftBottom">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.LeftMiddle">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.LeftUp">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.MiddleBottom">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.MiddleMiddle">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.MiddleUp">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.RightBottom">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.RightMiddle">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:RayGraphics.Math.AligentStyle.RightUp">
-            <summary>
-            
             </summary>
         </member>
         <member name="T:RayGraphics.Math.PolygonType">

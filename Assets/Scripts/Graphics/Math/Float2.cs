@@ -298,7 +298,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckInLine(Float2 a, Float2 b)
         {
-            return System.Math.Abs(Float2.SinAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Float2.Cross(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 垂直判断，考虑误差
@@ -308,7 +308,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckVertical(Float2 a, Float2 b)
         {
-            return System.Math.Abs(Float2.CosAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Float2.Dot(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 保持向量方向，调整向量长度

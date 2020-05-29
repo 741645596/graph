@@ -299,7 +299,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckInLine(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Double2.SinAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Double2.Cross(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 垂直判断，考虑误差
@@ -309,7 +309,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckVertical(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Double2.CosAngle(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Double2.Dot(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 保持向量方向，调整向量长度
@@ -337,9 +337,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static double Cross(Double2 lhs, Double2 rhs)
+        public static double Cross(Double2 a, Double2 b)
         {
-            return lhs.x * rhs.y - lhs.y * rhs.x;
+            return a.x * b.y - a.y * b.x;
         }
         /// <summary>
         /// 求距离

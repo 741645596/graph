@@ -715,7 +715,7 @@ namespace RayGraphics.Geometric
             int edgeNum = GetEdgeNum();
             for (int i = 0; i < edgeNum; i++)
             {
-                LineSegment2D line = GetEdge(i);
+                Point2D line = GetSimpleEdge(i);
                 // 先判断点是否在边上。
                 if (line.CheckIn(pt) == true)
                     return true;

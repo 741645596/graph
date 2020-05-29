@@ -26,5 +26,20 @@ namespace RayGraphics.Geometric
             this.startPoint = startPt;
             this.endPoint = endPt;
         }
+        /// <summary>
+        /// 判断点是否在线段上
+        /// </summary>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        public bool CheckIn(Double2 pt)
+        {
+            Double2 diff1 = pt - this.startPoint;
+            Double2 diff2 = pt - this.endPoint;
+            if (Double2.CheckInLine(diff1, diff2) == true && Double2.Dot(diff1, diff2) <= 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
