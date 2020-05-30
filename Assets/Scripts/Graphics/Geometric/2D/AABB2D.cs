@@ -319,21 +319,21 @@ namespace RayGraphics.Geometric
         {
             if (index == 0)
             {
-                return  new Double2Bool(this.leftBottom.x, this.leftBottom.y, true);
+                return  new Double2Bool(this.leftBottom, true);
             }
             else if (index == 1)
             {
-                return new Double2Bool(this.RightBottom.x, this.RightBottom.y, true);
+                return new Double2Bool(this.RightBottom, true);
             }
             else if (index == 2)
             {
-                return new Double2Bool(this.rightUp.x, this.rightUp.y, true);
+                return new Double2Bool(this.rightUp, true);
             }
             else if (index == 3)
             {
-                return new Double2Bool(this.LeftUp.x, this.LeftUp.y, true);
+                return new Double2Bool(this.LeftUp, true);
             }
-            return new Double2Bool(0, 0, true);
+            return new Double2Bool(Double2.zero, true);
         }
         /// <summary>
         /// 获取法线
@@ -380,6 +380,19 @@ namespace RayGraphics.Geometric
             points[1] = this.RightBottom;
             points[2] = this.rightUp;
             points[3] = this.LeftUp;
+            return points;
+        }
+        /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public virtual Double2Bool[] GetPointsPlus()
+        {
+            Double2Bool[] points = new Double2Bool[4];
+            points[0] = new Double2Bool(this.leftBottom, true);
+            points[1] = new Double2Bool(this.RightBottom, true); 
+            points[2] = new Double2Bool(this.rightUp, true); 
+            points[3] = new Double2Bool(this.LeftUp, true); 
             return points;
         }
         /// <summary>

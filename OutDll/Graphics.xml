@@ -250,6 +250,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.AABB2D.GetPointsPlus">
+            <summary>
+            获取顶点数组
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.AABB2D.CheckCrossPoint(System.Int32)">
             <summary>
             判断某个顶点是否可通行
@@ -1151,6 +1157,12 @@
             <param name="index"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPointsPlus">
+            <summary>
+            获取顶点数组
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.CheckIntersect(RayGraphics.Geometric.Rect2D)">
             <summary>
             与矩形的关系
@@ -1404,6 +1416,12 @@
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.Triangle2D.GetPoints">
+            <summary>
+            获取顶点数组
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Triangle2D.GetPointsPlus">
             <summary>
             获取顶点数组
             </summary>

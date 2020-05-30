@@ -53,6 +53,18 @@ namespace RayGraphics.Geometric
             return points;
         }
         /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public override Double2Bool[] GetPointsPlus()
+        {
+            Double2Bool[] points = new Double2Bool[3];
+            points[0] = new Double2Bool(this.p1, true);
+            points[1] = new Double2Bool(this.p2, true);
+            points[2] = new Double2Bool(this.p3, true);
+            return points;
+        }
+        /// <summary>
         /// 获取顶点
         /// </summary>
         /// <param name="index"></param>
@@ -76,17 +88,17 @@ namespace RayGraphics.Geometric
         {
             if (index == 0)
             {
-                return new Double2Bool(this.p1.x, this.p1.y, true);
+                return new Double2Bool(this.p1, true);
             }
             else if (index == 1)
             {
-                return new Double2Bool(this.p2.x, this.p2.y, true);
+                return new Double2Bool(this.p2, true);
             }
             else if (index == 2)
             {
-                return new Double2Bool(this.p3.x, this.p3.y, true);
+                return new Double2Bool(this.p3, true);
             }
-            return new Double2Bool(0, 0, true);
+            return new Double2Bool(Double2.zero, true);
         }
         /// <summary>
         /// 获取边

@@ -20,6 +20,13 @@ namespace RayGraphics.Math
             this.isCross = isCross;
         }
 
+        public Double2Bool(Double2 pos, bool isCross)
+        {
+            this.x = pos.x;
+            this.y = pos.x;
+            this.isCross = isCross;
+        }
+
         public static bool operator !=(Double2Bool v1, Double2Bool v2)
         {
             return v1.x != v2.x || v1.y != v2.y || v1.isCross != v2.isCross;

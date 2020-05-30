@@ -634,9 +634,22 @@ namespace RayGraphics.Geometric
         {
             if (index < 0 || index > this.pointArr.Length - 1)
             {
-                new Double2Bool(0, 0, true);
+                new Double2Bool(Double2.zero, true);
             }
-            return new Double2Bool(this.pointArr[index].x, this.pointArr[index].y, CheckCrossPoint(index));
+            return new Double2Bool(this.pointArr[index], CheckCrossPoint(index));
+        }
+        /// <summary>
+        /// 获取顶点数组
+        /// </summary>
+        /// <returns></returns>
+        public override Double2Bool[] GetPointsPlus()
+        {
+            Double2Bool[] points = new Double2Bool[this.pointArr.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                points[i] = GetPointPlus(i);
+            }
+            return points;
         }
         /// <summary>
         /// 与矩形的关系
