@@ -1779,6 +1779,14 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "F:RayGraphics.Geometric.RayboundingInfo.isCounterclockwiseDir" -->
+        <member name="M:RayGraphics.Geometric.RayboundingInfo.SetNear(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2)">
+            <summary>
+            设置近距离相交点
+            </summary>
+            <param name="line"></param>
+            <param name="offset"></param>
+            <param name="near"></param>
+        </member>
         <member name="M:RayGraphics.Geometric.RayboundingInfo.CalcHelpData(RayGraphics.Geometric.LineSegment2D,System.Double,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
             <summary>
             计算其他辅助数据

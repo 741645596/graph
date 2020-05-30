@@ -12,17 +12,34 @@ namespace RayGraphics.Geometric
         public Double2 nearPoint;
         public Double2 farPoint;
         public List<Double2> listpath = null;
+        public bool isCross = true;
         /// <summary>
         /// <summary>
         /// 路线在线段区域，是否逆时针方向
         /// </summary>
         public bool isCounterclockwiseDir;
         /// <summary>
+        /// 设置近距离相交点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="offset"></param>
+        /// <param name="near"></param>
+        public void SetNear(LineSegment2D line, double offset, Double2 near)
+        {
+            offset = offset * 5;
+            this.nearPoint = near;
+            this.nearPoint -= offset * line.normalizedDir;
+            this.farPoint = this.nearPoint;
+            this.distance = (line.startPoint - nearPoint).sqrMagnitude;
+            this.isCross = false;
+        }
+        /// <summary>
         /// 计算其他辅助数据
         /// </summary>
         /// <param name="line"></param>
         public void CalcHelpData(LineSegment2D line, double offset, Double2 near, Double2 far)
         {
+            isCross = true;
             if (this.listpath != null && this.listpath.Count > 0)
             {
                 this.nearPoint = near;

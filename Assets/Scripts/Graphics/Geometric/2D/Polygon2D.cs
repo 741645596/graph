@@ -147,6 +147,7 @@ namespace RayGraphics.Geometric
                 bool isPathDir = CheckPathDir(lineArray[0], lineArray[lineArray.Count - 1], ref isCross);
                 if (isCross == false)
                 {
+                    rbi.SetNear(line, offset, new Double2(lineArray[0].x, lineArray[0].y));
                     return RBIResultType.UnCross;
                 }
                 List<Double2> temppaths = new List<Double2>();
