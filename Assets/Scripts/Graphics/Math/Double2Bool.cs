@@ -23,7 +23,7 @@ namespace RayGraphics.Math
         public Double2Bool(Double2 pos, bool isCross)
         {
             this.x = pos.x;
-            this.y = pos.x;
+            this.y = pos.y;
             this.isCross = isCross;
         }
 
