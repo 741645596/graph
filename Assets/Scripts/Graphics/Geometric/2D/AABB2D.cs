@@ -181,6 +181,16 @@ namespace RayGraphics.Geometric
             return false;
         }
         /// <summary>
+        /// 获取近的相交点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="intersectStart"></param>
+        /// <returns></returns>
+        public virtual bool GetNearIntersectPoint(LineSegment2D line, ref Double2 intersectStart)
+        {
+            return false;
+        }
+        /// <summary>
         /// 与矩形的关系
         /// </summary>
         /// <param name="dbd1"></param>

@@ -91,7 +91,38 @@ namespace RayGraphics.Geometric
             else return null;
         }
 
-
+        /// <summary>
+        /// 获取近的相交点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="intersectStart"></param>
+        /// <returns></returns>
+        public override bool GetNearIntersectPoint(LineSegment2D line, ref Double2 intersectStart)
+        {
+            double radis2 = this.radius * this.radius;
+            Double2 projectoint = line.ProjectPoint(this.circleCenter);
+            Double2 diff = this.circleCenter - projectoint;
+            // 跟直线相交奥
+            double dis = diff.sqrMagnitude - radis2;
+            if (dis < 0)
+            {
+                double dis1 = (this.circleCenter - line.startPoint).sqrMagnitude;
+                double dis2 = (this.circleCenter - line.endPoint).sqrMagnitude;
+                if (dis1 >= radis2 && dis2 <= radis2)
+                {
+                    dis = System.Math.Sqrt(dis);
+                    intersectStart = projectoint - line.normalizedDir * dis;
+                    return true;
+                }
+                else if (dis1 <= radis2 && dis2 >= radis2)
+                {
+                    dis = System.Math.Sqrt(dis);
+                    intersectStart = projectoint + line.normalizedDir * dis;
+                    return true;
+                }
+            }
+            return false;
+        }
         /// <summary>
         /// 最短射线包围盒路径
         /// </summary>

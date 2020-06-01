@@ -232,6 +232,42 @@ namespace RayGraphics.Geometric
             return false;
         }
         /// <summary>
+        /// 获取近的相交点
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="intersectStart"></param>
+        /// <returns></returns>
+        public override bool GetNearIntersectPoint(LineSegment2D line, ref Double2 intersectStart)
+        {
+            bool ret = false;
+            intersectStart = Double2.positiveInfinity;
+            double dis = float.MaxValue;
+            Double2 pos = Double2.zero;
+            Double2 pos1 = Double2.zero;
+
+            for (int i = 0; i < GetEdgeNum(); i++)
+            {
+                if (GetEdge(i).GetIntersectPoint(line, ref pos, ref pos1) == true)
+                {
+                    ret = true;
+                    double dis1 = MathUtil.GetCompareDis(line.startPoint, pos);
+                    double dis2 = MathUtil.GetCompareDis(line.startPoint, pos1);
+                    if (dis1 < dis)
+                    {
+                        intersectStart = pos;
+                        dis = dis1;
+                    }
+
+                    if (dis2 < dis)
+                    {
+                        intersectStart = pos1;
+                        dis = dis2;
+                    }
+                }
+            }
+            return ret;
+        }
+        /// <summary>
         /// 与矩形的关系
         /// </summary>
         /// <param name="dbd1"></param>
