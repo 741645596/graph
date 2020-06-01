@@ -134,11 +134,26 @@ namespace RayGraphics.Geometric
                     lineArray.Add(new Double3(intersectionPoint.x, intersectionPoint.y, i));
                 }
             }
-            if (lineArray.Count == 0)
+            int count = lineArray.Count;
+
+            if (count == 0)
             {
                 return RBIResultType.Fail;
             }
-            else 
+            else if (count % 2 == 1)
+            {
+                lineArray.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), line.startPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), line.startPoint)));
+                if (CheckIn(line.startPoint) == true)
+                {
+                    rbi.SetNear(line, offset, new Double2(lineArray[0].x, lineArray[0].y));
+                }
+                else 
+                {
+                    rbi.SetNear(line, offset, new Double2(lineArray[count -1].x, lineArray[count - 1].y));
+                }
+                return RBIResultType.UnCross;
+            }
+            else
             {
                 // 先按距离进行排序。
                 lineArray.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), line.startPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), line.startPoint)));
@@ -161,7 +176,7 @@ namespace RayGraphics.Geometric
                     rbi.listpath.AddRange(temppaths);
                 }
                 // 排斥需要扣除的点。
-                for (int i = 1; i < lineArray.Count - 1; i+= 2)
+                for (int i = 1; i < lineArray.Count - 1; i += 2)
                 {
                     if (CheckisSubChild((int)lineArray[0].z, (int)lineArray[lineArray.Count - 1].z, isPathDir, (int)lineArray[i].z, (int)lineArray[i + 1].z) == false)
                         continue;
@@ -179,7 +194,7 @@ namespace RayGraphics.Geometric
                 if (rbi.listpath != null && rbi.listpath.Count > 0)
                 {
                     rbi.CalcHelpData(line, offset, new Double2(lineArray[0].x, lineArray[0].y), new Double2(lineArray[lineArray.Count - 1].x, lineArray[lineArray.Count - 1].y));
-                    return RBIResultType.Succ;               
+                    return RBIResultType.Succ;
                 }
                 return RBIResultType.Fail;
             }
