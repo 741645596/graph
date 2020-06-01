@@ -141,5 +141,13 @@ namespace RayGraphics.Math
         /// 通不过
         /// </summary>
         UnCross = 2,
+        /// <summary>
+        /// 通不过
+        /// </summary>
+        UnCrossstartPointIn = 3,
+        /// <summary>
+        /// 通不过
+        /// </summary>
+        UnCrossendPointIn = 4,
     }
 }

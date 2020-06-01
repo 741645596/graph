@@ -146,12 +146,13 @@ namespace RayGraphics.Geometric
                 if (CheckIn(line.startPoint) == true)
                 {
                     rbi.SetNear(line, offset, new Double2(lineArray[0].x, lineArray[0].y));
+                    return RBIResultType.UnCrossstartPointIn;
                 }
                 else 
                 {
                     rbi.SetNear(line, offset, new Double2(lineArray[count -1].x, lineArray[count - 1].y));
+                    return RBIResultType.UnCrossendPointIn;
                 }
-                return RBIResultType.UnCross;
             }
             else
             {

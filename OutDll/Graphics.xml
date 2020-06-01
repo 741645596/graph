@@ -3759,6 +3759,16 @@
             通不过
             </summary>
         </member>
+        <member name="F:RayGraphics.Math.RBIResultType.UnCrossstartPointIn">
+            <summary>
+            通不过
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.RBIResultType.UnCrossendPointIn">
+            <summary>
+            通不过
+            </summary>
+        </member>
         <member name="F:RayGraphics.Math.Matrix2x2.col1">
             <summary>
             第一行
