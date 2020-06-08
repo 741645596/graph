@@ -26,7 +26,6 @@ namespace RayGraphics.Geometric
         /// <param name="near"></param>
         public void SetNear(LineSegment2D line, double offset, Double2 near)
         {
-            offset = offset * 5;
             this.nearPoint = near;
             this.nearPoint -= offset * line.normalizedDir;
             this.farPoint = this.nearPoint;
