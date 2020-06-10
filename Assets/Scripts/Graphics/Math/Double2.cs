@@ -162,6 +162,23 @@ namespace RayGraphics.Math
             return v1.x == v2.x && v1.y == v2.y;
         }
 
+        public static bool operator <(Double2 v1, Double2 v2)
+        {
+            return v1.x < v2.x || !(v2.x < v1.x) && v1.y < v2.y;
+        }
+        public static bool operator <=(Double2 v1, Double2 v2)
+        {
+            return (v1.x == v2.x && v1.y == v2.y) || v1 < v2;
+        }
+        public static bool operator >(Double2 v1, Double2 v2)
+        {
+            return !(v1 <= v2);
+        }
+        public static bool operator >=(Double2 v1, Double2 v2)
+        {
+            return !(v1 < v2);
+        }
+
         public static Double2 operator +(Double2 v1, Double2 v2)
         {
             double xx = v1.x + v2.x;
@@ -525,7 +542,17 @@ namespace RayGraphics.Math
             }
             return false;
         }
-
+        /// <summary>
+        /// 当点target位于线p1p2的左侧时为负
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="target">目标点</param>
+        /// <returns></returns>
+        public static double LeftOf(Double2 p1, Double2 p2, Double2 target)
+        {
+            return Cross(target - p1, p2 - p1);
+        }
 #if Client
         /// <summary>
         /// 转vector2

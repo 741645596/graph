@@ -2216,6 +2216,15 @@
             <param name="outdir">起点出发的2个边界向量</param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Double2.LeftOf(RayGraphics.Math.Double2,RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            当点target位于线p1p2的左侧时为负
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="target">目标点</param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Double3.Set(System.Double,System.Double,System.Double)">
             <summary>
             设置属性
@@ -2905,6 +2914,15 @@
             <param name="startPoint">起点</param>
             <param name="indir">起点出发的2个边界向量</param>
             <param name="outdir">起点出发的2个边界向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Float2.LeftOf(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            当点target位于线p1p2的左侧时为负
+            </summary>
+            <param name="p1"></param>
+            <param name="p2"></param>
+            <param name="target">目标点</param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Float3.Set(System.Single,System.Single,System.Single)">
