@@ -336,9 +336,9 @@ namespace RayGraphics.Math
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static float Cross(Float2 lhs, Float2 rhs)
+        public static float Cross(Float2 a, Float2 b)
         {
-            return lhs.x * rhs.y - lhs.y * rhs.x;
+            return a.x * b.y - a.y * b.x;
         }
         /// <summary>
         /// 求距离

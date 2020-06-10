@@ -7,11 +7,11 @@ namespace RayGraphics.Math
         /// <summary>
         /// 直角增加的IntegrationValue
         /// </summary>
-        public static readonly Double StraightDistance = 1.0f;
+        public static readonly double StraightDistance = 1.0f;
         /// <summary>
         /// 对角增加的IntegrationValue
         /// </summary>
-        public static readonly Double DiagonalDistance = 1.414214f;
+        public static readonly double DiagonalDistance = 1.414214f;
         /// <summary>
         /// 误差
         /// </summary>
