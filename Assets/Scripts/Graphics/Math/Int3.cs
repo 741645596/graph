@@ -145,12 +145,12 @@ namespace RayGraphics.Math
 
         public static bool operator !=(Int3 v1, Int3 v2)
         {
-            return v1.x != v2.x || v1.y != v2.y;
+            return v1.x != v2.x || v1.y != v2.y|| v1.z != v2.z;
         }
 
         public static bool operator ==(Int3 v1, Int3 v2)
         {
-            return v1.x == v2.x && v1.y == v2.y;
+            return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
         }
 
         public static Int3 operator +(Int3 v1, Int3 v2)
