@@ -894,7 +894,7 @@ namespace RayGraphics.Geometric
             else 
             {
                 pt1 = new Double2(xAixs, minY + nearStep);
-                pt1 = new Double2(xAixs, maxY - nearStep);
+                pt2 = new Double2(xAixs, maxY - nearStep);
             }
             return true;
         }
