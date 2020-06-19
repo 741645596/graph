@@ -898,6 +898,66 @@ namespace RayGraphics.Geometric
             }
             return true;
         }
+        /// <summary>
+        /// 获取与x轴线与边界最接近的2个点
+        /// </summary>
+        /// <param name="xAixs"></param>
+        /// <param name="nearStep"></param>
+        /// <param name="pt1"></param>
+        /// <param name="pt2"></param>
+        /// <returns></returns>
+        public bool GetPointsInAreabyYaixs(double YAixs, double nearStep, ref Double2 pt1, ref Double2 pt2)
+        {
+            if (YAixs <= this.leftBottom.y)
+                return false;
+            if (YAixs >= this.rightUp.y)
+                return false;
+
+            List<Double2> listIntersectPoints = new List<Double2>();
+            int edgeNum = GetEdgeNum();
+            for (int i = 0; i < edgeNum; i++)
+            {
+                Point2D line = GetSimpleEdge(i);
+                Double2 diff = line.endPoint - line.startPoint;
+
+                if ((line.startPoint.y <= YAixs && line.endPoint.y >= YAixs) || (line.startPoint.y >= YAixs && line.endPoint.y <= YAixs))
+                {
+                    if (diff.y != 0)
+                    {
+                        double x = line.startPoint.x + (YAixs - line.startPoint.y) * diff.x / diff.y;
+                        listIntersectPoints.Add(new Double2(x,YAixs));
+                    }
+                    else // 共线情况，肯定是点在线段2端。
+                    {
+                        listIntersectPoints.Add(line.startPoint);
+                        listIntersectPoints.Add(line.endPoint);
+                    }
+                }
+            }
+            if (listIntersectPoints.Count < 2)
+            {
+                return false;
+            }
+            // 获取最小的y及最大的y。
+            double minX = double.PositiveInfinity;
+            double maxX = double.NegativeInfinity;
+            foreach (Double2 pos in listIntersectPoints)
+            {
+                minX = System.Math.Min(minX, pos.x);
+                maxX = System.Math.Max(maxX, pos.x);
+            }
+
+            if (minX + nearStep >= maxX - nearStep)
+            {
+                return false;
+            }
+            else
+            {
+                pt1 = new Double2(minX + nearStep, YAixs);
+                pt2 = new Double2(maxX - nearStep, YAixs);
+            }
+            return true;
+        }
     }
 
 }

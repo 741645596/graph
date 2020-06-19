@@ -1250,6 +1250,16 @@
             <param name="pt2"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.GetPointsInAreabyYaixs(System.Double,System.Double,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
+            <summary>
+            获取与x轴线与边界最接近的2个点
+            </summary>
+            <param name="xAixs"></param>
+            <param name="nearStep"></param>
+            <param name="pt1"></param>
+            <param name="pt2"></param>
+            <returns></returns>
+        </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
             <summary>
             直线
