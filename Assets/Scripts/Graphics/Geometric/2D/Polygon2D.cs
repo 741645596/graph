@@ -60,7 +60,7 @@ namespace RayGraphics.Geometric
                 }
             }
         }
-        public Polygon2D(Double2[] points) 
+        public Polygon2D(Double2[] points)
         {
             Init(points);
         }
@@ -127,7 +127,7 @@ namespace RayGraphics.Geometric
             List<Double3> lineArray = new List<Double3>();
             Double2 intersectionPoint = Double2.zero;
             Double2 pos1 = Double2.zero;
-            for (int i = 0; i < this.pointArr.Length ; i++)
+            for (int i = 0; i < this.pointArr.Length; i++)
             {
                 if (line.GetIntersectPoint(GetEdge(i), ref intersectionPoint, ref pos1) == true)
                 {
@@ -148,9 +148,9 @@ namespace RayGraphics.Geometric
                     rbi.SetNear(line, offset, new Double2(lineArray[0].x, lineArray[0].y));
                     return RBIResultType.UnCrossstartPointIn;
                 }
-                else 
+                else
                 {
-                    rbi.SetNear(line, offset, new Double2(lineArray[count -1].x, lineArray[count - 1].y));
+                    rbi.SetNear(line, offset, new Double2(lineArray[count - 1].x, lineArray[count - 1].y));
                     return RBIResultType.UnCrossendPointIn;
                 }
             }
@@ -204,10 +204,10 @@ namespace RayGraphics.Geometric
         /// 确定是否为其子集, 先简单实现。
         /// </summary>
         /// <returns></returns>
-        private bool CheckisSubChild(int start , int end, bool isPathDir, int substart,int subend)
+        private bool CheckisSubChild(int start, int end, bool isPathDir, int substart, int subend)
         {
-           List<int> listall = GetPathPoint(start, end, isPathDir);
-           List<int> listsub = GetPathPoint(substart, subend, isPathDir);
+            List<int> listall = GetPathPoint(start, end, isPathDir);
+            List<int> listsub = GetPathPoint(substart, subend, isPathDir);
 
             foreach (int index in listsub)
             {
@@ -238,14 +238,14 @@ namespace RayGraphics.Geometric
                         listpath.Add(GetOutPoint(i, offset));
                     }
                 }
-                else 
+                else
                 {
                     for (int i = (int)p1.z; i >= 0; i--)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
                     //
-                    for (int i = this.pointArr.Length -1; i > (int)p2.z; i--)
+                    for (int i = this.pointArr.Length - 1; i > (int)p2.z; i--)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
@@ -266,7 +266,7 @@ namespace RayGraphics.Geometric
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
-                    for (int i = 0; i <= (int)p2.z; i ++)
+                    for (int i = 0; i <= (int)p2.z; i++)
                     {
                         listpath.Add(GetOutPoint(i, offset));
                     }
@@ -511,8 +511,8 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public PolygonType GetPolygonType()
         {
-            double prev = CalcRotateValue(this.pointArr.Length -1);
-            double cur ;
+            double prev = CalcRotateValue(this.pointArr.Length - 1);
+            double cur;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
                 cur = CalcRotateValue(i);
@@ -548,7 +548,7 @@ namespace RayGraphics.Geometric
         /// </summary>
         /// <param name="line"></param>
         /// <param name="paths"></param>
-        public void GetAllIntersectPoint(LineSegment2D line,ref List<Double3> paths)
+        public void GetAllIntersectPoint(LineSegment2D line, ref List<Double3> paths)
         {
             List<Double3> listpath = new List<Double3>();
             Double2 point = Double2.zero;
@@ -561,7 +561,7 @@ namespace RayGraphics.Geometric
                     {
                         listpath.Add(new Double3(point.x, point.y, i));
                     }
-                    else 
+                    else
                     {
                         listpath.Add(new Double3(point.x, point.y, i));
                         listpath.Add(new Double3(point1.x, point1.y, i));
@@ -573,7 +573,7 @@ namespace RayGraphics.Geometric
             {
                 listpath.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), line.startPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), line.startPoint)));
             }
-            
+
             paths = listpath;
         }
         /// <summary>
@@ -591,9 +591,9 @@ namespace RayGraphics.Geometric
             {
                 return new LineSegment2D(this.pointArr[edgeIndex], this.pointArr[0]);
             }
-            else 
+            else
             {
-                return new LineSegment2D(this.pointArr[edgeIndex], this.pointArr[edgeIndex +　1]);
+                return new LineSegment2D(this.pointArr[edgeIndex], this.pointArr[edgeIndex + 1]);
             }
         }
         /// <summary>
@@ -719,7 +719,7 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public override int GetEdgeNum()
         {
-            return this.pointArr.Length; 
+            return this.pointArr.Length;
         }
         /// <summary>
         /// 获取顶点数组
@@ -770,8 +770,8 @@ namespace RayGraphics.Geometric
                     // 共线情况，肯定是点在线段2端。
                 }
             }
-            CrossPointCount /=  2;
-            CrossPointCount %=  2;
+            CrossPointCount /= 2;
+            CrossPointCount %= 2;
             if (CrossPointCount == 1)
             {
                 flag = !flag;
@@ -838,5 +838,66 @@ namespace RayGraphics.Geometric
             }
             return ret;
         }
+        /// <summary>
+        /// 获取与x轴线与边界最接近的2个点
+        /// </summary>
+        /// <param name="xAixs"></param>
+        /// <param name="nearStep"></param>
+        /// <param name="pt1"></param>
+        /// <param name="pt2"></param>
+        /// <returns></returns>
+        public bool GetPointsInAreabyXaixs(double xAixs, double nearStep, ref Double2 pt1, ref Double2 pt2)
+        {
+            if (xAixs <= this.leftBottom.x)
+                return false;
+            if (xAixs >= this.rightUp.x)
+                return false;
+
+            List<Double2> listIntersectPoints = new List<Double2>();
+            int edgeNum = GetEdgeNum();
+            for (int i = 0; i < edgeNum; i++)
+            {
+                Point2D line = GetSimpleEdge(i);
+                Double2 diff = line.endPoint - line.startPoint;
+
+                if ((line.startPoint.x <= xAixs && line.endPoint.x >= xAixs) || (line.startPoint.x >= xAixs && line.endPoint.x <= xAixs))
+                {
+                    if (diff.x != 0)
+                    {
+                        double y = line.startPoint.y + (xAixs - line.startPoint.x) * diff.y / diff.x;
+                        listIntersectPoints.Add(new Double2(xAixs, y));
+                    }
+                    else // 共线情况，肯定是点在线段2端。
+                    {
+                        listIntersectPoints.Add(line.startPoint);
+                        listIntersectPoints.Add(line.endPoint);
+                    }
+                }
+            }
+            if (listIntersectPoints.Count < 2)
+            {
+                return false;
+            }
+            // 获取最小的y及最大的y。
+            double minY = double.PositiveInfinity;
+            double maxY = double.NegativeInfinity;
+            foreach (Double2 pos in listIntersectPoints)
+            {
+                minY = System.Math.Min(minY,pos.y);
+                maxY = System.Math.Max(maxY, pos.y);
+            }
+
+            if (minY + nearStep >= maxY - nearStep)
+            {
+                return false;
+            }
+            else 
+            {
+                pt1 = new Double2(xAixs, minY + nearStep);
+                pt1 = new Double2(xAixs, maxY - nearStep);
+            }
+            return true;
+        }
     }
+
 }
