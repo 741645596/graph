@@ -1260,6 +1260,13 @@
             <param name="pt2"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Polygon2D.CheckInNoEdge(RayGraphics.Math.Double2)">
+            <summary>
+            判断点多边形内，排除在边上的情况
+            </summary>
+            <param name="pt"></param>
+            <returns></returns>
+        </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
             <summary>
             直线
