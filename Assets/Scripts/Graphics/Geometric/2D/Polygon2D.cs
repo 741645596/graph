@@ -958,53 +958,6 @@ namespace RayGraphics.Geometric
             }
             return true;
         }
-        /// <summary>
-        /// 判断点多边形内，排除在边上的情况
-        /// </summary>
-        /// <param name="pt"></param>
-        /// <returns></returns>
-        public bool CheckInNoEdge(Double2 pt)
-        {
-            // 做射线， y = pt.y
-            // 经过顶点的。
-            int CrossPointCount = 0;
-            bool flag = false;
-            int edgeNum = GetEdgeNum();
-            for (int i = 0; i < edgeNum; i++)
-            {
-                Point2D line = GetSimpleEdge(i);
-                // 先判断点是否在边上。
-                if (line.CheckIn(pt) == true)
-                      continue;
-                Double2 diff = line.endPoint - line.startPoint;
-
-                if ((line.startPoint.y <= pt.y && line.endPoint.y >= pt.y) || (line.startPoint.y >= pt.y && line.endPoint.y <= pt.y))
-                {
-                    if (diff.y != 0)
-                    {
-                        double x = line.startPoint.x + (pt.y - line.startPoint.y) * diff.x / diff.y;
-                        // 射线穿过多边形的边界
-                        if (x > pt.x)
-                        {
-                            // 统计经过顶点的次数
-                            if (line.startPoint.y == pt.y || line.endPoint.y == pt.y)
-                            {
-                                CrossPointCount++;
-                            }
-                            flag = !flag;
-                        }
-                    }
-                    // 共线情况，肯定是点在线段2端。
-                }
-            }
-            CrossPointCount /= 2;
-            CrossPointCount %= 2;
-            if (CrossPointCount == 1)
-            {
-                flag = !flag;
-            }
-            return flag;
-        }
     }
 
 }
