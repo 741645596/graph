@@ -238,7 +238,7 @@
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return (this.x << 16) + this.y;
         }
         /// <summary>
         /// 夹角[0, PI]
