@@ -1966,6 +1966,78 @@
             <param name="listOutEdgePoint"></param>
             <returns></returns>
         </member>
+        <member name="T:RayGraphics.Geometric.Polygon2DSetDiff">
+            <summary>
+            多边形差
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.PolygonSetDiff(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[],System.Boolean@)">
+            <summary>
+            求多边形的差。算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
+            </summary>
+            <param name="mainPoly"></param>
+            <param name="diffpoly"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+            <summary>
+            清理动作
+            </summary>
+            <param name="Poly1IntersectArray"></param>
+            <param name="Poly2IntersectArray"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetNearPointInEdge(RayGraphics.Geometric.Point2D,System.Boolean,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
+            <summary>
+            多边形决策。
+            </summary>
+            <param name="ls2d"></param>
+            <param name="SearchDir">边的方向，true 逆时针方向， false 顺时针方向</param>
+            <param name="targetPoint"></param>
+            <param name="middlePoint"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.SetInitData(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D@,RayGraphics.Math.Double2@,System.Int32@)">
+            <summary>
+            主多边形上找到一个顶点，不在diff多边形内的。
+            </summary>
+            <param name="mainPoly"></param>
+            <param name="diffpoly"></param>
+            <param name="poly"></param>
+            <param name="curedge"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2}@,RayGraphics.Math.Double2)">
+            <summary>
+            加入顶点
+            </summary>
+            <param name="listPoint"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
+            <summary>
+            交换数据
+            </summary>
+            <param name="poly"></param>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+            <summary>
+            获取多边形所有边的相交点
+            </summary>
+            <param name="mainPoly"></param>
+            <param name="diffpoly"></param>
+            <param name="mainPolyIntersectArray"></param>
+            <param name="Poly2IntersectArray"></param>
+        </member>
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
+            <summary>
+            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+            </summary>
+            <param name="lsStartPoint">线段起点</param>
+            <param name="lsindex">线段索引</param>
+            <param name="PolyIntersectArray">多边形相交数据</param>
+            <param name="paths"></param>
+        </member>
         <member name="M:RayGraphics.Math.Double2.Set(System.Double,System.Double)">
             <summary>
             设置属性
