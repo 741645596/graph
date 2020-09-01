@@ -380,6 +380,15 @@
             <param name="ab"></param>
             <returns>true 相交： false 不相交</returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.GetTangent(RayGraphics.Math.Double2,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
+            <summary>
+            求外部点到圆的切线
+            </summary>
+            <param name="outPoint">在圆上/圆内不计算切线</param>
+            <param name="leftTangent">逆时针切线</param>
+            <param name="rightTangent">顺时针切线</param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.ConcavePolygon2D.GenerateConcavePolygon(System.Collections.Generic.List{RayGraphics.Math.Double2[]})">
             <summary>
             生成凹多边形

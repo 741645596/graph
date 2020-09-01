@@ -356,5 +356,89 @@ namespace RayGraphics.Geometric
             }
             return false;
         }
+        /// <summary>
+        /// 求外部点到圆的切线
+        /// </summary>
+        /// <param name="outPoint">在圆上/圆内不计算切线</param>
+        /// <param name="leftTangent">逆时针切线</param>
+        /// <param name="rightTangent">顺时针切线</param>
+        /// <returns></returns>
+        public bool GetTangent(Double2 outPoint,ref Double2 leftTangent, ref Double2 rightTangent)
+        {
+            Double2 diff = this.circleCenter - outPoint;
+            double sqrDiff = diff.sqrMagnitude;
+            double sqrRadius = this.radius * this.radius;
+            // 先求切线的长度sqr
+            double sqrtLen = sqrDiff - sqrRadius;
+            if (sqrtLen <= 0)
+            {
+                return false;
+            }
+            else 
+            {
+                // 再求斜边的高度平方
+                double sqrHeight = sqrtLen * sqrRadius / sqrDiff;
+                // 再求高的方向。
+                Double2 aix;
+                if (diff.x == 0)
+                {
+                    if (diff.y > 0)
+                    {
+                        aix = Double2.right;
+                    }
+                    else 
+                    {
+                        aix = Double2.left;
+                    }
+                }
+                else if (diff.y == 0)
+                {
+                    if (diff.x > 0)
+                    {
+                        aix = Double2.down;
+                    }
+                    else
+                    {
+                        aix = Double2.up;
+                    }
+                }
+                else 
+                {
+                    Line2D line = new Line2D(outPoint, diff);
+                    Double2 pt = outPoint;
+                    if (diff.x > 0)
+                    {
+                        if (diff.y > 0)
+                        {
+                            pt.x += 1.0f;
+                        }
+                        else
+                        {
+                            pt.x -= 1.0f;
+                        }
+                    }
+                    else
+                    {
+                        if (diff.y > 0)
+                        {
+                            pt.x += 1.0f;
+                        }
+                        else
+                        {
+                            pt.x -= 1.0f;
+                        }
+                    }
+                    aix = line.AixsVector(pt);
+                }
+                // 再求斜边的垂足。
+                double value = (sqrtLen - sqrHeight) / sqrDiff;
+                Double2 aixPos = System.Math.Sqrt((float)value) * diff + outPoint;
+                // 再求2个切点。
+                double height = System.Math.Sqrt((float)sqrHeight);
+                leftTangent = aixPos - aix.normalized * height - outPoint;
+                rightTangent = aixPos + aix.normalized * height - outPoint;
+                return true;
+            }
+        }
     }
 }
