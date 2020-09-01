@@ -378,58 +378,8 @@ namespace RayGraphics.Geometric
             {
                 // 再求斜边的高度平方
                 double sqrHeight = sqrtLen * sqrRadius / sqrDiff;
-                // 再求高的方向。
-                Double2 aix;
-                if (diff.x == 0)
-                {
-                    if (diff.y > 0)
-                    {
-                        aix = Double2.right;
-                    }
-                    else 
-                    {
-                        aix = Double2.left;
-                    }
-                }
-                else if (diff.y == 0)
-                {
-                    if (diff.x > 0)
-                    {
-                        aix = Double2.down;
-                    }
-                    else
-                    {
-                        aix = Double2.up;
-                    }
-                }
-                else 
-                {
-                    Line2D line = new Line2D(outPoint, diff);
-                    Double2 pt = outPoint;
-                    if (diff.x > 0)
-                    {
-                        if (diff.y > 0)
-                        {
-                            pt.x += 1.0f;
-                        }
-                        else
-                        {
-                            pt.x -= 1.0f;
-                        }
-                    }
-                    else
-                    {
-                        if (diff.y > 0)
-                        {
-                            pt.x += 1.0f;
-                        }
-                        else
-                        {
-                            pt.x -= 1.0f;
-                        }
-                    }
-                    aix = line.AixsVector(pt);
-                }
+                // 求垂线。
+                Double2 aix = -Double2.Perpendicular(diff);
                 // 再求斜边的垂足。
                 double value = (sqrtLen - sqrHeight) / sqrDiff;
                 Double2 aixPos = System.Math.Sqrt((float)value) * diff + outPoint;
