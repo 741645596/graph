@@ -18,7 +18,7 @@ namespace RayGraphics.Geometric
         /// <param name="mainPoly">逆时针序列</param>
         /// <param name="diffpoly">逆时针序列</param>
         /// <returns></returns>
-        public static Double2[] PolygonSetDiff(Double2[] mainPoly, Double2[] diffpoly)
+        public static Double2[] CalcPoly(Double2[] mainPoly, Double2[] diffpoly)
         {
             if (mainPoly == null || mainPoly.Length < 3)
                 return null;
