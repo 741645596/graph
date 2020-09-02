@@ -1973,12 +1973,13 @@
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.PolygonSetDiff(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[])">
             <summary>
-            求多边形的差。算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
+            求多边形的差。
+            算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
             保证diffpoly多边形不会把mainpoly分成多个子部分。
             mainpoly> diffpoly
             </summary>
-            <param name="mainPoly"></param>
-            <param name="diffpoly"></param>
+            <param name="mainPoly">逆时针序列</param>
+            <param name="diffpoly">逆时针序列</param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
@@ -2006,7 +2007,7 @@
             <param name="poly"></param>
             <param name="curedge"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2}@,RayGraphics.Math.Double2)">
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2},RayGraphics.Math.Double2)">
             <summary>
             加入顶点
             </summary>

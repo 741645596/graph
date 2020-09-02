@@ -10,12 +10,13 @@ namespace RayGraphics.Geometric
     public class Polygon2DSetDiff
     {
         /// <summary>
-        /// 求多边形的差。算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
+        /// 求多边形的差。
+        /// 算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
         /// 保证diffpoly多边形不会把mainpoly分成多个子部分。
         /// mainpoly> diffpoly
         /// </summary>
-        /// <param name="mainPoly"></param>
-        /// <param name="diffpoly"></param>
+        /// <param name="mainPoly">逆时针序列</param>
+        /// <param name="diffpoly">逆时针序列</param>
         /// <returns></returns>
         public static Double2[] PolygonSetDiff(Double2[] mainPoly, Double2[] diffpoly)
         {
@@ -64,7 +65,7 @@ namespace RayGraphics.Geometric
             {
                 Point2D ls2d = poly.GetSimpleEdge(curedge);
 
-                if (AddPoint(ref listPoint, curPoint) == false)
+                if (AddPoint(listPoint, curPoint) == false)
                     break;
                 Double3 nextPoint = Double3.zero;
                 bool ret = GetNearPointInEdge(ls2d, SearchDir, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
@@ -149,6 +150,7 @@ namespace RayGraphics.Geometric
         /// <param name="middlePoint"></param>
         private static bool GetNearPointInEdge(Point2D ls2d, bool SearchDir, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
         {
+            // true 为主多边形。
             if (SearchDir == true)
             {
                 if (listMiddlePoint == null || listMiddlePoint.Count == 0)
@@ -160,7 +162,10 @@ namespace RayGraphics.Geometric
                     if (curPoint == ls2d.startPoint)
                     {
                         nextPoint = listMiddlePoint[0];
-                        return true;
+                        // 加入异常处理
+                        if (curPoint == new Double2(nextPoint.x, nextPoint.y))
+                            return false;
+                        else return true;
                     }
                     else
                     {
@@ -169,13 +174,30 @@ namespace RayGraphics.Geometric
                             if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
                             {
                                 nextPoint = listMiddlePoint[i + 1];
+                                if (i < listMiddlePoint.Count - 2 && (listMiddlePoint[i+1].x == listMiddlePoint[i+ 2].x && listMiddlePoint[i + 1].y == listMiddlePoint[i + 2].y))
+                                {
+                                    if (listMiddlePoint[i + 2].z > listMiddlePoint[i + 1].z)
+                                    {
+                                        if (listMiddlePoint[i + 1].z == 0.0f)
+                                        {
+                                            nextPoint = listMiddlePoint[i + 2];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (listMiddlePoint[i + 2].z != 0.0f)
+                                        {
+                                            nextPoint = listMiddlePoint[i + 2];
+                                        }
+                                    }
+                                }
                                 return true;
                             }
                         }
                     }
                 }
             }
-            else
+            else // 为diff多边形的搜索情况。
             {
                 if (listMiddlePoint == null || listMiddlePoint.Count == 0)
                 {
@@ -186,7 +208,10 @@ namespace RayGraphics.Geometric
                     if (curPoint == ls2d.endPoint)
                     {
                         nextPoint = listMiddlePoint[listMiddlePoint.Count - 1];
-                        return true;
+                        // 加入异常处理
+                        if (curPoint == new Double2(nextPoint.x, nextPoint.y))
+                            return false;
+                        else return true;
                     }
                     else
                     {
@@ -195,6 +220,23 @@ namespace RayGraphics.Geometric
                             if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i > 0)
                             {
                                 nextPoint = listMiddlePoint[i - 1];
+                                if (i > 1 && (listMiddlePoint[i - 1].x == listMiddlePoint[i - 2].x && listMiddlePoint[i - 1].y == listMiddlePoint[i - 2].y))
+                                {
+                                    if (listMiddlePoint[i - 2].z > listMiddlePoint[i - 1].z)
+                                    {
+                                        if (listMiddlePoint[i - 1].z != 0.0f)
+                                        {
+                                            nextPoint = listMiddlePoint[i - 2];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (listMiddlePoint[i - 2].z != 0.0f)
+                                        {
+                                            nextPoint = listMiddlePoint[i - 2];
+                                        }
+                                    }
+                                }
                                 return true;
                             }
                         }
@@ -233,7 +275,7 @@ namespace RayGraphics.Geometric
         /// <param name="listPoint"></param>
         /// <param name="point"></param>
         /// <returns></returns>
-        private static bool AddPoint(ref List<Double2> listPoint, Double2 point)
+        private static bool AddPoint(List<Double2> listPoint, Double2 point)
         {
             if (listPoint.Contains(point) == true)
                 return false;
