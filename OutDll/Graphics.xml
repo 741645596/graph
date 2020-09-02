@@ -1971,9 +1971,11 @@
             多边形差
             </summary>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.PolygonSetDiff(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[],System.Boolean@)">
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.PolygonSetDiff(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[])">
             <summary>
             求多边形的差。算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
+            保证diffpoly多边形不会把mainpoly分成多个子部分。
+            mainpoly> diffpoly
             </summary>
             <param name="mainPoly"></param>
             <param name="diffpoly"></param>
@@ -1995,7 +1997,7 @@
             <param name="targetPoint"></param>
             <param name="middlePoint"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.SetInitData(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D@,RayGraphics.Math.Double2@,System.Int32@)">
+        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.FindOutDiffPointPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Math.Double2@,System.Int32@)">
             <summary>
             主多边形上找到一个顶点，不在diff多边形内的。
             </summary>

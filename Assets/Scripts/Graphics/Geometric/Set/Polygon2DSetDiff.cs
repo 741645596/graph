@@ -11,13 +11,14 @@ namespace RayGraphics.Geometric
     {
         /// <summary>
         /// 求多边形的差。算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
+        /// 保证diffpoly多边形不会把mainpoly分成多个子部分。
+        /// mainpoly> diffpoly
         /// </summary>
         /// <param name="mainPoly"></param>
         /// <param name="diffpoly"></param>
         /// <returns></returns>
-        public static Double2[] PolygonSetDiff(Double2[] mainPoly, Double2[] diffpoly, ref bool isCombine)
+        public static Double2[] PolygonSetDiff(Double2[] mainPoly, Double2[] diffpoly)
         {
-            isCombine = true;
             if (mainPoly == null || mainPoly.Length < 3)
                 return null;
             if (diffpoly == null || diffpoly.Length < 3)
@@ -42,33 +43,26 @@ namespace RayGraphics.Geometric
             }
             if (CheckIntersect == false)
             {
-                isCombine = false;
                 ClearPolyIntersectArray(ref mainPolyIntersectArray, ref diffPolyIntersectArray);
                 return mainPoly;
             }
             // 有交点的处理
             List<Double2> listPoint = new List<Double2>();
-            Polygon2D poly = null;
             int curedge = 0;
             Double2 curPoint = Double2.zero;
-            // 
+            // 查找在diffpoly外的一个顶点。
+            if (FindOutDiffPointPoint(mainPoly_, diffPoly_, ref curPoint, ref curedge) == false)
+            {
+                return mainPoly;
+            }
+            // 初始化数据。
             bool SearchDir = true;
-            List<Double3>[] curPolyIntersectArray = null;
-            // 需要调整。
-            SetInitData(mainPoly_, diffPoly_, ref poly, ref curPoint, ref curedge);
-            if (poly == mainPoly_)
-            {
-                curPolyIntersectArray = mainPolyIntersectArray;
-            }
-            else if (poly == diffPoly_)
-            {
-                curPolyIntersectArray = diffPolyIntersectArray;
-            }
+            Polygon2D poly = mainPoly_;
+            List<Double3>[]  curPolyIntersectArray = mainPolyIntersectArray;
 
             while (poly != null && curedge >= 0 && curedge < poly.GetEdgeNum())
             {
                 Point2D ls2d = poly.GetSimpleEdge(curedge);
-                Double2 normalDir = poly.GetNormal(curedge);
 
                 if (AddPoint(ref listPoint, curPoint) == false)
                     break;
@@ -216,35 +210,22 @@ namespace RayGraphics.Geometric
         /// <param name="diffpoly"></param>
         /// <param name="poly"></param>
         /// <param name="curedge"></param>
-        private static void SetInitData(Polygon2D mainPoly, Polygon2D diffpoly, ref Polygon2D poly, ref Double2 curPoint, ref int curedge)
+        private static bool FindOutDiffPointPoint(Polygon2D mainPoly, Polygon2D diffpoly, ref Double2 curPoint, ref int curedge)
         {
             if (mainPoly == null || diffpoly == null || mainPoly.GetEdgeNum() < 3 || diffpoly.GetEdgeNum() < 3)
-                return;
-            // 先找poly1 最小的。
-            poly = mainPoly;
-            curedge = 0;
-            Double2 min = mainPoly.GetPoint(0);
-            for (int i = 1; i < mainPoly.GetEdgeNum(); i++)
+                return false;
+
+            for (int i = 0; i < mainPoly.GetEdgeNum(); i++)
             {
                 Double2 point = mainPoly.GetPoint(i);
-                if (point.y < min.y || (point.y == min.y && point.x < min.x))
+                if (diffpoly.CheckIn(point) == false)
                 {
-                    min = point;
+                    curPoint = point;
                     curedge = i;
+                    return true;
                 }
             }
-            //
-            for (int i = 0; i < diffpoly.GetEdgeNum(); i++)
-            {
-                Double2 point = diffpoly.GetPoint(i);
-                if (point.y < min.y || (point.y == min.y && point.x < min.x))
-                {
-                    min = point;
-                    curedge = i;
-                    poly = diffpoly;
-                }
-            }
-            curPoint = min;
+            return false;
         }
         /// <summary>
         /// 加入顶点
