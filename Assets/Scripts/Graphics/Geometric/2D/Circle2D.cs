@@ -161,11 +161,12 @@ namespace RayGraphics.Geometric
             Double2 p1 = projectoint - line.normalizedDir * dis;
             Double2 p2 = projectoint + line.normalizedDir * dis;
 
-            double angle = SignedAngleInCircle(p1 - this.circleCenter, p2 - this.circleCenter);
+            double bigRadius = this.radius + offset;
+            double angle = SignedAngleInCircle(p1 - this.circleCenter, p2 - this.circleCenter, bigRadius);
             int count = (int)(System.Math.Abs(angle / 0.25f));
             double diffangle = angle / count;
             List<Double2> listpath = new List<Double2>();
-            Double2 startVector = (p1 - this.circleCenter).normalized * (this.radius + offset);
+            Double2 startVector = (p1 - this.circleCenter).normalized * bigRadius;
             for (int i = 1; i <= count - 1; i++)
             {
                 Double2 rorateVector = Double2.Rotate(startVector, -diffangle * i);
@@ -185,11 +186,11 @@ namespace RayGraphics.Geometric
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private  double SignedAngleInCircle(Double2 from, Double2 to)
+        private  double SignedAngleInCircle(Double2 from, Double2 to, double r)
         {
             // [-PI / 2,  PI /2]  Asin
             // [0,  PI]  acos
-            double sqrRadius = this.radius * this.radius;
+            double sqrRadius = r * r;
             double sinValue = Double2.Cross(from, to) / sqrRadius;
             sinValue = System.Math.Min(sinValue, 1.0f);
             sinValue = System.Math.Max(sinValue, -1.0f);

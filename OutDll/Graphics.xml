@@ -322,7 +322,7 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Circle2D.SignedAngleInCircle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+        <member name="M:RayGraphics.Geometric.Circle2D.SignedAngleInCircle(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Double)">
             <summary>
             圆弧上的2个向量夹角
             </summary>
