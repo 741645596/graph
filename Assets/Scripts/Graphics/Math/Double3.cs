@@ -299,8 +299,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static double Angle(Double3 from, Double3 to)
         {
-            double cosAngle = Double3.Dot(from, to) / (from.magnitude * to.magnitude);
-            return System.Math.Acos(cosAngle);
+            double dot = Dot(from, to);
+            double sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
+            {
+                dot = System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
+            }
+            else
+            {
+                dot = -System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
+            }
+            return System.Math.Acos(dot);
         }
         /// <summary>
         /// 保持向量方向，调整向量长度

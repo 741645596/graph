@@ -322,6 +322,14 @@
             <param name="rbi">包围盒信息</param>
             <returns>true，表示线段与aabb有相交，并返回最短包围路径</returns>
         </member>
+        <member name="M:RayGraphics.Geometric.Circle2D.SignedAngleInCircle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            圆弧上的2个向量夹角
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Geometric.Circle2D.CheckIn(RayGraphics.Math.Double2)">
             <summary>
             判断点是否在直线上

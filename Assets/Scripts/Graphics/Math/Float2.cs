@@ -285,7 +285,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static float CosAngle(Float2 from, Float2 to)
         {
-            return Float2.Dot(from, to) / (from.magnitude * to.magnitude);
+            float dot = Dot(from, to);
+            double sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
+            {
+                dot = (float)System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
+            }
+            else
+            {
+                dot = -(float)System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
+            }
+            return dot;
         }
         /// <summary>
         /// 求sin Angle
@@ -295,7 +307,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static float SinAngle(Float2 from, Float2 to)
         {
-            return Float2.Cross(from, to) / (from.magnitude * to.magnitude);
+            float cross = Cross(from, to);
+            double sqrCross = (cross * cross) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (cross > 0)
+            {
+                cross = (float)System.Math.Sqrt(sqrCross);
+                cross = System.Math.Min(cross, 1.0f);
+            }
+            else
+            {
+                cross = -(float)System.Math.Sqrt(sqrCross);
+                cross = System.Math.Max(cross, -1.0f);
+            }
+            return cross;
         }
         /// <summary>
         /// 向量组成的平行四边形的面积， 已经取绝对值。
@@ -431,7 +455,7 @@ namespace RayGraphics.Math
         public static Float2 Project(Float2 vector, Float2 onNormal)
         {
             Float2 normal = onNormal.normalized;
-            return Float2.Dot(vector, normal) * normal;
+            return Dot(vector, normal) * normal;
         }
         /// <summary>
         /// 返回逆时针旋转90度的向量
@@ -483,25 +507,47 @@ namespace RayGraphics.Math
         {
             // [-PI / 2,  PI /2]  Asin
             // [0,  PI]  acos
+
             double sinValue = SinAngle(from, to);
-            float dot = Dot(from, to) / (from.magnitude * to.magnitude);
-            if (sinValue >= 0 && dot >= 0) // 1
+            double dot = Dot(from, to);
+            double sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
             {
-                return (float)(System.Math.Asin(sinValue));
+                dot = System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
             }
-            else if (sinValue >= 0 && dot <= 0) // 2
+            else
             {
-                return (float)(System.Math.Acos(dot));
+                dot = -System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
             }
-            else if (sinValue <= 0 && dot >= 0) // 4
+
+            if (sinValue == 0) // 共线
             {
-                return (float)(System.Math.Asin(sinValue));
+                return dot >= 0 ? 0 : MathUtil.kPI;
             }
-            else if (sinValue <= 0 && dot <= 0) // 2
+            else if (sinValue > 0)
             {
-                return -(float)(System.Math.Acos(dot));
+                if (dot >= 0) // 1
+                {
+                    return (float)(System.Math.Asin(sinValue));
+                }
+                else  // 2
+                {
+                    return (float)(System.Math.Acos(dot));
+                }
             }
-            return 0;
+            else 
+            {
+                if ( dot >= 0) // 4
+                {
+                    return (float)(System.Math.Asin(sinValue));
+                }
+                else  // 3
+                {
+                    return -(float)(System.Math.Acos(dot));
+                }
+            }
         }
         public static Float2 SmoothDamp(Float2 current, Float2 target, ref Float2 currentVelocity, float smoothTime, float maxSpeed, float deltaTime)
         {

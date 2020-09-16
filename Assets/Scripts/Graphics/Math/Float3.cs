@@ -299,8 +299,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static float Angle(Float3 from, Float3 to)
         {
-            float cosAngle = Float3.Dot(from, to) / (from.magnitude * to.magnitude);
-            return (float)System.Math.Acos(cosAngle);
+            float dot = Dot(from, to);
+            float sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
+            {
+                dot = (float)System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
+            }
+            else
+            {
+                dot = -(float)System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
+            }
+            return (float)System.Math.Acos(dot);
         }
         /// <summary>
         /// 保持向量方向，调整向量长度

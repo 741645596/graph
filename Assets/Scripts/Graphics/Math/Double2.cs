@@ -286,7 +286,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static double CosAngle(Double2 from, Double2 to)
         {
-            return Double2.Dot(from, to) / (from.magnitude * to.magnitude);
+            double dot = Dot(from, to);
+            double sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
+            {
+                dot = System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
+            }
+            else
+            {
+                dot = -System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
+            }
+            return dot;
         }
         /// <summary>
         /// 求sin Angle
@@ -296,7 +308,19 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static double SinAngle(Double2 from, Double2 to)
         {
-            return Double2.Cross(from, to) / (from.magnitude * to.magnitude);
+            double cross = Cross(from, to);
+            double sqrCross = (cross * cross) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (cross > 0)
+            {
+                cross = System.Math.Sqrt(sqrCross);
+                cross = System.Math.Min(cross, 1.0f);
+            }
+            else
+            {
+                cross = -System.Math.Sqrt(sqrCross);
+                cross = System.Math.Max(cross, -1.0f);
+            }
+            return cross;
         }
         /// <summary>
         /// 向量组成的平行四边形的面积， 已经取绝对值。
@@ -306,7 +330,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static double Area(Double2 from, Double2 to)
         {
-            return System.Math.Abs(Double2.Cross(from, to));
+            return System.Math.Abs(Cross(from, to));
         }
         /// <summary>
         /// 共线判断，考虑误差
@@ -316,7 +340,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckInLine(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Double2.Cross(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Cross(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 垂直判断，考虑误差
@@ -326,7 +350,7 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static bool CheckVertical(Double2 a, Double2 b)
         {
-            return System.Math.Abs(Double2.Dot(a, b)) < MathUtil.kEpsilon ? true : false;
+            return System.Math.Abs(Dot(a, b)) < MathUtil.kEpsilon ? true : false;
         }
         /// <summary>
         /// 保持向量方向，调整向量长度
@@ -483,24 +507,45 @@ namespace RayGraphics.Math
             // [-PI / 2,  PI /2]  Asin
             // [0,  PI]  acos
             double sinValue = SinAngle(from, to);
-            double dot = Dot(from, to) / (from.magnitude * to.magnitude);
-            if (sinValue >= 0 && dot >= 0) // 1
+            double dot = Dot(from, to);
+            double sqrDot = (dot * dot) / (from.sqrMagnitude * to.sqrMagnitude);
+            if (dot > 0)
             {
-                return (System.Math.Asin(sinValue));
+                dot = System.Math.Sqrt(sqrDot);
+                dot = System.Math.Min(dot, 1.0f);
             }
-            else if (sinValue >= 0 && dot <= 0) // 2
+            else 
             {
-                return (System.Math.Acos(dot));
+                dot = -System.Math.Sqrt(sqrDot);
+                dot = System.Math.Max(dot, -1.0f);
             }
-            else if (sinValue <= 0 && dot >= 0) // 4
+
+            if (sinValue == 0) // 共线
             {
-                return (System.Math.Asin(sinValue));
+                return dot >= 0 ? 0 : MathUtil.kPI;
             }
-            else if (sinValue <= 0 && dot <= 0) // 2
+            else if (sinValue > 0)
             {
-                return -(System.Math.Acos(dot));
+                if (dot >= 0) // 1
+                {
+                    return System.Math.Asin(sinValue);
+                }
+                else  // 2
+                {
+                    return System.Math.Acos(dot);
+                }
             }
-            return 0;
+            else
+            {
+                if (dot >= 0) // 4
+                {
+                    return System.Math.Asin(sinValue);
+                }
+                else  // 3
+                {
+                    return -System.Math.Acos(dot);
+                }
+            }
         }
         public static Double2 SmoothDamp(Double2 current, Double2 target, ref Double2 currentVelocity, double smoothTime, double maxSpeed, double deltaTime)
         {
@@ -522,18 +567,18 @@ namespace RayGraphics.Math
             if (diff == Double2.zero)
                 return false;
 
-            double ret = Double2.Cross(outdir, diff) * Double2.Cross(indir.normalized, diff);
+            double ret = Cross(outdir, diff) * Cross(indir.normalized, diff);
             if (ret < 0)
             {
                 Double2 mid = indir.normalized + outdir.normalized;
                 // 添加异常处理,防止在反方向
-                if (Double2.Dot(diff, mid) < 0)
+                if (Dot(diff, mid) < 0)
                     return false;
                 else return true;
             }
             else if (ret == 0)
             {
-                if (Double2.Dot(diff, indir) <= 0)
+                if (Dot(diff, indir) <= 0)
                     return false;
 
                 if (indir.sqrMagnitude < diff.sqrMagnitude)

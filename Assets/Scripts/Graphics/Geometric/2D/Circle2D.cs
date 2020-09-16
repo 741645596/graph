@@ -161,7 +161,7 @@ namespace RayGraphics.Geometric
             Double2 p1 = projectoint - line.normalizedDir * dis;
             Double2 p2 = projectoint + line.normalizedDir * dis;
 
-            double angle = Double2.SignedAngle(p1 - this.circleCenter, p2 - this.circleCenter);
+            double angle = SignedAngleInCircle(p1 - this.circleCenter, p2 - this.circleCenter);
             int count = (int)(System.Math.Abs(angle / 0.25f));
             double diffangle = angle / count;
             List<Double2> listpath = new List<Double2>();
@@ -178,6 +178,51 @@ namespace RayGraphics.Geometric
                 return RBIResultType.Succ;
             }
             return RBIResultType.Fail;
+        }
+        /// <summary>
+        /// 圆弧上的2个向量夹角
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private  double SignedAngleInCircle(Double2 from, Double2 to)
+        {
+            // [-PI / 2,  PI /2]  Asin
+            // [0,  PI]  acos
+            double sqrRadius = this.radius * this.radius;
+            double sinValue = Double2.Cross(from, to) / sqrRadius;
+            sinValue = System.Math.Min(sinValue, 1.0f);
+            sinValue = System.Math.Max(sinValue, -1.0f);
+            double dot = Double2.Dot(from, to) / sqrRadius;
+            dot = System.Math.Min(dot, 1.0f);
+            dot = System.Math.Max(dot, -1.0f);
+
+            if (sinValue == 0) // 共线
+            {
+                return dot >= 0 ? 0 : MathUtil.kPI;
+            }
+            else if (sinValue > 0)
+            {
+                if (dot >= 0) // 1
+                {
+                    return System.Math.Asin(sinValue);
+                }
+                else  // 2
+                {
+                    return System.Math.Acos(dot);
+                }
+            }
+            else
+            {
+                if (dot >= 0) // 4
+                {
+                    return System.Math.Asin(sinValue);
+                }
+                else  // 3
+                {
+                    return -System.Math.Acos(dot);
+                }
+            }
         }
         /// <summary>
         /// 判断点是否在直线上
