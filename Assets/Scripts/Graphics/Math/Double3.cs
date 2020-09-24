@@ -194,6 +194,46 @@ namespace RayGraphics.Math
             return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
         }
         /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Double3 v1, Double3 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Double3 v1, Double3 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Double3 v1, Double3 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y && v1.z >= v2.z;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Double3 v1, Double3 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y && v1.z <= v2.z;
+        }
+        /// <summary>
         /// + 运算
         /// </summary>
         /// <param name="v1"></param>

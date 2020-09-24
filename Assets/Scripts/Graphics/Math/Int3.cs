@@ -123,7 +123,6 @@ namespace RayGraphics.Math
             get { return s_right; }
         }
         private static readonly Int3 s_right = new Int3(1, 0, 0);
-
         /// <summary>
         /// back 向量
         /// </summary>
@@ -140,19 +139,72 @@ namespace RayGraphics.Math
             get { return s_foward; }
         }
         private static readonly Int3 s_foward = new Int3(0, 0, 1);
-
-
-
+        /// <summary>
+        /// ！=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Int3 v1, Int3 v2)
         {
             return v1.x != v2.x || v1.y != v2.y|| v1.z != v2.z;
         }
-
+        /// <summary>
+        /// ==
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Int3 v1, Int3 v2)
         {
             return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
         }
-
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Int3 v1, Int3 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Int3 v1, Int3 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Int3 v1, Int3 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y && v1.z >= v2.z;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Int3 v1, Int3 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y && v1.z <= v2.z;
+        }
+        /// <summary>
+        /// +
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Int3 operator +(Int3 v1, Int3 v2)
         {
             int xx = v1.x + v2.x;
@@ -160,7 +212,12 @@ namespace RayGraphics.Math
             int zz = v1.z + v2.z;
             return new Int3(xx, yy, zz);
         }
-
+        /// <summary>
+        /// -
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Int3 operator -(Int3 v1, Int3 v2)
         {
             int xx = v1.x - v2.x;
@@ -206,7 +263,11 @@ namespace RayGraphics.Math
             int zz = v.z * k;
             return new Int3(xx, yy, zz);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(System.Object obj)
         {
             if (obj == null)
@@ -221,8 +282,10 @@ namespace RayGraphics.Math
             }
             return (x == p.x) && (y == p.y) && (z == p.z);
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();

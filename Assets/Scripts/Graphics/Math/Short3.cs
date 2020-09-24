@@ -1,6 +1,4 @@
-﻿
-
-namespace RayGraphics.Math
+﻿namespace RayGraphics.Math
 {
     [System.Serializable]
     public partial struct Short3
@@ -71,7 +69,6 @@ namespace RayGraphics.Math
         {
             get { return (float)System.Math.Sqrt(this.sqrMagnitude); }
         }
-
         /// <summary>
         /// 无效
         /// </summary>
@@ -80,7 +77,6 @@ namespace RayGraphics.Math
             get { return s_invalid; }
         }
         private static readonly Short3 s_invalid = new Short3(-1, -1, -1);
-
         /// <summary>
         /// 0 向量
         /// </summary>
@@ -97,7 +93,6 @@ namespace RayGraphics.Math
             get { return s_one; }
         }
         private static readonly Short3 s_one = new Short3(1, 1, 1);
-
         /// <summary>
         /// back 向量
         /// </summary>
@@ -130,7 +125,6 @@ namespace RayGraphics.Math
             get { return s_right; }
         }
         private static readonly Short3 s_right = new Short3(1, 0, 0);
-
         /// <summary>
         /// back 向量
         /// </summary>
@@ -147,19 +141,72 @@ namespace RayGraphics.Math
             get { return s_foward; }
         }
         private static readonly Short3 s_foward = new Short3(0, 0, 1);
-
-
-
+        /// <summary>
+        /// ！=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Short3 v1, Short3 v2)
         {
-            return v1.x != v2.x || v1.y != v2.y;
+            return v1.x != v2.x || v1.y != v2.y || v1.z != v2.z;
         }
-
+        /// <summary>
+        /// ==
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Short3 v1, Short3 v2)
         {
-            return v1.x == v2.x && v1.y == v2.y;
+            return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
         }
-
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Short3 v1, Short3 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Short3 v1, Short3 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Short3 v1, Short3 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y && v1.z >= v2.z;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Short3 v1, Short3 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y && v1.z <= v2.z;
+        }
+        /// <summary>
+        /// +
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Short3 operator +(Short3 v1, Short3 v2)
         {
             int xx = v1.x + v2.x;
@@ -167,7 +214,12 @@ namespace RayGraphics.Math
             int zz = v1.z + v2.z;
             return new Short3(xx, yy, zz);
         }
-
+        /// <summary>
+        /// -
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Short3 operator -(Short3 v1, Short3 v2)
         {
             int xx = v1.x - v2.x;
@@ -213,7 +265,11 @@ namespace RayGraphics.Math
             int zz = v.z * k;
             return new Short3(xx, yy, zz);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(System.Object obj)
         {
             if (obj == null)
@@ -228,8 +284,10 @@ namespace RayGraphics.Math
             }
             return (x == p.x) && (y == p.y) && (z == p.z);
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();

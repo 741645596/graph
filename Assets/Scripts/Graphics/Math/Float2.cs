@@ -160,22 +160,45 @@ namespace RayGraphics.Math
         {
             return v1.x == v2.x && v1.y == v2.y;
         }
-
-        public static bool operator <(Float2 v1, Float2 v2)
-        {
-            return v1.x < v2.x || !(v2.x < v1.x) && v1.y < v2.y;
-        }
-        public static bool operator <=(Float2 v1, Float2 v2)
-        {
-            return (v1.x == v2.x && v1.y == v2.y) || v1 < v2;
-        }
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator >(Float2 v1, Float2 v2)
         {
-            return !(v1 <= v2);
+            return v1.x > v2.x && v1.y > v2.y;
         }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Float2 v1, Float2 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator >=(Float2 v1, Float2 v2)
         {
-            return !(v1 < v2);
+            return v1.x >= v2.x && v1.y >= v2.y;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Float2 v1, Float2 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y ;
         }
 
         public static Float2 operator +(Float2 v1, Float2 v2)

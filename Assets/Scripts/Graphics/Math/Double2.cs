@@ -151,41 +151,84 @@ namespace RayGraphics.Math
             get { return s_positiveInfinity; }
         }
         private static readonly Double2 s_positiveInfinity = new Double2(double.PositiveInfinity, double.PositiveInfinity);
-
+        /// <summary>
+        /// ！=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Double2 v1, Double2 v2)
         {
             return v1.x != v2.x || v1.y != v2.y;
         }
-
+        /// <summary>
+        /// ==
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Double2 v1, Double2 v2)
         {
             return v1.x == v2.x && v1.y == v2.y;
         }
-
+        /// <summary>
+        /// <
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator <(Double2 v1, Double2 v2)
         {
-            return v1.x < v2.x || !(v2.x < v1.x) && v1.y < v2.y;
+            return v1.x < v2.x && v1.y < v2.y;
         }
+        /// <summary>
+        /// <=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator <=(Double2 v1, Double2 v2)
         {
-            return (v1.x == v2.x && v1.y == v2.y) || v1 < v2;
+            return v1.x <= v2.x && v1.y <= v2.y;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator >(Double2 v1, Double2 v2)
         {
-            return !(v1 <= v2);
+            return v1.x > v2.x && v1.y > v2.y;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator >=(Double2 v1, Double2 v2)
         {
-            return !(v1 < v2);
+            return v1.x >= v2.x && v1.y >= v2.y;
         }
-
+        /// <summary>
+        /// +
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Double2 operator +(Double2 v1, Double2 v2)
         {
             double xx = v1.x + v2.x;
             double yy = v1.y + v2.y;
             return new Double2(xx, yy);
         }
-
+        /// <summary>
+        /// -
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Double2 operator -(Double2 v1, Double2 v2)
         {
             double xx = v1.x - v2.x;
@@ -246,7 +289,11 @@ namespace RayGraphics.Math
             }
             return v * k;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(System.Object obj)
         {
             if (obj == null)
@@ -261,8 +308,10 @@ namespace RayGraphics.Math
             }
             return (x == p.x) && (y == p.y);
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();

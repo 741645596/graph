@@ -1,6 +1,4 @@
-﻿
-
-namespace RayGraphics.Math
+﻿namespace RayGraphics.Math
 {
     [System.Serializable]
     public partial struct Int2
@@ -113,9 +111,6 @@ namespace RayGraphics.Math
             get { return s_right; }
         }
         private static readonly Int2 s_right = new Int2(1, 0);
-
-
-
         /// <summary>
         /// foward 向量
         /// </summary>
@@ -133,8 +128,6 @@ namespace RayGraphics.Math
             get { return s_rightUp; }
         }
         private static readonly Int2 s_rightUp = new Int2(1, 1);
-
-
         /// <summary>
         /// foward 向量
         /// </summary>
@@ -143,7 +136,6 @@ namespace RayGraphics.Math
             get { return s_leftDown; }
         }
         private static readonly Int2 s_leftDown = new Int2(-1, -1);
-
         /// <summary>
         /// foward 向量
         /// </summary>
@@ -152,24 +144,84 @@ namespace RayGraphics.Math
             get { return s_leftUp; }
         }
         private static readonly Int2 s_leftUp = new Int2(-1, 1);
-
+        /// <summary>
+        /// ！=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Int2 v1, Int2 v2)
         {
             return v1.x != v2.x || v1.y != v2.y;
         }
-
+        /// <summary>
+        /// ==
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Int2 v1, Int2 v2)
         {
             return v1.x == v2.x && v1.y == v2.y;
         }
-
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Int2 v1, Int2 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Int2 v1, Int2 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Int2 v1, Int2 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Int2 v1, Int2 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y;
+        }
+        /// <summary>
+        /// +
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Int2 operator +(Int2 v1, Int2 v2)
         {
             int xx = v1.x + v2.x;
             int yy = v1.y + v2.y;
             return new Int2(xx, yy);
         }
-
+        /// <summary>
+        /// -
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Int2 operator -(Int2 v1, Int2 v2)
         {
             int xx = v1.x - v2.x;
@@ -211,7 +263,11 @@ namespace RayGraphics.Math
             int yy = v.y * k;
             return new Int2(xx, yy);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(System.Object obj)
         {
             if (obj == null)
@@ -226,8 +282,10 @@ namespace RayGraphics.Math
             }
             return (x == p.x) && (y == p.y);
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();
@@ -263,7 +321,6 @@ namespace RayGraphics.Math
         {
             return Cross(from, to) / (from.magnitude * to.magnitude);
         }
-
         /// <summary>
         /// 求距离
         /// </summary>

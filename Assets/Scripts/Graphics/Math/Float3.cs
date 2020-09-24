@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-
+﻿
 namespace RayGraphics.Math
 {
     public partial struct Float3
@@ -192,6 +189,46 @@ namespace RayGraphics.Math
         public static bool operator ==(Float3 v1, Float3 v2)
         {
             return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
+        }
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Float3 v1, Float3 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y && v1.z > v2.z;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Float3 v1, Float3 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y && v1.z < v2.z;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Float3 v1, Float3 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y && v1.z >= v2.z;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Float3 v1, Float3 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y && v1.z <= v2.z;
         }
         /// <summary>
         /// + 运算

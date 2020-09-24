@@ -160,24 +160,84 @@
         private static readonly Short2 s_leftUp = new Short2(-1, 1);
 
 
-
+        /// <summary>
+        /// !=
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator !=(Short2 v1, Short2 v2)
         {
             return v1.x != v2.x || v1.y != v2.y;
         }
-
+        /// <summary>
+        /// ==
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static bool operator ==(Short2 v1, Short2 v2)
         {
             return v1.x == v2.x && v1.y == v2.y;
         }
-
+        /// <summary>
+        /// > 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >(Short2 v1, Short2 v2)
+        {
+            return v1.x > v2.x && v1.y > v2.y;
+        }
+        /// <summary>
+        /// < 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <(Short2 v1, Short2 v2)
+        {
+            return v1.x < v2.x && v1.y < v2.y;
+        }
+        /// <summary>
+        /// >= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator >=(Short2 v1, Short2 v2)
+        {
+            return v1.x >= v2.x && v1.y >= v2.y;
+        }
+        /// <summary>
+        /// <= 运算符
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
+        public static bool operator <=(Short2 v1, Short2 v2)
+        {
+            return v1.x <= v2.x && v1.y <= v2.y;
+        }
+        /// <summary>
+        /// +
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Short2 operator +(Short2 v1, Short2 v2)
         {
             int xx = v1.x + v2.x;
             int yy = v1.y + v2.y;
             return new Short2(xx, yy);
         }
-
+        /// <summary>
+        /// -
+        /// </summary>
+        /// <param name="v1"></param>
+        /// <param name="v2"></param>
+        /// <returns></returns>
         public static Short2 operator -(Short2 v1, Short2 v2)
         {
             int xx = v1.x - v2.x;
