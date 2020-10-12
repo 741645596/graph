@@ -19,8 +19,8 @@ public class PolyBoolTest : MonoBehaviour
        l.AddRange(diffPoly);
        l.Reverse();
 
-        resultPoly = Polygon2DSetDiff.CalcPoly(mainPoly, /*diffPoly*/ l.ToArray());
-        //resultPoly = Polygon2DSetAnd.CalcPoly(mainPoly, diffPoly);
+        //resultPoly = Polygon2DSetDiff.CalcPoly(mainPoly, /*diffPoly*/ l.ToArray());
+        resultPoly = Polygon2DSetAnd.CalcPoly(mainPoly, diffPoly);
     }
 
 

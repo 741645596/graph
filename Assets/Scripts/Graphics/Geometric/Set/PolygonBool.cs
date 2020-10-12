@@ -141,5 +141,56 @@ namespace RayGraphics.Geometric
                 mainPoly.GetAllIntersectPoint(diffpoly.GetEdge(i), ref Poly2IntersectArray[i]);
             }
         }
+        /// <summary>
+        /// 多边形决策。
+        /// </summary>
+        /// <param name="ls2d"></param>
+        /// <param name="targetPoint"></param>
+        /// <param name="middlePoint"></param>
+        public static bool GetNearPointInEdge(Polygon2D poly, Polygon2D mainPoly_, Polygon2D diffPoly_, Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
+        {
+            if (listMiddlePoint == null || listMiddlePoint.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                int k = 0;
+                if (curPoint != ls2d.startPoint)
+                {
+                    for (int i = 0; i < listMiddlePoint.Count; i++)
+                    {
+                        // 找到了
+                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true)
+                        {
+                            if (i < listMiddlePoint.Count - 1)
+                            {
+                                k = i + 1;
+                                break;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                // 过重复点
+                while (k < listMiddlePoint.Count - 1 && (listMiddlePoint[k].x == listMiddlePoint[k + 1].x && listMiddlePoint[k].y == listMiddlePoint[k + 1].y))
+                {
+                    k++;
+                }
+                Point2D otherEdge = PolygonBool.GetOtherEdge(poly, mainPoly_, diffPoly_, (int)listMiddlePoint[k].z);
+                if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) == 0 && k < listMiddlePoint.Count - 1)
+                {
+                    k++;
+                }
+                //
+                nextPoint = listMiddlePoint[k];
+                if (curPoint == new Double2(nextPoint.x, nextPoint.y))
+                    return false;
+                return true;
+            }
+        }
     }
 }
