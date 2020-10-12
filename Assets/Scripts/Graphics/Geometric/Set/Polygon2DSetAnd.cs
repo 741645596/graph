@@ -78,14 +78,28 @@ namespace RayGraphics.Geometric
                 }
                 else // 则需要交换了。
                 {
-                    curPoint = new Double2(nextPoint.x, nextPoint.y);
-                    curedge = (int)nextPoint.z;
-                    ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, addPolyIntersectArray);
+                    Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)nextPoint.z);
+                    if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) < 0) // 进一步判断是否需要更换
+                    {
+                        curPoint = new Double2(nextPoint.x, nextPoint.y);
+                        curedge = (int)nextPoint.z;
+                        ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, addPolyIntersectArray);
+                    }
+                    else // 不需要变换了。
+                    {
+                        curedge++;
+                        if (curedge >= poly.GetEdgeNum())
+                        {
+                            curedge = 0;
+                        }
+                        curPoint = poly.GetEdge(curedge).startPoint;
+                    }
                 }
             }
             ClearPolyIntersectArray(ref mainPolyIntersectArray, ref addPolyIntersectArray);
             return listPoint.ToArray();
         }
+
         /// <summary>
         /// 清理动作
         /// </summary>
@@ -252,6 +266,22 @@ namespace RayGraphics.Geometric
                 curPolyIntersectArray = poly2IntersectArray;
             }
             else curPolyIntersectArray = poly1IntersectArray;
+        }
+        /// <summary>
+        /// 获取另外一个多边形的边
+        /// </summary>
+        /// <param name="poly"></param>
+        /// <param name="poly1"></param>
+        /// <param name="poly2"></param>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        private static Point2D GetOtherEdge(Polygon2D poly, Polygon2D poly1, Polygon2D poly2, int edgeIndex)
+        {
+            if (poly == poly1)
+            {
+                return poly2.GetSimpleEdge(edgeIndex);
+            }
+            else return poly1.GetSimpleEdge(edgeIndex);
         }
         /// <summary>
         /// 获取多边形所有边的相交点
