@@ -555,16 +555,44 @@ namespace RayGraphics.Geometric
             Double2 point1 = Double2.zero;
             for (int i = 0; i < this.pointArr.Length; i++)
             {
-                if (line.GetIntersectPoint(GetEdge(i), ref point, ref point1) == true)
+                LineSegment2D ls = GetEdge(i);
+                if (line.GetIntersectPoint(ls, ref point, ref point1) == true)
                 {
-                    if (point1 == point)
+                    if (point1 == point) // 肯定是交于端点，需特殊处理
                     {
-                        listpath.Add(new Double3(point.x, point.y, i));
+                        if (point1 == ls.endPoint)
+                        {
+                            int id = (i + 1) % this.pointArr.Length;
+                            listpath.Add(new Double3(point1.x, point1.y, id));
+                        }
+                        else 
+                        {
+                            listpath.Add(new Double3(point1.x, point1.y, i));
+                        }
                     }
                     else
                     {
-                        listpath.Add(new Double3(point.x, point.y, i));
-                        listpath.Add(new Double3(point1.x, point1.y, i));
+
+                        if (point1 == ls.endPoint)
+                        {
+                            int id = (i + 1) % this.pointArr.Length;
+                            listpath.Add(new Double3(point1.x, point1.y, id));
+                        }
+                        else
+                        {
+                            listpath.Add(new Double3(point1.x, point1.y, i));
+                        }
+
+
+                        if (point == ls.endPoint)
+                        {
+                            int id = (i + 1) % this.pointArr.Length;
+                            listpath.Add(new Double3(point.x, point.y, id));
+                        }
+                        else
+                        {
+                            listpath.Add(new Double3(point.x, point.y, i));
+                        }
                     }
                 }
             }

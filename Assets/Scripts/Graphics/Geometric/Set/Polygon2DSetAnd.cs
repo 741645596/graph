@@ -300,38 +300,8 @@ namespace RayGraphics.Geometric
             //
             for (int i = 0; i < diffpoly.GetEdgeNum(); i++)
             {
-                GetAllIntersectPoint(diffpoly.GetEdge(i).startPoint, i, mainPolyIntersectArray, ref Poly2IntersectArray[i]);
+                mainPoly.GetAllIntersectPoint(diffpoly.GetEdge(i), ref Poly2IntersectArray[i]);
             }
-        }
-        /// <summary>
-        /// 获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
-        /// </summary>
-        /// <param name="lsStartPoint">线段起点</param>
-        /// <param name="lsindex">线段索引</param>
-        /// <param name="PolyIntersectArray">多边形相交数据</param>
-        /// <param name="paths"></param>
-        private static void GetAllIntersectPoint(Double2 lsStartPoint, int lsindex, List<Double3>[] PolyIntersectArray, ref List<Double3> paths)
-        {
-            List<Double3> listpath = new List<Double3>();
-            for (int i = 0; i < PolyIntersectArray.Length; i++)
-            {
-                if (PolyIntersectArray[i] != null && PolyIntersectArray[i].Count > 0)
-                {
-                    foreach (Double3 pos in PolyIntersectArray[i])
-                    {
-                        if (pos.z == lsindex)
-                        {
-                            listpath.Add(new Double3(pos.x, pos.y, i));
-                        }
-                    }
-                }
-            }
-            // 从近到远排好队。
-            if (listpath.Count > 1)
-            {
-                listpath.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), lsStartPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), lsStartPoint)));
-            }
-            paths = listpath;
         }
     }
 }

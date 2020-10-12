@@ -16,7 +16,7 @@ namespace RayGraphics.Geometric
         /// mainpoly> diffpoly
         /// </summary>
         /// <param name="mainPoly">逆时针序列</param>
-        /// <param name="diffpoly">逆时针序列</param>
+        /// <param name="diffpoly">顺时针序列，必须顺时针序列</param>
         /// <returns></returns>
         public static Double2[] CalcPoly(Double2[] mainPoly, Double2[] diffpoly)
         {
@@ -57,7 +57,6 @@ namespace RayGraphics.Geometric
                 return mainPoly;
             }
             // 初始化数据。
-            bool SearchDir = true;
             Polygon2D poly = mainPoly_;
             List<Double3>[]  curPolyIntersectArray = mainPolyIntersectArray;
 
@@ -68,10 +67,26 @@ namespace RayGraphics.Geometric
                 if (AddPoint(listPoint, curPoint) == false)
                     break;
                 Double3 nextPoint = Double3.zero;
-                bool ret = GetNearPointInEdge(ls2d, SearchDir, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
+                bool ret = GetNearPointInEdge(ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
                 if (ret == false)
                 {
-                    if (SearchDir == true)
+                    curedge++;
+                    if (curedge >= poly.GetEdgeNum())
+                    {
+                        curedge = 0;
+                    }
+                    curPoint = poly.GetEdge(curedge).startPoint;
+                }
+                else // 则需要交换了。
+                {
+                    Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)nextPoint.z);
+                    if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) > 0) // 进一步判断是否需要更换
+                    {
+                        curPoint = new Double2(nextPoint.x, nextPoint.y);
+                        curedge = (int)nextPoint.z;
+                        ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, diffPolyIntersectArray);
+                    }
+                    else // 不需要变换了。
                     {
                         curedge++;
                         if (curedge >= poly.GetEdgeNum())
@@ -79,30 +94,6 @@ namespace RayGraphics.Geometric
                             curedge = 0;
                         }
                         curPoint = poly.GetEdge(curedge).startPoint;
-                    }
-                    else
-                    {
-                        curedge--;
-                        if (curedge < 0)
-                        {
-                            curedge = poly.GetEdgeNum() - 1;
-                        }
-                        curPoint = poly.GetEdge(curedge).endPoint;
-                    }
-                }
-                else // 则需要交换了。
-                {
-                    curPoint = new Double2(nextPoint.x, nextPoint.y);
-                    curedge = (int)nextPoint.z;
-                    ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, diffPolyIntersectArray);
-                    // 核心。主多边形逆时针。diff多边形顺时针了。
-                    if (poly == mainPoly_)
-                    {
-                        SearchDir = true;
-                    }
-                    else
-                    {
-                        SearchDir = false;
                     }
                 }
             }
@@ -145,100 +136,49 @@ namespace RayGraphics.Geometric
         /// 多边形决策。
         /// </summary>
         /// <param name="ls2d"></param>
-        /// <param name="SearchDir">边的方向，true 逆时针方向， false 顺时针方向</param>
         /// <param name="targetPoint"></param>
         /// <param name="middlePoint"></param>
-        private static bool GetNearPointInEdge(Point2D ls2d, bool SearchDir, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
+        private static bool GetNearPointInEdge(Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
         {
-            // true 为主多边形。
-            if (SearchDir == true)
+            if (listMiddlePoint == null || listMiddlePoint.Count == 0)
             {
-                if (listMiddlePoint == null || listMiddlePoint.Count == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    if (curPoint == ls2d.startPoint)
-                    {
-                        nextPoint = listMiddlePoint[0];
-                        // 加入异常处理
-                        if (curPoint == new Double2(nextPoint.x, nextPoint.y))
-                            return false;
-                        else return true;
-                    }
-                    else
-                    {
-                        for (int i = 0; i < listMiddlePoint.Count; i++)
-                        {
-                            if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
-                            {
-                                nextPoint = listMiddlePoint[i + 1];
-                                if (i < listMiddlePoint.Count - 2 && (listMiddlePoint[i+1].x == listMiddlePoint[i+ 2].x && listMiddlePoint[i + 1].y == listMiddlePoint[i + 2].y))
-                                {
-                                    if (listMiddlePoint[i + 2].z > listMiddlePoint[i + 1].z)
-                                    {
-                                        if (listMiddlePoint[i + 1].z == 0.0f)
-                                        {
-                                            nextPoint = listMiddlePoint[i + 2];
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (listMiddlePoint[i + 2].z != 0.0f)
-                                        {
-                                            nextPoint = listMiddlePoint[i + 2];
-                                        }
-                                    }
-                                }
-                                return true;
-                            }
-                        }
-                    }
-                }
+                return false;
             }
-            else // 为diff多边形的搜索情况。
+            else
             {
-                if (listMiddlePoint == null || listMiddlePoint.Count == 0)
+                if (curPoint == ls2d.startPoint)
                 {
-                    return false;
+                    nextPoint = listMiddlePoint[0];
+                    // 加入异常处理
+                    if (curPoint == new Double2(nextPoint.x, nextPoint.y))
+                        return false;
+                    else return true;
                 }
                 else
                 {
-                    if (curPoint == ls2d.endPoint)
+                    for (int i = 0; i < listMiddlePoint.Count; i++)
                     {
-                        nextPoint = listMiddlePoint[listMiddlePoint.Count - 1];
-                        // 加入异常处理
-                        if (curPoint == new Double2(nextPoint.x, nextPoint.y))
-                            return false;
-                        else return true;
-                    }
-                    else
-                    {
-                        for (int i = listMiddlePoint.Count - 1; i >= 0; i--)
+                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
                         {
-                            if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i > 0)
+                            nextPoint = listMiddlePoint[i + 1];
+                            if (i < listMiddlePoint.Count - 2 && (listMiddlePoint[i+1].x == listMiddlePoint[i+ 2].x && listMiddlePoint[i + 1].y == listMiddlePoint[i + 2].y))
                             {
-                                nextPoint = listMiddlePoint[i - 1];
-                                if (i > 1 && (listMiddlePoint[i - 1].x == listMiddlePoint[i - 2].x && listMiddlePoint[i - 1].y == listMiddlePoint[i - 2].y))
+                                if (listMiddlePoint[i + 2].z > listMiddlePoint[i + 1].z)
                                 {
-                                    if (listMiddlePoint[i - 2].z > listMiddlePoint[i - 1].z)
+                                    if (listMiddlePoint[i + 1].z == 0.0f)
                                     {
-                                        if (listMiddlePoint[i - 1].z != 0.0f)
-                                        {
-                                            nextPoint = listMiddlePoint[i - 2];
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (listMiddlePoint[i - 2].z != 0.0f)
-                                        {
-                                            nextPoint = listMiddlePoint[i - 2];
-                                        }
+                                        nextPoint = listMiddlePoint[i + 2];
                                     }
                                 }
-                                return true;
+                                else
+                                {
+                                    if (listMiddlePoint[i + 2].z != 0.0f)
+                                    {
+                                        nextPoint = listMiddlePoint[i + 2];
+                                    }
+                                }
                             }
+                            return true;
                         }
                     }
                 }
@@ -326,38 +266,24 @@ namespace RayGraphics.Geometric
             //
             for (int i = 0; i < diffpoly.GetEdgeNum(); i++)
             {
-                GetAllIntersectPoint(diffpoly.GetEdge(i).startPoint, i, mainPolyIntersectArray, ref Poly2IntersectArray[i]);
+                mainPoly.GetAllIntersectPoint(diffpoly.GetEdge(i), ref Poly2IntersectArray[i]);
             }
         }
         /// <summary>
-        /// 获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+        /// 获取另外一个多边形的边
         /// </summary>
-        /// <param name="lsStartPoint">线段起点</param>
-        /// <param name="lsindex">线段索引</param>
-        /// <param name="PolyIntersectArray">多边形相交数据</param>
-        /// <param name="paths"></param>
-        private static void GetAllIntersectPoint(Double2 lsStartPoint, int lsindex, List<Double3>[] PolyIntersectArray, ref List<Double3> paths)
+        /// <param name="poly"></param>
+        /// <param name="poly1"></param>
+        /// <param name="poly2"></param>
+        /// <param name="edgeIndex"></param>
+        /// <returns></returns>
+        private static Point2D GetOtherEdge(Polygon2D poly, Polygon2D poly1, Polygon2D poly2, int edgeIndex)
         {
-            List<Double3> listpath = new List<Double3>();
-            for (int i = 0; i < PolyIntersectArray.Length; i++)
+            if (poly == poly1)
             {
-                if (PolyIntersectArray[i] != null && PolyIntersectArray[i].Count > 0)
-                {
-                    foreach (Double3 pos in PolyIntersectArray[i])
-                    {
-                        if (pos.z == lsindex)
-                        {
-                            listpath.Add(new Double3(pos.x, pos.y, i));
-                        }
-                    }
-                }
+                return poly2.GetSimpleEdge(edgeIndex);
             }
-            // 从近到远排好队。
-            if (listpath.Count > 1)
-            {
-                listpath.Sort((x, y) => MathUtil.GetCompareDis(new Double2(x.x, x.y), lsStartPoint).CompareTo(MathUtil.GetCompareDis(new Double2(y.x, y.y), lsStartPoint)));
-            }
-            paths = listpath;
+            else return poly1.GetSimpleEdge(edgeIndex);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RayGraphics.Math;
 using RayGraphics.Geometric;
+using System.Collections.Generic;
 
 public class PolyBoolTest : MonoBehaviour
 {
@@ -14,7 +15,12 @@ public class PolyBoolTest : MonoBehaviour
     }
     void Update()
     {
-        resultPoly = Polygon2DSetAnd.CalcPoly(mainPoly, diffPoly);
+       List<Double2> l = new List<Double2>();
+       l.AddRange(diffPoly);
+       l.Reverse();
+
+        resultPoly = Polygon2DSetDiff.CalcPoly(mainPoly, /*diffPoly*/ l.ToArray());
+        //resultPoly = Polygon2DSetAnd.CalcPoly(mainPoly, diffPoly);
     }
 
 
