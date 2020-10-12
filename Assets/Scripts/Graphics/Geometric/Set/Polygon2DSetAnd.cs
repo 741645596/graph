@@ -27,7 +27,7 @@ namespace RayGraphics.Geometric
             // 获取边上的交点
             List<Double3>[] mainPolyIntersectArray = new List<Double3>[mainPoly_.GetEdgeNum()];
             List<Double3>[] addPolyIntersectArray = new List<Double3>[diffPoly_.GetEdgeNum()];
-            GetAllEdgeInterSectPoint(mainPoly_, diffPoly_, ref mainPolyIntersectArray, ref addPolyIntersectArray);
+            PolygonBool.GetAllEdgeInterSectPoint(mainPoly_, diffPoly_, ref mainPolyIntersectArray, ref addPolyIntersectArray);
 
             // 没有交点直接返回呗
             bool CheckIntersect = false;
@@ -41,7 +41,7 @@ namespace RayGraphics.Geometric
             }
             if (CheckIntersect == false)
             {
-                ClearPolyIntersectArray(ref mainPolyIntersectArray, ref addPolyIntersectArray);
+                PolygonBool.ClearPolyIntersectArray(ref mainPolyIntersectArray, ref addPolyIntersectArray);
                 return mainPoly;
             }
             // 有交点的处理
@@ -49,7 +49,7 @@ namespace RayGraphics.Geometric
             int curedge = 0;
             Double2 curPoint = Double2.zero;
             // 查找在diffpoly外的一个顶点。
-            if (FindOutDiffPointPoint(mainPoly_, diffPoly_, ref curPoint, ref curedge) == false)
+            if (PolygonBool.FindOutDiffPointPoint(mainPoly_, diffPoly_, ref curPoint, ref curedge) == false)
             {
                 return mainPoly;
             }
@@ -61,7 +61,7 @@ namespace RayGraphics.Geometric
             {
                 Point2D ls2d = poly.GetSimpleEdge(curedge);
 
-                if (AddPoint(listPoint, curPoint) == false)
+                if (PolygonBool.AddPoint(listPoint, curPoint) == false)
                     break;
                 Double3 nextPoint = Double3.zero;
                 bool ret = GetNearPointInEdge(poly, mainPoly_, diffPoly_, ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
@@ -76,13 +76,13 @@ namespace RayGraphics.Geometric
                 }
                 else // 则需要交换了。
                 {
-                    Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)nextPoint.z);
+                    Point2D otherEdge = PolygonBool.GetOtherEdge(poly, mainPoly_, diffPoly_, (int)nextPoint.z);
 
                     if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) <= 0 ) // 进一步判断是否需要更换
                     {
                         curPoint = new Double2(nextPoint.x, nextPoint.y);
                         curedge = (int)nextPoint.z;
-                        ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, addPolyIntersectArray);
+                        PolygonBool.ExChangePoly(ref poly, mainPoly_, diffPoly_, ref curPolyIntersectArray, mainPolyIntersectArray, addPolyIntersectArray);
                     }
                     else // 不需要变换了。
                     {
@@ -95,40 +95,8 @@ namespace RayGraphics.Geometric
                     }
                 }
             }
-            ClearPolyIntersectArray(ref mainPolyIntersectArray, ref addPolyIntersectArray);
+            PolygonBool.ClearPolyIntersectArray(ref mainPolyIntersectArray, ref addPolyIntersectArray);
             return listPoint.ToArray();
-        }
-
-        /// <summary>
-        /// 清理动作
-        /// </summary>
-        /// <param name="Poly1IntersectArray"></param>
-        /// <param name="Poly2IntersectArray"></param>
-        private static void ClearPolyIntersectArray(ref List<Double3>[] Poly1IntersectArray, ref List<Double3>[] Poly2IntersectArray)
-        {
-            if (Poly1IntersectArray != null)
-            {
-                foreach (List<Double3> v in Poly1IntersectArray)
-                {
-                    if (v != null && v.Count > 0)
-                    {
-                        v.Clear();
-                    }
-                }
-                Poly1IntersectArray = null;
-            }
-
-            if (Poly2IntersectArray != null)
-            {
-                foreach (List<Double3> v in Poly2IntersectArray)
-                {
-                    if (v != null && v.Count > 0)
-                    {
-                        v.Clear();
-                    }
-                }
-                Poly2IntersectArray = null;
-            }
         }
         /// <summary>
         /// 多边形决策。
@@ -136,7 +104,7 @@ namespace RayGraphics.Geometric
         /// <param name="ls2d"></param>
         /// <param name="targetPoint"></param>
         /// <param name="middlePoint"></param>
-        private static bool GetNearPointInEdge(Polygon2D poly, Polygon2D mainPoly_, Polygon2D diffPoly_, Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
+        public static bool GetNearPointInEdge(Polygon2D poly, Polygon2D mainPoly_, Polygon2D diffPoly_, Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
         {
             if (listMiddlePoint == null || listMiddlePoint.Count == 0)
             {
@@ -169,7 +137,7 @@ namespace RayGraphics.Geometric
                 {
                     k++;
                 }
-                Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)listMiddlePoint[k].z);
+                Point2D otherEdge = PolygonBool.GetOtherEdge(poly, mainPoly_, diffPoly_, (int)listMiddlePoint[k].z);
                 if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) == 0 && k < listMiddlePoint.Count - 1)
                 {
                     k++;
@@ -179,106 +147,6 @@ namespace RayGraphics.Geometric
                 if (curPoint == new Double2(nextPoint.x, nextPoint.y))
                     return false;
                 return true;
-            }
-        }
-        /// <summary>
-        /// 主多边形上找到一个顶点，不在diff多边形内的。
-        /// </summary>
-        /// <param name="mainPoly"></param>
-        /// <param name="diffpoly"></param>
-        /// <param name="poly"></param>
-        /// <param name="curedge"></param>
-        private static bool FindOutDiffPointPoint(Polygon2D mainPoly, Polygon2D diffpoly, ref Double2 curPoint, ref int curedge)
-        {
-            if (mainPoly == null || diffpoly == null || mainPoly.GetEdgeNum() < 3 || diffpoly.GetEdgeNum() < 3)
-                return false;
-
-            for (int i = 0; i < mainPoly.GetEdgeNum(); i++)
-            {
-                Double2 point = mainPoly.GetPoint(i);
-                if (diffpoly.CheckIn(point) == false)
-                {
-                    curPoint = point;
-                    curedge = i;
-                    return true;
-                }
-            }
-            return false;
-        }
-        /// <summary>
-        /// 加入顶点
-        /// </summary>
-        /// <param name="listPoint"></param>
-        /// <param name="point"></param>
-        /// <returns></returns>
-        private static bool AddPoint(List<Double2> listPoint, Double2 point)
-        {
-            if (listPoint.Contains(point) == true)
-                return false;
-            else
-            {
-                listPoint.Add(point);
-                return true;
-            }
-        }
-        /// <summary>
-        /// 交换数据
-        /// </summary>
-        /// <param name="poly"></param>
-        /// <param name="poly1"></param>
-        /// <param name="poly2"></param>
-        private static void ExChangePoly(ref Polygon2D poly, Polygon2D poly1, Polygon2D poly2,
-            ref List<Double3>[] curPolyIntersectArray, List<Double3>[] poly1IntersectArray, List<Double3>[] poly2IntersectArray)
-        {
-            if (poly == poly1)
-            {
-                poly = poly2;
-            }
-            else poly = poly1;
-
-
-            if (curPolyIntersectArray == poly1IntersectArray)
-            {
-                curPolyIntersectArray = poly2IntersectArray;
-            }
-            else curPolyIntersectArray = poly1IntersectArray;
-        }
-        /// <summary>
-        /// 获取另外一个多边形的边
-        /// </summary>
-        /// <param name="poly"></param>
-        /// <param name="poly1"></param>
-        /// <param name="poly2"></param>
-        /// <param name="edgeIndex"></param>
-        /// <returns></returns>
-        private static Point2D GetOtherEdge(Polygon2D poly, Polygon2D poly1, Polygon2D poly2, int edgeIndex)
-        {
-            if (poly == poly1)
-            {
-                return poly2.GetSimpleEdge(edgeIndex);
-            }
-            else return poly1.GetSimpleEdge(edgeIndex);
-        }
-        /// <summary>
-        /// 获取多边形所有边的相交点
-        /// </summary>
-        /// <param name="mainPoly"></param>
-        /// <param name="diffpoly"></param>
-        /// <param name="mainPolyIntersectArray"></param>
-        /// <param name="Poly2IntersectArray"></param>
-        private static void GetAllEdgeInterSectPoint(Polygon2D mainPoly, Polygon2D diffpoly, ref List<Double3>[] mainPolyIntersectArray, ref List<Double3>[] Poly2IntersectArray)
-        {
-            if (mainPoly == null || diffpoly == null)
-                return;
-
-            for (int i = 0; i < mainPoly.GetEdgeNum(); i++)
-            {
-                diffpoly.GetAllIntersectPoint(mainPoly.GetEdge(i), ref mainPolyIntersectArray[i]);
-            }
-            //
-            for (int i = 0; i < diffpoly.GetEdgeNum(); i++)
-            {
-                mainPoly.GetAllIntersectPoint(diffpoly.GetEdge(i), ref Poly2IntersectArray[i]);
             }
         }
     }
