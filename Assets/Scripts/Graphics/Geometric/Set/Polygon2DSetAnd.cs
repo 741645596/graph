@@ -64,7 +64,7 @@ namespace RayGraphics.Geometric
                 if (AddPoint(listPoint, curPoint) == false)
                     break;
                 Double3 nextPoint = Double3.zero;
-                bool ret = GetNearPointInEdge(ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
+                bool ret = GetNearPointInEdge(poly, mainPoly_, diffPoly_, ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
                 if (ret == false)
                 {
                     curedge++;
@@ -77,7 +77,8 @@ namespace RayGraphics.Geometric
                 else // 则需要交换了。
                 {
                     Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)nextPoint.z);
-                    if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) < 0) // 进一步判断是否需要更换
+
+                    if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) <= 0 ) // 进一步判断是否需要更换
                     {
                         curPoint = new Double2(nextPoint.x, nextPoint.y);
                         curedge = (int)nextPoint.z;
@@ -129,14 +130,13 @@ namespace RayGraphics.Geometric
                 Poly2IntersectArray = null;
             }
         }
-
         /// <summary>
         /// 多边形决策。
         /// </summary>
         /// <param name="ls2d"></param>
         /// <param name="targetPoint"></param>
         /// <param name="middlePoint"></param>
-        private static bool GetNearPointInEdge(Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
+        private static bool GetNearPointInEdge(Polygon2D poly, Polygon2D mainPoly_, Polygon2D diffPoly_, Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
         {
             if (listMiddlePoint == null || listMiddlePoint.Count == 0)
             {
@@ -144,64 +144,42 @@ namespace RayGraphics.Geometric
             }
             else
             {
-                if (curPoint == ls2d.startPoint)
-                {
-                    nextPoint = listMiddlePoint[0];
-                    // 加入异常处理
-                    if (curPoint == new Double2(nextPoint.x, nextPoint.y))
-                        return false;
-                    else 
-                    {
-                        if (listMiddlePoint.Count > 1 && (listMiddlePoint[0].x == listMiddlePoint[1].x && listMiddlePoint[0].y == listMiddlePoint[1].y))
-                        {
-                            if (listMiddlePoint[1].z > listMiddlePoint[0].z)
-                            {
-                                if (listMiddlePoint[0].z != 0.0f)
-                                {
-                                    nextPoint = listMiddlePoint[1];
-                                }
-                            }
-                            else
-                            {
-                                if (listMiddlePoint[1].z == 0.0f)
-                                {
-                                    nextPoint = listMiddlePoint[1];
-                                }
-                            }
-                        }
-                        return true;
-                    }
-                }
-                else
+                int k = 0;
+                if (curPoint != ls2d.startPoint)
                 {
                     for (int i = 0; i < listMiddlePoint.Count; i++)
                     {
-                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
+                        // 找到了
+                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true)
                         {
-                            nextPoint = listMiddlePoint[i + 1];
-                            if (i < listMiddlePoint.Count - 2 && (listMiddlePoint[i + 1].x == listMiddlePoint[i + 2].x && listMiddlePoint[i + 1].y == listMiddlePoint[i + 2].y))
+                            if (i < listMiddlePoint.Count - 1)
                             {
-                                if (listMiddlePoint[i + 2].z > listMiddlePoint[i + 1].z)
-                                {
-                                    if (listMiddlePoint[i + 1].z != 0.0f)
-                                    {
-                                        nextPoint = listMiddlePoint[i + 2];
-                                    }
-                                }
-                                else
-                                {
-                                    if (listMiddlePoint[i + 2].z == 0.0f)
-                                    {
-                                        nextPoint = listMiddlePoint[i + 2];
-                                    }
-                                }
+                                k = i + 1;
+                                break;
                             }
-                            return true;
+                            else 
+                            {
+                                return false;
+                            }
                         }
                     }
                 }
+                // 过重复点
+                while (k < listMiddlePoint.Count - 1 && (listMiddlePoint[k].x == listMiddlePoint[k + 1].x && listMiddlePoint[k].y == listMiddlePoint[k + 1].y))
+                {
+                    k++;
+                }
+                Point2D otherEdge = GetOtherEdge(poly, mainPoly_, diffPoly_, (int)listMiddlePoint[k].z);
+                if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) == 0 && k < listMiddlePoint.Count - 1)
+                {
+                    k++;
+                }
+                //
+                nextPoint = listMiddlePoint[k];
+                if (curPoint == new Double2(nextPoint.x, nextPoint.y))
+                    return false;
+                return true;
             }
-            return false;
         }
         /// <summary>
         /// 主多边形上找到一个顶点，不在diff多边形内的。
