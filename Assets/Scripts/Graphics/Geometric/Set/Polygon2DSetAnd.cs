@@ -10,9 +10,7 @@ namespace RayGraphics.Geometric
     public class Polygon2DSetAnd
     {
         /// <summary>
-        /// 求多边形的和。  还有瑕疵。后续改进你。
-        /// 算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
-        /// mainpoly> diffpoly
+        /// 求多边形的和。  
         /// </summary>
         /// <param name="mainPoly">逆时针序列</param>
         /// <param name="addPoly">逆时针序列</param>
