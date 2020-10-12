@@ -161,7 +161,11 @@ namespace RayGraphics.Geometric
                     for (int i = 0; i < listMiddlePoint.Count; i++)
                     {
                         // 找到了
-                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true)
+                        Double2 temp = new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y);
+                        Double2 diff = curPoint - temp;
+                        bool ret = System.Math.Abs(diff.x) <= MathUtil.kEpsilon && System.Math.Abs(diff.y) <= MathUtil.kEpsilon;
+ 
+                        if (ret == true)
                         {
                             if (i < listMiddlePoint.Count - 1)
                             {

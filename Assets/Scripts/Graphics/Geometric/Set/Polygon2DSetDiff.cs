@@ -66,7 +66,7 @@ namespace RayGraphics.Geometric
                 if (PolygonBool.AddPoint(listPoint, curPoint) == false)
                     break;
                 Double3 nextPoint = Double3.zero;
-                bool ret = GetNearPointInEdge(ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
+                bool ret = PolygonBool.GetNearPointInEdge(poly, mainPoly_, diffPoly_, ls2d, curPoint, curPolyIntersectArray[curedge], ref nextPoint);
                 if (ret == false)
                 {
                     curedge++;
@@ -98,59 +98,6 @@ namespace RayGraphics.Geometric
             }
             PolygonBool.ClearPolyIntersectArray(ref mainPolyIntersectArray, ref diffPolyIntersectArray);
             return listPoint.ToArray(); ;
-        }
-        /// <summary>
-        /// 多边形决策。
-        /// </summary>
-        /// <param name="ls2d"></param>
-        /// <param name="targetPoint"></param>
-        /// <param name="middlePoint"></param>
-        private static bool GetNearPointInEdge(Point2D ls2d, Double2 curPoint, List<Double3> listMiddlePoint, ref Double3 nextPoint)
-        {
-            if (listMiddlePoint == null || listMiddlePoint.Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                if (curPoint == ls2d.startPoint)
-                {
-                    nextPoint = listMiddlePoint[0];
-                    // 加入异常处理
-                    if (curPoint == new Double2(nextPoint.x, nextPoint.y))
-                        return false;
-                    else return true;
-                }
-                else
-                {
-                    for (int i = 0; i < listMiddlePoint.Count; i++)
-                    {
-                        if (curPoint == new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y) == true && i < listMiddlePoint.Count - 1)
-                        {
-                            nextPoint = listMiddlePoint[i + 1];
-                            if (i < listMiddlePoint.Count - 2 && (listMiddlePoint[i+1].x == listMiddlePoint[i+ 2].x && listMiddlePoint[i + 1].y == listMiddlePoint[i + 2].y))
-                            {
-                                if (listMiddlePoint[i + 2].z > listMiddlePoint[i + 1].z)
-                                {
-                                    if (listMiddlePoint[i + 1].z == 0.0f)
-                                    {
-                                        nextPoint = listMiddlePoint[i + 2];
-                                    }
-                                }
-                                else
-                                {
-                                    if (listMiddlePoint[i + 2].z != 0.0f)
-                                    {
-                                        nextPoint = listMiddlePoint[i + 2];
-                                    }
-                                }
-                            }
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
         }
     }
 }
