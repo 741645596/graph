@@ -64,13 +64,24 @@ namespace RayGraphics.Geometric
         /// <returns></returns>
         public static bool AddPoint(List<Double2> listPoint, Double2 point)
         {
-            if (listPoint.Contains(point) == true)
+            if (listPoint.Count > 300)
+                return false;
+            if (listPoint.Count > 0 && listPoint[0] == point)
+            {
+                return false;
+            }
+            else 
+            {
+                listPoint.Add(point);
+                return true;
+            }
+            /*if (listPoint.Contains(point) == true)
                 return false;
             else
             {
                 listPoint.Add(point);
                 return true;
-            }
+            }*/
         }
         /// <summary>
         /// 主多边形上找到一个顶点，不在diff多边形内的。
@@ -158,13 +169,13 @@ namespace RayGraphics.Geometric
                 int k = 0;
                 if (curPoint != ls2d.startPoint)
                 {
-                    for (int i = 0; i < listMiddlePoint.Count; i++)
+                    for (int i = listMiddlePoint.Count - 1; i >= 0; i--)
                     {
                         // 找到了
                         Double2 temp = new Double2(listMiddlePoint[i].x, listMiddlePoint[i].y);
                         Double2 diff = curPoint - temp;
                         bool ret = System.Math.Abs(diff.x) <= MathUtil.kEpsilon && System.Math.Abs(diff.y) <= MathUtil.kEpsilon;
- 
+
                         if (ret == true)
                         {
                             if (i < listMiddlePoint.Count - 1)
@@ -179,10 +190,13 @@ namespace RayGraphics.Geometric
                         }
                     }
                 }
-                // 过重复点
-                while (k < listMiddlePoint.Count - 1 && (listMiddlePoint[k].x == listMiddlePoint[k + 1].x && listMiddlePoint[k].y == listMiddlePoint[k + 1].y))
+                else 
                 {
-                    k++;
+                    // 过重复点
+                    while (k < listMiddlePoint.Count - 1 && (listMiddlePoint[k].x == listMiddlePoint[k + 1].x && listMiddlePoint[k].y == listMiddlePoint[k + 1].y))
+                    {
+                        k++;
+                    }
                 }
                 Point2D otherEdge = PolygonBool.GetOtherEdge(poly, mainPoly_, diffPoly_, (int)listMiddlePoint[k].z);
                 if (Double2.Cross(ls2d.endPoint - ls2d.startPoint, otherEdge.endPoint - otherEdge.startPoint) == 0 && k < listMiddlePoint.Count - 1)
