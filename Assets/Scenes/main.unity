@@ -236,14 +236,14 @@ MonoBehaviour:
   - x: 0
     y: 100
   diffPoly:
-  - x: 60
-    y: 40
-  - x: 120
-    y: 40
-  - x: 120
-    y: 100
-  - x: 60
-    y: 100
+  - x: -10
+    y: -10
+  - x: 0
+    y: -10
+  - x: 0
+    y: 0
+  - x: -10
+    y: 0
   resultPoly: []
 --- !u!1 &963194225
 GameObject:
