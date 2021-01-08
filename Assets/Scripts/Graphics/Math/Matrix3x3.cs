@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-/// <summary>
+﻿/// <summary>
 /// 矩阵
 /// </summary>
 namespace RayGraphics.Math
@@ -117,8 +114,10 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateZMatrix(double angle)
         {
-            Double3 col1 = new Double3(System.Math.Cos(angle), System.Math.Sin(angle), 0);
-            Double3 col2 = new Double3(-System.Math.Sin(angle), System.Math.Cos(angle), 0);
+            double cosAngle = MathFunc.cosAngle(angle);
+            double sinAngle = MathFunc.sinAngle(angle);
+            Double3 col1 = new Double3(cosAngle, sinAngle, 0);
+            Double3 col2 = new Double3(-sinAngle, cosAngle, 0);
             Double3 col3 = new Double3(0, 0, 1);
             return new Matrix3x3(col1, col2, col3);
         }
@@ -129,10 +128,32 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateXMatrix(double angle)
         {
+            double cosAngle = System.Math.Cos(angle);
+            double sinAngle = System.Math.Sin(angle);
             Double3 col1 = new Double3(1, 0, 0);
-            Double3 col2 = new Double3(0, System.Math.Cos(angle), System.Math.Sin(angle));
-            Double3 col3 = new Double3(0, -System.Math.Sin(angle), System.Math.Cos(angle));
-            
+            Double3 col2 = new Double3(0, cosAngle, sinAngle);
+            Double3 col3 = new Double3(0, -sinAngle, cosAngle);
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 绕轴旋转
+        /// </summary>
+        /// <param name="axis">轴的法向量</param>
+        /// <param name="angle">旋转角度</param>
+        /// <returns></returns>
+        public static Matrix3x3 RotateMatrix(Double3 axis,double angle)
+        {
+            double cosAngle = MathFunc.cosAngle(angle);
+            double sinAngle = MathFunc.sinAngle(angle);
+            double nxCosAngleDiff = axis.x * (1- cosAngle);
+            double nyCosAngleDiff = axis.y * (1 - cosAngle);
+            double nzCosAngleDiff = axis.z * (1 - cosAngle);
+            double nxSinAngle = axis.x * sinAngle;
+            double nySinAngle = axis.y * sinAngle;
+            double nzSinAngle = axis.z * sinAngle;
+            Double3 col1 = new Double3(axis.x * nxCosAngleDiff + cosAngle, axis.x * nyCosAngleDiff + nzSinAngle, axis.x * nzCosAngleDiff - nySinAngle);
+            Double3 col2 = new Double3(axis.y * nxCosAngleDiff - nzSinAngle, axis.y * nyCosAngleDiff + cosAngle, axis.y * nzCosAngleDiff + nxSinAngle);
+            Double3 col3 = new Double3(axis.z * nxCosAngleDiff + nySinAngle, axis.z * nyCosAngleDiff - nxSinAngle, axis.z * nzCosAngleDiff + cosAngle);
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
@@ -142,9 +163,11 @@ namespace RayGraphics.Math
         /// <returns></returns>
         public static Matrix3x3 RotateYMatrix(double angle)
         {
-            Double3 col1 = new Double3(System.Math.Cos(angle), 0, System.Math.Sin(angle));
+            double cosAngle = MathFunc.cosAngle(angle);
+            double sinAngle = MathFunc.sinAngle(angle);
+            Double3 col1 = new Double3(cosAngle, 0, sinAngle);
             Double3 col2 = new Double3(0, 1, 0);
-            Double3 col3 = new Double3(-System.Math.Sin(angle), 0, System.Math.Cos(angle));
+            Double3 col3 = new Double3(-sinAngle, 0, cosAngle);
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>

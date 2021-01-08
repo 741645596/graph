@@ -1,47 +1,43 @@
-ï»¿using System;
-/// <summary>
-/// ä½¿ç”¨æŸ¥è¡¨ä¸‰è§’å‡½æ•°
-/// </summary>
 namespace RayGraphics.Math
 {
-    public class MathTri
+    public class MathFunc 
     {
         /// <summary>
-        /// åœ†å‘¨åˆ’åˆ†æ•°
+        /// Ô²ÖÜ»®·ÖÊı
         /// </summary>
         private static readonly int kMaxCircleAngle = 512;
         /// <summary>
-        /// åœ†å‘¨åˆ’åˆ†åŠæ•°
+        /// Ô²ÖÜ»®·Ö°ëÊı
         /// </summary>
         private static readonly int kHalfMaxCircleAngle = (kMaxCircleAngle / 2);
         /// <summary>
-        /// åœ†å‘¨åˆ’åˆ†å››åˆ†æ•°
+        /// Ô²ÖÜ»®·ÖËÄ·ÖÊı
         /// </summary>
-        private static readonly int kQuarterMaxCircleAngle  = (kHalfMaxCircleAngle / 4);
+        private static readonly int kQuarterMaxCircleAngle = (kHalfMaxCircleAngle / 4);
         /// <summary>
-        /// æœ€å¤§ç´¢å¼•æ•°
+        /// ×î´óË÷ÒıÊı
         /// </summary>
         private static readonly int kMaskMaxCircleAngle = (kMaxCircleAngle - 1);
         /// <summary>
-        /// æ¯ä¸€ä»½æ‰€ä»£è¡¨çš„å¼§åº¦
+        /// Ã¿Ò»·İËù´ú±íµÄ»¡¶È
         /// </summary>
         private static readonly double kpAngle = MathUtil.kPI / kHalfMaxCircleAngle;
         /// <summary>
-        /// æ¯ä¸€ä»½æ‰€ä»£è¡¨çš„å¼§åº¦å€’æ•°
+        /// Ã¿Ò»·İËù´ú±íµÄ»¡¶Èµ¹Êı
         /// </summary>
-        private static readonly double ktpAngle =  kHalfMaxCircleAngle/ MathUtil.kPI;
+        private static readonly double ktpAngle = kHalfMaxCircleAngle / MathUtil.kPI;
         /// <summary>
         /// Declare table of fast cosinus and sinus
         /// </summary>
-        public static  double[] fast_cossin_table = new double[kMaxCircleAngle];
+        public static double[] fast_cossin_table = new double[kMaxCircleAngle];
         /// <summary>
-        /// è·å–Cos å‡½æ•°
+        /// »ñÈ¡Cos º¯Êı
         /// </summary>
-        /// <param name="angle">å¼§åº¦åˆ¶</param>
+        /// <param name="angle">»¡¶ÈÖÆ</param>
         /// <returns></returns>
         public static double Cos(float angle)
         {
-            int index  = (int)(angle * ktpAngle);
+            int index = (int)(angle * ktpAngle);
             if (index < 0)
             {
                 return fast_cossin_table[((-index) + kQuarterMaxCircleAngle) & kMaskMaxCircleAngle];
@@ -52,7 +48,7 @@ namespace RayGraphics.Math
             }
         }
         /// <summary>
-        /// è·å–sin å‡½æ•°
+        /// »ñÈ¡sin º¯Êı
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
@@ -69,22 +65,39 @@ namespace RayGraphics.Math
             }
         }
         /// <summary>
-        /// ç”Ÿæˆè¡¨
+        /// Éú³É±í
         /// </summary>
         public static void MakeTable()
         {
             for (int i = 0; i < kMaxCircleAngle; i++)
             {
-                fast_cossin_table[i] =  System.Math.Sin(i * kpAngle);
+                fast_cossin_table[i] = System.Math.Sin(i * kpAngle);
             }
         }
         /// <summary>
-        /// æ¸…ç†è¡¨æ ¼æ•°æ®
+        /// ÇåÀí±í¸ñÊı¾İ
         /// </summary>
         public static void ClearTable()
         {
             fast_cossin_table = null;
         }
-
+        /// <summary>
+        /// ¼ÆËãcos angle
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static double cosAngle(double angle)
+        {
+            return System.Math.Cos(angle);
+        }
+        /// <summary>
+        /// ¼ÆËãsin angle
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static double sinAngle(double angle)
+        {
+            return System.Math.Sin(angle);
+        }
     }
 }

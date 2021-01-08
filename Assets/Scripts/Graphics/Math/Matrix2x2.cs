@@ -91,14 +91,16 @@ namespace RayGraphics.Math
         }
         private static readonly Matrix2x2 s_one = new Matrix2x2(Double2.right, Double2.up);
         /// <summary>
-        /// 
+        /// 旋转矩阵，逆时针旋转angle
         /// </summary>
-        /// <param name="angle"></param>
+        /// <param name="angle">旋转角度</param>
         /// <returns></returns>
         public static Matrix2x2 RotateMatrix(double angle)
         {
-            Double2 col1 = new Double2(System.Math.Cos(angle), System.Math.Sin(angle));
-            Double2 col2 = new Double2(-System.Math.Sin(angle), System.Math.Cos(angle));
+            double cosAngle = MathFunc.cosAngle(angle);
+            double sinAngle = MathFunc.sinAngle(angle);
+            Double2 col1 = new Double2(cosAngle, sinAngle);
+            Double2 col2 = new Double2(-sinAngle, cosAngle);
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
@@ -207,8 +209,8 @@ namespace RayGraphics.Math
         /// <summary>
         /// * 运算
         /// </summary>
-        /// <param name="m1"></param>
-        /// <param name="m2"></param>
+        /// <param name="m"></param>
+        /// <param name="v">作为列向量</param>
         /// <returns></returns>
         public static Double2 operator *(Matrix2x2 m, Double2 v)
         {
@@ -217,8 +219,8 @@ namespace RayGraphics.Math
         /// <summary>
         /// * 运算
         /// </summary>
-        /// <param name="m1"></param>
-        /// <param name="m2"></param>
+        /// <param name="v">作为行向量</param>
+        /// <param name="m"></param>
         /// <returns></returns>
         public static Double2 operator *(Double2 v, Matrix2x2 m)
         {
