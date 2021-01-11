@@ -196,6 +196,55 @@ namespace RayGraphics.Math
             return new Matrix3x3(col1, col2, col3);
         }
         /// <summary>
+        /// 沿着指定轴进行缩放
+        /// </summary>
+        /// <param name="axis">指定轴的法向量</param>
+        /// <param name="scale">缩放比例</param>
+        /// <returns></returns>
+        public static Matrix3x3 ScaleMatrix(Double3 axis, float scale)
+        {
+            double dx = (scale - 1) * axis.x;
+            double dy = (scale - 1) * axis.y;
+            double dz = (scale - 1) * axis.z;
+            Double3 col1 = new Double3(1+ dx * axis.x, dx * axis.y, dx * axis.y);
+            Double3 col2 = new Double3(dy * axis.x, 1 + dy * axis.y, dy * axis.z);
+            Double3 col3 = new Double3(dz * axis.x, dz * axis.y, 1 + dz * axis.z);
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 投影到XY平面的正交投影矩阵
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix3x3 XYOrthogonalProjectionMatrix()
+        {
+            Double3 col1 = Double3.right;
+            Double3 col2 = Double3.up;
+            Double3 col3 = Double3.zero;
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 投影到XZ平面的正交投影矩阵
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix3x3 XZOrthogonalProjectionMatrix()
+        {
+            Double3 col1 = Double3.right;
+            Double3 col2 = Double3.zero;
+            Double3 col3 = Double3.foward;
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
+        /// 投影到XZ平面的正交投影矩阵
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix3x3 YZOrthogonalProjectionMatrix()
+        {
+            Double3 col1 = Double3.zero;
+            Double3 col2 = Double3.up;
+            Double3 col3 = Double3.foward;
+            return new Matrix3x3(col1, col2, col3);
+        }
+        /// <summary>
         /// 矩阵判断相等
         /// </summary>
         /// <param name="v1"></param>

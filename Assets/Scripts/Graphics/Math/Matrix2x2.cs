@@ -127,6 +127,40 @@ namespace RayGraphics.Math
             return new Matrix2x2(col1, col2);
         }
         /// <summary>
+        /// 沿着指定轴进行缩放
+        /// </summary>
+        /// <param name="axis">指定轴的法向量</param>
+        /// <param name="scale">缩放比例</param>
+        /// <returns></returns>
+        public static Matrix2x2 ScaleMatrix(Double2 axis, float scale)
+        {
+            double dx = (scale - 1) * axis.x;
+            double dy = (scale - 1) * axis.y;
+            Double2 col1 = new Double2(1+ dx * axis.x, dx * axis.y);
+            Double2 col2 = new Double2(dy * axis.x,    1+ dy * axis.y);
+            return new Matrix2x2(col1, col2);
+        }
+        /// <summary>
+        /// 投影到X轴的正交投影矩阵
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix2x2 XOrthogonalProjectionMatrix()
+        {
+            Double2 col1 = Double2.right;
+            Double2 col2 = Double2.zero;
+            return new Matrix2x2(col1, col2);
+        }
+        /// <summary>
+        /// 投影到X轴的正交投影矩阵
+        /// </summary>
+        /// <returns></returns>
+        public static Matrix2x2 YOrthogonalProjectionMatrix()
+        {
+            Double2 col1 = Double2.zero;
+            Double2 col2 = Double2.up;
+            return new Matrix2x2(col1, col2);
+        }
+        /// <summary>
         /// 矩阵判断相等
         /// </summary>
         /// <param name="v1"></param>
