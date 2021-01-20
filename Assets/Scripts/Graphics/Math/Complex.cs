@@ -49,6 +49,19 @@ namespace RayGraphics.Math
             get { return System.Math.Sqrt(this.sqrMagnitude); }
         }
         /// <summary>
+        /// 求角度
+        /// </summary>
+        /// <returns></returns>
+        public double GetAngle()
+        {
+            double len = magnitude;
+            if (len == 0)
+                return 0;
+            double sinValue = this.y / len;
+            double cosValue = this.x / len;
+            return MathFunc.GetAngle(cosValue, sinValue);
+        }
+        /// <summary>
         /// 共轭复数
         /// </summary>
         /// <param name="v"></param>

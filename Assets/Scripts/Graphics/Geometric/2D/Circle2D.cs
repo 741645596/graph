@@ -197,7 +197,7 @@ namespace RayGraphics.Geometric
             double cosValue = Double2.Dot(from, to) / sqrRadius;
             cosValue = System.Math.Min(cosValue, 1.0f);
             cosValue = System.Math.Max(cosValue, -1.0f);
-            return MathFunc.GetAngle(sinValue, cosValue);
+            return MathFunc.GetAngle(cosValue, sinValue);
         }
         /// <summary>
         /// 判断点是否在直线上

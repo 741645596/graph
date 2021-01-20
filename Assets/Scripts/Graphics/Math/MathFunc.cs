@@ -102,10 +102,10 @@ namespace RayGraphics.Math
         /// <summary>
         /// Çóangle£¬[-PI,  PI]
         /// </summary>
-        /// <param name="sinValue"></param>
         /// <param name="cosValue"></param>
+        /// <param name="sinValue"></param>
         /// <returns></returns>
-        public static double GetAngle(double sinValue, double cosValue)
+        public static double GetAngle(double cosValue, double sinValue)
         {
             // [-PI / 2,  PI /2]  Asin
             // [0,  PI]  Acos
