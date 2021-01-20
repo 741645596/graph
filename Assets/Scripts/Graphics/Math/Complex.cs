@@ -207,6 +207,23 @@ namespace RayGraphics.Math
             return (x == p.x) && (y == p.y);
         }
         /// <summary>
+        /// Ö¸Êýº¯Êý
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public Complex Exp(double n)
+        {
+            double len = this.magnitude;
+            double angle = this.GetAngle();
+            if (len == 0)
+            {
+                return zero;
+            }
+            len = System.Math.Pow(len, n);
+            angle *= n;
+            return new Complex(len * MathFunc.cosAngle(angle), len * MathFunc.sinAngle(angle));
+        }
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
