@@ -1,6 +1,6 @@
 using System;
 /// <summary>
-/// 复数
+/// 复数：满足加法交换律，乘法交换律， 加法结合律，乘法结合律， 分配律
 /// </summary>
 namespace RayGraphics.Math
 {

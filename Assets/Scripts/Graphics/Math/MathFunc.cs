@@ -99,5 +99,33 @@ namespace RayGraphics.Math
         {
             return System.Math.Sin(angle);
         }
+        /// <summary>
+        /// Çóangle£¬[-PI,  PI]
+        /// </summary>
+        /// <param name="sinValue"></param>
+        /// <param name="cosValue"></param>
+        /// <returns></returns>
+        public static double GetAngle(double sinValue, double cosValue)
+        {
+            // [-PI / 2,  PI /2]  Asin
+            // [0,  PI]  Acos
+            sinValue = System.Math.Min(sinValue, 1.0f);
+            sinValue = System.Math.Max(sinValue, -1.0f);
+            cosValue = System.Math.Min(cosValue, 1.0f);
+            cosValue = System.Math.Max(cosValue, -1.0f);
+
+            if (sinValue == 0) // ¹²Ïß
+            {
+                return cosValue >= 0 ? 0 : MathUtil.kPI;
+            }
+            else if (sinValue > 0)
+            {
+                return System.Math.Acos(cosValue);
+            }
+            else
+            {
+                return -System.Math.Acos(cosValue);
+            }
+        }
     }
 }

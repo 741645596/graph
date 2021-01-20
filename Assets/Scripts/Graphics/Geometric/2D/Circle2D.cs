@@ -194,36 +194,10 @@ namespace RayGraphics.Geometric
             double sinValue = Double2.Cross(from, to) / sqrRadius;
             sinValue = System.Math.Min(sinValue, 1.0f);
             sinValue = System.Math.Max(sinValue, -1.0f);
-            double dot = Double2.Dot(from, to) / sqrRadius;
-            dot = System.Math.Min(dot, 1.0f);
-            dot = System.Math.Max(dot, -1.0f);
-
-            if (sinValue == 0) // 共线
-            {
-                return dot >= 0 ? 0 : MathUtil.kPI;
-            }
-            else if (sinValue > 0)
-            {
-                if (dot >= 0) // 1
-                {
-                    return System.Math.Asin(sinValue);
-                }
-                else  // 2
-                {
-                    return System.Math.Acos(dot);
-                }
-            }
-            else
-            {
-                if (dot >= 0) // 4
-                {
-                    return System.Math.Asin(sinValue);
-                }
-                else  // 3
-                {
-                    return -System.Math.Acos(dot);
-                }
-            }
+            double cosValue = Double2.Dot(from, to) / sqrRadius;
+            cosValue = System.Math.Min(cosValue, 1.0f);
+            cosValue = System.Math.Max(cosValue, -1.0f);
+            return MathFunc.GetAngle(sinValue, cosValue);
         }
         /// <summary>
         /// 判断点是否在直线上
