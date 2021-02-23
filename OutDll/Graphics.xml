@@ -44,6 +44,154 @@
             bounding volume hierarchy 层次包围盒
             </summary>
         </member>
+        <member name="F:RayGraphics.Tree.KdTree.s_LimitCount">
+            <summary>
+            限定分割条件
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTree.BuildTree(RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Tree.TreeData})">
+            <summary>
+            构建KD树
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTree.GetData(System.Int32)">
+            <summary>
+            获取数据
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTree.CheckNeedCull(System.Int32)">
+            <summary>
+            判断是否需要分割。
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Tree.KdTreeNode.left">
+            <summary>
+            左子树节点索引
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.KdTreeNode.right">
+            <summary>
+            右子树索引
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.KdTreeNode.CullingValue">
+            <summary>
+            子树的分割值
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.KdTreeNode.isXCulling">
+            <summary>
+            子树分割轴
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTreeNode.#ctor">
+            <summary>
+            默认构造函数
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTreeNode.#ctor(RayGraphics.Tree.KdTree,RayGraphics.Math.Double2,RayGraphics.Math.Double2,System.Boolean,System.Collections.Generic.List{System.Int32})">
+            <summary>
+            构造
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <param name="listIndex"></param>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTreeNode.BuildTreeRecursive">
+            <summary>
+            递归构建Agent 树
+            </summary>
+            <param name="begin">agent 开始索引，包含begin</param>
+            <param name="end">agent 结束索引，不包含end</param>
+            <param name="node"></param>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTreeNode.CalcTotalCount">
+            <summary>
+            统计节点数据规模。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Tree.KdTreeNode.CullProcess(System.Collections.Generic.List{System.Int32}@,System.Collections.Generic.List{System.Int32}@)">
+            <summary>
+            处理分割
+            </summary>
+            <param name="listLeft"></param>
+            <param name="listRight"></param>
+        </member>
+        <member name="F:RayGraphics.Tree.CullUnitHelp.s_ListLineUnit">
+            <summary>
+            从小到大排好序的了，x方向的分割了。
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnitHelp.Clear">
+            <summary>
+            清理工作
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnitHelp.Process(System.Int32,RayGraphics.Tree.TreeData,System.Boolean)">
+            <summary>
+            添加一个挡格。
+            </summary>
+            <param name="ContourPolyIndex"></param>
+            <param name="ab"></param>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnitHelp.AddLineUnit(System.Collections.Generic.List{RayGraphics.Tree.CullUnit}@,RayGraphics.Tree.CullUnit)">
+            <summary>
+            查找到相交的区间
+            </summary>
+            <param name="listLineUnit"></param>
+            <param name="unit"></param>
+            <param name="retIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnitHelp.GetBestCulling(System.Double@)">
+            <summary>
+            获取y 最佳分割线
+            </summary>
+            <param name="cullingValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnitHelp.GetBestCulling(System.Collections.Generic.List{RayGraphics.Tree.CullUnit},System.Double@)">
+            <summary>
+            获取最佳分隔线
+            </summary>
+            <param name="listLineUnit"></param>
+            <param name="cullingValue"></param>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Tree.CullUnit.listIndex">
+            <summary>
+            包含的挡格多边形
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Tree.CullUnit.pointCounts">
+            <summary>
+            包含的挡格多变形总顶点数
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnit.CheckIntersection(RayGraphics.Tree.CullUnit,RayGraphics.Tree.CullUnit)">
+            <summary>
+            判断是否相交
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Tree.CullUnit.Combine(RayGraphics.Tree.CullUnit)">
+            <summary>
+            合并两个
+            </summary>
+            <param name="v"></param>
+        </member>
+        <member name="T:RayGraphics.Tree.TreeData">
+            <summary>
+            定义树的相关数据
+            </summary>
+        </member>
         <member name="T:RayGraphics.Bounding.AABB">
             <summary>
             AABB包围盒(Axis-aligned bounding box)
@@ -73,6 +221,86 @@
         <member name="T:RayGraphics.Bounding.Sphere">
             <summary>
             球形包围盒
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem2D.originPoint">
+            <summary>
+            坐标原点
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem2D.xAixs">
+            <summary>
+            x轴
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem2D.yAixs">
+            <summary>
+            y轴
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem3D.originPoint">
+            <summary>
+            坐标原点
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem3D.xAixs">
+            <summary>
+            x轴
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem3D.yAixs">
+            <summary>
+            x轴
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.CoordinateSystem3D.zAixs">
+            <summary>
+            x轴
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.Polar2D.radius">
+            <summary>
+            长度
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.Polar2D.angle">
+            <summary>
+            角度
+            </summary>
+        </member>
+        <member name="P:RayGraphics.CoordinateSystem.Polar2D.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.CoordinateSystem.Polar2D.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="M:RayGraphics.CoordinateSystem.Polar2D.Exp(System.Double)">
+            <summary>
+            指数函数
+            </summary>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.CoordinateSystem.Polar2D.op_Multiply(RayGraphics.CoordinateSystem.Polar2D,RayGraphics.CoordinateSystem.Polar2D)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.ViewCoordinateSystem.near">
+            <summary>
+            近截面
+            </summary>
+        </member>
+        <member name="F:RayGraphics.CoordinateSystem.ViewCoordinateSystem.far">
+            <summary>
+            远界面
             </summary>
         </member>
         <member name="F:RayGraphics.Geometric.AABB2D.leftBottom">
@@ -1265,17 +1493,17 @@
             <param name="nearStep"></param>
             <param name="pt1"></param>
             <param name="pt2"></param>
-            <returns></returns>
+            <returns>false ：不相交 true；相交</returns>
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2D.GetPointsInAreabyYaixs(System.Double,System.Double,RayGraphics.Math.Double2@,RayGraphics.Math.Double2@)">
             <summary>
-            获取与x轴线与边界最接近的2个点
+            获取与Y轴线与边界最接近的2个点
             </summary>
-            <param name="xAixs"></param>
+            <param name="YAixs"></param>
             <param name="nearStep"></param>
             <param name="pt1"></param>
             <param name="pt2"></param>
-            <returns></returns>
+            <returns>false ：不相交 true；相交</returns>
         </member>
         <member name="T:RayGraphics.Geometric.Rays2D">
             <summary>
@@ -1981,71 +2209,11 @@
         </member>
         <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.CalcPoly(RayGraphics.Math.Double2[],RayGraphics.Math.Double2[])">
             <summary>
-            求多边形的和。  还有瑕疵。后续改进你。
-            算法核心，主多边形走逆时针方向，diff多边形走顺时针方向。
-            mainpoly> diffpoly
+            求多边形的和。  
             </summary>
             <param name="mainPoly">逆时针序列</param>
             <param name="addPoly">逆时针序列</param>
             <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
-            <summary>
-            清理动作
-            </summary>
-            <param name="Poly1IntersectArray"></param>
-            <param name="Poly2IntersectArray"></param>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.GetNearPointInEdge(RayGraphics.Geometric.Point2D,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
-            <summary>
-            多边形决策。
-            </summary>
-            <param name="ls2d"></param>
-            <param name="targetPoint"></param>
-            <param name="middlePoint"></param>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.FindOutDiffPointPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Math.Double2@,System.Int32@)">
-            <summary>
-            主多边形上找到一个顶点，不在diff多边形内的。
-            </summary>
-            <param name="mainPoly"></param>
-            <param name="diffpoly"></param>
-            <param name="poly"></param>
-            <param name="curedge"></param>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2},RayGraphics.Math.Double2)">
-            <summary>
-            加入顶点
-            </summary>
-            <param name="listPoint"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
-            <summary>
-            交换数据
-            </summary>
-            <param name="poly"></param>
-            <param name="poly1"></param>
-            <param name="poly2"></param>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
-            <summary>
-            获取多边形所有边的相交点
-            </summary>
-            <param name="mainPoly"></param>
-            <param name="diffpoly"></param>
-            <param name="mainPolyIntersectArray"></param>
-            <param name="Poly2IntersectArray"></param>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetAnd.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
-            <summary>
-            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
-            </summary>
-            <param name="lsStartPoint">线段起点</param>
-            <param name="lsindex">线段索引</param>
-            <param name="PolyIntersectArray">多边形相交数据</param>
-            <param name="paths"></param>
         </member>
         <member name="T:RayGraphics.Geometric.Polygon2DSetDiff">
             <summary>
@@ -2060,26 +2228,35 @@
             mainpoly> diffpoly
             </summary>
             <param name="mainPoly">逆时针序列</param>
-            <param name="diffpoly">逆时针序列</param>
+            <param name="diffpoly">顺时针序列，必须顺时针序列</param>
             <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+        <member name="M:RayGraphics.Geometric.PolygonBool.ClearPolyIntersectArray(System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
             <summary>
             清理动作
             </summary>
             <param name="Poly1IntersectArray"></param>
             <param name="Poly2IntersectArray"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetNearPointInEdge(RayGraphics.Geometric.Point2D,System.Boolean,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
+        <member name="M:RayGraphics.Geometric.PolygonBool.GetOtherEdge(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Int32)">
             <summary>
-            多边形决策。
+            获取另外一个多边形的边
             </summary>
-            <param name="ls2d"></param>
-            <param name="SearchDir">边的方向，true 逆时针方向， false 顺时针方向</param>
-            <param name="targetPoint"></param>
-            <param name="middlePoint"></param>
+            <param name="poly"></param>
+            <param name="poly1"></param>
+            <param name="poly2"></param>
+            <param name="edgeIndex"></param>
+            <returns></returns>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.FindOutDiffPointPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Math.Double2@,System.Int32@)">
+        <member name="M:RayGraphics.Geometric.PolygonBool.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2},RayGraphics.Math.Double2)">
+            <summary>
+            加入顶点
+            </summary>
+            <param name="listPoint"></param>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Geometric.PolygonBool.FindOutDiffPointPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Math.Double2@,System.Int32@)">
             <summary>
             主多边形上找到一个顶点，不在diff多边形内的。
             </summary>
@@ -2088,15 +2265,7 @@
             <param name="poly"></param>
             <param name="curedge"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.AddPoint(System.Collections.Generic.List{RayGraphics.Math.Double2},RayGraphics.Math.Double2)">
-            <summary>
-            加入顶点
-            </summary>
-            <param name="listPoint"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
+        <member name="M:RayGraphics.Geometric.PolygonBool.ExChangePoly(RayGraphics.Geometric.Polygon2D@,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}[])">
             <summary>
             交换数据
             </summary>
@@ -2104,7 +2273,7 @@
             <param name="poly1"></param>
             <param name="poly2"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
+        <member name="M:RayGraphics.Geometric.PolygonBool.GetAllEdgeInterSectPoint(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@,System.Collections.Generic.List{RayGraphics.Math.Double3}[]@)">
             <summary>
             获取多边形所有边的相交点
             </summary>
@@ -2113,14 +2282,254 @@
             <param name="mainPolyIntersectArray"></param>
             <param name="Poly2IntersectArray"></param>
         </member>
-        <member name="M:RayGraphics.Geometric.Polygon2DSetDiff.GetAllIntersectPoint(RayGraphics.Math.Double2,System.Int32,System.Collections.Generic.List{RayGraphics.Math.Double3}[],System.Collections.Generic.List{RayGraphics.Math.Double3}@)">
+        <member name="M:RayGraphics.Geometric.PolygonBool.GetNearPointInEdge(RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Polygon2D,RayGraphics.Geometric.Point2D,RayGraphics.Math.Double2,System.Collections.Generic.List{RayGraphics.Math.Double3},RayGraphics.Math.Double3@)">
             <summary>
-            获取线段与多边形的所有交点，并按从近到远排序。，float3 z记录与多边形相交的边。
+            多边形决策。
             </summary>
-            <param name="lsStartPoint">线段起点</param>
-            <param name="lsindex">线段索引</param>
-            <param name="PolyIntersectArray">多边形相交数据</param>
-            <param name="paths"></param>
+            <param name="ls2d"></param>
+            <param name="targetPoint"></param>
+            <param name="middlePoint"></param>
+        </member>
+        <member name="T:RayGraphics.Math.BlizzardHash">
+            <summary>
+            暴雪 hash 算法one-way hash 
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.BlizzardHash.m_CryptTable">
+            <summary>
+            表
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.BlizzardHash.PrepareTable">
+            <summary>
+            生成hash
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.BlizzardHash.HashString(System.String,System.UInt32)">
+            <summary>
+             Blizzard的这个算法是非常高效的，被称为"One-Way Hash"
+             A one-way hash is a an algorithm that is constructed in such a way 
+             that deriving the original string (set of strings, actually) is virtually impossible
+            </summary>
+            <param name="strValue"></param>
+            <param name="dwHashType">hash 类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.BlizzardHash.GetHashTablePos(System.String,RayGraphics.Math.SomeHash[],System.Int32)">
+            <summary>
+            查找hash所在的位置
+            </summary>
+            <param name="strValue"></param>
+            <param name="lpTable"></param>
+            <param name="nTableSize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RayGraphics.Math.SomeHash">
+            <summary>
+            相同的hash
+            </summary>
+        </member>
+        <member name="T:RayGraphics.Math.HashCodeHelp">
+            <summary>
+            hash函数
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.hashCode(System.String)">
+            <summary>
+            String中hashCode方法
+            算法：s[0]*31^(n-1) + s[1]*31^(n-2) + … + s[n-1]
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.getHashCode(System.String)">
+            <summary>
+            一个比较好的字符串hash算法，add到这里，听说是微软用
+            这个算法要保证str的长度是8的倍数，如果不够用0补齐，
+            不然会导致越界，计算出的hash就不准确了。
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.SDBMHash(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.RSHash(System.String)">
+            <summary>
+            RS Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.JSHash(System.String)">
+            <summary>
+            JS Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.PJWHash(System.String)">
+            <summary>
+            P. J. Weinberger Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.ELFHash(System.String)">
+            <summary>
+            ELF Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.BKDRHash(System.String)">
+            <summary>
+            BKDR Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.DJBHash(System.String)">
+            <summary>
+            DJB Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.HashCodeHelp.APHash(System.String)">
+            <summary>
+            AP Hash Function
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Math.Complex.zero">
+            <summary>
+            0 向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Complex.one">
+            <summary>
+            单位向量
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Complex.sqrMagnitude">
+            <summary>
+            模的平方
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Math.Complex.magnitude">
+            <summary>
+            模
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.GetAngle">
+            <summary>
+            求角度
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.GetConjugateComplex(RayGraphics.Math.Complex)">
+            <summary>
+            共轭复数
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Inequality(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            ！=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Equality(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Addition(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Subtraction(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Multiply(System.Double,RayGraphics.Math.Complex)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="k"></param>
+            <param name="vector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Multiply(RayGraphics.Math.Complex,System.Double)">
+            <summary>
+             * 运算
+            </summary>
+            <param name="vector"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Division(RayGraphics.Math.Complex,System.Double)">
+            <summary>
+            /运算
+            </summary>
+            <param name="v"></param>
+            <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Multiply(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            * 运算
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.op_Division(RayGraphics.Math.Complex,RayGraphics.Math.Complex)">
+            <summary>
+            / 运算,除法相当于都乘以一个共轭负数
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.Equals(System.Object)">
+            <summary>
+            Equals
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.Exp(System.Double)">
+            <summary>
+            指数函数
+            </summary>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Complex.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Double2.Set(System.Double,System.Double)">
             <summary>
@@ -2191,6 +2600,56 @@
             无穷大
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Double2.op_Inequality(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            ！=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Equality(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Double2.op_LessThan(RayGraphics.Math.Double2,RayGraphics.Math.Double2)" -->
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Double2.op_LessThanOrEqual(RayGraphics.Math.Double2,RayGraphics.Math.Double2)" -->
+        <member name="M:RayGraphics.Math.Double2.op_GreaterThan(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_GreaterThanOrEqual(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Addition(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.op_Subtraction(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Double2.op_UnaryNegation(RayGraphics.Math.Double2)">
             <summary>
             负号重载
@@ -2220,6 +2679,19 @@
             </summary>
             <param name="v"></param>
             <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Double2.GetHashCode">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Double2.Angle(RayGraphics.Math.Double2,RayGraphics.Math.Double2)">
@@ -2506,6 +2978,24 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Double3.op_GreaterThan(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Double3.op_LessThan(RayGraphics.Math.Double3,RayGraphics.Math.Double3)" -->
+        <member name="M:RayGraphics.Math.Double3.op_GreaterThanOrEqual(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Double3.op_LessThanOrEqual(RayGraphics.Math.Double3,RayGraphics.Math.Double3)" -->
         <member name="M:RayGraphics.Math.Double3.op_Addition(RayGraphics.Math.Double3,RayGraphics.Math.Double3)">
             <summary>
             + 运算
@@ -2891,6 +3381,24 @@
             无穷大
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Float2.op_GreaterThan(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Float2.op_LessThan(RayGraphics.Math.Float2,RayGraphics.Math.Float2)" -->
+        <member name="M:RayGraphics.Math.Float2.op_GreaterThanOrEqual(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Float2.op_LessThanOrEqual(RayGraphics.Math.Float2,RayGraphics.Math.Float2)" -->
         <member name="M:RayGraphics.Math.Float2.op_UnaryNegation(RayGraphics.Math.Float2)">
             <summary>
             负号重载
@@ -3206,6 +3714,24 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Float3.op_GreaterThan(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Float3.op_LessThan(RayGraphics.Math.Float3,RayGraphics.Math.Float3)" -->
+        <member name="M:RayGraphics.Math.Float3.op_GreaterThanOrEqual(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Float3.op_LessThanOrEqual(RayGraphics.Math.Float3,RayGraphics.Math.Float3)" -->
         <member name="M:RayGraphics.Math.Float3.op_Addition(RayGraphics.Math.Float3,RayGraphics.Math.Float3)">
             <summary>
             + 运算
@@ -3618,6 +4144,56 @@
             foward 向量
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Int2.op_Inequality(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            ！=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_Equality(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_GreaterThan(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Int2.op_LessThan(RayGraphics.Math.Int2,RayGraphics.Math.Int2)" -->
+        <member name="M:RayGraphics.Math.Int2.op_GreaterThanOrEqual(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Int2.op_LessThanOrEqual(RayGraphics.Math.Int2,RayGraphics.Math.Int2)" -->
+        <member name="M:RayGraphics.Math.Int2.op_Addition(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.op_Subtraction(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Int2.op_UnaryNegation(RayGraphics.Math.Int2)">
             <summary>
             负号重载
@@ -3639,6 +4215,19 @@
             </summary>
             <param name="vector"></param>
             <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int2.GetHashCode">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Int2.Angle(RayGraphics.Math.Int2,RayGraphics.Math.Int2)">
@@ -3806,6 +4395,56 @@
             foward 向量
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Int3.op_Inequality(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            ！=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_Equality(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_GreaterThan(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Int3.op_LessThan(RayGraphics.Math.Int3,RayGraphics.Math.Int3)" -->
+        <member name="M:RayGraphics.Math.Int3.op_GreaterThanOrEqual(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Int3.op_LessThanOrEqual(RayGraphics.Math.Int3,RayGraphics.Math.Int3)" -->
+        <member name="M:RayGraphics.Math.Int3.op_Addition(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.op_Subtraction(RayGraphics.Math.Int3,RayGraphics.Math.Int3)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Int3.op_UnaryNegation(RayGraphics.Math.Int3)">
             <summary>
             负号重载
@@ -3827,6 +4466,100 @@
             </summary>
             <param name="vector"></param>
             <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Int3.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.kMaxCircleAngle">
+            <summary>
+            圆周划分数
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.kHalfMaxCircleAngle">
+            <summary>
+            圆周划分半数
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.kQuarterMaxCircleAngle">
+            <summary>
+            圆周划分四分数
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.kMaskMaxCircleAngle">
+            <summary>
+            最大索引数
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.kpAngle">
+            <summary>
+            每一份所代表的弧度
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.ktpAngle">
+            <summary>
+            每一份所代表的弧度倒数
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Math.MathFunc.fast_cossin_table">
+            <summary>
+            Declare table of fast cosinus and sinus
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.Cos(System.Single)">
+            <summary>
+            获取Cos 函数
+            </summary>
+            <param name="angle">弧度制</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.fastsin(System.Single)">
+            <summary>
+            获取sin 函数
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.MakeTable">
+            <summary>
+            生成表
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.ClearTable">
+            <summary>
+            清理表格数据
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.cosAngle(System.Double)">
+            <summary>
+            计算cos angle
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.sinAngle(System.Double)">
+            <summary>
+            计算sin angle
+            </summary>
+            <param name="angle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.MathFunc.GetAngle(System.Double,System.Double)">
+            <summary>
+            求angle，[-PI,  PI]
+            </summary>
+            <param name="cosValue"></param>
+            <param name="sinValue"></param>
             <returns></returns>
         </member>
         <member name="F:RayGraphics.Math.MathUtil.StraightDistance">
@@ -4026,9 +4759,9 @@
         </member>
         <member name="M:RayGraphics.Math.Matrix2x2.RotateMatrix(System.Double)">
             <summary>
-            
+            旋转矩阵，逆时针旋转angle
             </summary>
-            <param name="angle"></param>
+            <param name="angle">旋转角度</param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix2x2.ScaleMatrix(System.Double,System.Double)">
@@ -4044,6 +4777,26 @@
             缩放矩阵
             </summary>
             <param name="scale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix2x2.ScaleMatrix(RayGraphics.Math.Double2,System.Single)">
+            <summary>
+            沿着指定轴进行缩放
+            </summary>
+            <param name="axis">指定轴的法向量</param>
+            <param name="scale">缩放比例</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix2x2.XOrthogonalProjectionMatrix">
+            <summary>
+            投影到X轴的正交投影矩阵
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix2x2.YOrthogonalProjectionMatrix">
+            <summary>
+            投影到X轴的正交投影矩阵
+            </summary>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix2x2.op_Inequality(RayGraphics.Math.Matrix2x2,RayGraphics.Math.Matrix2x2)">
@@ -4106,16 +4859,16 @@
             <summary>
             * 运算
             </summary>
-            <param name="m1"></param>
-            <param name="m2"></param>
+            <param name="m"></param>
+            <param name="v">作为列向量</param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix2x2.op_Multiply(RayGraphics.Math.Double2,RayGraphics.Math.Matrix2x2)">
             <summary>
             * 运算
             </summary>
-            <param name="m1"></param>
-            <param name="m2"></param>
+            <param name="v">作为行向量</param>
+            <param name="m"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix2x2.Equals(System.Object)">
@@ -4238,6 +4991,14 @@
             <param name="angle"></param>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Math.Matrix3x3.RotateMatrix(RayGraphics.Math.Double3,System.Double)">
+            <summary>
+            绕轴旋转
+            </summary>
+            <param name="axis">轴的法向量</param>
+            <param name="angle">旋转角度</param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Matrix3x3.RotateYMatrix(System.Double)">
             <summary>
             绕Y旋转
@@ -4258,6 +5019,32 @@
             缩放矩阵
             </summary>
             <param name="scale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix3x3.ScaleMatrix(RayGraphics.Math.Double3,System.Single)">
+            <summary>
+            沿着指定轴进行缩放
+            </summary>
+            <param name="axis">指定轴的法向量</param>
+            <param name="scale">缩放比例</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix3x3.XYOrthogonalProjectionMatrix">
+            <summary>
+            投影到XY平面的正交投影矩阵
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix3x3.XZOrthogonalProjectionMatrix">
+            <summary>
+            投影到XZ平面的正交投影矩阵
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Matrix3x3.YZOrthogonalProjectionMatrix">
+            <summary>
+            投影到XZ平面的正交投影矩阵
+            </summary>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Math.Matrix3x3.op_Inequality(RayGraphics.Math.Matrix3x3,RayGraphics.Math.Matrix3x3)">
@@ -4614,6 +5401,56 @@
             foward 向量
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Short2.op_Inequality(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            !=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_Equality(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_GreaterThan(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Short2.op_LessThan(RayGraphics.Math.Short2,RayGraphics.Math.Short2)" -->
+        <member name="M:RayGraphics.Math.Short2.op_GreaterThanOrEqual(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Short2.op_LessThanOrEqual(RayGraphics.Math.Short2,RayGraphics.Math.Short2)" -->
+        <member name="M:RayGraphics.Math.Short2.op_Addition(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short2.op_Subtraction(RayGraphics.Math.Short2,RayGraphics.Math.Short2)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Short2.op_UnaryNegation(RayGraphics.Math.Short2)">
             <summary>
             负号重载
@@ -4795,6 +5632,56 @@
             foward 向量
             </summary>
         </member>
+        <member name="M:RayGraphics.Math.Short3.op_Inequality(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            ！=
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_Equality(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            ==
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_GreaterThan(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            > 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Short3.op_LessThan(RayGraphics.Math.Short3,RayGraphics.Math.Short3)" -->
+        <member name="M:RayGraphics.Math.Short3.op_GreaterThanOrEqual(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            >= 运算符
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:RayGraphics.Math.Short3.op_LessThanOrEqual(RayGraphics.Math.Short3,RayGraphics.Math.Short3)" -->
+        <member name="M:RayGraphics.Math.Short3.op_Addition(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            +
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.op_Subtraction(RayGraphics.Math.Short3,RayGraphics.Math.Short3)">
+            <summary>
+            -
+            </summary>
+            <param name="v1"></param>
+            <param name="v2"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Math.Short3.op_UnaryNegation(RayGraphics.Math.Short3)">
             <summary>
             负号重载
@@ -4816,6 +5703,19 @@
             </summary>
             <param name="vector"></param>
             <param name="k"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Math.Short3.GetHashCode">
+            <summary>
+            
+            </summary>
             <returns></returns>
         </member>
     </members>

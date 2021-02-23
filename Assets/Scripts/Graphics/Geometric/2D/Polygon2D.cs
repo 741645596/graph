@@ -873,7 +873,7 @@ namespace RayGraphics.Geometric
         /// <param name="nearStep"></param>
         /// <param name="pt1"></param>
         /// <param name="pt2"></param>
-        /// <returns></returns>
+        /// <returns>false ：不相交 true；相交</returns>
         public bool GetPointsInAreabyXaixs(double xAixs, double nearStep, ref Double2 pt1, ref Double2 pt2)
         {
             if (xAixs <= this.leftBottom.x)
@@ -927,13 +927,13 @@ namespace RayGraphics.Geometric
             return true;
         }
         /// <summary>
-        /// 获取与x轴线与边界最接近的2个点
+        /// 获取与Y轴线与边界最接近的2个点
         /// </summary>
-        /// <param name="xAixs"></param>
+        /// <param name="YAixs"></param>
         /// <param name="nearStep"></param>
         /// <param name="pt1"></param>
         /// <param name="pt2"></param>
-        /// <returns></returns>
+        /// <returns>false ：不相交 true；相交</returns>
         public bool GetPointsInAreabyYaixs(double YAixs, double nearStep, ref Double2 pt1, ref Double2 pt2)
         {
             if (YAixs <= this.leftBottom.y)
