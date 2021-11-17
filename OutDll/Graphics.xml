@@ -5718,5 +5718,55 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:RayGraphics.Triangulation.Polygon2D.ConvexHull(RayGraphics.Math.Float2[])">
+            <summary>
+            凸多边形
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Polygon2D.Contour(RayGraphics.Math.Float2[])">
+            <summary>
+            生成轮廓
+            </summary>
+            <param name="points"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Triangulation2D.Polygon">
+            <summary>
+            多边形
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Triangulation2D.Triangles">
+            <summary>
+            三角形
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Triangulation2D.Edges">
+            <summary>
+            边
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Triangulation2D.Points">
+            <summary>
+            顶点
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.#ctor(RayGraphics.Triangulation.Polygon2D,System.Single,System.Single)">
+            <summary>
+            构建
+            </summary>
+            <param name="polygon"></param>
+            <param name="angle"></param>
+            <param name="threshold"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.Bound(RayGraphics.Math.Float2[],RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
+            <summary>
+            计算bound
+            </summary>
+            <param name="points"></param>
+            <param name="min"></param>
+            <param name="max"></param>
+        </member>
     </members>
 </doc>
