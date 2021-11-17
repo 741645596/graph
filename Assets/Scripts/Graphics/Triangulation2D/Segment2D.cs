@@ -19,10 +19,13 @@ namespace RayGraphics.Triangulation
 		public Float2 Midpoint () {
 			return (a.Pos + b.Pos) * 0.5f;
 		}
-
-		public float Length () {
+		/// <summary>
+		/// 边长的平方
+		/// </summary>
+		/// <returns></returns>
+		public float sqrMagnitude () {
 			if(length <= 0f) {
-				length = (a.Pos - b.Pos).magnitude;
+				length = (a.Pos - b.Pos).sqrMagnitude;
 			}
 			return length;
 		}
@@ -32,36 +35,10 @@ namespace RayGraphics.Triangulation
 		 */
 		public bool EncroachedUpon (Float2 p) {
 			if(p == a.Pos || p == b.Pos) return false;
-			var radius = (a.Pos - b.Pos).magnitude * 0.5f;
-			return (Midpoint() - p).magnitude < radius;
+			float sqrRadius = (a.Pos - b.Pos).sqrMagnitude / 4;
+			return (Midpoint() - p).sqrMagnitude < sqrRadius;
 		}
 
-		const float epsilon = 0.0001f;
-		public bool On (Float2 p) {
-			if(HasPoint(p)) return true;
-			if(Distance(p) > epsilon) return false;
-
-			Float2 p0 = a.Pos, p1 = b.Pos;
-			bool bx = (p0.x < p1.x) ? (p0.x <= p.x && p.x <= p1.x) : (p1.x <= p.x && p.x <= p0.x);
-			bool by = (p0.y < p1.y) ? (p0.y <= p.y && p.y <= p1.y) : (p1.y <= p.y && p.y <= p0.y);
-			return bx && by;
-		}
-
-		public bool On (Vertex2D v) {
-			return On(v.Pos);
-		}
-
-		// https://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line
-		public float Distance (Float2 p) {
-			Float2 p0 = a.Pos, p1 = b.Pos;
-			float dx = (p1.x - p0.x), dy = (p1.y - p0.y);
-			double sqrt = System.Math.Sqrt(dy * dy + dx * dx);
-			return System.Math.Abs((dy * p.x) - (dx * p.y) + (p1.x * p0.y) - (p1.y * p0.x)) / (float)sqrt;
-		}
-
-		public float Distance (Vertex2D v) {
-			return Distance(v.Pos);
-		}
 
 		public bool HasPoint (Vertex2D v) {
 			return (a == v) || (b == v);

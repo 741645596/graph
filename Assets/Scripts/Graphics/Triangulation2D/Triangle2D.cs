@@ -58,35 +58,39 @@ namespace RayGraphics.Triangulation
 			return circum.Contains(v.Pos);
 		}
 		/// <summary>
-		/// 计算夹角大于指定的最小角度
+		/// 返回cos angle 的平方
 		/// </summary>
 		/// <param name="from"></param>
 		/// <param name="to0"></param>
 		/// <param name="to1"></param>
 		/// <returns></returns>
-		private float Angle(Float2 from, Float2 to0, Float2 to1) {
+		private float SqrCosAngle(Float2 from, Float2 to0, Float2 to1) {
 			Float2 v0 = to0 - from;
 			Float2 v1 = to1 - from;
-
-			double sqrt = System.Math.Sqrt(v0.sqrMagnitude * v1.sqrMagnitude);
-			// 0 ~ PI
-			float acos = (float)System.Math.Acos(Float2.Dot(v0, v1) / (float)sqrt);
-
-			return acos;
+			
+			float dot = Float2.Dot(v0, v1);
+			// 这种情况大于pi/ 2 直接简单直接返回0
+			if (dot < 0)
+				return 0;
+			dot *= dot;
+			float sqr = v0.sqrMagnitude * v1.sqrMagnitude;
+			return dot / sqr;
 		}
 		/// <summary>
 		/// 防止瘦骨嶙峋的三角形出现
 		/// </summary>
-		/// <param name="angle">为弧度角度,限制最小角度</param>
-		/// <param name="threshold">限制最大边长</param>
+		/// <param name="sqrCosAngleValue">为弧度角度,限制最小角度</param>
+		/// <param name="sqrThreshold">边长临界的平方 限制最大边长</param>
 		/// <returns></returns>
-		public bool Skinny (float angle, float threshold) {
-			if(s0.Length() <= threshold && s1.Length() <= threshold && s2.Length() <= threshold) 
+		public bool Skinny (float sqrCosAngleValue, float sqrThreshold) {
+			if(s0.sqrMagnitude() <= sqrThreshold 
+				&& s1.sqrMagnitude() <= sqrThreshold 
+				&& s2.sqrMagnitude() <= sqrThreshold) 
 				return false;
 
-			if(Angle(a.Pos, b.Pos, c.Pos) < angle) return true; // angle bac
-			else if(Angle(b.Pos, a.Pos, c.Pos) < angle) return true; // angle abc
-			else if(Angle(c.Pos, a.Pos, b.Pos) < angle) return true; // angle acb
+			if (SqrCosAngle(a.Pos, b.Pos, c.Pos) > sqrCosAngleValue) return true; // angle bac
+			else if(SqrCosAngle(b.Pos, a.Pos, c.Pos) > sqrCosAngleValue) return true; // angle abc
+			else if(SqrCosAngle(c.Pos, a.Pos, b.Pos) > sqrCosAngleValue) return true; // angle acb
 			return false;
 		}
 

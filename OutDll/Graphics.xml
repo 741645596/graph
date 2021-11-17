@@ -5748,9 +5748,15 @@
             </summary>
             <param name="listContour"></param>
         </member>
-        <member name="M:RayGraphics.Triangulation.Triangle2D.Angle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+        <member name="M:RayGraphics.Triangulation.Segment2D.sqrMagnitude">
             <summary>
-            计算夹角大于指定的最小角度
+            边长的平方
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.SqrCosAngle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            返回cos angle 的平方
             </summary>
             <param name="from"></param>
             <param name="to0"></param>
@@ -5761,8 +5767,8 @@
             <summary>
             防止瘦骨嶙峋的三角形出现
             </summary>
-            <param name="angle">为弧度角度,限制最小角度</param>
-            <param name="threshold">限制最大边长</param>
+            <param name="sqrCosAngleValue">为弧度角度,限制最小角度</param>
+            <param name="sqrThreshold">边长临界的平方 限制最大边长</param>
             <returns></returns>
         </member>
         <member name="P:RayGraphics.Triangulation.Triangulation2D.Polygon">
@@ -5809,6 +5815,14 @@
             <param name="min"></param>
             <param name="max"></param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.Triangulate(RayGraphics.Math.Float2[],System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="points"></param>
+            <param name="sqrCosAngleValue"></param>
+            <param name="sqrThreshold">边长临界点的平方</param>
+        </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.RemoveExternalPSLG">
             <summary>
             移除外部三角形
@@ -5839,15 +5853,15 @@
             <summary>
             精炼
             </summary>
-            <param name="angle"></param>
-            <param name="threshold"></param>
+            <param name="sqrCosAngleValue"></param>
+            <param name="sqrThreshold">边长临界点的平方</param>
         </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.RefineSubRoutine(System.Single,System.Single)">
             <summary>
             分割三角形
             </summary>
-            <param name="angle"></param>
-            <param name="threshold"></param>
+            <param name="sqrCosAngleValue"></param>
+            <param name="sqrThreshold"></param>
         </member>
         <member name="M:RayGraphics.Triangulation.Utils2D.Contains(RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Triangulation.Vertex2D})">
             <summary>

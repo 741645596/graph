@@ -49,13 +49,17 @@ namespace RayGraphics.Triangulation
 		/// <param name="polygon"></param>
 		/// <param name="angle"></param>
 		/// <param name="threshold"></param>
-		public Triangulation2D (Polygon2D polygon, float angle = 20f, float threshold = 0.1f) 
+		public Triangulation2D (Polygon2D polygon, float angle = 20.0f, float threshold = 0.1f) 
 		{
+			float sqrThreshold = threshold * threshold;
 			angle =(float) (System.Math.Min(angle, kAngleMax) * System.Math.PI / 180.0f);
+			float sqrCosAngleValue = (float)System.Math.Cos(angle);
+			sqrCosAngleValue *= sqrCosAngleValue;
+
 			PSLG = polygon;
 			V = PSLG.Vertices.ToList();
 			S = PSLG.Segments.ToList();
-			Triangulate (polygon.Vertices.Select(v => v.Pos).ToArray(), angle, threshold);
+			Triangulate (polygon.Vertices.Select(v => v.Pos).ToArray(), sqrCosAngleValue, sqrThreshold);
 		}
 
 		/// <summary>
@@ -125,10 +129,6 @@ namespace RayGraphics.Triangulation
 			if(t.s2.Decrement() <= 0) RemoveSegment (t.s2);
 		}
 
-		public void RemoveTriangle (Segment2D s) {
-			T.FindAll(t => t.HasSegment(s)).ForEach(t => RemoveTriangle(t));
-		}
-
 		public void RemoveSegment (Segment2D s) {
 			E.Remove(s);
 			if(s.a.ReferenceCount <= 0) P.Remove(s.a);
@@ -163,8 +163,13 @@ namespace RayGraphics.Triangulation
 				CheckAndAddVertex(center + new Float2(0f, diagonal) * 3f)
 			);
 		}
-
-		void Triangulate (Float2[] points, float angle, float threshold) {
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="points"></param>
+		/// <param name="sqrCosAngleValue"></param>
+		/// <param name="sqrThreshold">边长临界点的平方</param>
+		private void Triangulate (Float2[] points, float sqrCosAngleValue, float sqrThreshold) {
 			Float2 min, max;
 			Bound(points, out min, out max);
 
@@ -175,7 +180,7 @@ namespace RayGraphics.Triangulation
 				UpdateTriangulation (v);
 			}
 
-			Refine (angle, threshold);
+			Refine (sqrCosAngleValue, sqrThreshold);
 			RemoveExternalPSLG ();
 		}
 		void Triangulate(Float2[] points)
@@ -285,10 +290,10 @@ namespace RayGraphics.Triangulation
 
 		}
 
-		bool FindAndSplit (float threshold) {
+		bool FindAndSplit (float sqrThreshold) {
 			for(int i = 0, n = S.Count; i < n; i++) {
 				var s = S[i];
-				if(s.Length() < threshold) continue;
+				if(s.sqrMagnitude() < sqrThreshold) continue;
 
 				for(int j = 0, m = P.Count; j < m; j++) {
 					if(s.EncroachedUpon(P[j].Pos)) {
@@ -330,25 +335,25 @@ namespace RayGraphics.Triangulation
 		/// <summary>
 		/// 精炼
 		/// </summary>
-		/// <param name="angle"></param>
-		/// <param name="threshold"></param>
-		void Refine (float angle, float threshold)  {
-			while(T.Any(t => !ExternalPSLG(t) && t.Skinny(angle, threshold))) {
-				RefineSubRoutine(angle, threshold);
+		/// <param name="sqrCosAngleValue"></param>
+		/// <param name="sqrThreshold">边长临界点的平方</param>
+		void Refine (float sqrCosAngleValue, float sqrThreshold)  {
+			while(T.Any(t => !ExternalPSLG(t) && t.Skinny(sqrCosAngleValue, sqrThreshold))) {
+				RefineSubRoutine(sqrCosAngleValue, sqrThreshold);
 			}
 		}
 		/// <summary>
 		/// 分割三角形
 		/// </summary>
-		/// <param name="angle"></param>
-		/// <param name="threshold"></param>
-		void RefineSubRoutine (float angle, float threshold) {
+		/// <param name="sqrCosAngleValue"></param>
+		/// <param name="sqrThreshold"></param>
+		void RefineSubRoutine (float sqrCosAngleValue, float sqrThreshold) {
 
 			while(true) { 
-				if(!FindAndSplit(threshold)) break; 
+				if(!FindAndSplit(sqrThreshold)) break; 
 			}
 
-			var skinny = T.Find (t => !ExternalPSLG(t) && t.Skinny(angle, threshold));
+			var skinny = T.Find (t => !ExternalPSLG(t) && t.Skinny(sqrCosAngleValue, sqrThreshold));
 			var p = skinny.Circumcenter();
 
 			var segments = S.FindAll(s => s.EncroachedUpon(p));
