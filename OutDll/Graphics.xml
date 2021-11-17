@@ -5748,6 +5748,23 @@
             </summary>
             <param name="listContour"></param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.Angle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            计算夹角大于指定的最小角度
+            </summary>
+            <param name="from"></param>
+            <param name="to0"></param>
+            <param name="to1"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.Skinny(System.Single,System.Single)">
+            <summary>
+            防止瘦骨嶙峋的三角形出现
+            </summary>
+            <param name="angle">为弧度角度,限制最小角度</param>
+            <param name="threshold">限制最大边长</param>
+            <returns></returns>
+        </member>
         <member name="P:RayGraphics.Triangulation.Triangulation2D.Polygon">
             <summary>
             多边形
@@ -5776,6 +5793,14 @@
             <param name="angle"></param>
             <param name="threshold"></param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.#ctor(RayGraphics.Triangulation.Polygon2D)">
+            <summary>
+            构建
+            </summary>
+            <param name="polygon"></param>
+            <param name="angle"></param>
+            <param name="threshold"></param>
+        </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.Bound(RayGraphics.Math.Float2[],RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
             计算bound
@@ -5783,6 +5808,93 @@
             <param name="points"></param>
             <param name="min"></param>
             <param name="max"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.RemoveExternalPSLG">
+            <summary>
+            移除外部三角形
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.ExternalPSLG(RayGraphics.Math.Float2)">
+            <summary>
+            点在多边形内
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.ExternalPSLG(RayGraphics.Triangulation.Segment2D)">
+            <summary>
+            线段在多边形内
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.ExternalPSLG(RayGraphics.Triangulation.Triangle2D)">
+            <summary>
+            检查三角形是否在多边形外
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.Refine(System.Single,System.Single)">
+            <summary>
+            精炼
+            </summary>
+            <param name="angle"></param>
+            <param name="threshold"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.RefineSubRoutine(System.Single,System.Single)">
+            <summary>
+            分割三角形
+            </summary>
+            <param name="angle"></param>
+            <param name="threshold"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Utils2D.Contains(RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Triangulation.Vertex2D})">
+            <summary>
+            点在多边形内
+            </summary>
+            <param name="p"></param>
+            <param name="vertices"></param>
+            <returns></returns>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Vertex2D.Index">
+            <summary>
+            记录在顶点列表的索引
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Vertex2D.ReferenceCount">
+            <summary>
+            引用次数
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Vertex2D.Pos">
+            <summary>
+            坐标
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Vertex2D.#ctor(RayGraphics.Math.Float2)">
+            <summary>
+            初始化
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Vertex2D.#ctor(RayGraphics.Math.Float2,System.Int32)">
+            <summary>
+            初始化
+            </summary>
+            <param name="pos"></param>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Vertex2D.Increment">
+            <summary>
+            增加引用此次
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Vertex2D.Decrement">
+            <summary>
+            减少饮用次数
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

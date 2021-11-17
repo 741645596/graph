@@ -16,12 +16,12 @@ namespace RayGraphics.Triangulation {
 		}
 
 		public static Circle2D GetCircumscribedCircle(Triangle2D triangle) {
-			var x1 = triangle.a.Coordinate.x;
-			var y1 = triangle.a.Coordinate.y;
-			var x2 = triangle.b.Coordinate.x;
-			var y2 = triangle.b.Coordinate.y;
-			var x3 = triangle.c.Coordinate.x;
-			var y3 = triangle.c.Coordinate.y;
+			var x1 = triangle.a.Pos.x;
+			var y1 = triangle.a.Pos.y;
+			var x2 = triangle.b.Pos.x;
+			var y2 = triangle.b.Pos.y;
+			var x3 = triangle.c.Pos.x;
+			var y3 = triangle.c.Pos.y;
 
 			float x1_2 = x1 * x1;
 			float x2_2 = x2 * x2;

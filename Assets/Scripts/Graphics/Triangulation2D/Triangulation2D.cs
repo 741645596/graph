@@ -55,12 +55,26 @@ namespace RayGraphics.Triangulation
 			PSLG = polygon;
 			V = PSLG.Vertices.ToList();
 			S = PSLG.Segments.ToList();
-			Triangulate (polygon.Vertices.Select(v => v.Coordinate).ToArray(), angle, threshold);
+			Triangulate (polygon.Vertices.Select(v => v.Pos).ToArray(), angle, threshold);
+		}
+
+		/// <summary>
+		/// 构建
+		/// </summary>
+		/// <param name="polygon"></param>
+		/// <param name="angle"></param>
+		/// <param name="threshold"></param>
+		public Triangulation2D(Polygon2D polygon)
+		{
+			PSLG = polygon;
+			V = PSLG.Vertices.ToList();
+			S = PSLG.Segments.ToList();
+			Triangulate(polygon.Vertices.Select(v => v.Pos).ToArray());
 		}
 
 		int FindVertex (Float2 p, List<Vertex2D> Vertices) {
 			return Vertices.FindIndex (v => { 
-				return v.Coordinate == p;
+				return v.Pos == p;
 			});
 		}
 
@@ -68,10 +82,11 @@ namespace RayGraphics.Triangulation
 			return Segments.FindIndex (s => (s.a == a && s.b == b) || (s.a == b && s.b == a));
 		}
 
-		public Vertex2D CheckAndAddVertex (Float2 coord) {
-			var idx = FindVertex(coord, P);
+		public Vertex2D CheckAndAddVertex (Float2 coord) 
+		{
+			int idx = FindVertex(coord, P);
 			if(idx < 0) {
-				var v = new Vertex2D(coord);
+				Vertex2D v = new Vertex2D(coord, P.Count);
 				P.Add(v);
 				return v;
 			}
@@ -162,8 +177,24 @@ namespace RayGraphics.Triangulation
 
 			Refine (angle, threshold);
 			RemoveExternalPSLG ();
-		}	
+		}
+		void Triangulate(Float2[] points)
+		{
+			Float2 min, max;
+			Bound(points, out min, out max);
 
+			AddExternalTriangle(min, max);
+
+			for (int i = 0, n = points.Length; i < n; i++)
+			{
+				var v = points[i];
+				UpdateTriangulation(v);
+			}
+			RemoveExternalPSLG();
+		}
+		/// <summary>
+		/// 移除外部三角形
+		/// </summary>
 		void RemoveExternalPSLG () {
 			for(int i = 0, n = T.Count; i < n; i++) {
 				var t = T[i];
@@ -178,8 +209,8 @@ namespace RayGraphics.Triangulation
 
 		bool ContainsSegments (Segment2D s, List<Segment2D> segments) {
 			return segments.FindIndex (s2 => 
-				(s2.a.Coordinate == s.a.Coordinate && s2.b.Coordinate == s.b.Coordinate) ||
-				(s2.a.Coordinate == s.b.Coordinate && s2.b.Coordinate == s.a.Coordinate)
+				(s2.a.Pos == s.a.Pos && s2.b.Pos == s.b.Pos) ||
+				(s2.a.Pos == s.b.Pos && s2.b.Pos == s.a.Pos)
 			) >= 0;
 		}
 
@@ -235,7 +266,7 @@ namespace RayGraphics.Triangulation
 				var d = abd.ExcludePoint(s);
 				
 				var ec = Circle2D.GetCircumscribedCircle(abc);
-				if(ec.Contains(d.Coordinate)) {
+				if(ec.Contains(d.Pos)) {
 					RemoveTriangle (abc);
 					RemoveTriangle (abd);
 					
@@ -260,7 +291,7 @@ namespace RayGraphics.Triangulation
 				if(s.Length() < threshold) continue;
 
 				for(int j = 0, m = P.Count; j < m; j++) {
-					if(s.EncroachedUpon(P[j].Coordinate)) {
+					if(s.EncroachedUpon(P[j].Pos)) {
 						SplitSegment(s);
 						return true;
 					}
@@ -268,29 +299,49 @@ namespace RayGraphics.Triangulation
 			}
 			return false;
 		}
-
+		/// <summary>
+		/// 点在多边形内
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
 		bool ExternalPSLG (Float2 p) {
 			return !Utils2D.Contains(p, V);
 		}
-
+		/// <summary>
+		/// 线段在多边形内
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		bool ExternalPSLG (Segment2D s) {
 			return ExternalPSLG(s.Midpoint());
 		}
-
+		/// <summary>
+		/// 检查三角形是否在多边形外
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
 		bool ExternalPSLG (Triangle2D t) {
 			return 
-				ExternalPSLG(t.a.Coordinate) ||
-				ExternalPSLG(t.b.Coordinate) ||
-				ExternalPSLG(t.c.Coordinate)
+				ExternalPSLG(t.a.Pos) ||
+				ExternalPSLG(t.b.Pos) ||
+				ExternalPSLG(t.c.Pos)
 			;
 		}
-
+		/// <summary>
+		/// 精炼
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <param name="threshold"></param>
 		void Refine (float angle, float threshold)  {
 			while(T.Any(t => !ExternalPSLG(t) && t.Skinny(angle, threshold))) {
 				RefineSubRoutine(angle, threshold);
 			}
 		}
-
+		/// <summary>
+		/// 分割三角形
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <param name="threshold"></param>
 		void RefineSubRoutine (float angle, float threshold) {
 
 			while(true) { 
@@ -315,23 +366,25 @@ namespace RayGraphics.Triangulation
 
 		void SplitSegment (Segment2D s) {
 			Vertex2D a = s.a, b = s.b;
-			var mv = new Vertex2D(s.Midpoint());
+			Vertex2D mv = new Vertex2D(s.Midpoint());
 
 			// add mv to V 
 			// the index is between a and b.
 			var idxA = V.IndexOf(a);
 			var idxB = V.IndexOf(b);
 			if(System.Math.Abs(idxA - idxB) == 1) {
-				var idx = (idxA > idxB) ? idxA : idxB;
+				int idx = (idxA > idxB) ? idxA : idxB;
+				mv.Index = idx;
 				V.Insert(idx, mv);
 			} else {
+				mv.Index = V.Count;
 				V.Add(mv);
 			}
 
-			UpdateTriangulation(mv.Coordinate);
+			UpdateTriangulation(mv.Pos);
 
 			// Add two halves to S
-			var sidx = S.IndexOf(s);
+			int sidx = S.IndexOf(s);
 			S.RemoveAt(sidx);
 
 			S.Add(new Segment2D(s.a, mv));

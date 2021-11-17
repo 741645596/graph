@@ -169,16 +169,15 @@ namespace RayGraphics.Triangulation{
 
 			return edges;
 		}
-
 		/// <summary>
 		/// 逆时针序
 		/// </summary>
 		/// <param name="listContour"></param>
 		public Polygon2D(List<Float2> listContour) {
 			vertices = new List<Vertex2D>();
-			foreach (Float2 v in listContour)
+			for (int i = 0; i < listContour.Count; i++)
 			{
-				vertices.Add(new Vertex2D(v));
+				vertices.Add(new Vertex2D(listContour[i], i));
 			}
 			segments = new List<Segment2D>();
 			for(int i = 0, n = vertices.Count; i < n; i++) {

@@ -22,34 +22,16 @@ namespace RayGraphics.Triangulation
 			return (a == p) || (b == p) || (c == p);
 		}
 
-		public bool HasCommonPoint (Triangle2D t) {
-			return HasPoint(t.a) || HasPoint(t.b) || HasPoint(t.c);
-		}
 
 		public bool HasSegment (Segment2D s) {
 			return (s0 == s) || (s1 == s) || (s2 == s);
 		}
 
-		public bool HasSegment (Float2 a, Float2 b) {
-			return (s0.HasPoint(a) && s0.HasPoint(b)) || (s1.HasPoint(a) && s1.HasPoint(b)) || (s2.HasPoint(a) && s2.HasPoint(b));
-		}
 
 		public Vertex2D ExcludePoint (Segment2D s) {
 			if(!s.HasPoint(a)) return a;
 			else if(!s.HasPoint(b)) return b;
 			return c;
-		}
-
-		public Vertex2D ExcludePoint (Float2 p0, Float2 p1) {
-			if(p0 != a.Coordinate && p1 != a.Coordinate) return a;
-			else if(p0 != b.Coordinate && p1 != b.Coordinate) return b;
-			return c;
-		}
-
-		public Vertex2D[] ExcludePoint (Float2 p) {
-			if(p == a.Coordinate) return new Vertex2D[] { b, c };
-			else if(p == b.Coordinate) return new Vertex2D[] { a, c };
-			return new Vertex2D[] { a, b };
 		}
 
 		public Segment2D[] ExcludeSegment (Segment2D s) {
@@ -61,23 +43,6 @@ namespace RayGraphics.Triangulation
 			return new Segment2D[] { s0, s1 };
 		}
 
-		public Segment2D CommonSegment (Vertex2D v0, Vertex2D v1) {
-			if(s0.HasPoint(v0) && s0.HasPoint(v1)) {
-				return s0;
-			} else if(s1.HasPoint(v0) && s1.HasPoint(v1)) {
-				return s1;
-			}
-			return s2;
-		}
-
-		public Segment2D[] CommonSegments (Vertex2D v) {
-			if(s0.HasPoint(v) && s1.HasPoint(v)) {
-				return new [] {s0, s1};
-			} else if(s1.HasPoint(v) && s2.HasPoint(v)) {
-				return new [] {s1, s2};
-			}
-			return new [] {s0, s2};
-		}
 
 		public Float2 Circumcenter () {
 			if(circum == null) {
@@ -90,12 +55,18 @@ namespace RayGraphics.Triangulation
 			if(circum == null) {
 				circum = Circle2D.GetCircumscribedCircle(this);
 			}
-			return circum.Contains(v.Coordinate);
+			return circum.Contains(v.Pos);
 		}
-
-		float Angle (Float2 from, Float2 to0, Float2 to1) {
-			var v0 = (to0 - from);
-			var v1 = (to1 - from);
+		/// <summary>
+		/// 计算夹角大于指定的最小角度
+		/// </summary>
+		/// <param name="from"></param>
+		/// <param name="to0"></param>
+		/// <param name="to1"></param>
+		/// <returns></returns>
+		private float Angle(Float2 from, Float2 to0, Float2 to1) {
+			Float2 v0 = to0 - from;
+			Float2 v1 = to1 - from;
 
 			double sqrt = System.Math.Sqrt(v0.sqrMagnitude * v1.sqrMagnitude);
 			// 0 ~ PI
@@ -103,14 +74,19 @@ namespace RayGraphics.Triangulation
 
 			return acos;
 		}
-
-		// angle must to RADIAN
+		/// <summary>
+		/// 防止瘦骨嶙峋的三角形出现
+		/// </summary>
+		/// <param name="angle">为弧度角度,限制最小角度</param>
+		/// <param name="threshold">限制最大边长</param>
+		/// <returns></returns>
 		public bool Skinny (float angle, float threshold) {
-			if(s0.Length() <= threshold && s1.Length() <= threshold && s2.Length() <= threshold) return false;
+			if(s0.Length() <= threshold && s1.Length() <= threshold && s2.Length() <= threshold) 
+				return false;
 
-			if(Angle(a.Coordinate, b.Coordinate, c.Coordinate) < angle) return true; // angle bac
-			else if(Angle(b.Coordinate, a.Coordinate, c.Coordinate) < angle) return true; // angle abc
-			else if(Angle(c.Coordinate, a.Coordinate, b.Coordinate) < angle) return true; // angle acb
+			if(Angle(a.Pos, b.Pos, c.Pos) < angle) return true; // angle bac
+			else if(Angle(b.Pos, a.Pos, c.Pos) < angle) return true; // angle abc
+			else if(Angle(c.Pos, a.Pos, b.Pos) < angle) return true; // angle acb
 			return false;
 		}
 

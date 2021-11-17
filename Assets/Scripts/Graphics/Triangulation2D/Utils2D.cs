@@ -40,14 +40,20 @@ namespace RayGraphics.Triangulation
 		}
 
 		// http://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
+		/// <summary>
+		/// 点在多边形内
+		/// </summary>
+		/// <param name="p"></param>
+		/// <param name="vertices"></param>
+		/// <returns></returns>
 		public static bool Contains (Float2 p, List<Vertex2D> vertices) {
 			var n = vertices.Count;
 			bool c = false;
 			for(int i = 0, j = n - 1; i < n; j = i++) {
-				if(vertices[i].Coordinate == p) return true;
+				if(vertices[i].Pos == p) return true;
 				if (
-					((vertices[i].Coordinate.y > p.y) != (vertices[j].Coordinate.y > p.y)) &&
-					(p.x < (vertices[j].Coordinate.x - vertices[i].Coordinate.x) * (p.y - vertices[i].Coordinate.y) / (vertices[j].Coordinate.y - vertices[i].Coordinate.y) + vertices[i].Coordinate.x)
+					((vertices[i].Pos.y > p.y) != (vertices[j].Pos.y > p.y)) &&
+					(p.x < (vertices[j].Pos.x - vertices[i].Pos.x) * (p.y - vertices[i].Pos.y) / (vertices[j].Pos.y - vertices[i].Pos.y) + vertices[i].Pos.x)
 				) {
 					c = !c;
 				}
@@ -63,7 +69,7 @@ namespace RayGraphics.Triangulation
 		}
 
 		public static bool CheckEqual (Vertex2D v0, Vertex2D v1) {
-			return (v0.Coordinate == v1.Coordinate);
+			return (v0.Pos == v1.Pos);
 		}
 
 		public static bool CheckEqual (Segment2D s0, Segment2D s1) {
