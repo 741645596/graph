@@ -5718,6 +5718,16 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:RayGraphics.Triangulation.Polygon2D.Vertices">
+            <summary>
+            顶点
+            </summary>
+        </member>
+        <member name="P:RayGraphics.Triangulation.Polygon2D.Segments">
+            <summary>
+            线段
+            </summary>
+        </member>
         <member name="M:RayGraphics.Triangulation.Polygon2D.ConvexHull(RayGraphics.Math.Float2[])">
             <summary>
             凸多边形
@@ -5731,6 +5741,12 @@
             </summary>
             <param name="points"></param>
             <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Polygon2D.#ctor(System.Collections.Generic.List{RayGraphics.Math.Float2})">
+            <summary>
+            逆时针序
+            </summary>
+            <param name="listContour"></param>
         </member>
         <member name="P:RayGraphics.Triangulation.Triangulation2D.Polygon">
             <summary>

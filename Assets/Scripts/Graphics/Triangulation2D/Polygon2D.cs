@@ -6,11 +6,16 @@ namespace RayGraphics.Triangulation{
 
 	public class Polygon2D {
 
+		/// <summary>
+		/// 顶点
+		/// </summary>
 		public Vertex2D[] Vertices { get { return vertices.ToArray(); } }
+		private List<Vertex2D> vertices;
+		/// <summary>
+		/// 线段
+		/// </summary>
 		public Segment2D[] Segments { get { return segments.ToArray(); } }
-
-		List<Vertex2D> vertices;
-		List<Segment2D> segments;
+		private List<Segment2D> segments;
         /// <summary>
 		/// 凸多边形
 		/// </summary>
@@ -57,7 +62,7 @@ namespace RayGraphics.Triangulation{
 
 			upper.AddRange (lower);
 
-			return new Polygon2D(upper.ToArray());
+			return new Polygon2D(upper);
 		}
 		/// <summary>
 		/// 生成轮廓
@@ -126,11 +131,12 @@ namespace RayGraphics.Triangulation{
 
 			result.RemoveAt(result.Count - 1); // remove last
 
-			return new Polygon2D(result.ToArray());
+			return new Polygon2D(result);
 		}
 
 		// Disable to intersect more than two edges
-		static List<HalfEdge2D> SplitEdges (List<HalfEdge2D> edges) {
+		private static List<HalfEdge2D> SplitEdges (List<HalfEdge2D> edges) 
+		{
 			HalfEdge2D start = edges[0];
 			HalfEdge2D cur = start;
 
@@ -164,9 +170,16 @@ namespace RayGraphics.Triangulation{
 			return edges;
 		}
 
-		// contour must be inversed clockwise order.
-		public Polygon2D (Float2[] contour) {
-			vertices = contour.Select(p => new Vertex2D(p)).ToList();
+		/// <summary>
+		/// 逆时针序
+		/// </summary>
+		/// <param name="listContour"></param>
+		public Polygon2D(List<Float2> listContour) {
+			vertices = new List<Vertex2D>();
+			foreach (Float2 v in listContour)
+			{
+				vertices.Add(new Vertex2D(v));
+			}
 			segments = new List<Segment2D>();
 			for(int i = 0, n = vertices.Count; i < n; i++) {
 				var v0 = vertices[i];
