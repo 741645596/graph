@@ -5777,17 +5777,15 @@
             被引用次数
             </summary>
         </member>
-        <member name="M:RayGraphics.Triangulation.Segment2D.Midpoint">
+        <member name="F:RayGraphics.Triangulation.Segment2D.SqrLength">
             <summary>
-            中点
+            平方长度
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:RayGraphics.Triangulation.Segment2D.sqrMagnitude">
+        <member name="P:RayGraphics.Triangulation.Segment2D.MidPoint">
             <summary>
-            边长的平方
+            中心点
             </summary>
-            <returns></returns>
         </member>
         <member name="M:RayGraphics.Triangulation.Segment2D.HasPoint(RayGraphics.Triangulation.Vertex2D)">
             <summary>
@@ -5849,7 +5847,7 @@
             防止瘦骨嶙峋的三角形出现
             </summary>
             <param name="sqrCosAngleValue">为弧度角度,限制最小角度</param>
-            <param name="sqrThreshold">边长临界的平方 限制最大边长</param>
+            <param name="sqrThreshold">所有边都小于临界的边，这类三角形不再细分</param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Triangulation.Triangle2D.Equals(RayGraphics.Triangulation.Triangle2D)">
@@ -5887,13 +5885,13 @@
             <param name="angle"></param>
             <param name="threshold"></param>
         </member>
-        <member name="M:RayGraphics.Triangulation.Triangulation2D.#ctor(RayGraphics.Triangulation.Polygon2D)">
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.#ctor(RayGraphics.Triangulation.Polygon2D,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
             <summary>
-            构建
+            
             </summary>
             <param name="polygon"></param>
-            <param name="angle"></param>
-            <param name="threshold"></param>
+            <param name="min"></param>
+            <param name="max"></param>
         </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.Bound(RayGraphics.Math.Float2[],RayGraphics.Math.Float2@,RayGraphics.Math.Float2@)">
             <summary>
@@ -5919,7 +5917,7 @@
             <param name="sqrCosAngleValue"></param>
             <param name="sqrThreshold">边长临界点的平方</param>
         </member>
-        <member name="M:RayGraphics.Triangulation.Triangulation2D.Triangulate(RayGraphics.Math.Float2[])">
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.Triangulate(RayGraphics.Math.Float2[],RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
             <summary>
             构建三角形
             </summary>
@@ -5972,6 +5970,12 @@
             <param name="sqrCosAngleValue"></param>
             <param name="sqrThreshold"></param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.SplitSegment(RayGraphics.Triangulation.Segment2D)">
+            <summary>
+            分割三角形
+            </summary>
+            <param name="s"></param>
+        </member>
         <member name="M:RayGraphics.Triangulation.Utils2D.Contains(RayGraphics.Math.Float2,System.Collections.Generic.List{RayGraphics.Triangulation.Vertex2D})">
             <summary>
             点在多边形内
@@ -5979,11 +5983,6 @@
             <param name="p"></param>
             <param name="vertices"></param>
             <returns></returns>
-        </member>
-        <member name="P:RayGraphics.Triangulation.Vertex2D.Index">
-            <summary>
-            记录在顶点列表的索引
-            </summary>
         </member>
         <member name="P:RayGraphics.Triangulation.Vertex2D.ReferenceCount">
             <summary>
@@ -5996,12 +5995,6 @@
             </summary>
         </member>
         <member name="M:RayGraphics.Triangulation.Vertex2D.#ctor(RayGraphics.Math.Float2)">
-            <summary>
-            初始化
-            </summary>
-            <param name="pos"></param>
-        </member>
-        <member name="M:RayGraphics.Triangulation.Vertex2D.#ctor(RayGraphics.Math.Float2,System.Int32)">
             <summary>
             初始化
             </summary>

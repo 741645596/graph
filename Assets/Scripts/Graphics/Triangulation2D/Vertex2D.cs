@@ -4,16 +4,6 @@ namespace RayGraphics.Triangulation
 {
 
 	public class Vertex2D {
-
-		private int index;
-		/// <summary>
-		/// 记录在顶点列表的索引
-		/// </summary>
-		public int Index {
-			get { return index; }
-			set { index = value; }
-		}
-
 		private int reference;
 		/// <summary>
 		/// 引用次数
@@ -29,30 +19,24 @@ namespace RayGraphics.Triangulation
 		/// 初始化
 		/// </summary>
 		/// <param name="pos"></param>
-		public Vertex2D (Float2 pos) {
-		    this.pos = pos;
-		}
-		/// <summary>
-		/// 初始化
-		/// </summary>
-		/// <param name="pos"></param>
-		public Vertex2D(Float2 pos,int index)
+		public Vertex2D(Float2 pos)
 		{
 			this.pos = pos;
-			this.index = index;
 		}
 		/// <summary>
 		/// 增加引用此次
 		/// </summary>
 		/// <returns></returns>
-		public int Increment () {
+		public int Increment () 
+		{
 			return ++reference;
 		}
 		/// <summary>
 		/// 减少饮用次数
 		/// </summary>
 		/// <returns></returns>
-		public int Decrement () {
+		public int Decrement () 
+		{
 			return --reference;
 		}
 	}

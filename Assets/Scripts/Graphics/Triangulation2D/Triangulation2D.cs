@@ -49,7 +49,7 @@ namespace RayGraphics.Triangulation
 		/// <param name="polygon"></param>
 		/// <param name="angle"></param>
 		/// <param name="threshold"></param>
-		public Triangulation2D (Polygon2D polygon, float angle = 20.0f, float threshold = 0.1f) 
+		public Triangulation2D (Polygon2D polygon, float angle , float threshold = 0.1f) 
 		{
 			float sqrThreshold = threshold * threshold;
 			angle =(float) (System.Math.Min(angle, kAngleMax) * System.Math.PI / 180.0f);
@@ -61,22 +61,22 @@ namespace RayGraphics.Triangulation
 			S = PSLG.Segments.ToList();
 			Triangulate (polygon.Vertices.Select(v => v.Pos).ToArray(), sqrCosAngleValue, sqrThreshold);
 		}
-
-		/// <summary>
-		/// 构建
+        /// <summary>
+		/// 
 		/// </summary>
 		/// <param name="polygon"></param>
-		/// <param name="angle"></param>
-		/// <param name="threshold"></param>
-		public Triangulation2D(Polygon2D polygon)
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		public Triangulation2D(Polygon2D polygon, Float2 min, Float2 max)
 		{
 			PSLG = polygon;
 			V = PSLG.Vertices.ToList();
 			S = PSLG.Segments.ToList();
-			Triangulate(polygon.Vertices.Select(v => v.Pos).ToArray());
+			Triangulate(polygon.Vertices.Select(v => v.Pos).ToArray(), min,  max);
 		}
 
-		int FindVertex (Float2 p, List<Vertex2D> Vertices) {
+		int FindVertex (Float2 p, List<Vertex2D> Vertices) 
+		{
 			return Vertices.FindIndex (v => { 
 				return v.Pos == p;
 			});
@@ -90,7 +90,7 @@ namespace RayGraphics.Triangulation
 		{
 			int idx = FindVertex(coord, P);
 			if(idx < 0) {
-				Vertex2D v = new Vertex2D(coord, P.Count);
+				Vertex2D v = new Vertex2D(coord);
 				P.Add(v);
 				return v;
 			}
@@ -119,7 +119,8 @@ namespace RayGraphics.Triangulation
 			return t;
 		}
 
-		public void RemoveTriangle (Triangle2D t) {
+		public void RemoveTriangle (Triangle2D t) 
+		{
 			var idx = T.IndexOf(t);
 			if(idx < 0) return;
 
@@ -140,7 +141,8 @@ namespace RayGraphics.Triangulation
 		/// <param name="points"></param>
 		/// <param name="min"></param>
 		/// <param name="max"></param>
-		void Bound (Float2[] points, out Float2 min, out Float2 max) {
+		void Bound (Float2[] points, out Float2 min, out Float2 max) 
+		{
 			min = Float2.one * float.MaxValue;
 			max = Float2.one * float.MinValue;
 			for(int i = 0, n = points.Length; i < n; i++) {
@@ -192,11 +194,8 @@ namespace RayGraphics.Triangulation
 		/// 构建三角形
 		/// </summary>
 		/// <param name="points"></param>
-		private void Triangulate(Float2[] points)
+		private void Triangulate(Float2[] points, Float2 min, Float2 max)
 		{
-			Float2 min, max;
-			Bound(points, out min, out max);
-
 			AddExternalTriangle(min, max);
 
 			for (int i = 0, n = points.Length; i < n; i++)
@@ -307,7 +306,7 @@ namespace RayGraphics.Triangulation
 		{
 			for(int i = 0, n = S.Count; i < n; i++) {
 				var s = S[i];
-				if(s.sqrMagnitude() < sqrThreshold) continue;
+				if(s.SqrLength < sqrThreshold) continue;
 
 				for(int j = 0, m = P.Count; j < m; j++) 
 				{
@@ -324,7 +323,8 @@ namespace RayGraphics.Triangulation
 		/// </summary>
 		/// <param name="p"></param>
 		/// <returns></returns>
-		bool ExternalPSLG (Float2 p) {
+		bool ExternalPSLG (Float2 p) 
+		{
 			return !Utils2D.Contains(p, V);
 		}
 		/// <summary>
@@ -332,15 +332,17 @@ namespace RayGraphics.Triangulation
 		/// </summary>
 		/// <param name="s"></param>
 		/// <returns></returns>
-		bool ExternalPSLG (Segment2D s) {
-			return ExternalPSLG(s.Midpoint());
+		bool ExternalPSLG (Segment2D s) 
+		{
+			return ExternalPSLG(s.MidPoint);
 		}
 		/// <summary>
 		/// 检查三角形是否在多边形外
 		/// </summary>
 		/// <param name="t"></param>
 		/// <returns></returns>
-		bool ExternalPSLG (Triangle2D t) {
+		bool ExternalPSLG (Triangle2D t) 
+		{
 			return 
 				ExternalPSLG(t.a.Pos) ||
 				ExternalPSLG(t.b.Pos) ||
@@ -352,8 +354,10 @@ namespace RayGraphics.Triangulation
 		/// </summary>
 		/// <param name="sqrCosAngleValue"></param>
 		/// <param name="sqrThreshold">边长临界点的平方</param>
-		void Refine (float sqrCosAngleValue, float sqrThreshold)  {
-			while(T.Any(t => !ExternalPSLG(t) && t.Skinny(sqrCosAngleValue, sqrThreshold))) {
+		void Refine (float sqrCosAngleValue, float sqrThreshold) 
+		{
+			while(T.Any(t => !ExternalPSLG(t) && t.Skinny(sqrCosAngleValue, sqrThreshold))) 
+			{
 				RefineSubRoutine(sqrCosAngleValue, sqrThreshold);
 			}
 		}
@@ -362,9 +366,10 @@ namespace RayGraphics.Triangulation
 		/// </summary>
 		/// <param name="sqrCosAngleValue"></param>
 		/// <param name="sqrThreshold"></param>
-		void RefineSubRoutine (float sqrCosAngleValue, float sqrThreshold) {
-
-			while(true) { 
+		void RefineSubRoutine (float sqrCosAngleValue, float sqrThreshold) 
+		{
+			while(true) 
+			{ 
 				if(!FindAndSplit(sqrThreshold)) break; 
 			}
 
@@ -384,22 +389,22 @@ namespace RayGraphics.Triangulation
 			var c = t.Circumcenter();
 			UpdateTriangulation(c);
 		}
-
+		/// <summary>
+		/// 分割三角形
+		/// </summary>
+		/// <param name="s"></param>
 		private void SplitSegment (Segment2D s) 
 		{
 			Vertex2D a = s.a, b = s.b;
-			Vertex2D mv = new Vertex2D(s.Midpoint());
-
+			Vertex2D mv = new Vertex2D(s.MidPoint);
 			// add mv to V 
 			// the index is between a and b.
 			var idxA = V.IndexOf(a);
 			var idxB = V.IndexOf(b);
 			if(System.Math.Abs(idxA - idxB) == 1) {
 				int idx = (idxA > idxB) ? idxA : idxB;
-				mv.Index = idx;
 				V.Insert(idx, mv);
 			} else {
-				mv.Index = V.Count;
 				V.Add(mv);
 			}
 

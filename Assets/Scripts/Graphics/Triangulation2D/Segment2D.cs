@@ -9,42 +9,37 @@ namespace RayGraphics.Triangulation
 		/// 被引用次数
 		/// </summary>
 		private int reference;
-		float length;
+
+		private float sqrLength;
+		/// <summary>
+		/// 平方长度
+		/// </summary>
+		public float SqrLength;
+		private Float2 midPoint;
+		/// <summary>
+		/// 中心点
+		/// </summary>
+		public Float2 MidPoint
+		{
+			get { return midPoint; }
+		}
 
 		public Segment2D (Vertex2D a, Vertex2D b) 
 		{
 			this.a = a;
 			this.b = b;
+			this.sqrLength = (a.Pos - b.Pos).sqrMagnitude;
+			this.midPoint = (a.Pos + b.Pos) * 0.5f;
 		}
-		/// <summary>
-		/// 中点
-		/// </summary>
-		/// <returns></returns>
-		public Float2 Midpoint ()
-		{
-			return (a.Pos + b.Pos) * 0.5f;
-		}
-		/// <summary>
-		/// 边长的平方
-		/// </summary>
-		/// <returns></returns>
-		public float sqrMagnitude () {
-			if(length <= 0f) 
-			{
-				length = (a.Pos - b.Pos).sqrMagnitude;
-			}
-			return length;
-		}
-
 		/*
 		 * check a given point "p" lies within diametral circle of segment(a, b) 
 		 */
-		public bool EncroachedUpon (Float2 p) {
+		public bool EncroachedUpon (Float2 p) 
+		{
 			if(p == a.Pos || p == b.Pos) return false;
-			float sqrRadius = (a.Pos - b.Pos).sqrMagnitude / 4;
-			return (Midpoint() - p).sqrMagnitude < sqrRadius;
+			float sqrRadius = this.sqrLength / 4;
+			return (this.midPoint - p).sqrMagnitude < sqrRadius;
 		}
-
 		/// <summary>
 		/// 判断是否包含点
 		/// </summary>

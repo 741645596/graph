@@ -177,7 +177,7 @@ namespace RayGraphics.Triangulation{
 			vertices = new List<Vertex2D>();
 			for (int i = 0; i < listContour.Count; i++)
 			{
-				vertices.Add(new Vertex2D(listContour[i], i));
+				vertices.Add(new Vertex2D(listContour[i]));
 			}
 			segments = new List<Segment2D>();
 			for(int i = 0, n = vertices.Count; i < n; i++) {

@@ -96,12 +96,12 @@ namespace RayGraphics.Triangulation
 		/// 防止瘦骨嶙峋的三角形出现
 		/// </summary>
 		/// <param name="sqrCosAngleValue">为弧度角度,限制最小角度</param>
-		/// <param name="sqrThreshold">边长临界的平方 限制最大边长</param>
+		/// <param name="sqrThreshold">所有边都小于临界的边，这类三角形不再细分</param>
 		/// <returns></returns>
 		public bool Skinny (float sqrCosAngleValue, float sqrThreshold) {
-			if(s0.sqrMagnitude() <= sqrThreshold 
-				&& s1.sqrMagnitude() <= sqrThreshold 
-				&& s2.sqrMagnitude() <= sqrThreshold) 
+			if(s0.SqrLength <= sqrThreshold 
+				&& s1.SqrLength <= sqrThreshold 
+				&& s2.SqrLength <= sqrThreshold) 
 				return false;
 
 			if (SqrCosAngle(a.Pos, b.Pos, c.Pos) > sqrCosAngleValue) return true; // angle bac
