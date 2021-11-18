@@ -5718,6 +5718,30 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="F:RayGraphics.Triangulation.Circle2D.center">
+            <summary>
+            圆心
+            </summary>
+        </member>
+        <member name="F:RayGraphics.Triangulation.Circle2D.sqrRadius">
+            <summary>
+            半径d的平方
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Circle2D.Contains(RayGraphics.Math.Float2)">
+            <summary>
+            判断有没在园内
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Circle2D.GetCircumscribedCircle(RayGraphics.Triangulation.Triangle2D)">
+            <summary>
+            外接圆
+            </summary>
+            <param name="triangle"></param>
+            <returns></returns>
+        </member>
         <member name="P:RayGraphics.Triangulation.Polygon2D.Vertices">
             <summary>
             顶点
@@ -5748,10 +5772,67 @@
             </summary>
             <param name="listContour"></param>
         </member>
+        <member name="F:RayGraphics.Triangulation.Segment2D.reference">
+            <summary>
+            被引用次数
+            </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Segment2D.Midpoint">
+            <summary>
+            中点
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Triangulation.Segment2D.sqrMagnitude">
             <summary>
             边长的平方
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Segment2D.HasPoint(RayGraphics.Triangulation.Vertex2D)">
+            <summary>
+            判断是否包含点
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Segment2D.Increment">
+            <summary>
+            被引用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Segment2D.Decrement">
+            <summary>
+            减少引用
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.ExcludePoint(RayGraphics.Triangulation.Segment2D)">
+            <summary>
+            获取另外一个点
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.ExcludeSegment(RayGraphics.Triangulation.Segment2D)">
+            <summary>
+            获取另外2条边
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.Circumcenter">
+            <summary>
+            获取外接圆的圆心
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.ContainsInExternalCircle(RayGraphics.Triangulation.Vertex2D)">
+            <summary>
+            判断在外接圆内
+            </summary>
+            <param name="v"></param>
             <returns></returns>
         </member>
         <member name="M:RayGraphics.Triangulation.Triangle2D.SqrCosAngle(RayGraphics.Math.Float2,RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
@@ -5769,6 +5850,13 @@
             </summary>
             <param name="sqrCosAngleValue">为弧度角度,限制最小角度</param>
             <param name="sqrThreshold">边长临界的平方 限制最大边长</param>
+            <returns></returns>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangle2D.Equals(RayGraphics.Triangulation.Triangle2D)">
+            <summary>
+            判断2个三角形相等
+            </summary>
+            <param name="t"></param>
             <returns></returns>
         </member>
         <member name="P:RayGraphics.Triangulation.Triangulation2D.Polygon">
@@ -5815,6 +5903,14 @@
             <param name="min"></param>
             <param name="max"></param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.AddExternalTriangle(RayGraphics.Math.Float2,RayGraphics.Math.Float2)">
+            <summary>
+            添加外部三角形
+            </summary>
+            <param name="min"></param>
+            <param name="max"></param>
+            <returns></returns>
+        </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.Triangulate(RayGraphics.Math.Float2[],System.Single,System.Single)">
             <summary>
             
@@ -5823,10 +5919,23 @@
             <param name="sqrCosAngleValue"></param>
             <param name="sqrThreshold">边长临界点的平方</param>
         </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.Triangulate(RayGraphics.Math.Float2[])">
+            <summary>
+            构建三角形
+            </summary>
+            <param name="points"></param>
+        </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.RemoveExternalPSLG">
             <summary>
             移除外部三角形
             </summary>
+        </member>
+        <member name="M:RayGraphics.Triangulation.Triangulation2D.FindAndSplit(System.Single)">
+            <summary>
+            发现并分割三角形
+            </summary>
+            <param name="sqrThreshold"></param>
+            <returns></returns>
         </member>
         <member name="M:RayGraphics.Triangulation.Triangulation2D.ExternalPSLG(RayGraphics.Math.Float2)">
             <summary>

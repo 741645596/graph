@@ -151,11 +151,16 @@ namespace RayGraphics.Triangulation
 				max.y = System.Math.Max (max.y, p.y);
 			}
 		}
-
+		/// <summary>
+		/// 添加外部三角形
+		/// </summary>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
 		public Triangle2D AddExternalTriangle (Float2 min, Float2 max) {
-			var center = (max + min) * 0.5f;
-			var diagonal = (max - min).magnitude;
-			var dh = diagonal * 0.5f;
+			Float2 center = (max + min) * 0.5f;
+			float diagonal = (max - min).magnitude;
+			float dh = diagonal * 0.5f;
 			var rdh = System.Math.Sqrt(3f) * dh;
 			return AddTriangle(
 				CheckAndAddVertex(center + new Float2(-rdh, -dh) * 3f),
@@ -183,7 +188,11 @@ namespace RayGraphics.Triangulation
 			Refine (sqrCosAngleValue, sqrThreshold);
 			RemoveExternalPSLG ();
 		}
-		void Triangulate(Float2[] points)
+		/// <summary>
+		/// 构建三角形
+		/// </summary>
+		/// <param name="points"></param>
+		private void Triangulate(Float2[] points)
 		{
 			Float2 min, max;
 			Bound(points, out min, out max);
@@ -289,13 +298,19 @@ namespace RayGraphics.Triangulation
 			}
 
 		}
-
-		bool FindAndSplit (float sqrThreshold) {
+		/// <summary>
+		/// 发现并分割三角形
+		/// </summary>
+		/// <param name="sqrThreshold"></param>
+		/// <returns></returns>
+		private bool FindAndSplit (float sqrThreshold) 
+		{
 			for(int i = 0, n = S.Count; i < n; i++) {
 				var s = S[i];
 				if(s.sqrMagnitude() < sqrThreshold) continue;
 
-				for(int j = 0, m = P.Count; j < m; j++) {
+				for(int j = 0, m = P.Count; j < m; j++) 
+				{
 					if(s.EncroachedUpon(P[j].Pos)) {
 						SplitSegment(s);
 						return true;
@@ -364,12 +379,14 @@ namespace RayGraphics.Triangulation
 			}
 		}
 
-		void SplitTriangle (Triangle2D t) {
+		private void SplitTriangle (Triangle2D t) 
+		{
 			var c = t.Circumcenter();
 			UpdateTriangulation(c);
 		}
 
-		void SplitSegment (Segment2D s) {
+		private void SplitSegment (Segment2D s) 
+		{
 			Vertex2D a = s.a, b = s.b;
 			Vertex2D mv = new Vertex2D(s.Midpoint());
 

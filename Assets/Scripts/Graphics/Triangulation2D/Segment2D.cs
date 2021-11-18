@@ -4,19 +4,24 @@ namespace RayGraphics.Triangulation
 {
 
 	public class Segment2D {
-
-		public int ReferenceCount { get { return reference; } }
 		public Vertex2D a, b;
-
+		/// <summary>
+		/// 被引用次数
+		/// </summary>
 		private int reference;
 		float length;
 
-		public Segment2D (Vertex2D a, Vertex2D b) {
+		public Segment2D (Vertex2D a, Vertex2D b) 
+		{
 			this.a = a;
 			this.b = b;
 		}
-
-		public Float2 Midpoint () {
+		/// <summary>
+		/// 中点
+		/// </summary>
+		/// <returns></returns>
+		public Float2 Midpoint ()
+		{
 			return (a.Pos + b.Pos) * 0.5f;
 		}
 		/// <summary>
@@ -24,7 +29,8 @@ namespace RayGraphics.Triangulation
 		/// </summary>
 		/// <returns></returns>
 		public float sqrMagnitude () {
-			if(length <= 0f) {
+			if(length <= 0f) 
+			{
 				length = (a.Pos - b.Pos).sqrMagnitude;
 			}
 			return length;
@@ -39,21 +45,28 @@ namespace RayGraphics.Triangulation
 			return (Midpoint() - p).sqrMagnitude < sqrRadius;
 		}
 
-
-		public bool HasPoint (Vertex2D v) {
+		/// <summary>
+		/// 判断是否包含点
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
+		public bool HasPoint (Vertex2D v) 
+		{
 			return (a == v) || (b == v);
 		}
-
-		public bool HasPoint (Float2 p) {
-			return (a.Pos == p) || (b.Pos == p);
-		}
-
+		/// <summary>
+		/// 被引用
+		/// </summary>
+		/// <returns></returns>
 		public int Increment () {
 			a.Increment();
 			b.Increment();
 			return ++reference;
 		}
-
+		/// <summary>
+		/// 减少引用
+		/// </summary>
+		/// <returns></returns>
 		public int Decrement () {
 			a.Decrement();
 			b.Decrement();

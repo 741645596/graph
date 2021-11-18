@@ -27,13 +27,21 @@ namespace RayGraphics.Triangulation
 			return (s0 == s) || (s1 == s) || (s2 == s);
 		}
 
-
+		/// <summary>
+		/// 获取另外一个点
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		public Vertex2D ExcludePoint (Segment2D s) {
 			if(!s.HasPoint(a)) return a;
 			else if(!s.HasPoint(b)) return b;
 			return c;
 		}
-
+		/// <summary>
+		/// 获取另外2条边
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
 		public Segment2D[] ExcludeSegment (Segment2D s) {
 			if(s0.Equals(s)) {
 				return new Segment2D[] { s1, s2 };
@@ -43,14 +51,22 @@ namespace RayGraphics.Triangulation
 			return new Segment2D[] { s0, s1 };
 		}
 
-
+		/// <summary>
+		/// 获取外接圆的圆心
+		/// </summary>
+		/// <returns></returns>
 		public Float2 Circumcenter () {
-			if(circum == null) {
+			if(circum == null) 
+			{
 				circum = Circle2D.GetCircumscribedCircle(this);
 			}
 			return circum.center;
 		}
-
+		/// <summary>
+		/// 判断在外接圆内
+		/// </summary>
+		/// <param name="v"></param>
+		/// <returns></returns>
 		public bool ContainsInExternalCircle (Vertex2D v) {
 			if(circum == null) {
 				circum = Circle2D.GetCircumscribedCircle(this);
@@ -93,8 +109,13 @@ namespace RayGraphics.Triangulation
 			else if(SqrCosAngle(c.Pos, a.Pos, b.Pos) > sqrCosAngleValue) return true; // angle acb
 			return false;
 		}
-
-		public bool Equals (Triangle2D t) {
+		/// <summary>
+		/// 判断2个三角形相等
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		public bool Equals (Triangle2D t) 
+		{
 			return HasPoint(t.a) && HasPoint(t.b) && HasPoint(t.c);
 		}
 	}
