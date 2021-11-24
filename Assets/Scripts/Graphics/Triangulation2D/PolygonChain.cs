@@ -1,4 +1,5 @@
 ﻿using RayGraphics.Math;
+using RayGraphics.Geometric;
 using System.Collections.Generic;
 /// <summary>
 /// 多边形链
@@ -65,6 +66,9 @@ public class PolygonChain
     /// <returns></returns>
     private List<Index2> TriangulationDiagonal()
     {
+        // y 从小到大
+
+        // y 从到到小
         return null;
     }
     /// <summary>
@@ -310,7 +314,7 @@ public class YPoints
     /// // x: 保存x坐标。 y保存索引
     /// 同时按x 从小到大进行了排序
     /// </summary>
-    public List<Float2> listXIndex = new List<Float2>();
+    public List<VertexInfo> listXIndex = new List<VertexInfo>();
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -330,13 +334,13 @@ public class YPoints
         if (count == 0)
         {
             this.y = v.pos.y;
-            this.listXIndex.Add(new Float2(v.pos.x, v.index));
+            this.listXIndex.Add(v);
         }
         else 
         {
             if (v.pos.y == this.y)
             {
-                BinaryInsert(new Float2(v.pos.x, v.index),0, count - 1);
+                BinaryInsert(v, 0, count - 1);
             }
         }
     }
@@ -352,15 +356,15 @@ public class YPoints
         while (minIndex <= maxIndex)
         {
             int middle = (minIndex + maxIndex) / 2;
-            if (targetValue == this.listXIndex[middle].x)
+            if (targetValue == this.listXIndex[middle].pos.x)
             {
                     return middle;
             }
-            else if (targetValue > this.listXIndex[middle].x)
+            else if (targetValue > this.listXIndex[middle].pos.x)
             {
                     minIndex = middle + 1;
             }
-            else if (targetValue < this.listXIndex[middle].x)
+            else if (targetValue < this.listXIndex[middle].pos.x)
             {
                     maxIndex = middle - 1;
             }
@@ -374,11 +378,11 @@ public class YPoints
     /// <param name="minIndex"></param>
     /// <param name="maxIndex"></param>
     /// <returns></returns>
-    private void BinaryInsert(Float2 targetValue, int minIndex, int maxIndex)
+    private void BinaryInsert(VertexInfo targetValue, int minIndex, int maxIndex)
     {
         while (minIndex <= maxIndex)
         {
-            if (this.listXIndex[minIndex].x <= targetValue.x && this.listXIndex[maxIndex].x >= targetValue.x)
+            if (this.listXIndex[minIndex].pos.x <= targetValue.pos.x && this.listXIndex[maxIndex].pos.x >= targetValue.pos.x)
             {
                 int middle = (minIndex + maxIndex) / 2;
 
@@ -389,7 +393,7 @@ public class YPoints
                 }
                 else 
                 {
-                    if (this.listXIndex[middle].x <= targetValue.x)
+                    if (this.listXIndex[middle].pos.x <= targetValue.pos.x)
                     {
                         minIndex = middle;
                     }
@@ -399,7 +403,7 @@ public class YPoints
                     }
                 }
             }
-            else if (this.listXIndex[minIndex].x > targetValue.x)
+            else if (this.listXIndex[minIndex].pos.x > targetValue.pos.x)
             {
                 this.listXIndex.Insert(0, targetValue);
                 return;
@@ -410,5 +414,77 @@ public class YPoints
                 return;
             }
         }
+    }
+}
+/// <summary>
+/// 扫描线状态结构
+/// 维持一个梯形列表
+/// </summary>
+public class SweepLineStatus
+{
+    /// <summary>
+    /// 梯形列表
+    /// </summary>
+    private List<Trapezoid> listTrap = new List<Trapezoid>();
+    /// <summary>
+    /// 更新下一条扫描线的点
+    /// 
+    /// </summary>
+    /// <param name="pts"></param>
+    public void UpdatePoints(YPoints pts)
+    {
+        
+    }
+}
+
+/// <summary>
+/// 梯形
+/// </summary>
+public class Trapezoid 
+{
+    /// <summary>
+    /// 左边
+    /// </summary>
+    public Edge left;
+    /// <summary>
+    /// 右边
+    /// </summary>
+    public Edge right;
+    /// <summary>
+    /// helper 点
+    /// </summary>
+    public VertexInfo helper;
+    /// <summary>
+    /// 判断目标点是梯形夹边中。
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public bool CheckInEdge(VertexInfo target)
+    {
+        // 需在左侧
+        if (left.CheckLeft(target) == false)
+            return false;
+        // 需在右侧
+        if (right.CheckLeft(target) == true)
+            return false;
+        return true;
+    }
+}
+
+/// <summary>
+/// 边
+/// </summary>
+public class Edge
+{
+    public VertexInfo start;
+    public VertexInfo end;
+    /// <summary>
+    /// 判断目标点是在左侧
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public bool CheckLeft(VertexInfo target)
+    {
+        return GeometricUtil.LeftSide(start.pos, end.pos, target.pos);
     }
 }
