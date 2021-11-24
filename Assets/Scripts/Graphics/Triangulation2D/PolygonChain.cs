@@ -6,10 +6,6 @@ using System.Collections.Generic;
 public class PolygonChain 
 {
     /// <summary>
-    /// 最低点索引
-    /// </summary>
-    private int minYIndex;
-    /// <summary>
     /// 最高点索引
     /// </summary>
     private int maxYIndex;
@@ -27,17 +23,29 @@ public class PolygonChain
     /// <param name="minYIndex"></param>
     /// <param name="maxYIndex"></param>
     /// <param name="listPts"></param>
-    public PolygonChain(int minYIndex, int maxYIndex, List<VertexInfo> listPts)
+    public PolygonChain(int maxYIndex, List<VertexInfo> listPts)
     {
-        this.minYIndex = minYIndex;
         this.maxYIndex = maxYIndex;
         for (int i = 0; i < maxYIndex; i++)
         {
-            listPoints.Add(listPts[i]);
+            VertexInfo v = listPts[i];
+            v.vType = VertexType.Normal;
+            if (i > 0 && i < maxYIndex - 1)
+            {
+                v.vType = GetPointVertexType(listPts[i- 1], v, listPts[i + 1]);
+            }
+            listPoints.Add(v);
         }
-        for (int i = maxYIndex; i < listPts.Count; i++)
+        int totalCount = listPts.Count;
+        for (int i = maxYIndex; i < totalCount; i++)
         {
-            listPoints.Add(listPts[i]);
+            VertexInfo v = listPts[i];
+            v.vType = VertexType.Normal;
+            if (i > maxYIndex && i < totalCount - 1)
+            {
+                v.vType = GetPointVertexType(listPts[i - 1], v, listPts[i + 1]);
+            }
+            listPoints.Add(v);
         }
     }
     /// <summary>
@@ -67,27 +75,104 @@ public class PolygonChain
         return null;
     }
     /// <summary>
-    /// 判断是歧点
-    /// 考虑性能需求，不做异常检查
+    /// 获取点的其点属性
     /// </summary>
+    /// <param name="prev"></param>
     /// <param name="cur"></param>
     /// <param name="next"></param>
     /// <returns></returns>
-    private bool CheckDivergencePoint(VertexInfo cur, VertexInfo next)
+    private VertexType GetPointVertexType(VertexInfo prev, VertexInfo cur, VertexInfo next)
     {
-        if (cur.isConvex == false)
-            return false;
-        if ( cur.pos.y >= next.pos.y )
+        if ( cur.pos.y >= next.pos.y && cur.pos.y >= prev.pos.y)
         {
-            return true;
+            return VertexType.UpCorner;
         }
-        else if ( cur.pos.y <= next.pos.y )
+        else if (cur.pos.y <= next.pos.y && cur.pos.y <= prev.pos.y)
         {
-            return true;
+            return VertexType.DownCorner;
         }
-        return false;
+        else return VertexType.Normal;
     }
 
+    /// <summary>
+    /// 加入并排好序
+    /// </summary>
+    /// <param name="v"></param>
+    public void AddPoints(VertexInfo v)
+    {
+        int count = this.listYPoints.Count;
+        if (count == 0)
+        {
+            this.listYPoints.Add(new YPoints(v));
+        }
+        else
+        {
+            BinaryInsert(v, 0, count -1);
+        }
+    }
+
+    /// <summary>
+    /// 二分插入
+    /// </summary>
+    /// <param name="targetValue"></param>
+    /// <param name="minIndex"></param>
+    /// <param name="maxIndex"></param>
+    /// <returns></returns>
+    private void BinaryInsert(VertexInfo targetValue, int minIndex, int maxIndex)
+    {
+        float targetValueY = targetValue.pos.y;
+        while (minIndex <= maxIndex)
+        {
+            float minYvalue = this.listYPoints[minIndex].y;
+            float maxYvalue = this.listYPoints[maxIndex].y;
+            if (minYvalue < targetValueY && maxYvalue > targetValueY)
+            {
+                int middle = (minIndex + maxIndex) / 2;
+                if (middle == minIndex)
+                {
+                    this.listYPoints.Insert(minIndex + 1, new YPoints(targetValue));
+                    return;
+                }
+                else 
+                {
+                    float minddleY = this.listYPoints[middle].y;
+                    if (targetValueY == minddleY)
+                    {
+                        this.listYPoints[middle].AddPoints(targetValue);
+                        return;
+                    }
+                    else if (targetValueY > minddleY)
+                    {
+                        minIndex = middle + 1;
+                    }
+                    else if (targetValueY < minddleY)
+                    {
+                        maxIndex = middle - 1;
+                    }
+                }
+            }
+            else if (minYvalue == targetValueY)
+            {
+                this.listYPoints[minIndex].AddPoints(targetValue);
+                return;
+            }
+            else if (maxYvalue == targetValueY)
+            {
+                this.listYPoints[maxIndex].AddPoints(targetValue);
+                return;
+            }
+            else if (minYvalue > targetValue.pos.y)
+            {
+                this.listYPoints.Insert(0, new YPoints(targetValue));
+                return;
+            }
+            else if(maxYvalue > targetValueY)
+            {
+                this.listYPoints.Add(new YPoints(targetValue));
+                return;
+            }
+        }
+    }
 }
 /// <summary>
 /// 保存同一个高度
@@ -104,4 +189,104 @@ public class YPoints
     /// 同时按x 从小到大进行了排序
     /// </summary>
     public List<Float2> listXIndex = new List<Float2>();
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="v"></param>
+    public YPoints(VertexInfo v)
+    {
+        this.y = v.pos.y;
+        AddPoints(v);
+    }
+    /// <summary>
+    /// 加入并排好序
+    /// </summary>
+    /// <param name="v"></param>
+    public void AddPoints(VertexInfo v)
+    {
+        int count = listXIndex.Count;
+        if (count == 0)
+        {
+            this.y = v.pos.y;
+            this.listXIndex.Add(new Float2(v.pos.x, v.index));
+        }
+        else 
+        {
+            if (v.pos.y == this.y)
+            {
+                BinaryInsert(new Float2(v.pos.x, v.index),0, count - 1);
+            }
+        }
+    }
+    /// <summary>
+    /// 二分查找
+    /// </summary>
+    /// <param name="targetValue"></param>
+    /// <param name="minIndex"></param>
+    /// <param name="maxIndex"></param>
+    /// <returns></returns>
+    private int BinarySearch(int targetValue, int minIndex, int maxIndex)
+    {
+        while (minIndex <= maxIndex)
+        {
+            int middle = (minIndex + maxIndex) / 2;
+            if (targetValue == this.listXIndex[middle].x)
+            {
+                    return middle;
+            }
+            else if (targetValue > this.listXIndex[middle].x)
+            {
+                    minIndex = middle + 1;
+            }
+            else if (targetValue < this.listXIndex[middle].x)
+            {
+                    maxIndex = middle - 1;
+            }
+        }
+        return -1;
+    }
+    /// <summary>
+    /// 二分查找
+    /// </summary>
+    /// <param name="targetValue"></param>
+    /// <param name="minIndex"></param>
+    /// <param name="maxIndex"></param>
+    /// <returns></returns>
+    private void BinaryInsert(Float2 targetValue, int minIndex, int maxIndex)
+    {
+        while (minIndex <= maxIndex)
+        {
+            if (this.listXIndex[minIndex].x <= targetValue.x && this.listXIndex[maxIndex].x >= targetValue.x)
+            {
+                int middle = (minIndex + maxIndex) / 2;
+
+                if (middle == minIndex)
+                {
+                    this.listXIndex.Insert(minIndex + 1, targetValue);
+                    return;
+                }
+                else 
+                {
+                    if (this.listXIndex[middle].x <= targetValue.x)
+                    {
+                        minIndex = middle;
+                    }
+                    else
+                    {
+                        maxIndex = middle;
+                    }
+                }
+            }
+            else if (this.listXIndex[minIndex].x > targetValue.x)
+            {
+                this.listXIndex.Insert(0, targetValue);
+                return;
+            }
+            else 
+            {
+                this.listXIndex.Add(targetValue);
+                return;
+            }
+        }
+    }
 }

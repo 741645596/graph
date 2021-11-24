@@ -20,7 +20,7 @@ public class Triangulation2DHelp
             listTri = new List<Index3>();
         }
         // 先得到多边形链
-        PolygonChain pc = new PolygonChain(0, maxYIndex, listPts);
+        PolygonChain pc = new PolygonChain(maxYIndex, listPts);
         // 得到分解后的单调多边形
         List<MonotonePolygon> listMp= pc.GeneralMonotonePolygon();
         // 分解单调多边形得到三角形
