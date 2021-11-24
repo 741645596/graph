@@ -6,6 +6,14 @@ using RayGraphics.Math;
 public class MonotonePolygon
 {
     /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="listPoints"></param>
+    public MonotonePolygon(List<VertexInfo> listPoints)
+    {
+        
+    }
+    /// <summary>
     /// 单调链- left
     /// </summary>
     private MonotoneChain left;
