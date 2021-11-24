@@ -34,7 +34,7 @@ public class PolygonChain
             {
                 v.vType = GetPointVertexType(listPts[i- 1], v, listPts[i + 1]);
             }
-            listPoints.Add(v);
+            AddPoints(v);
         }
         int totalCount = listPts.Count;
         for (int i = maxYIndex; i < totalCount; i++)
@@ -45,7 +45,7 @@ public class PolygonChain
             {
                 v.vType = GetPointVertexType(listPts[i - 1], v, listPts[i + 1]);
             }
-            listPoints.Add(v);
+            AddPoints(v);
         }
     }
     /// <summary>
@@ -161,10 +161,6 @@ public class PolygonChain
                 else i++;
             }
         }
-
-
-
-
         return listRet;
     }
     /// <summary>
@@ -234,6 +230,7 @@ public class PolygonChain
         {
             BinaryInsert(v, 0, count -1);
         }
+        this.listPoints.Add(v);
     }
 
     /// <summary>
