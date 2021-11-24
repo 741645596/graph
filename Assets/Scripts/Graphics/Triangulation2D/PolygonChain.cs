@@ -415,6 +415,52 @@ public class YPoints
             }
         }
     }
+    /// <summary>
+    /// 得到梯形列表
+    /// </summary>
+    /// <returns></returns>
+    public List<Trapezoid> GetTrapezoid(List<VertexInfo> listPoints)
+    {
+        List<Trapezoid> listRet = new List<Trapezoid>();
+        int TotalPts = listPoints.Count;
+        int count = this.listXIndex.Count;
+        for (int i = 0; i < count; )
+        {
+            VertexInfo l = this.listXIndex[i];
+            if (i < count - 1 && CheckCanCombine(l, this.listXIndex[i + 1]) == true)
+            {
+                VertexInfo r = this.listXIndex[i + 1];
+                listRet.Add(new Trapezoid(
+                    new Edge(l, listPoints[l.index == 0 ? (TotalPts -1):(l.index -1)]), 
+                    new Edge(r, listPoints[r.index == TotalPts -1 ? 0 : (r.index + 1)]),
+                    l));
+                i += 2;
+            }
+            else 
+            {
+                listRet.Add(new Trapezoid(
+                         new Edge(l, listPoints[l.index == 0 ? (TotalPts - 1) : (l.index - 1)]),
+                         new Edge(l, listPoints[l.index == TotalPts - 1 ? 0 : (l.index + 1)]),
+                         l));
+                i++;
+            }
+        }
+        return listRet;
+    }
+    /// <summary>
+    /// 特定的要求设定
+    /// 判断梯形顶点的合并
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    private bool CheckCanCombine(VertexInfo a, VertexInfo b)
+    {
+        int diff = a.index - b.index;
+        if (diff == 1 || diff == -1)
+            return true;
+        else return false;
+    }
 }
 /// <summary>
 /// 扫描线状态结构
@@ -428,12 +474,19 @@ public class SweepLineStatus
     private List<Trapezoid> listTrap = new List<Trapezoid>();
     /// <summary>
     /// 更新下一条扫描线的点
-    /// 
     /// </summary>
     /// <param name="pts"></param>
-    public void UpdatePoints(YPoints pts)
+    public void UpdatePoints(YPoints pts, List<VertexInfo> listPoints)
     {
-        
+        // 初始化
+        if (listTrap.Count == 0)
+        {
+            listTrap  = pts.GetTrapezoid(listPoints);
+        }
+        else // 更新,进行梯形的合并
+        {
+
+        }
     }
 }
 
@@ -454,6 +507,18 @@ public class Trapezoid
     /// helper 点
     /// </summary>
     public VertexInfo helper;
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <param name="helper"></param>
+    public Trapezoid(Edge left, Edge right, VertexInfo helper)
+    {
+        this.left = left;
+        this.right = right;
+        this.helper = helper;
+    }
     /// <summary>
     /// 判断目标点是梯形夹边中。
     /// </summary>
@@ -478,6 +543,12 @@ public class Edge
 {
     public VertexInfo start;
     public VertexInfo end;
+
+    public Edge(VertexInfo start, VertexInfo end)
+    {
+        this.start = start;
+        this.end = end;
+    }
     /// <summary>
     /// 判断目标点是在左侧
     /// </summary>
