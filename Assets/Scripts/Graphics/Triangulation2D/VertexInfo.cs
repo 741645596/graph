@@ -17,9 +17,29 @@ public class VertexInfo
     /// </summary>
     public bool isConvex;
     /// <summary>
-    /// 在多边形中是否为凸点
+    /// 是否为歧点
     /// </summary>
     public VertexType vType;
+    /// <summary>
+    /// 确定是否歧点，分割点
+    /// </summary>
+    /// <param name="isYdown"></param>
+    /// <returns></returns>
+    public bool CheckSplitPoint(bool isYdown)
+    {
+        if (this.isConvex == true)
+            return false;
+
+        if (this.vType == VertexType.UpCorner && isYdown == true)
+        {
+            return true;
+        }   
+        else if (this.vType == VertexType.DownCorner && isYdown == false)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 public enum VertexType

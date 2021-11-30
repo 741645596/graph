@@ -2,6 +2,7 @@
 using RayGraphics.Math;
 using RayGraphics.Geometric;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 public class PolyBoolTest : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PolyBoolTest : MonoBehaviour
 
     private void Start()
     {
+        //Float2 v = Float2.zero;
+        //int t = Marshal.SizeOf(v);
+        //Debug.Log("size:" + t);
     }
     void Update()
     {
