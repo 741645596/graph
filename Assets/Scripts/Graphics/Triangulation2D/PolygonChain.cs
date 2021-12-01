@@ -9,10 +9,6 @@ namespace RayGraphics.Triangulation
     /// </summary>
     public class PolygonChain
     {
-        /// <summary>
-        /// 最高点索引
-        /// </summary>
-        private int maxYIndex;
         private int countPonts;
         /// <summary>
         /// 顶点数量
@@ -35,28 +31,16 @@ namespace RayGraphics.Triangulation
         /// <param name="minYIndex"></param>
         /// <param name="maxYIndex"></param>
         /// <param name="listPts"></param>
-        public PolygonChain(int maxYIndex, List<VertexInfo> listPts)
+        public PolygonChain(List<VertexInfo> listPts)
         {
-            this.maxYIndex = maxYIndex;
-            for (int i = 0; i < maxYIndex; i++)
-            {
-                VertexInfo v = listPts[i];
-                v.vType = VertexType.Normal;
-                if (i > 0 && i < maxYIndex - 1)
-                {
-                    v.vType = GetPointVertexType(listPts[i - 1], v, listPts[i + 1]);
-                }
-                AddPoints(v);
-            }
             int totalCount = listPts.Count;
-            for (int i = maxYIndex; i < totalCount; i++)
+            for (int i = 0; i < totalCount; i++)
             {
                 VertexInfo v = listPts[i];
                 v.vType = VertexType.Normal;
-                if (i > maxYIndex && i < totalCount - 1)
-                {
-                    v.vType = GetPointVertexType(listPts[i - 1], v, listPts[i + 1]);
-                }
+                int prev = (i - 1) < 0 ? totalCount - 1 : (i - 1);
+                int next = (i + 1) >= totalCount ? 0 : (i + 1);
+                v.vType = GetPointVertexType(listPts[prev], v, listPts[next]);
                 AddPoints(v);
             }
             this.countPonts = listPoints.Count;
