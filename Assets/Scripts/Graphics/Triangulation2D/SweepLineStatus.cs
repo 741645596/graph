@@ -41,16 +41,36 @@ namespace RayGraphics.Triangulation
                     Trapezoid targetTrap = FindCheckInTrapezoid(targetV, ref retIndex);
                     if (targetTrap != null)
                     {
-                        listDiagonal.Add(new Index2(targetTrap.helper.index, targetV.index));
+                        if (targetTrap.helper.pos.y != targetV.pos.y) // 过滤掉这种特殊情况
+                        {
+                            listDiagonal.Add(new Index2(targetTrap.helper.index, targetV.index));
+                        }
                         // 进行分割梯形为2
                         Trapezoid leftTrap = new Trapezoid(targetTrap.left, parent.GetMinXEdge(targetV), targetV);
                         Trapezoid rightTrap = new Trapezoid(parent.GetMaxXEdge(targetV), targetTrap.right, targetV);
-                        listTrap[retIndex] = leftTrap;
-                        listTrap.Insert(retIndex + 1, rightTrap);
+                        bool isLeft = !leftTrap.CheckInvalid();
+                        bool isRight = !rightTrap.CheckInvalid();
+                        if (isLeft && isRight)
+                        {
+                            listTrap[retIndex] = leftTrap;
+                            listTrap.Insert(retIndex + 1, rightTrap);
+                        }
+                        else if (isLeft)
+                        {
+                            listTrap[retIndex] = leftTrap;
+                        }
+                        else if (isRight)
+                        {
+                            listTrap[retIndex] = rightTrap;
+                        }
+                        else 
+                        {
+                            listTrap.RemoveAt(retIndex);
+                        }
                     }
                     else
                     {
-                        BinaryInsert(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV), 0, listTrap.Count - 1);
+                        AddTrapezoid(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV));
                     }
                 }
                 else
@@ -62,6 +82,11 @@ namespace RayGraphics.Triangulation
                         if (left == right)
                         {
                             left.Growth(targetV, parent);
+                            // 剔除退化的梯形
+                            if (left.CheckInvalid() == true)
+                            {
+                                listTrap.RemoveAt(retIndex);
+                            }
                         }
                         else // 进行合并，剔除合并前的，新增合并后的
                         {
@@ -71,9 +96,25 @@ namespace RayGraphics.Triangulation
                     }
                     else
                     {
-                        BinaryInsert(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV), 0, listTrap.Count - 1);
+                        AddTrapezoid(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV));
                     }
                 }
+            }
+        }
+        /// <summary>
+        /// 加入梯形
+        /// </summary>
+        private void AddTrapezoid(Trapezoid v)
+        {
+            if (v == null)
+                return;
+            if (listTrap.Count == 0)
+            {
+                listTrap.Add(v);
+            }
+            else 
+            {
+                BinaryInsert(v, 0, listTrap.Count - 1);
             }
         }
         /// <summary>

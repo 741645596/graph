@@ -34,6 +34,19 @@ namespace RayGraphics.Triangulation
             }
             return true;
         }
+
+        /// <summary>
+        /// 测试分隔对角线
+        /// </summary>
+        /// <param name="listPts"></param>
+        /// <param name="listTri">得到切割出来的三角形</param>
+        public static bool TestGeneralTri(List<VertexInfo> listPts, ref List<Index2> listTri)
+        {
+            // 先得到多边形链
+            PolygonChain pc = new PolygonChain(listPts);
+            listTri = pc.TestDiagonal();
+            return true;
+        }
     }
 }
 

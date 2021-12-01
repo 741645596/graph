@@ -57,6 +57,14 @@ namespace RayGraphics.Triangulation
             return listMp;
         }
         /// <summary>
+        /// 测试分割链条
+        /// </summary>
+        /// <returns></returns>
+        public List<Index2> TestDiagonal()
+        {
+            return TriangulationDiagonal();
+        }
+        /// <summary>
         /// 得到剖分对象线
         /// </summary>
         /// <returns></returns>
@@ -276,11 +284,11 @@ namespace RayGraphics.Triangulation
                         }
                         else if (targetValueY > minddleY)
                         {
-                            minIndex = middle + 1;
+                            minIndex = middle;
                         }
                         else if (targetValueY < minddleY)
                         {
-                            maxIndex = middle - 1;
+                            maxIndex = middle;
                         }
                     }
                 }
@@ -294,12 +302,12 @@ namespace RayGraphics.Triangulation
                     this.listYPoints[maxIndex].AddPoints(targetValue);
                     return;
                 }
-                else if (minYvalue > targetValue.pos.y)
+                else if (minYvalue > targetValueY)
                 {
                     this.listYPoints.Insert(0, new YPoints(targetValue));
                     return;
                 }
-                else if (maxYvalue > targetValueY)
+                else if (maxYvalue < targetValueY)
                 {
                     this.listYPoints.Add(new YPoints(targetValue));
                     return;
@@ -352,7 +360,7 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public VertexInfo GetVertexInfo(int index)
         {
-            if (index >= 0 || index < listPoints.Count)
+            if (index >= 0 && index < listPoints.Count)
             {
                 return listPoints[index];
             }
@@ -415,34 +423,7 @@ namespace RayGraphics.Triangulation
             }
         }
         /// <summary>
-        /// 二分查找
-        /// </summary>
-        /// <param name="targetValue"></param>
-        /// <param name="minIndex"></param>
-        /// <param name="maxIndex"></param>
-        /// <returns></returns>
-        private int BinarySearch(int targetValue, int minIndex, int maxIndex)
-        {
-            while (minIndex <= maxIndex)
-            {
-                int middle = (minIndex + maxIndex) / 2;
-                if (targetValue == this.listXIndex[middle].pos.x)
-                {
-                    return middle;
-                }
-                else if (targetValue > this.listXIndex[middle].pos.x)
-                {
-                    minIndex = middle + 1;
-                }
-                else if (targetValue < this.listXIndex[middle].pos.x)
-                {
-                    maxIndex = middle - 1;
-                }
-            }
-            return -1;
-        }
-        /// <summary>
-        /// 二分查找
+        /// 二分插入
         /// </summary>
         /// <param name="targetValue"></param>
         /// <param name="minIndex"></param>
@@ -450,9 +431,10 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         private void BinaryInsert(VertexInfo targetValue, int minIndex, int maxIndex)
         {
+            float targetValueX = targetValue.pos.x;
             while (minIndex <= maxIndex)
             {
-                if (this.listXIndex[minIndex].pos.x <= targetValue.pos.x && this.listXIndex[maxIndex].pos.x >= targetValue.pos.x)
+                if (this.listXIndex[minIndex].pos.x <= targetValueX && this.listXIndex[maxIndex].pos.x >= targetValueX)
                 {
                     int middle = (minIndex + maxIndex) / 2;
 
@@ -463,7 +445,7 @@ namespace RayGraphics.Triangulation
                     }
                     else
                     {
-                        if (this.listXIndex[middle].pos.x <= targetValue.pos.x)
+                        if (this.listXIndex[middle].pos.x <= targetValueX)
                         {
                             minIndex = middle;
                         }
@@ -473,7 +455,7 @@ namespace RayGraphics.Triangulation
                         }
                     }
                 }
-                else if (this.listXIndex[minIndex].pos.x > targetValue.pos.x)
+                else if (this.listXIndex[minIndex].pos.x > targetValueX)
                 {
                     this.listXIndex.Insert(0, targetValue);
                     return;

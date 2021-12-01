@@ -54,16 +54,17 @@ namespace RayGraphics.Triangulation
                 // left
                 for (int i = maxIndex + 1; i < count; i++)
                 {
-                    this.left.Add(new TriVertexInfo(listPoints[i], true));
+                    this.left.Add(new TriVertexInfo(listPoints[i], SideType.Left));
                 }
                 for (int i = 0; i < minIndex; i++)
                 {
-                    this.left.Add(new TriVertexInfo(listPoints[i], true));
+                    this.left.Add(new TriVertexInfo(listPoints[i], SideType.Left));
                 }
                 // right
                 for (int i = maxIndex ; i >= minIndex; i--)
                 {
-                    this.right.Add(new TriVertexInfo(listPoints[i], false));
+                    SideType type = (i == maxIndex || i == minIndex) ? SideType.Center : SideType.Right;
+                    this.right.Add(new TriVertexInfo(listPoints[i], type));
                 }
             }
             else if (maxIndex < minIndex)
@@ -71,16 +72,18 @@ namespace RayGraphics.Triangulation
                 // left
                 for (int i = maxIndex + 1; i < minIndex; i++)
                 {
-                    this.left.Add(new TriVertexInfo(listPoints[i], true));
+                    this.left.Add(new TriVertexInfo(listPoints[i], SideType.Left));
                 }
                 // right
                 for (int i = maxIndex; i >= 0; i--)
                 {
-                    this.right.Add(new TriVertexInfo(listPoints[i], false));
+                    SideType type = (i == maxIndex || i == minIndex) ? SideType.Center : SideType.Right;
+                    this.right.Add(new TriVertexInfo(listPoints[i], type));
                 }
                 for (int i = 0; i <= minIndex; i++)
                 {
-                    this.right.Add(new TriVertexInfo(listPoints[i], false));
+                    SideType type = (i == maxIndex || i == minIndex) ? SideType.Center : SideType.Right;
+                    this.right.Add(new TriVertexInfo(listPoints[i], type));
                 }
             }
         }
@@ -114,7 +117,7 @@ namespace RayGraphics.Triangulation
                     TriVertexInfo first = WaitPoint.Pop();
                     TriVertexInfo second = WaitPoint.Pop();
                     // 判断与stack 顶元素是否同意侧
-                    if (newPoint.isLeft == first.isLeft)
+                    if (newPoint.sideType == first.sideType)
                     {
                         if (Utils2D.LeftSide(second.pos, first.pos, newPoint.pos))
                         {//不是凹的
@@ -123,15 +126,14 @@ namespace RayGraphics.Triangulation
                             //然后次栈顶元素就可以解放了，原来的栈顶变成次栈顶，新元素变成栈顶
                             WaitPoint.Push(second);
                         }
-                        else
-                        {//如果无法构成三角形还要进入栈中等待
+                        else // 无发够成三角形
+                        {
                             WaitPoint.Push(second);
                             WaitPoint.Push(first);
-                            WaitPoint.Push(newPoint);
                             break;
                         }
                     }
-                    else
+                    else // 异侧
                     {
                         // 得到三角形
                         listTri.Add(new Index3(second.index, first.index, newPoint.index));
@@ -147,25 +149,34 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         private TriVertexInfo GetBestPoint()
         {
+            TriVertexInfo ret = null;
             int leftCount = this.left.Count;
             int rightCount = this.right.Count;
-            if (leftCount == 0 || rightCount == 0)
-                return null;
+            if (leftCount == 0 && rightCount == 0)
+                return ret;
             if (leftCount == 0)
             {
-                return this.right[0];
+                ret = this.right[0];
+                this.right.RemoveAt(0);
+                return ret;
             }
             else if (rightCount == 0)
             {
-                return this.left[0];
+                ret = this.left[0];
+                this.left.RemoveAt(0);
+                return ret;
             }
             else if (this.left[0].pos.y >= this.right[0].pos.y)
             {
-                return this.left[0];
+                ret = this.left[0];
+                this.left.RemoveAt(0);
+                return ret;
             }
             else 
             {
-                return this.right[0];
+                ret = this.right[0];
+                this.right.RemoveAt(0);
+                return ret;
             }
         }
     }
@@ -173,11 +184,11 @@ namespace RayGraphics.Triangulation
 
     public class TriVertexInfo
     {
-        public TriVertexInfo(VertexInfo v, bool isLeft)
+        public TriVertexInfo(VertexInfo v, SideType isLeft)
         {
             this.pos = v.pos;
             this.index = v.index;
-            this.isLeft = isLeft;
+            this.sideType = isLeft;
         }
         /// <summary>
         /// 顶点数据
@@ -190,6 +201,14 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 是否左链的点
         /// </summary>
-        public bool isLeft;
+        public SideType sideType;
+    }
+
+
+    public enum SideType
+    {
+        Center  = 0,  // 顶部，或底部元素
+        Left    = 1,  // 左链
+        Right   = 2,  // 右链
     }
 }

@@ -43,27 +43,37 @@ namespace RayGraphics.Triangulation
         /// </summary>
         public void Growth(VertexInfo points, PolygonChain parent)
         {
+            Edge edge;
             if (this.left.end == points)
             {
                 if (this.left.start.index < points.index)
                 {
-                    this.left = new Edge(points, parent.GetVertexInfo(points.index + 1));
+                    edge = new Edge(points, parent.GetVertexInfo(points.index + 1)); 
                 }
                 else
                 {
-                    this.left = new Edge(points, parent.GetVertexInfo(points.index - 1));
+                    edge = new Edge(points, parent.GetVertexInfo(points.index - 1));
+                    
                 }
+                // 过滤一些节点，这种情况下，不成长梯形
+                bool check = points.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                if(check == false)
+                   this.left = edge;
             }
             else if (this.right.end == points)
             {
                 if (this.right.start.index < points.index)
                 {
-                    this.right = new Edge(points, parent.GetVertexInfo(points.index + 1));
+                    edge = new Edge(points, parent.GetVertexInfo(points.index + 1));
                 }
                 else
                 {
-                    this.right = new Edge(points, parent.GetVertexInfo(points.index - 1));
+                    edge = new Edge(points, parent.GetVertexInfo(points.index - 1));
                 }
+                // 过滤一些节点，这种情况下，不成长梯形
+                bool check = points.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                if (check == false)
+                    this.right = edge;
             }
         }
         /// <summary>
@@ -100,6 +110,26 @@ namespace RayGraphics.Triangulation
             else if (right.end == target)
                 return right;
             return null;
+        }
+        /// <summary>
+        /// 判断是否为无效的梯形
+        /// </summary>
+        /// <returns>true 无效梯形， false 有效</returns>
+        public bool CheckInvalid()
+        {
+            if (this.left.start.index == this.right.end.index && this.left.end.index == this.right.start.index)
+            {
+                return true;
+            }
+            // 退化的梯形
+            else if (this.right.end.index == this.left.end.index )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 
