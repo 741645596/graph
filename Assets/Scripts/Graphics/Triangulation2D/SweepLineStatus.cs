@@ -20,6 +20,15 @@ namespace RayGraphics.Triangulation
         {
             this.listTrap.Clear();
         }
+
+        private void Print()
+        {
+            UnityEngine.Debug.Log("next:" + listTrap.Count);
+            foreach (Trapezoid v in listTrap)
+            {
+                v.Print();
+            }
+        }
         /// <summary>
         /// 更新扫描线，更新扫描线状态
         /// </summary>
@@ -46,8 +55,8 @@ namespace RayGraphics.Triangulation
                             listDiagonal.Add(new Index2(targetTrap.helper.index, targetV.index));
                         }
                         // 进行分割梯形为2
-                        Trapezoid leftTrap = new Trapezoid(targetTrap.left, parent.GetMinXEdge(targetV), targetV);
-                        Trapezoid rightTrap = new Trapezoid(parent.GetMaxXEdge(targetV), targetTrap.right, targetV);
+                        Trapezoid leftTrap = new Trapezoid(targetTrap.left, targetV.GetLeftEdge(parent) /*parent.GetMinXEdge(targetV)*/, targetV);
+                        Trapezoid rightTrap = new Trapezoid(targetV.GetRightEdge(parent)/*parent.GetMaxXEdge(targetV)*/, targetTrap.right, targetV);
                         bool isLeft = !leftTrap.CheckInvalid();
                         bool isRight = !rightTrap.CheckInvalid();
                         if (isLeft && isRight)
@@ -70,7 +79,7 @@ namespace RayGraphics.Triangulation
                     }
                     else
                     {
-                        AddTrapezoid(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV));
+                        AddTrapezoid(new Trapezoid(targetV.GetLeftEdge(parent), targetV.GetRightEdge(parent), /*parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV),*/ targetV));
                     }
                 }
                 else
@@ -96,10 +105,11 @@ namespace RayGraphics.Triangulation
                     }
                     else
                     {
-                        AddTrapezoid(new Trapezoid(parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV), targetV));
+                        AddTrapezoid(new Trapezoid(targetV.GetLeftEdge(parent), targetV.GetRightEdge(parent), /*parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV),*/ targetV));
                     }
                 }
             }
+            Print();
         }
         /// <summary>
         /// 加入梯形

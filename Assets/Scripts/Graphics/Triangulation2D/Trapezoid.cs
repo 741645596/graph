@@ -131,6 +131,12 @@ namespace RayGraphics.Triangulation
                 return false;
             }
         }
+
+        public void Print()
+        {
+            string str = "left:" + left.Print() + " right:" + right.Print() + " helper:" + "[" + helper.pos.x + "," + helper.pos.y + "]";
+            UnityEngine.Debug.Log(str);
+        }
     }
 
     /// <summary>
@@ -154,6 +160,11 @@ namespace RayGraphics.Triangulation
         public bool CheckLeft(VertexInfo target)
         {
             return GeometricUtil.LeftSide(start.pos, end.pos, target.pos);
+        }
+
+        public string Print()
+        {
+            return "[" + start.pos.x + "," + start.pos.y + "]->[" + end.pos.x + "," + end.pos.y + "]";
         }
     }
 }

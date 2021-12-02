@@ -74,10 +74,10 @@ namespace RayGraphics.Triangulation
             SweepLineStatus sls = new SweepLineStatus();
             int count = listYPoints.Count;
             // y 从小到大
-            for (int i = 0; i < count; i++)
+            /*for (int i = 0; i < count; i++)
             {
                 sls.UpdatePoints(listYPoints[i].LinePoints, ref listDiagonal, this, false);
-            }
+            }*/
             // y 从大到小
             sls.Clear();
             for (int i = count -1; i >= 0; i--)
@@ -315,45 +315,6 @@ namespace RayGraphics.Triangulation
             }
         }
         /// <summary>
-        /// 获取左边
-        /// </summary>
-        /// <returns></returns>
-        public Edge GetMinXEdge(VertexInfo targetPoint)
-        {
-            int index = targetPoint.index;
-            int prev = (index - 1) < 0 ? countPonts - 1 : (index - 1);
-            int next = (index + 1) >= countPonts ? 0 : (index + 1);
-            VertexInfo p = listPoints[prev];
-            if (listPoints[prev].pos.x <= targetPoint.pos.x)
-            {
-                return new Edge(targetPoint, p);
-            }
-            else
-            {
-                return new Edge(targetPoint, listPoints[next]);
-            }
-        }
-        /// <summary>
-        /// 获取右边
-        /// </summary>
-        /// <param name="targetPoint"></param>
-        /// <returns></returns>
-        public Edge GetMaxXEdge(VertexInfo targetPoint)
-        {
-            int index = targetPoint.index;
-            int prev = (index - 1) < 0 ? countPonts - 1 : (index - 1);
-            int next = (index + 1) >= countPonts ? 0 : (index + 1);
-            VertexInfo p = listPoints[prev];
-            if (listPoints[prev].pos.x >= targetPoint.pos.x)
-            {
-                return new Edge(targetPoint, p);
-            }
-            else
-            {
-                return new Edge(targetPoint, listPoints[next]);
-            }
-        }
-        /// <summary>
         /// 获取顶点数据,安全的获取
         /// </summary>
         /// <param name="index"></param>
@@ -466,52 +427,6 @@ namespace RayGraphics.Triangulation
                     return;
                 }
             }
-        }
-        /// <summary>
-        /// 得到梯形列表
-        /// </summary>
-        /// <returns></returns>
-        public List<Trapezoid> GetTrapezoid(List<VertexInfo> listPoints)
-        {
-            List<Trapezoid> listRet = new List<Trapezoid>();
-            int TotalPts = listPoints.Count;
-            int count = this.listXIndex.Count;
-            for (int i = 0; i < count;)
-            {
-                VertexInfo l = this.listXIndex[i];
-                if (i < count - 1 && CheckCanCombine(l, this.listXIndex[i + 1]) == true)
-                {
-                    VertexInfo r = this.listXIndex[i + 1];
-                    listRet.Add(new Trapezoid(
-                        new Edge(l, listPoints[l.index == 0 ? (TotalPts - 1) : (l.index - 1)]),
-                        new Edge(r, listPoints[r.index == TotalPts - 1 ? 0 : (r.index + 1)]),
-                        l));
-                    i += 2;
-                }
-                else
-                {
-                    listRet.Add(new Trapezoid(
-                             new Edge(l, listPoints[l.index == 0 ? (TotalPts - 1) : (l.index - 1)]),
-                             new Edge(l, listPoints[l.index == TotalPts - 1 ? 0 : (l.index + 1)]),
-                             l));
-                    i++;
-                }
-            }
-            return listRet;
-        }
-        /// <summary>
-        /// 特定的要求设定
-        /// 判断梯形顶点的合并
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        private bool CheckCanCombine(VertexInfo a, VertexInfo b)
-        {
-            int diff = a.index - b.index;
-            if (diff == 1 || diff == -1)
-                return true;
-            else return false;
         }
     }
 }
