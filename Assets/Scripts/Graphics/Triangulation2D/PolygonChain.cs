@@ -128,6 +128,39 @@ namespace RayGraphics.Triangulation
                 }
             }
         }
+
+
+        /// <summary>
+        /// 通过分隔对角线得到单调多边形
+        /// </summary>
+        /// <param name="listDiagonal"></param>
+        /// <param name="listMp"></param>
+        private void GeneralTestPolygon(List<Index2> listDiagonal, List<VertexInfo> listPts, ref List<List<VertexInfo>> listMp)
+        {
+            if (listMp == null)
+            {
+                listMp = new List<List<VertexInfo>>();
+            }
+            if (listDiagonal == null || listMp.Count == 0)
+            {
+                listMp.Add(listPts);
+            }
+            else
+            {
+                // 后续根据算法测试调整取值
+                Index2 first = listDiagonal[0];
+                listDiagonal.RemoveAt(0);
+                List<VertexInfo> listCut1 = null;
+                List<VertexInfo> listCut2 = null;
+                if (CutPoints(first, listPts, ref listCut1, ref listCut2) == true)
+                {
+                    List<Index2> listDiagonal1 = GetDiagonal(ref listDiagonal, listCut1);
+                    List<Index2> listDiagonal2 = GetDiagonal(ref listDiagonal, listCut2);
+                    GeneralTestPolygon(listDiagonal1, listCut1, ref listMp);
+                    GeneralTestPolygon(listDiagonal2, listCut2, ref listMp);
+                }
+            }
+        }
         /// <summary>
         /// 分隔链条
         /// </summary>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RayGraphics.Math;
+using RayGraphics.Geometric;
 
 namespace RayGraphics.Triangulation
 {
@@ -119,7 +120,8 @@ namespace RayGraphics.Triangulation
                     // 判断与stack 顶元素是否同意侧
                     if (newPoint.sideType == first.sideType)
                     {
-                        if (Utils2D.LeftSide(second.pos, first.pos, newPoint.pos))
+                        bool isLeft = GeometricUtil.LeftSide(second.pos, first.pos, newPoint.pos);
+                        if ((newPoint.sideType == SideType.Left && isLeft == true) ||(newPoint.sideType == SideType.Right && isLeft == false))
                         {//不是凹的
                             // 得到三角形
                             listTri.Add(new Index3(second.index, first.index, newPoint.index));
@@ -137,7 +139,7 @@ namespace RayGraphics.Triangulation
                     {
                         // 得到三角形
                         listTri.Add(new Index3(second.index, first.index, newPoint.index));
-                        WaitPoint.Push(second);
+                        WaitPoint.Push(first);
                     }
                 }
                 WaitPoint.Push(newPoint);
