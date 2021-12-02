@@ -29,9 +29,9 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <param name="helper"></param>
+        /// <param name="left">保证不为组合点</param>
+        /// <param name="right">保证不为组合点</param>
+        /// <param name="helper">保证不为组合点</param>
         public Trapezoid(Edge left, Edge right, VertexInfo helper)
         {
             this.left = left;
@@ -41,37 +41,41 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 已经确定可以合并了,梯形增长
         /// </summary>
-        public void Growth(VertexInfo points, PolygonChain parent)
+        /// <param name="ScanPoints">扫描线点</param>
+        /// <param name="parent"></param>
+        public void Growth(VertexInfo ScanPoints, PolygonChain parent)
         {
             Edge edge;
-            if (this.left.end == points)
+            if (this.left.end.CheckHit(ScanPoints) == true)
             {
-                if (this.left.start.index < points.index)
+                int endIndex = this.left.end.index;
+                if (this.left.start.index < this.left.end.index)
                 {
-                    edge = new Edge(points, parent.GetVertexInfo(points.index + 1)); 
+                    edge = new Edge(this.left.end, parent.GetVertexInfo(endIndex + 1)); 
                 }
                 else
                 {
-                    edge = new Edge(points, parent.GetVertexInfo(points.index - 1));
+                    edge = new Edge(this.left.end, parent.GetVertexInfo(endIndex - 1));
                     
                 }
                 // 过滤一些节点，这种情况下，不成长梯形
-                bool check = points.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
                 if(check == false)
                    this.left = edge;
             }
-            else if (this.right.end == points)
+            else if (this.right.end.CheckHit(ScanPoints) == true)
             {
-                if (this.right.start.index < points.index)
+                int endIndex = this.right.end.index;
+                if (this.right.start.index < endIndex)
                 {
-                    edge = new Edge(points, parent.GetVertexInfo(points.index + 1));
+                    edge = new Edge(this.right.end, parent.GetVertexInfo(endIndex + 1));
                 }
                 else
                 {
-                    edge = new Edge(points, parent.GetVertexInfo(points.index - 1));
+                    edge = new Edge(this.right.end, parent.GetVertexInfo(endIndex - 1));
                 }
                 // 过滤一些节点，这种情况下，不成长梯形
-                bool check = points.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
                 if (check == false)
                     this.right = edge;
             }
@@ -79,9 +83,13 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 合并梯形
         /// </summary>
-        public static Trapezoid CombineTrapezoid(Trapezoid left, Trapezoid right, VertexInfo points)
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <param name="ScanPoints">扫描线点</param>
+        /// <returns></returns>
+        public static Trapezoid CombineTrapezoid(Trapezoid left, Trapezoid right, VertexInfo ScanPoints)
         {
-            return new Trapezoid(left.left, right.right, points);
+            return new Trapezoid(left.left, right.right, ScanPoints.GetLeftPoint());
         }
         /// <summary>
         /// 判断目标点是梯形夹边中。
@@ -101,13 +109,13 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 确定在边上
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="ScanPoints">扫描线点，可能为符合点</param>
         /// <returns></returns>
-        public Edge CheckInEdge(VertexInfo target)
+        public Edge CheckInEdge(VertexInfo ScanPoints)
         {
-            if (left.end == target)
+            if (left.end.CheckHit(ScanPoints) == true)
                 return left;
-            else if (right.end == target)
+            else if (right.end.CheckHit(ScanPoints) == true)
                 return right;
             return null;
         }

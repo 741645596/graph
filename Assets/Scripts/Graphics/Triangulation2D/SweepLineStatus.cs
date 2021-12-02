@@ -41,22 +41,22 @@ namespace RayGraphics.Triangulation
             // 先创建独立梯形
             Trapezoid left = null;
             Trapezoid right = null;
-            foreach (VertexInfo targetV in sweepLinePts)
+            foreach (VertexInfo ScanPoints in sweepLinePts)
             {
                 // 定位到分割点了
-                if (targetV.CheckSplitPoint(isYdown))
+                if (ScanPoints.CheckSplitPoint(isYdown))
                 {
                     int retIndex = -1;
-                    Trapezoid targetTrap = FindCheckInTrapezoid(targetV, ref retIndex);
+                    Trapezoid targetTrap = FindCheckInTrapezoid(ScanPoints, ref retIndex);
                     if (targetTrap != null)
                     {
-                        if (targetTrap.helper.pos.y != targetV.pos.y) // 过滤掉这种特殊情况
+                        if (targetTrap.helper.pos.y != ScanPoints.pos.y) // 过滤掉这种特殊情况
                         {
-                            listDiagonal.Add(new Index2(targetTrap.helper.index, targetV.index));
+                            listDiagonal.Add(new Index2(targetTrap.helper.index, ScanPoints.index));
                         }
                         // 进行分割梯形为2
-                        Trapezoid leftTrap = new Trapezoid(targetTrap.left, targetV.GetLeftEdge(parent) /*parent.GetMinXEdge(targetV)*/, targetV);
-                        Trapezoid rightTrap = new Trapezoid(targetV.GetRightEdge(parent)/*parent.GetMaxXEdge(targetV)*/, targetTrap.right, targetV);
+                        Trapezoid leftTrap = new Trapezoid(targetTrap.left, ScanPoints.GetLeftEdge(parent) , ScanPoints.GetLeftPoint());
+                        Trapezoid rightTrap = new Trapezoid(ScanPoints.GetRightEdge(parent), targetTrap.right, ScanPoints.GetRightPoint());
                         bool isLeft = !leftTrap.CheckInvalid();
                         bool isRight = !rightTrap.CheckInvalid();
                         if (isLeft && isRight)
@@ -79,18 +79,18 @@ namespace RayGraphics.Triangulation
                     }
                     else
                     {
-                        AddTrapezoid(new Trapezoid(targetV.GetLeftEdge(parent), targetV.GetRightEdge(parent), /*parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV),*/ targetV));
+                        AddTrapezoid(new Trapezoid(ScanPoints.GetLeftEdge(parent), ScanPoints.GetRightEdge(parent), ScanPoints.GetLeftPoint()));
                     }
                 }
                 else
                 {
                     int retIndex = -1;
-                    bool ret = FindParent(targetV, ref left, ref right, ref retIndex);
+                    bool ret = FindParent(ScanPoints, ref left, ref right, ref retIndex);
                     if (ret == true)
                     {
                         if (left == right)
                         {
-                            left.Growth(targetV, parent);
+                            left.Growth(ScanPoints, parent);
                             // 剔除退化的梯形
                             if (left.CheckInvalid() == true)
                             {
@@ -99,13 +99,13 @@ namespace RayGraphics.Triangulation
                         }
                         else // 进行合并，剔除合并前的，新增合并后的
                         {
-                            listTrap[retIndex] = Trapezoid.CombineTrapezoid(left, right, targetV);
+                            listTrap[retIndex] = Trapezoid.CombineTrapezoid(left, right, ScanPoints);
                             listTrap.RemoveAt(retIndex + 1);
                         }
                     }
                     else
                     {
-                        AddTrapezoid(new Trapezoid(targetV.GetLeftEdge(parent), targetV.GetRightEdge(parent), /*parent.GetMinXEdge(targetV), parent.GetMaxXEdge(targetV),*/ targetV));
+                        AddTrapezoid(new Trapezoid(ScanPoints.GetLeftEdge(parent), ScanPoints.GetRightEdge(parent), ScanPoints.GetLeftPoint()));
                     }
                 }
             }
@@ -130,12 +130,12 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 找老大，最多找到2个梯形
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="ScanPoints">扫描线点</param>
         /// <param name="left">左梯形</param>
         /// <param name="right">右梯形</param>
         /// <param name="retIndex">左梯形的索引</param>
         /// <returns></returns>
-        private bool FindParent(VertexInfo points, ref Trapezoid left, ref Trapezoid right, ref int retIndex)
+        private bool FindParent(VertexInfo ScanPoints, ref Trapezoid left, ref Trapezoid right, ref int retIndex)
         {
             left = null;
             right = null;
@@ -149,7 +149,7 @@ namespace RayGraphics.Triangulation
             for (int i = 0; i < count; i++)
             {
                 Trapezoid v = listTrap[i];
-                if (v.CheckInEdge(points) != null)
+                if (v.CheckInEdge(ScanPoints) != null)
                 {
                     if (left == null)
                     {
@@ -222,16 +222,16 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 查找到所在的梯形
         /// </summary>
-        /// <param name="points"></param>
+        /// <param name="ScanPoints">扫描线点</param>
         /// <returns></returns>
-        private Trapezoid FindCheckInTrapezoid(VertexInfo points, ref int retIndex)
+        private Trapezoid FindCheckInTrapezoid(VertexInfo ScanPoints, ref int retIndex)
         {
             retIndex = -1;
             int count = listTrap.Count;
             for (int i = 0; i < count; i++)
             {
                 Trapezoid v = listTrap[i];
-                if (v.CheckIn(points) == true)
+                if (v.CheckIn(ScanPoints) == true)
                 {
                     retIndex = i;
                     return v;

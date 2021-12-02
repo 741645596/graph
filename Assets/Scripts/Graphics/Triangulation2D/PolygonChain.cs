@@ -43,7 +43,18 @@ namespace RayGraphics.Triangulation
                 v.vType = GetPointVertexType(listPts[prev], v, listPts[next]);
                 AddPoints(v);
             }
+            CombineYPoints();
             this.countPonts = listPoints.Count;
+        }
+        /// <summary>
+        /// 进行Ypoints 点的合并
+        /// </summary>
+        private void CombineYPoints()
+        {
+            foreach (YPoints v in listYPoints)
+            {
+                v.Combine();
+            }
         }
         /// <summary>
         /// 生成单调多边形
@@ -425,6 +436,23 @@ namespace RayGraphics.Triangulation
                 {
                     this.listXIndex.Add(targetValue);
                     return;
+                }
+            }
+        }
+        /// <summary>
+        /// 对能合并的点进行合并
+        /// </summary>
+        public void Combine()
+        {
+            if (listXIndex == null || listXIndex.Count < 2)
+                return;
+            for (int i = 0; i < listXIndex.Count - 1; i++)
+            {
+                // 不用采取连续合并的策略
+                if (CombineVertex.CheckCanCombine(listXIndex[i], listXIndex[i + 1]) == true)
+                {
+                    listXIndex[i] = new CombineVertex(listXIndex[i], listXIndex[i + 1]);
+                    listXIndex.RemoveAt(i + 1);
                 }
             }
         }

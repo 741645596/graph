@@ -77,8 +77,34 @@ namespace RayGraphics.Triangulation
                 return new Edge(this, next);
             }
         }
+        /// <summary>
+        /// 获取左点
+        /// </summary>
+        /// <returns></returns>
+        public virtual VertexInfo GetLeftPoint()
+        {
+            return this;
+        }
+        /// <summary>
+        /// 获取右点
+        /// </summary>
+        /// <returns></returns>
+        public virtual VertexInfo GetRightPoint()
+        {
+            return this;
+        }
+        /// <summary>
+        /// 是否hit。
+        /// </summary>
+        /// <param name="ScanPoints">扫描线点，可能为符合点</param>
+        /// <returns></returns>
+        public bool CheckHit(VertexInfo ScanPoints)
+        {
+            if (this == ScanPoints.GetLeftPoint() || this == ScanPoints.GetRightPoint())
+                return true;
+            else return false;
+        }
     }
-
     /// <summary>
     /// 组合点，满足条件，y值相同，在同一条边上，凹凸性相同
     /// </summary>
@@ -91,7 +117,7 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        CombineVertex(VertexInfo left, VertexInfo right)
+        public CombineVertex(VertexInfo left, VertexInfo right)
         {
             this.left = left;
             this.right = right;
@@ -99,6 +125,78 @@ namespace RayGraphics.Triangulation
             this.vType = this.left.vType;
             this.isConvex = this.left.isConvex;
             this.index = this.left.index;
+        }
+        /// <summary>
+        /// 确定2个点能否合并
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool CheckCanCombine(VertexInfo left, VertexInfo right)
+        {
+            if (left == null || right == null)
+                return false;
+            if (left.pos.y != right.pos.y)
+                return false;
+            if (System.Math.Abs(left.index - right.index) != 1)
+            {
+                return false;
+            }
+            if (left.isConvex != right.isConvex)
+                return false;
+            return true;
+        }
+        /// <summary>
+        /// 获取左边
+        /// </summary>
+        /// <returns></returns>
+        public override Edge GetLeftEdge(PolygonChain parent)
+        {
+            int leftIndex = this.left.index;
+            VertexInfo prev = parent.GetVertexInfo(leftIndex - 1);
+            VertexInfo next = parent.GetVertexInfo(leftIndex + 1);
+            if (prev.pos.x <= this.left.pos.x)
+            {
+                return new Edge(this.left, prev);
+            }
+            else
+            {
+                return new Edge(this.left, next);
+            }
+        }
+        /// <summary>
+        /// 获取右边
+        /// </summary>
+        /// <returns></returns>
+        public override Edge GetRightEdge(PolygonChain parent)
+        {
+            int rightIndex = this.right.index;
+            VertexInfo prev = parent.GetVertexInfo(rightIndex - 1);
+            VertexInfo next = parent.GetVertexInfo(rightIndex + 1);
+            if (prev.pos.x >= this.right.pos.x)
+            {
+                return new Edge(this.right, prev);
+            }
+            else
+            {
+                return new Edge(this.right, next);
+            }
+        }
+        /// <summary>
+        /// 获取左点
+        /// </summary>
+        /// <returns></returns>
+        public override VertexInfo GetLeftPoint()
+        {
+            return this.left;
+        }
+        /// <summary>
+        /// 获取右点
+        /// </summary>
+        /// <returns></returns>
+        public override VertexInfo GetRightPoint()
+        {
+            return this.right;
         }
     }
 
