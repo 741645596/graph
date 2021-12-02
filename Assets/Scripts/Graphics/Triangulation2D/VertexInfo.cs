@@ -104,6 +104,15 @@ namespace RayGraphics.Triangulation
                 return true;
             else return false;
         }
+        /// <summary>
+        /// 对边进行成长
+        /// </summary>
+        /// <param name="growEdge"></param>
+        /// <returns></returns>
+        public virtual Edge GetGrowEdge(Edge growEdge, PolygonChain parent)
+        {
+            return new Edge(growEdge.end, parent.GetOtherPoints(growEdge));
+        }
     }
     /// <summary>
     /// 组合点，满足条件，y值相同，在同一条边上，凹凸性相同
@@ -132,18 +141,18 @@ namespace RayGraphics.Triangulation
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool CheckCanCombine(VertexInfo left, VertexInfo right)
+        public static bool CheckCanCombine(VertexInfo left, VertexInfo right, PolygonChain parent)
         {
-            if (left == null || right == null)
+            if (left == null || right == null || parent == null)
                 return false;
             if (left.pos.y != right.pos.y)
                 return false;
-            if (System.Math.Abs(left.index - right.index) != 1)
+            if (parent.CheckSameEdge(left.index, right.index) == false)
             {
                 return false;
             }
-            if (left.isConvex != right.isConvex)
-                return false;
+            //if (left.isConvex != right.isConvex)
+            //    return false;
             return true;
         }
         /// <summary>
@@ -197,6 +206,22 @@ namespace RayGraphics.Triangulation
         public override VertexInfo GetRightPoint()
         {
             return this.right;
+        }
+        /// <summary>
+        /// 对边进行成长
+        /// </summary>
+        /// <param name="growEdge"></param>
+        /// <returns></returns>
+        public override Edge GetGrowEdge(Edge growEdge, PolygonChain parent)
+        {
+            if (growEdge.end == this.left)
+            {
+                return new Edge(this.right, parent.GetOtherPoints(new Edge(this.left, this.right)));
+            }
+            else 
+            {
+                return new Edge(this.left, parent.GetOtherPoints(new Edge(this.right, this.left)));
+            }
         }
     }
 

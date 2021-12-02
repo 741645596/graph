@@ -45,39 +45,40 @@ namespace RayGraphics.Triangulation
         /// <param name="parent"></param>
         public void Growth(VertexInfo ScanPoints, PolygonChain parent)
         {
-            Edge edge;
-            if (this.left.end.CheckHit(ScanPoints) == true)
+            //Edge edge;
+             if (this.left.end.CheckHit(ScanPoints) == true)
             {
-                int endIndex = this.left.end.index;
-                if (this.left.start.index < this.left.end.index)
-                {
-                    edge = new Edge(this.left.end, parent.GetVertexInfo(endIndex + 1)); 
-                }
-                else
-                {
-                    edge = new Edge(this.left.end, parent.GetVertexInfo(endIndex - 1));
-                    
-                }
+                /*edge = new Edge(this.left.end, parent.GetOtherPoints(this.left));
                 // 过滤一些节点，这种情况下，不成长梯形
-                bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
-                if(check == false)
-                   this.left = edge;
+                if (ScanPoints is CombineVertex)
+                {
+                    this.left = edge;
+                }
+                else 
+                {
+                    bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                    if (check == false)
+                    {
+                        this.left = edge;
+                    }
+                }*/
+                this.left = ScanPoints.GetGrowEdge(this.left, parent);
             }
             else if (this.right.end.CheckHit(ScanPoints) == true)
             {
-                int endIndex = this.right.end.index;
-                if (this.right.start.index < endIndex)
-                {
-                    edge = new Edge(this.right.end, parent.GetVertexInfo(endIndex + 1));
-                }
-                else
-                {
-                    edge = new Edge(this.right.end, parent.GetVertexInfo(endIndex - 1));
-                }
+                /*edge = new Edge(this.right.end, parent.GetOtherPoints(this.right));
                 // 过滤一些节点，这种情况下，不成长梯形
-                bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
-                if (check == false)
+                if (ScanPoints is CombineVertex)
+                {
                     this.right = edge;
+                }
+                else 
+                {
+                    bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
+                    if (check == false)
+                        this.right = edge;
+                }*/
+                this.right = ScanPoints.GetGrowEdge(this.right, parent);
             }
         }
         /// <summary>
@@ -130,7 +131,11 @@ namespace RayGraphics.Triangulation
                 return true;
             }
             // 退化的梯形
-            else if (this.right.end.index == this.left.end.index )
+            else if (this.right.end.index == this.left.end.index)
+            {
+                return true;
+            }
+            else if (this.left.CheckLevelEdge() == true || this.right.CheckLevelEdge() == true)
             {
                 return true;
             }
@@ -138,6 +143,17 @@ namespace RayGraphics.Triangulation
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// 没面积的梯形，一条边的终点 等于一条边的起点高度，特指这类梯形
+        /// 边的节点== end
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckNoArea()
+        {
+            if (this.left.end.pos.y == this.right.start.pos.y || this.left.start.pos.y == this.right.end.pos.y)
+                return true;
+            else return false;
         }
 
         public void Print()
@@ -168,6 +184,16 @@ namespace RayGraphics.Triangulation
         public bool CheckLeft(VertexInfo target)
         {
             return GeometricUtil.LeftSide(start.pos, end.pos, target.pos);
+        }
+        /// <summary>
+        /// 判断是否为水平边，y 值相同
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckLevelEdge()
+        {
+            if (start.pos.y == end.pos.y)
+                return true;
+            else return false;
         }
 
         public string Print()

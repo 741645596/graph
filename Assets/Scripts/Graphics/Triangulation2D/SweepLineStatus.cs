@@ -32,16 +32,16 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 更新扫描线，更新扫描线状态
         /// </summary>
-        /// <param name="sweepLinePts"></param>
+        /// <param name="sl">扫描线结构</param>
         /// <param name="listDiagonal"></param>
         /// <param name="parent">父对象</param>
         /// <param name="isYdown">扫描方向 true y从大到小扫描，否则从小到到大扫描</param>
-        public void UpdatePoints(List<VertexInfo> sweepLinePts, ref List<Index2> listDiagonal, PolygonChain parent, bool isYdown)
+        public void UpdatePoints(ScanLine sl, ref List<Index2> listDiagonal, PolygonChain parent, bool isYdown)
         {
             // 先创建独立梯形
             Trapezoid left = null;
             Trapezoid right = null;
-            foreach (VertexInfo ScanPoints in sweepLinePts)
+            foreach (VertexInfo ScanPoints in sl.LinePoints)
             {
                 // 定位到分割点了
                 if (ScanPoints.CheckSplitPoint(isYdown))
@@ -86,7 +86,7 @@ namespace RayGraphics.Triangulation
                 {
                     int retIndex = -1;
                     bool ret = FindParent(ScanPoints, ref left, ref right, ref retIndex);
-                    if (ret == true)
+                     if (ret == true)
                     {
                         if (left == right)
                         {
@@ -109,7 +109,25 @@ namespace RayGraphics.Triangulation
                     }
                 }
             }
+            CullNoAreaTrapezoid();
             Print();
+        }
+        /// <summary>
+        /// 剔除无面积矩形
+        /// </summary>
+        private void CullNoAreaTrapezoid()
+        {
+            for (int i = 0; i < listTrap.Count;)
+            {
+                if (listTrap[i].CheckNoArea() == true)
+                {
+                    listTrap.RemoveAt(i);
+                }
+                else 
+                {
+                    i++;
+                }
+            }
         }
         /// <summary>
         /// 加入梯形

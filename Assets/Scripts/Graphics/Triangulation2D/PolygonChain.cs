@@ -20,7 +20,7 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 对所用顶点进行按Y从低到高进行排序
         /// </summary>
-        private List<YPoints> listYPoints = new List<YPoints>();
+        private List<ScanLine> listScanLine = new List<ScanLine>();
         /// <summary>
         /// 顶点列表
         /// </summary>
@@ -43,17 +43,17 @@ namespace RayGraphics.Triangulation
                 v.vType = GetPointVertexType(listPts[prev], v, listPts[next]);
                 AddPoints(v);
             }
-            CombineYPoints();
+            CombineScanLine();
             this.countPonts = listPoints.Count;
         }
         /// <summary>
-        /// 进行Ypoints 点的合并
+        /// 合并扫描线
         /// </summary>
-        private void CombineYPoints()
+        private void CombineScanLine()
         {
-            foreach (YPoints v in listYPoints)
+            foreach (ScanLine v in listScanLine)
             {
-                v.Combine();
+                v.Combine(this);
             }
         }
         /// <summary>
@@ -83,7 +83,7 @@ namespace RayGraphics.Triangulation
         {
             List<Index2> listDiagonal = new List<Index2>();
             SweepLineStatus sls = new SweepLineStatus();
-            int count = listYPoints.Count;
+            int count = listScanLine.Count;
             // y 从小到大
             /*for (int i = 0; i < count; i++)
             {
@@ -93,7 +93,7 @@ namespace RayGraphics.Triangulation
             sls.Clear();
             for (int i = count -1; i >= 0; i--)
             {
-                sls.UpdatePoints(listYPoints[i].LinePoints, ref listDiagonal, this, true);
+                sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, true);
             }
             return listDiagonal;
         }
@@ -251,10 +251,10 @@ namespace RayGraphics.Triangulation
         /// <param name="v"></param>
         public void AddPoints(VertexInfo v)
         {
-            int count = this.listYPoints.Count;
+            int count = this.listScanLine.Count;
             if (count == 0)
             {
-                this.listYPoints.Add(new YPoints(v));
+                this.listScanLine.Add(new ScanLine(v));
             }
             else
             {
@@ -275,22 +275,22 @@ namespace RayGraphics.Triangulation
             float targetValueY = targetValue.pos.y;
             while (minIndex <= maxIndex)
             {
-                float minYvalue = this.listYPoints[minIndex].y;
-                float maxYvalue = this.listYPoints[maxIndex].y;
+                float minYvalue = this.listScanLine[minIndex].y;
+                float maxYvalue = this.listScanLine[maxIndex].y;
                 if (minYvalue < targetValueY && maxYvalue > targetValueY)
                 {
                     int middle = (minIndex + maxIndex) / 2;
                     if (middle == minIndex)
                     {
-                        this.listYPoints.Insert(minIndex + 1, new YPoints(targetValue));
+                        this.listScanLine.Insert(minIndex + 1, new ScanLine(targetValue));
                         return;
                     }
                     else
                     {
-                        float minddleY = this.listYPoints[middle].y;
+                        float minddleY = this.listScanLine[middle].y;
                         if (targetValueY == minddleY)
                         {
-                            this.listYPoints[middle].AddPoints(targetValue);
+                            this.listScanLine[middle].AddPoints(targetValue);
                             return;
                         }
                         else if (targetValueY > minddleY)
@@ -305,22 +305,22 @@ namespace RayGraphics.Triangulation
                 }
                 else if (minYvalue == targetValueY)
                 {
-                    this.listYPoints[minIndex].AddPoints(targetValue);
+                    this.listScanLine[minIndex].AddPoints(targetValue);
                     return;
                 }
                 else if (maxYvalue == targetValueY)
                 {
-                    this.listYPoints[maxIndex].AddPoints(targetValue);
+                    this.listScanLine[maxIndex].AddPoints(targetValue);
                     return;
                 }
                 else if (minYvalue > targetValueY)
                 {
-                    this.listYPoints.Insert(0, new YPoints(targetValue));
+                    this.listScanLine.Insert(0, new ScanLine(targetValue));
                     return;
                 }
                 else if (maxYvalue < targetValueY)
                 {
-                    this.listYPoints.Add(new YPoints(targetValue));
+                    this.listScanLine.Add(new ScanLine(targetValue));
                     return;
                 }
             }
@@ -345,11 +345,57 @@ namespace RayGraphics.Triangulation
                 return this.listPoints[0];
             }
         }
+        /// <summary>
+        /// 查找边的另外一个顶点，边的edge 连接的
+        /// </summary>
+        /// <param name="edge"></param>
+        /// <returns></returns>
+        public VertexInfo GetOtherPoints(Edge edge)
+        {
+            int endIndex = edge.end.index;
+            int startIndex = edge.start.index;
+            int diff = System.Math.Abs(endIndex - startIndex);
+            if (diff == 1)
+            {
+                if (endIndex > startIndex)
+                {
+                    return GetVertexInfo(endIndex + 1);
+                }
+                else
+                {
+                    return GetVertexInfo(endIndex - 1);
+                }
+            }
+            else  // 说明end 要不是0 ，要不是最后一个点
+            {
+                if (endIndex > startIndex)
+                {
+                    return GetVertexInfo(endIndex - 1);
+                }
+                else
+                {
+                    return GetVertexInfo(endIndex + 1);
+                }
+            }
+        }
+        /// <summary>
+        /// 判断是同一条边上的点
+        /// </summary>
+        /// <param name="index1"></param>
+        /// <param name="index2"></param>
+        /// <returns></returns>
+        public bool CheckSameEdge(int index1, int index2)
+        {
+            int diff = System.Math.Abs(index1 - index2);
+            if (diff == 1 || diff == this.countPonts - 1)
+                return true;
+            else return false;
+        }
     }
     /// <summary>
-    /// 保存同一个高度
+    /// 扫描线结构体
     /// </summary>
-    public class YPoints
+    public class ScanLine
     {
         /// <summary>
         /// y的高度
@@ -369,7 +415,7 @@ namespace RayGraphics.Triangulation
         /// 构造函数
         /// </summary>
         /// <param name="v"></param>
-        public YPoints(VertexInfo v)
+        public ScanLine(VertexInfo v)
         {
             this.y = v.pos.y;
             AddPoints(v);
@@ -442,14 +488,14 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 对能合并的点进行合并
         /// </summary>
-        public void Combine()
+        public void Combine(PolygonChain parent)
         {
             if (listXIndex == null || listXIndex.Count < 2)
                 return;
             for (int i = 0; i < listXIndex.Count - 1; i++)
             {
                 // 不用采取连续合并的策略
-                if (CombineVertex.CheckCanCombine(listXIndex[i], listXIndex[i + 1]) == true)
+                if (CombineVertex.CheckCanCombine(listXIndex[i], listXIndex[i + 1], parent) == true)
                 {
                     listXIndex[i] = new CombineVertex(listXIndex[i], listXIndex[i + 1]);
                     listXIndex.RemoveAt(i + 1);
