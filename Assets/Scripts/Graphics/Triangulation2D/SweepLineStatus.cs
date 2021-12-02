@@ -47,7 +47,7 @@ namespace RayGraphics.Triangulation
                 if (ScanPoints.CheckSplitPoint(isYdown))
                 {
                     int retIndex = -1;
-                    Trapezoid targetTrap = FindCheckInTrapezoid(ScanPoints, ref retIndex);
+                    Trapezoid targetTrap = FindCheckInTrapezoid(ScanPoints, isYdown, ref retIndex);
                     if (targetTrap != null)
                     {
                         if (targetTrap.helper.pos.y != ScanPoints.pos.y) // 过滤掉这种特殊情况
@@ -110,7 +110,7 @@ namespace RayGraphics.Triangulation
                 }
             }
             CullNoAreaTrapezoid();
-            Print();
+            //Print();
         }
         /// <summary>
         /// 剔除无面积矩形
@@ -242,14 +242,14 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="ScanPoints">扫描线点</param>
         /// <returns></returns>
-        private Trapezoid FindCheckInTrapezoid(VertexInfo ScanPoints, ref int retIndex)
+        private Trapezoid FindCheckInTrapezoid(VertexInfo ScanPoints, bool isYdown,ref int retIndex)
         {
             retIndex = -1;
             int count = listTrap.Count;
             for (int i = 0; i < count; i++)
             {
                 Trapezoid v = listTrap[i];
-                if (v.CheckIn(ScanPoints) == true)
+                if (v.CheckIn(ScanPoints, isYdown) == true)
                 {
                     retIndex = i;
                     return v;

@@ -45,40 +45,13 @@ namespace RayGraphics.Triangulation
         /// <param name="parent"></param>
         public void Growth(VertexInfo ScanPoints, PolygonChain parent)
         {
-            //Edge edge;
-             if (this.left.end.CheckHit(ScanPoints) == true)
+            if (this.left.end.CheckHit(ScanPoints) == true)
             {
-                /*edge = new Edge(this.left.end, parent.GetOtherPoints(this.left));
-                // 过滤一些节点，这种情况下，不成长梯形
-                if (ScanPoints is CombineVertex)
-                {
-                    this.left = edge;
-                }
-                else 
-                {
-                    bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
-                    if (check == false)
-                    {
-                        this.left = edge;
-                    }
-                }*/
-                this.left = ScanPoints.GetGrowEdge(this.left, parent);
+                this.left = ScanPoints.GetGrowEdge(this.left, ref this.helper, parent);
             }
             else if (this.right.end.CheckHit(ScanPoints) == true)
             {
-                /*edge = new Edge(this.right.end, parent.GetOtherPoints(this.right));
-                // 过滤一些节点，这种情况下，不成长梯形
-                if (ScanPoints is CombineVertex)
-                {
-                    this.right = edge;
-                }
-                else 
-                {
-                    bool check = ScanPoints.isConvex == true && edge.start.pos.y == edge.end.pos.y;
-                    if (check == false)
-                        this.right = edge;
-                }*/
-                this.right = ScanPoints.GetGrowEdge(this.right, parent);
+                this.right = ScanPoints.GetGrowEdge(this.right, ref this.helper, parent);
             }
         }
         /// <summary>
@@ -97,15 +70,28 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public bool CheckIn(VertexInfo target)
+        public bool CheckIn(VertexInfo target, bool isYdown)
         {
-            // 需在左侧
-            if (left.CheckLeft(target) == false)
-                return false;
-            // 需在右侧
-            if (right.CheckLeft(target) == true)
-                return false;
-            return true;
+            if (isYdown == true)
+            {
+                // 需在左侧
+                if (left.CheckLeft(target) == false)
+                    return false;
+                // 需在右侧
+                if (right.CheckLeft(target) == true)
+                    return false;
+                return true;
+            }
+            else 
+            {
+                // 需在左侧
+                if (left.CheckLeft(target) == true)
+                    return false;
+                // 需在右侧
+                if (right.CheckLeft(target) == false)
+                    return false;
+                return true;
+            }
         }
         /// <summary>
         /// 确定在边上

@@ -109,8 +109,9 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="growEdge"></param>
         /// <returns></returns>
-        public virtual Edge GetGrowEdge(Edge growEdge, PolygonChain parent)
+        public virtual Edge GetGrowEdge(Edge growEdge, ref VertexInfo helper, PolygonChain parent)
         {
+            helper = growEdge.end;
             return new Edge(growEdge.end, parent.GetOtherPoints(growEdge));
         }
     }
@@ -132,7 +133,15 @@ namespace RayGraphics.Triangulation
             this.right = right;
             this.pos = this.left.pos;
             this.vType = this.left.vType;
-            this.isConvex = this.left.isConvex;
+            // 强制这样设定吧
+            /*if (this.left.isConvex != this.right.isConvex)
+            {
+                this.isConvex = true;
+            }
+            else*/ 
+            {
+                this.isConvex = this.left.isConvex;
+            }
             this.index = this.left.index;
         }
         /// <summary>
@@ -151,8 +160,6 @@ namespace RayGraphics.Triangulation
             {
                 return false;
             }
-            //if (left.isConvex != right.isConvex)
-            //    return false;
             return true;
         }
         /// <summary>
@@ -212,14 +219,16 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="growEdge"></param>
         /// <returns></returns>
-        public override Edge GetGrowEdge(Edge growEdge, PolygonChain parent)
+        public override Edge GetGrowEdge(Edge growEdge, ref VertexInfo helper, PolygonChain parent)
         {
             if (growEdge.end == this.left)
             {
+                helper = this.right;
                 return new Edge(this.right, parent.GetOtherPoints(new Edge(this.left, this.right)));
             }
             else 
             {
+                helper = this.left;
                 return new Edge(this.left, parent.GetOtherPoints(new Edge(this.right, this.left)));
             }
         }

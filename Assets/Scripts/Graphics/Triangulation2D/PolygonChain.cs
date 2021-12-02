@@ -87,7 +87,7 @@ namespace RayGraphics.Triangulation
             // y 从小到大
             /*for (int i = 0; i < count; i++)
             {
-                sls.UpdatePoints(listYPoints[i].LinePoints, ref listDiagonal, this, false);
+                sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, false);
             }*/
             // y 从大到小
             sls.Clear();
