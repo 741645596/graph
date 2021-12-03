@@ -71,6 +71,17 @@ namespace RayGraphics.Triangulation
         /// 测试分割链条
         /// </summary>
         /// <returns></returns>
+        public List<List<Float2>> TestPolygon()
+        {
+            List<Index2> listDiagonal = TriangulationDiagonal();
+            List<List<Float2>> list = new List<List<Float2>>();
+            GeneralTestPolygon(listDiagonal, this.listPoints, ref list);
+            return list;
+        }
+        /// <summary>
+        /// 测试分割链条
+        /// </summary>
+        /// <returns></returns>
         public List<Index2> TestDiagonal()
         {
             return TriangulationDiagonal();
@@ -108,7 +119,7 @@ namespace RayGraphics.Triangulation
             {
                 listMp = new List<MonotonePolygon>();
             }
-            if (listDiagonal == null || listMp.Count == 0)
+            if (listDiagonal == null || listDiagonal.Count == 0)
             {
                 listMp.Add(new MonotonePolygon(listPts));
             }
@@ -135,15 +146,20 @@ namespace RayGraphics.Triangulation
         /// </summary>
         /// <param name="listDiagonal"></param>
         /// <param name="listMp"></param>
-        private void GeneralTestPolygon(List<Index2> listDiagonal, List<VertexInfo> listPts, ref List<List<VertexInfo>> listMp)
+        private void GeneralTestPolygon(List<Index2> listDiagonal, List<VertexInfo> listPts, ref List<List<Float2>> listMp)
         {
             if (listMp == null)
             {
-                listMp = new List<List<VertexInfo>>();
+                listMp = new List<List<Float2>>();
             }
-            if (listDiagonal == null || listMp.Count == 0)
+            if (listDiagonal == null || listDiagonal.Count == 0)
             {
-                listMp.Add(listPts);
+                List<Float2> l = new List<Float2>();
+                foreach (VertexInfo v in listPts)
+                {
+                    l.Add(v.pos);
+                }
+                listMp.Add(l);
             }
             else
             {
@@ -246,12 +262,12 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         private int FindPointsIndex(List<VertexInfo> listPts, int vertexIndex)
         {
-            if (listPoints == null || listPts.Count == 0)
+            if (listPts == null || listPts.Count == 0)
                 return -1;
             int count = listPts.Count;
             for (int i = 0; i < count; i++)
             {
-                if (this.listPoints[i].index == vertexIndex)
+                if (listPts[i].index == vertexIndex)
                 {
                     return i;
                 }

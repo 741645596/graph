@@ -25,11 +25,13 @@ namespace RayGraphics.Triangulation
             // 得到分解后的单调多边形
             List<MonotonePolygon> listMp = pc.GeneralMonotonePolygon();
             // 分解单调多边形得到三角形
+            UnityEngine.Debug.Log("count:" + listMp.Count);
             if (listMp != null && listMp.Count > 0)
             {
-                foreach (MonotonePolygon mp in listMp)
+                for (int i = 0; i < listMp.Count; i++)
                 {
-                    mp.GeneralTri(ref listTri);
+                    if(i == 1)
+                      listMp[i].GeneralTri(ref listTri);
                 }
             }
             return true;
@@ -45,6 +47,18 @@ namespace RayGraphics.Triangulation
             // 先得到多边形链
             PolygonChain pc = new PolygonChain(listPts);
             listTri = pc.TestDiagonal();
+            return true;
+        }
+        /// <summary>
+        /// 测试分隔多边形
+        /// </summary>
+        /// <param name="listPts"></param>
+        /// <param name="listTri">得到切割出来的三角形</param>
+        public static bool TestGeneralTri(List<VertexInfo> listPts, ref List<List<Float2>> listTri)
+        {
+            // 先得到多边形链
+            PolygonChain pc = new PolygonChain(listPts);
+            listTri = pc.TestPolygon();
             return true;
         }
     }

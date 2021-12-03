@@ -21,15 +21,18 @@ namespace RayGraphics.Triangulation
             if (count < 3)
                 return;
             // 找最小
+            float targetY;
             int minIndex = -1;
+            float minValue = float.MaxValue;
             for (int i = 0; i < count; i++)
             {
                 int prev = (i - 1) < 0 ? (count - 1):(i - 1);
                 int next = (i + 1) >= count ? 0 : (i + 1);
-                if (listPoints[i].pos.y < listPoints[prev].pos.y && listPoints[i].pos.y <= listPoints[next].pos.y)
+                targetY = listPoints[i].pos.y;
+                if (targetY < listPoints[prev].pos.y && targetY <= listPoints[next].pos.y && targetY <= minValue)
                 {
                     minIndex = i;
-                    break;
+                    minValue = targetY;
                 }
             }
             if (minIndex == -1)
@@ -37,14 +40,16 @@ namespace RayGraphics.Triangulation
 
             // 找最大
             int maxIndex = -1;
+            float maxValue = float.MinValue;
             for (int i = 0; i < count; i++)
             {
                 int prev = (i - 1) < 0 ? (count - 1) : (i - 1);
                 int next = (i + 1) >= count ? 0 : (i + 1);
-                if (listPoints[i].pos.y >= listPoints[prev].pos.y && listPoints[i].pos.y > listPoints[next].pos.y)
+                targetY = listPoints[i].pos.y;
+                if (targetY >= listPoints[prev].pos.y && targetY > listPoints[next].pos.y && targetY >=maxValue)
                 {
                     maxIndex = i;
-                    break;
+                    maxValue = targetY;
                 }
             }
             if (maxIndex == -1)
@@ -81,7 +86,7 @@ namespace RayGraphics.Triangulation
                     SideType type = (i == maxIndex || i == minIndex) ? SideType.Center : SideType.Right;
                     this.right.Add(new TriVertexInfo(listPoints[i], type));
                 }
-                for (int i = 0; i <= minIndex; i++)
+                for (int i = count -1; i >= minIndex; i--)
                 {
                     SideType type = (i == maxIndex || i == minIndex) ? SideType.Center : SideType.Right;
                     this.right.Add(new TriVertexInfo(listPoints[i], type));
@@ -115,31 +120,43 @@ namespace RayGraphics.Triangulation
             {
                 while (WaitPoint.Count > 1)
                 {
-                    TriVertexInfo first = WaitPoint.Pop();
-                    TriVertexInfo second = WaitPoint.Pop();
+                    TriVertexInfo stackUp = WaitPoint.Pop();
+                    TriVertexInfo stackDown = WaitPoint.Pop();
                     // 判断与stack 顶元素是否同意侧
-                    if (newPoint.sideType == first.sideType)
+                    if (newPoint.sideType == stackUp.sideType)
                     {
-                        bool isLeft = GeometricUtil.LeftSide(second.pos, first.pos, newPoint.pos);
+                        bool isLeft = GeometricUtil.LeftSide(stackDown.pos, stackUp.pos, newPoint.pos);
                         if ((newPoint.sideType == SideType.Left && isLeft == true) ||(newPoint.sideType == SideType.Right && isLeft == false))
                         {//不是凹的
                             // 得到三角形
-                            listTri.Add(new Index3(second.index, first.index, newPoint.index));
+                            listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
+                            //UnityEngine.Debug.Log("[" + stackDown.index + "," + stackUp.index + "," + newPoint.index + "]");
                             //然后次栈顶元素就可以解放了，原来的栈顶变成次栈顶，新元素变成栈顶
-                            WaitPoint.Push(second);
+                            WaitPoint.Push(stackDown);
                         }
                         else // 无发够成三角形
                         {
-                            WaitPoint.Push(second);
-                            WaitPoint.Push(first);
+                            WaitPoint.Push(stackDown);
+                            WaitPoint.Push(stackUp);
                             break;
                         }
                     }
                     else // 异侧
                     {
                         // 得到三角形
-                        listTri.Add(new Index3(second.index, first.index, newPoint.index));
-                        WaitPoint.Push(first);
+                        listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
+                        //UnityEngine.Debug.Log("[" + stackDown.index + "," + stackUp.index + "," + newPoint.index + "]");
+                        TriVertexInfo botton = stackUp;
+                        if (WaitPoint.Count > 0)
+                        {
+                            while (WaitPoint.Count > 0)
+                            {
+                                 stackUp = stackDown;
+                                 stackDown = WaitPoint.Pop();
+                                listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
+                            }
+                        }
+                        WaitPoint.Push(botton);
                     }
                 }
                 WaitPoint.Push(newPoint);
