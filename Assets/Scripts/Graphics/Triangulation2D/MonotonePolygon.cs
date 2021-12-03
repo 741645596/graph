@@ -129,9 +129,7 @@ namespace RayGraphics.Triangulation
                         if ((newPoint.sideType == SideType.Left && isLeft == true) ||(newPoint.sideType == SideType.Right && isLeft == false))
                         {//不是凹的
                             // 得到三角形
-                            listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
-                            //UnityEngine.Debug.Log("[" + stackDown.index + "," + stackUp.index + "," + newPoint.index + "]");
-                            //然后次栈顶元素就可以解放了，原来的栈顶变成次栈顶，新元素变成栈顶
+                            AddTri(ref listTri, stackDown, stackUp, newPoint);
                             WaitPoint.Push(stackDown);
                         }
                         else // 无发够成三角形
@@ -144,8 +142,7 @@ namespace RayGraphics.Triangulation
                     else // 异侧
                     {
                         // 得到三角形
-                        listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
-                        //UnityEngine.Debug.Log("[" + stackDown.index + "," + stackUp.index + "," + newPoint.index + "]");
+                        AddTri(ref listTri, stackDown, stackUp, newPoint);
                         TriVertexInfo botton = stackUp;
                         if (WaitPoint.Count > 0)
                         {
@@ -153,13 +150,32 @@ namespace RayGraphics.Triangulation
                             {
                                  stackUp = stackDown;
                                  stackDown = WaitPoint.Pop();
-                                listTri.Add(new Index3(stackDown.index, stackUp.index, newPoint.index));
+                                AddTri(ref listTri, stackDown, stackUp, newPoint);
                             }
                         }
                         WaitPoint.Push(botton);
                     }
                 }
                 WaitPoint.Push(newPoint);
+            }
+        }
+        /// <summary>
+        /// 添加三角形
+        /// </summary>
+        /// <param name="listTri"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        private void AddTri(ref List<Index3> listTri, TriVertexInfo a, TriVertexInfo  b, TriVertexInfo c)
+        {
+            // 得到三角形
+            if (b.sideType == SideType.Left)
+            {
+                listTri.Add(new Index3(c.index, b.index, a.index));
+            }
+            else 
+            {
+                listTri.Add(new Index3(a.index, b.index, c.index));
             }
         }
         /// <summary>

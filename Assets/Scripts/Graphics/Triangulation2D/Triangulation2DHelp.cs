@@ -25,13 +25,11 @@ namespace RayGraphics.Triangulation
             // 得到分解后的单调多边形
             List<MonotonePolygon> listMp = pc.GeneralMonotonePolygon();
             // 分解单调多边形得到三角形
-            UnityEngine.Debug.Log("count:" + listMp.Count);
             if (listMp != null && listMp.Count > 0)
             {
                 for (int i = 0; i < listMp.Count; i++)
                 {
-                    if(i == 1)
-                      listMp[i].GeneralTri(ref listTri);
+                    listMp[i].GeneralTri(ref listTri);
                 }
             }
             return true;
