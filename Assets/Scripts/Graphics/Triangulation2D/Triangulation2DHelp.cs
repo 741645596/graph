@@ -20,18 +20,28 @@ namespace RayGraphics.Triangulation
             {
                 listTri = new List<Index3>();
             }
-            // 先得到多边形链
-            PolygonChain pc = new PolygonChain(listPts);
-            // 得到分解后的单调多边形
-            List<MonotonePolygon> listMp = pc.GeneralMonotonePolygon();
-            // 分解单调多边形得到三角形
-            if (listMp != null && listMp.Count > 0)
+            // 先判断是否为单调多边形
+            if (MonotonePolygon.CheckMonotonePolygon(listPts) == true)
             {
-                for (int i = 0; i < listMp.Count; i++)
+                MonotonePolygon mp = new MonotonePolygon(listPts);
+                mp.GeneralTri(ref listTri);
+            }
+            else 
+            {
+                // 先得到多边形链
+                PolygonChain pc = new PolygonChain(listPts);
+                // 得到分解后的单调多边形
+                List<MonotonePolygon> listMp = pc.GeneralMonotonePolygon();
+                // 分解单调多边形得到三角形
+                if (listMp != null && listMp.Count > 0)
                 {
-                    listMp[i].GeneralTri(ref listTri);
+                    for (int i = 0; i < listMp.Count; i++)
+                    {
+                        listMp[i].GeneralTri(ref listTri);
+                    }
                 }
             }
+
             return true;
         }
 

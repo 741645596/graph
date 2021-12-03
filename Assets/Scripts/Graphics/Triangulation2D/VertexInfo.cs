@@ -14,7 +14,11 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 所在顶点列表中的索引
         /// </summary>
-        public int index;
+        public int fixIndex;
+        /// <summary>
+        /// 在多边形链的序列
+        /// </summary>
+        public int indexInPolygonChain;
         /// <summary>
         /// 在多边形中是否为凸点
         /// </summary>
@@ -49,8 +53,8 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public virtual Edge GetLeftEdge(PolygonChain parent)
         {
-            VertexInfo prev = parent.GetVertexInfo(index - 1);
-            VertexInfo next = parent.GetVertexInfo(index + 1);
+            VertexInfo prev = parent.GetVertexInfo(this.indexInPolygonChain - 1);
+            VertexInfo next = parent.GetVertexInfo(this.indexInPolygonChain + 1);
             if (prev.pos.x <= this.pos.x)
             {
                 return new Edge(this, prev);
@@ -66,8 +70,8 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public virtual Edge GetRightEdge(PolygonChain parent)
         {
-            VertexInfo prev = parent.GetVertexInfo(index - 1);
-            VertexInfo next = parent.GetVertexInfo(index + 1);
+            VertexInfo prev = parent.GetVertexInfo(this.indexInPolygonChain - 1);
+            VertexInfo next = parent.GetVertexInfo(this.indexInPolygonChain + 1);
             if (prev.pos.x >= this.pos.x)
             {
                 return new Edge(this, prev);
@@ -133,16 +137,9 @@ namespace RayGraphics.Triangulation
             this.right = right;
             this.pos = this.left.pos;
             this.vType = this.left.vType;
-            // 强制这样设定吧
-            /*if (this.left.isConvex != this.right.isConvex)
-            {
-                this.isConvex = true;
-            }
-            else*/ 
-            {
-                this.isConvex = this.left.isConvex;
-            }
-            this.index = this.left.index;
+            this.isConvex = this.left.isConvex;
+            this.fixIndex = this.left.fixIndex;
+            this.indexInPolygonChain = this.left.indexInPolygonChain;
         }
         /// <summary>
         /// 确定2个点能否合并
@@ -156,7 +153,7 @@ namespace RayGraphics.Triangulation
                 return false;
             if (left.pos.y != right.pos.y)
                 return false;
-            if (parent.CheckSameEdge(left.index, right.index) == false)
+            if (parent.CheckSameEdge(left.indexInPolygonChain, right.indexInPolygonChain) == false)
             {
                 return false;
             }
@@ -168,7 +165,7 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public override Edge GetLeftEdge(PolygonChain parent)
         {
-            int leftIndex = this.left.index;
+            int leftIndex = this.left.indexInPolygonChain;
             VertexInfo prev = parent.GetVertexInfo(leftIndex - 1);
             VertexInfo next = parent.GetVertexInfo(leftIndex + 1);
             if (prev.pos.x <= this.left.pos.x)
@@ -186,7 +183,7 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public override Edge GetRightEdge(PolygonChain parent)
         {
-            int rightIndex = this.right.index;
+            int rightIndex = this.right.indexInPolygonChain;
             VertexInfo prev = parent.GetVertexInfo(rightIndex - 1);
             VertexInfo next = parent.GetVertexInfo(rightIndex + 1);
             if (prev.pos.x >= this.right.pos.x)

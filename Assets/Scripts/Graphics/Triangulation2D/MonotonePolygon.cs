@@ -10,16 +10,26 @@ namespace RayGraphics.Triangulation
     public class MonotonePolygon
     {
         /// <summary>
+        /// 单调链- left -单调降
+        /// </summary>
+        private List<TriVertexInfo> left = new List<TriVertexInfo>();
+        /// <summary>
+        /// 单调链 - right - 单调降
+        /// </summary>
+        private List<TriVertexInfo> right = new List<TriVertexInfo>();
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="listPoints">为逆时针序列,且为单调多边形</param>
         public MonotonePolygon(List<VertexInfo> listPoints)
         {
-            if (listPoints == null)
-                return;
+            // 先判断是否为单调多边形
+            if (CheckMonotonePolygon(listPoints) == false)
+            {
+                UnityEngine.Debug.Log("非单调多边形");
+            }
+                
             int count = listPoints.Count;
-            if (count < 3)
-                return;
             // 找最小
             float targetY;
             int minIndex = -1;
@@ -93,14 +103,7 @@ namespace RayGraphics.Triangulation
                 }
             }
         }
-        /// <summary>
-        /// 单调链- left -单调降
-        /// </summary>
-        private List<TriVertexInfo> left = new List<TriVertexInfo>();
-        /// <summary>
-        /// 单调链 - right - 单调降
-        /// </summary>
-        private List<TriVertexInfo> right = new List<TriVertexInfo>();
+
         /// <summary>
         /// 生成三角形列表
         /// </summary>
@@ -214,6 +217,113 @@ namespace RayGraphics.Triangulation
                 return ret;
             }
         }
+        /// <summary>
+        /// 判断是否为单调多边形
+        /// </summary>
+        /// <param name="listPoints"></param>
+        /// <returns></returns>
+        public static bool CheckMonotonePolygon(List<VertexInfo> listPoints)
+        {
+            if (listPoints == null)
+            return false;
+
+            int count = listPoints.Count;
+            if (count < 3)
+                return false;
+            // 找最小
+            int minIndex = -1;
+            float minValue = float.MaxValue;
+            for (int i = 0; i < count; i++)
+            {
+                if (listPoints[i].pos.y < minValue)
+                {
+                    minIndex = i;
+                    minValue = listPoints[i].pos.y;
+                }
+            }
+            if (minIndex == -1)
+                return false;
+
+            // 找最大
+            int maxIndex = -1;
+            float maxValue = float.MinValue;
+            for (int i = 0; i < count; i++)
+            {
+                if (listPoints[i].pos.y >= maxValue)
+                {
+                    maxIndex = i;
+                    maxValue = listPoints[i].pos.y;
+                }
+            }
+            if (maxIndex == -1)
+                return false;
+
+            // 得到单调链
+            if (maxIndex > minIndex)
+            {
+                for (int i = maxIndex; i > minIndex; i--)
+                {
+                    if (listPoints[i].pos.y < listPoints[i - 1].pos.y)
+                    {
+                        return false;
+
+                    }
+                }
+                for (int i = maxIndex; i < count; i++)
+                {
+                    int next = i + 1;
+                    if (next == count)
+                    {
+                        next = 0;
+                    }
+                    if (listPoints[i].pos.y < listPoints[next].pos.y)
+                    {
+                        return false;
+                    }
+                }
+                for (int i = 0; i < minIndex -1; i ++)
+                {
+                    int next = i + 1;
+                    if (listPoints[i].pos.y < listPoints[next].pos.y)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else if (maxIndex < minIndex)
+            {
+                for (int i = maxIndex; i < minIndex; i++)
+                {
+                    if (listPoints[i].pos.y < listPoints[i + 1].pos.y)
+                    {
+                        return false;
+                    }
+                }
+
+                for (int i = maxIndex; i < count; i++)
+                {
+                    int next = i + 1;
+                    if (next == count)
+                    {
+                        next = 0;
+                    }
+                    if (listPoints[i].pos.y < listPoints[next].pos.y)
+                    {
+                        return false;
+                    }
+                }
+                for (int i = 0; i < minIndex - 1; i++)
+                {
+                    int next = i + 1;
+                    if (listPoints[i].pos.y < listPoints[next].pos.y)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+
+        }
     }
 
 
@@ -222,7 +332,7 @@ namespace RayGraphics.Triangulation
         public TriVertexInfo(VertexInfo v, SideType isLeft)
         {
             this.pos = v.pos;
-            this.index = v.index;
+            this.index = v.fixIndex;
             this.sideType = isLeft;
         }
         /// <summary>

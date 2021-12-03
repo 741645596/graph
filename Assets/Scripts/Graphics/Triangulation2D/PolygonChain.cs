@@ -9,6 +9,13 @@ namespace RayGraphics.Triangulation
     /// </summary>
     public class PolygonChain
     {
+        /// <summary>
+        /// 链的特点
+        /// </summary>
+        private PolygonChainType m_Type;
+        /// <summary>
+        /// 顶点数量
+        /// </summary>
         private int countPonts;
         /// <summary>
         /// 顶点数量
@@ -38,13 +45,45 @@ namespace RayGraphics.Triangulation
             {
                 VertexInfo v = listPts[i];
                 v.vType = VertexType.Normal;
+                // 在多边形链中的索引
+                v.indexInPolygonChain = i;
                 int prev = (i - 1) < 0 ? totalCount - 1 : (i - 1);
                 int next = (i + 1) >= totalCount ? 0 : (i + 1);
                 v.vType = GetPointVertexType(listPts[prev], v, listPts[next]);
+                SetPolygonChainType(v.vType);
                 AddPoints(v);
             }
             CombineScanLine();
             this.countPonts = listPoints.Count;
+        }
+        /// <summary>
+        /// 设置多边形链的类型
+        /// </summary>
+        /// <param name="type"></param>
+        private void SetPolygonChainType(VertexType type)
+        {
+            if (type == VertexType.UpCorner)
+            {
+                if (m_Type == PolygonChainType.DownCorner)
+                {
+                    m_Type = PolygonChainType.Both;
+                }
+                else
+                {
+                    m_Type = PolygonChainType.UpCorner;
+                }
+            }
+            else if (type == VertexType.DownCorner)
+            {
+                if (m_Type == PolygonChainType.UpCorner)
+                {
+                    m_Type = PolygonChainType.Both;
+                }
+                else
+                {
+                    m_Type = PolygonChainType.DownCorner;
+                }
+            }
         }
         /// <summary>
         /// 合并扫描线
@@ -95,16 +134,21 @@ namespace RayGraphics.Triangulation
             List<Index2> listDiagonal = new List<Index2>();
             SweepLineStatus sls = new SweepLineStatus();
             int count = listScanLine.Count;
-            // y 从小到大
-            /*for (int i = 0; i < count; i++)
+            if (m_Type == PolygonChainType.Both || m_Type == PolygonChainType.UpCorner)
             {
-                sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, false);
-            }*/
-            // y 从大到小
-            sls.Clear();
-            for (int i = count -1; i >= 0; i--)
+                // y 从大到小
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, true);
+                }
+            }
+            else 
             {
-                sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, true);
+                // y 从小到大
+                for (int i = 0; i < count; i++)
+                {
+                    sls.UpdatePoints(listScanLine[i], ref listDiagonal, this, false);
+                }
             }
             return listDiagonal;
         }
@@ -222,7 +266,7 @@ namespace RayGraphics.Triangulation
         /// <summary>
         /// 获取多边形中包含的对角线，并且进行剔除
         /// </summary>
-        /// <returns></returns>
+        /// <returns>得到的是决定的顶点序列</returns>
         private List<Index2> GetDiagonal(ref List<Index2> listDiagonal, List<VertexInfo> listPts)
         {
             List<Index2> listRet = new List<Index2>();
@@ -267,7 +311,7 @@ namespace RayGraphics.Triangulation
             int count = listPts.Count;
             for (int i = 0; i < count; i++)
             {
-                if (listPts[i].index == vertexIndex)
+                if (listPts[i].fixIndex == vertexIndex)
                 {
                     return i;
                 }
@@ -401,8 +445,8 @@ namespace RayGraphics.Triangulation
         /// <returns></returns>
         public VertexInfo GetOtherPoints(Edge edge)
         {
-            int endIndex = edge.end.index;
-            int startIndex = edge.start.index;
+            int endIndex = edge.end.indexInPolygonChain;
+            int startIndex = edge.start.indexInPolygonChain;
             int diff = System.Math.Abs(endIndex - startIndex);
             if (diff == 1)
             {
@@ -441,116 +485,16 @@ namespace RayGraphics.Triangulation
             else return false;
         }
     }
-    /// <summary>
-    /// 扫描线结构体
-    /// </summary>
-    public class ScanLine
-    {
-        /// <summary>
-        /// y的高度
-        /// </summary>
-        public float y;
-        /// <summary>
-        /// 保持x 坐标的值，及对应在多边形链表中的索引
-        /// // x: 保存x坐标。 y保存索引
-        /// 同时按x 从小到大进行了排序
-        /// </summary>
-        private List<VertexInfo> listXIndex = new List<VertexInfo>();
-        public List<VertexInfo> LinePoints
-        {
-            get { return listXIndex; }
-        }
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="v"></param>
-        public ScanLine(VertexInfo v)
-        {
-            this.y = v.pos.y;
-            AddPoints(v);
-        }
-        /// <summary>
-        /// 加入并排好序
-        /// </summary>
-        /// <param name="v"></param>
-        public void AddPoints(VertexInfo v)
-        {
-            int count = listXIndex.Count;
-            if (count == 0)
-            {
-                this.y = v.pos.y;
-                this.listXIndex.Add(v);
-            }
-            else
-            {
-                if (v.pos.y == this.y)
-                {
-                    BinaryInsert(v, 0, count - 1);
-                }
-            }
-        }
-        /// <summary>
-        /// 二分插入
-        /// </summary>
-        /// <param name="targetValue"></param>
-        /// <param name="minIndex"></param>
-        /// <param name="maxIndex"></param>
-        /// <returns></returns>
-        private void BinaryInsert(VertexInfo targetValue, int minIndex, int maxIndex)
-        {
-            float targetValueX = targetValue.pos.x;
-            while (minIndex <= maxIndex)
-            {
-                if (this.listXIndex[minIndex].pos.x <= targetValueX && this.listXIndex[maxIndex].pos.x >= targetValueX)
-                {
-                    int middle = (minIndex + maxIndex) / 2;
 
-                    if (middle == minIndex)
-                    {
-                        this.listXIndex.Insert(minIndex + 1, targetValue);
-                        return;
-                    }
-                    else
-                    {
-                        if (this.listXIndex[middle].pos.x <= targetValueX)
-                        {
-                            minIndex = middle;
-                        }
-                        else
-                        {
-                            maxIndex = middle;
-                        }
-                    }
-                }
-                else if (this.listXIndex[minIndex].pos.x > targetValueX)
-                {
-                    this.listXIndex.Insert(0, targetValue);
-                    return;
-                }
-                else
-                {
-                    this.listXIndex.Add(targetValue);
-                    return;
-                }
-            }
-        }
-        /// <summary>
-        /// 对能合并的点进行合并
-        /// </summary>
-        public void Combine(PolygonChain parent)
-        {
-            if (listXIndex == null || listXIndex.Count < 2)
-                return;
-            for (int i = 0; i < listXIndex.Count - 1; i++)
-            {
-                // 不用采取连续合并的策略
-                if (CombineVertex.CheckCanCombine(listXIndex[i], listXIndex[i + 1], parent) == true)
-                {
-                    listXIndex[i] = new CombineVertex(listXIndex[i], listXIndex[i + 1]);
-                    listXIndex.RemoveAt(i + 1);
-                }
-            }
-        }
+    /// <summary>
+    /// 多边形链特点
+    /// </summary>
+    public enum PolygonChainType
+    {
+        None       = 0,  // 不存在，也就是单调链了
+        UpCorner   = 1,   // 向上拐 ^
+        DownCorner = 2,   // 向下拐
+        Both       = 3,   // 都存在
     }
 }
 

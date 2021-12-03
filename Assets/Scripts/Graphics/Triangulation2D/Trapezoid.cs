@@ -112,12 +112,13 @@ namespace RayGraphics.Triangulation
         /// <returns>true 无效梯形， false 有效</returns>
         public bool CheckInvalid()
         {
-            if (this.left.start.index == this.right.end.index && this.left.end.index == this.right.start.index)
+            if (this.left.start.indexInPolygonChain == this.right.end.indexInPolygonChain 
+                && this.left.end.indexInPolygonChain == this.right.start.indexInPolygonChain)
             {
                 return true;
             }
             // 退化的梯形
-            else if (this.right.end.index == this.left.end.index)
+            else if (this.right.end.indexInPolygonChain == this.left.end.indexInPolygonChain)
             {
                 return true;
             }

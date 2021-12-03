@@ -52,7 +52,7 @@ namespace RayGraphics.Triangulation
                     {
                         if (targetTrap.helper.pos.y != ScanPoints.pos.y) // 过滤掉这种特殊情况
                         {
-                            listDiagonal.Add(new Index2(targetTrap.helper.index, ScanPoints.index));
+                            listDiagonal.Add(new Index2(targetTrap.helper.fixIndex, ScanPoints.fixIndex));
                         }
                         // 进行分割梯形为2
                         Trapezoid leftTrap = new Trapezoid(targetTrap.left, ScanPoints.GetLeftEdge(parent) , ScanPoints.GetLeftPoint());
