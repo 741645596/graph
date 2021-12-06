@@ -24,10 +24,10 @@ namespace RayGraphics.Triangulation
         public MonotonePolygon(List<VertexInfo> listPoints)
         {
             // 先判断是否为单调多边形
-            if (CheckMonotonePolygon(listPoints) == false)
+            /*if (CheckMonotonePolygon(listPoints) == false)
             {
                 UnityEngine.Debug.Log("非单调多边形");
-            }
+            }*/
                 
             int count = listPoints.Count;
             // 找最小
